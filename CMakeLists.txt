@@ -30,8 +30,8 @@ endif()
 enable_language(C CXX)
 
 
-FIND_PACKAGE(sepVector NO_MODULE REQUIRED)
-INCLUDE_DIRECTORIES(${sepVector_DIRNAME_include})
+FIND_PACKAGE(hypercube NO_MODULE REQUIRED)
+INCLUDE_DIRECTORIES(${hypercube_DIRNAME_include})
 
 
 

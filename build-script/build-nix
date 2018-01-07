@@ -8,8 +8,9 @@ from subprocess import Popen,PIPE
 def help():
    print "build[build] - Directory to build project in"
    print "basePrefix - Prefix  where all local packages are installed"
-   print "hypercube [basePrefix/hypercube]  - Where to instal hypercube"
-   print "hypercube must be defined "
+   print "hypercube [basePrefix/hypercube]  - Where hypercube is installed"
+   print "sepVector [basePrefix/sepVector]  - Where to instal hypercube"
+   print "sepVector and hypercube must be defined "
    print "Specify arguments on the command line in the form [basePrefix='/opt']"
    print "\n Example \n"+sys.argv[0]+" basePrefix='/opt'"
 
@@ -43,6 +44,7 @@ def runCommand(args,dir,fail):
    """
     Execute the external command and get its exitcode, stdout and stderr.
     """
+   print string.join(args)
    proc = Popen(args, stdout=PIPE, stderr=PIPE,cwd=dir)
    out, err = proc.communicate()
    exitcode = proc.returncode
@@ -61,15 +63,16 @@ def build(args):
    runCommand(["ls",args["build"]],cwd,False)
    if os.path.exists(args["build"]):
        shutil.rmtree(args["build"])
-   if os.path.exists(args["hypercube"]):
-       shutil.rmtree(args["hypercube"])
+   if os.path.exists(args["sepVector"]):
+       shutil.rmtree(args["sepVector"])
    runCommand(["mkdir","-p",args["build"]],cwd,True)
-   runCommand(["cmake","-DCMAKE_INSTALL_PREFIX=%s"%args["hypercube"],parDir],args["build"],True)
+   runCommand(["cmake","-DCMAKE_INSTALL_PREFIX=%s"%args["sepVector"],
+    "-Dhypercube_DIR=%s/lib"%args["hypercube"], parDir],args["build"],True)
    runCommand(["make"],args["build"],True)
    runCommand(["make","install"],args["build"],True)
 
 
-req=["hypercube"]
+req=["hypercube","sepVector"]
 args=defaultArgs(req,buildArgs())
 checkArgs(req,args)
 build(args)

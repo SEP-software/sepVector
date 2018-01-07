@@ -1,8 +1,8 @@
 #pragma once
-#include "Operator.h"
 #include<hypercube.h>
 #include<cassert>
 #include<sstream>
+#include "vector.h"
 namespace giee{
 class floatHyper: public Vector{
   protected:
