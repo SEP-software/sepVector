@@ -1,4 +1,5 @@
-project(sepVector) cmake_minimum_required(VERSION 2.8)
+project(sepVector) 
+cmake_minimum_required(VERSION 2.8)
 set(CMAKE_INCLUDE_CURRENT_DIR TRUE)
 
 # configure a header file to pass some of the CMake settings
