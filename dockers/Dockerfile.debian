@@ -9,3 +9,9 @@ RUN git clone http://zapad.Stanford.EDU/bob/hypercube.git   /opt/hypercube/src &
     cmake -DCMAKE_INSTALL_PREFIX=/opt/hypercube ../src &&\
     make install &&\
     rm -rf /opt/hypercube/build
+RUN git clone http://zapad.Stanford.EDU/bob/sepVector.git /opt/sepVector/src && \
+    mkdir /opt/sepVector/build &&\
+    cd /opt/sepVector/build &&\
+    cmake  -Dhypercube_DIR=/opt/hypercube/lib  -DCMAKE_INSTALL_PREFIX=/opt/sepVector ../src  &&\
+    make install && \
+    rm -rf /opt/sepVector/build
