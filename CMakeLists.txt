@@ -66,8 +66,7 @@ INCLUDE_DIRECTORIES(${hypercube_DIRNAME_include})
   EXPORT
     sepVectorExports
   DESTINATION
-    ${sepVector_DIRNAME_include}
-    ${sepVector_DIRNAME_lib}
+   lib
   )
   
 add_subdirectory(lib)
