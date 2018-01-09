@@ -1,7 +1,7 @@
 From debian:latest
 MAINTAINER Bob Clapp <bob@sep.stanford.edu>
 RUN apt-get -y update &&\
-    apt-get -y  install g++ git make cmake gcc &&\
+    apt-get -y  install g++ swig git make cmake gcc libboost-all-dev  libboost-dev &&\
   apt-get -y clean
 RUN git clone http://zapad.Stanford.EDU/bob/hypercube.git   /opt/hypercube/src && \
     mkdir /opt/hypercube/build && \

@@ -2,25 +2,28 @@
 import sys
 import string
 import os
+import re
 import shutil
 from subprocess import Popen,PIPE
 
 def help():
-   print "build[build] - Directory to build project in"
-   print "basePrefix - Prefix  where all local packages are installed"
-   print "hypercube [basePrefix/hypercube]  - Where hypercube is installed"
-   print "sepVector [basePrefix/sepVector]  - Where to instal hypercube"
-   print "sepVector and hypercube must be defined "
-   print "Specify arguments on the command line in the form [basePrefix='/opt']"
-   print "\n Example \n"+sys.argv[0]+" basePrefix='/opt'"
+   print("build[build] - Directory to build project in")
+   print("basePrefix - Prefix  where all local packages are installed")
+   print("sepVector [basePrefix/sepVector]  - Where to instal sepVector")
+   print("hypercube  [basePrefix/hypercube]  - Where hypercube is installed")
+   print("defines=[arg=val,arg2=val2]")
+   print("Specify arguments on the command line in the form [basePrefix='/opt']")
+   print("hypercube,sepVector must be defined ")
+   print("\n Example \n"+sys.argv[0]+" basePrefix='/opt'")
 
 
 def buildArgs():
    args={}
+   m=re.compile("^(\w+)=(.+)$")
    for a in sys.argv[1:]:
-     b=a.split("=")
-     if len(b)==2:
-       args[b[0]]=b[1]
+     b=m.search(a)
+     if b:
+       args[b.group(1)]=b.group(2)
    return args
 
 def defaultArgs(required,args):
@@ -36,7 +39,7 @@ def checkArgs(required,args):
     if i not in args.keys(): 
       notDefined.append(i)
   if len(notDefined)> 0: 
-    print "The following parameters were not set "+string.join(notDefined)
+    print("The following parameters were not set "+".".join(notDefined))
     help()
     sys.exit(-1)
 
@@ -44,13 +47,13 @@ def runCommand(args,dir,fail):
    """
     Execute the external command and get its exitcode, stdout and stderr.
     """
-   print string.join(args)
    proc = Popen(args, stdout=PIPE, stderr=PIPE,cwd=dir)
    out, err = proc.communicate()
    exitcode = proc.returncode
    if exitcode!=0 and fail:
-      print "Command failed \n"+string.join(args)
-      print "\n Stdout\n"+out+"\nErr\n"+err
+      print("Command failed \n"+".".join(args))
+      print(out.decode())
+      print(err.decode())
       sys.exit(-1)
    
 
@@ -66,8 +69,25 @@ def build(args):
    if os.path.exists(args["sepVector"]):
        shutil.rmtree(args["sepVector"])
    runCommand(["mkdir","-p",args["build"]],cwd,True)
-   runCommand(["cmake","-DCMAKE_INSTALL_PREFIX=%s"%args["sepVector"],
-    "-Dhypercube_DIR=%s/lib"%args["hypercube"], parDir],args["build"],True)
+   x=["cmake","-DCMAKE_INSTALL_PREFIX=%s"%args["sepVector"],
+    "-Dhypercube_DIR=%s/lib"%args["hypercube"]]
+   if "defines" in args.keys():
+     y=re.compile("\[(.+)\]")
+     z=y.search(args["defines"])
+     if not z:
+        print (args["defines"])
+        print ("Trouble parsing defines")
+        sys.exit(-1)
+     m=z.group(1).split(",")
+     for d in m:
+       c=d.split("=")
+       if len(c)!=2:
+          print ("trouble parsing defines")
+          print (d)
+          sys.exit(-1)
+       x.append("-D%s=%s"%(c[0],c[1]))
+   x.append(parDir)
+   runCommand(x,args["build"],True)
    runCommand(["make"],args["build"],True)
    runCommand(["make","install"],args["build"],True)
 
