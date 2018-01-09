@@ -7,8 +7,11 @@ list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake")
 
 set(sepVector_MAJOR_VERSION 0)
 set(sepVector_MINOR_VERSION 1)
-set(genericIO_VERSION_STRING
+set(sepVector_VERSION_STRING
   ${sepVector_MAJOR_VERSION}.${sepVector_MINOR_VERSION})
+
+ SET(sepVector_DIRNAME_lib     "lib")
+ SET(sepVector_DIRNAME_include "include")
 
 
 
