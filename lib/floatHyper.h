@@ -2,7 +2,7 @@
 #include<hypercube.h>
 #include<cassert>
 #include<sstream>
-#include "vector.h"
+#include "Vector.h"
 namespace giee{
 class floatHyper: public Vector{
   protected:
