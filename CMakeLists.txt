@@ -72,5 +72,5 @@ INCLUDE_DIRECTORIES(${hypercube_DIRNAME_include})
   )
   
 add_subdirectory(lib)
-add_subdirectory(python)
+#add_subdirectory(python)
 add_subdirectory(env-modules)
