@@ -39,7 +39,7 @@ def checkArgs(required,args):
     if i not in args.keys(): 
       notDefined.append(i)
   if len(notDefined)> 0: 
-    print("The following parameters were not set "+".".join(notDefined))
+    print("The following parameters were not set "+" ".join(notDefined))
     help()
     sys.exit(-1)
 
@@ -51,7 +51,7 @@ def runCommand(args,dir,fail):
    out, err = proc.communicate()
    exitcode = proc.returncode
    if exitcode!=0 and fail:
-      print("Command failed \n"+".".join(args))
+      print("Command failed \n"+" ".join(args))
       print(out.decode())
       print(err.decode())
       sys.exit(-1)

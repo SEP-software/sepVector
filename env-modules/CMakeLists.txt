@@ -3,7 +3,7 @@ project(sepvector-env-modules)
 
 
 
-  set(min  "${CMAKE_CURRENT_SOURCE_DIR}/speVector.in")
+  set(min  "${CMAKE_CURRENT_SOURCE_DIR}/sepVector.in")
   set(mout "${CMAKE_CURRENT_BINARY_DIR}/sepVector")
   configure_file (${min} ${mout})
 

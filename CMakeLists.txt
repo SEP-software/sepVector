@@ -5,6 +5,8 @@ set(CMAKE_INCLUDE_CURRENT_DIR TRUE)
 # configure a header file to pass some of the CMake settings
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake")
 
+
+find_package(NumPy  REQUIRED)
 set(sepVector_MAJOR_VERSION 0)
 set(sepVector_MINOR_VERSION 1)
 set(sepVector_VERSION_STRING
@@ -70,5 +72,5 @@ INCLUDE_DIRECTORIES(${hypercube_DIRNAME_include})
   )
   
 add_subdirectory(lib)
-#add_subdirectory(python)
-#add_subdirectory(env-modules)
+add_subdirectory(python)
+add_subdirectory(env-modules)
