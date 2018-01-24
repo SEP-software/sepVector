@@ -6,10 +6,9 @@
 namespace giee {
 
 class floatHyper : public Vector {
- protected:
+ public:
   floatHyper() { ; }
 
- public:
   void setHyper(std::shared_ptr<SEP::hypercube> h) { _hyper = h; }
 
   bool getSpaceOnly() const { return _spaceOnly; }
