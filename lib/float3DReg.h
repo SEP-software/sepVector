@@ -41,6 +41,14 @@ class float3DReg : public floatHyper {
     std::shared_ptr<SEP::hypercube> hyp(new SEP::hypercube(a));
     initData(hyp, vals);
   }
+  void allocate() {
+    std::vector<int> ns = getHyper()->getNs();
+    _mat.reset(new float3D(boost::extents[ns[2]][ns[1]][ns[0]]));
+
+    std::cerr << "in allocate" << ns[0] << std::endl;
+    setData(_mat->data());
+    ;
+  }
   std::shared_ptr<Vector> clone() const;
   std::shared_ptr<Vector> cloneSpace() const;
   virtual void cleanMemory() {

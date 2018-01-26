@@ -1,9 +1,12 @@
+#include <pybind11/chrono.h>
+#include <pybind11/complex.h>
+#include <pybind11/functional.h>
 #include <pybind11/pybind11.h>
+#include <pybind11/stl.h>
 #include "float1DReg.h"
 #include "float2DReg.h"
 #include "float3DReg.h"
 #include "float4DReg.h"
-
 namespace py = pybind11;
 namespace giee {
 using namespace SEP;
@@ -28,8 +31,11 @@ PYBIND11_MODULE(pySepVector, clsVector) {
       .def("random",
            (void (floatHyper::*)(std::shared_ptr<Vector>)) & floatHyper::random,
            "Fill a vector with random number")
-      .def("setData", (void (floatHyper::*)(float *)) & floatHyper::setData,
+      .def("getData", (void (floatHyper::*)(float *)) & floatHyper::setData,
            "Set the data pointer")
+      .def("getVals", (float *(floatHyper::*)()) & floatHyper::getVals,
+           "Get the data pointer")
+
       .def("dot",
            (double (floatHyper::*)(std::shared_ptr<Vector>) const) &
                floatHyper::dot,
@@ -39,64 +45,104 @@ PYBIND11_MODULE(pySepVector, clsVector) {
                                  const bool checkAlloc) const) &
                floatHyper::checkSame,
            "Check to make sure the vectors exist in the same space")
-      .def("getHyper",
-           (std::shared_ptr<hypercube>(floatHyper::*)() const) &
-               floatHyper::getHyper,
-           "Return a hypercube describing the space");
 
-  py::class_<float1DReg, std::shared_ptr<float1DReg>>(clsVector, "float1DReg")
+      .def_property("_hyper", &floatHyper::getHyper, &floatHyper::setHyper,
+                    py::return_value_policy::reference)
+
+      .def_property("_vals", &floatHyper::getVals, &floatHyper::setData,
+                    py::return_value_policy::reference);
+  py::class_<float1DReg, floatHyper, std::shared_ptr<float1DReg>>(
+      clsVector, "float1DReg", py::buffer_protocol())
       .def(py::init<const int>(), "Initialize giving size")
       .def(py::init<const axis &>(), "Initialize from an axis")
+      .def(py::init<std::shared_ptr<hypercube>>(), "Initialize with hypercube")
+
       .def("clone",
            (std::shared_ptr<Vector>(float1DReg::*)() const) & float1DReg::clone,
            "Make a copy of the vector")
       .def("cloneSpace",
            (std::shared_ptr<Vector>(float1DReg::*)() const) &
                float1DReg::cloneSpace,
-           "Make a copy of the vector space");
-
-  py::class_<float2DReg, std::shared_ptr<float2DReg>>(clsVector, "float2DReg",
-                                                      py::buffer_protocol())
+           "Make a copy of the vector space")
+      .def_buffer([](float1DReg &m) -> py::buffer_info {
+        return py::buffer_info(m.getVals(), sizeof(float),
+                               py::format_descriptor<float>::format(), 1,
+                               {m.getHyper()->getAxis(1).n}, {sizeof(float)});
+      });
+  py::class_<float2DReg, floatHyper, std::shared_ptr<float2DReg>>(
+      clsVector, "float2DReg", py::buffer_protocol())
       .def(py::init<const int, const int>(), "Initialize giving size")
       .def(py::init<const axis &, const axis &>(), "Initialize from an axis")
+      .def(py::init<std::shared_ptr<hypercube>>(), "Initialize with hypercube")
       .def("clone",
            (std::shared_ptr<Vector>(float2DReg::*)() const) & float2DReg::clone,
            "Make a copy of the vector")
       .def("cloneSpace",
            (std::shared_ptr<Vector>(float2DReg::*)() const) &
-               float1DReg::cloneSpace,
+               float2DReg::cloneSpace,
            "Make a copy of the vector space")
       .def_buffer([](float2DReg &m) -> py::buffer_info {
         return py::buffer_info(
             m.getVals(), sizeof(float), py::format_descriptor<float>::format(),
             2, {m.getHyper()->getAxis(2).n, m.getHyper()->getAxis(1).n},
             {sizeof(float) * m.getHyper()->getAxis(1).n, sizeof(float)});
+
       });
 
-  py::class_<float3DReg, std::shared_ptr<float3DReg>>(clsVector, "float3DReg")
+  py::class_<float3DReg, floatHyper, std::shared_ptr<float3DReg>>(
+      clsVector, "float3DReg", py::buffer_protocol())
       .def(py::init<const int, const int, const int>(),
            "Initialize giving size")
+      .def(py::init<std::shared_ptr<hypercube>>(), "Initialize with hypercube")
       .def(py::init<const axis &, const axis &, const axis &>(),
            "Initialize from an axis")
+      .def("allocate", (void (float3DReg::*)()) & float3DReg::allocate,
+           "Allocate the array")
+
       .def("clone",
            (std::shared_ptr<Vector>(float3DReg::*)() const) & float3DReg::clone,
            "Make a copy of the vector")
       .def("cloneSpace",
            (std::shared_ptr<Vector>(float3DReg::*)() const) &
-               float1DReg::cloneSpace,
-           "Make a copy of the vector space");
+               float3DReg::cloneSpace,
+           "Make a copy of the vector space")
+      .def_buffer([](float3DReg &m) -> py::buffer_info {
+        return py::buffer_info(
+            m.getVals(), sizeof(float), py::format_descriptor<float>::format(),
+            3,
+            {m.getHyper()->getAxis(3).n, m.getHyper()->getAxis(2).n,
+             m.getHyper()->getAxis(1).n},
+            {sizeof(float) * m.getHyper()->getAxis(1).n *
+                 m.getHyper()->getAxis(2).n,
+             sizeof(float) * m.getHyper()->getAxis(1).n, sizeof(float)});
+      });
 
-  py::class_<float4DReg, std::shared_ptr<float4DReg>>(clsVector, "float4DReg")
+  py::class_<float4DReg, floatHyper, std::shared_ptr<float4DReg>>(
+      clsVector, "float4DReg", py::buffer_protocol())
       .def(py::init<const int, const int, const int, const int>(),
            "Initialize giving size")
       .def(py::init<const axis &, const axis &, const axis &, const axis &>(),
            "Initialize from an axis")
+      .def(py::init<std::shared_ptr<hypercube>>(), "Initialize with hypercube")
+
       .def("clone",
            (std::shared_ptr<Vector>(float4DReg::*)() const) & float4DReg::clone,
            "Make a copy of the vector")
       .def("cloneSpace",
            (std::shared_ptr<Vector>(float4DReg::*)() const) &
-               float1DReg::cloneSpace,
-           "Make a copy of the vector space");
+               float4DReg::cloneSpace,
+           "Make a copy of the vector space")
+      .def_buffer([](float4DReg &m) -> py::buffer_info {
+        return py::buffer_info(
+            m.getVals(), sizeof(float), py::format_descriptor<float>::format(),
+            4,
+            {m.getHyper()->getAxis(4).n, m.getHyper()->getAxis(3).n,
+             m.getHyper()->getAxis(2).n, m.getHyper()->getAxis(1).n},
+            {sizeof(float) * m.getHyper()->getAxis(1).n *
+                 m.getHyper()->getAxis(2).n * m.getHyper()->getAxis(3).n,
+             sizeof(float) * m.getHyper()->getAxis(1).n *
+                 m.getHyper()->getAxis(2).n,
+             sizeof(float) * m.getHyper()->getAxis(1).n, sizeof(float)});
+      });
 }
 }  // namespace giee
