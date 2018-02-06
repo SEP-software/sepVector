@@ -50,8 +50,15 @@ class float4DReg : public floatHyper {
     std::shared_ptr<SEP::hypercube> hyp(new SEP::hypercube(a));
     initData(hyp, vals);
   }
-  std::shared_ptr<Vector> clone() const;
-  std::shared_ptr<Vector> cloneSpace() const;
+  void allocate() {
+    std::vector<int> ns = getHyper()->getNs();
+    _mat.reset(new float4D(boost::extents[ns[3]][ns[2]][ns[1]][ns[0]]));
+
+    setData(_mat->data());
+    ;
+  }
+  std::shared_ptr<float4DReg> clone() const;
+  std::shared_ptr<float4DReg> cloneSpace() const;
   virtual void cleanMemory() {
     _mat = 0;
     setSpace();

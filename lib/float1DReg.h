@@ -1,5 +1,6 @@
 #pragma once
 #include <floatHyper.h>
+#include <iostream>
 #include "boost/multi_array.hpp"
 typedef boost::multi_array<float, 1> float1D;
 namespace giee {
@@ -29,13 +30,16 @@ class float1DReg : public floatHyper {
     std::shared_ptr<SEP::hypercube> hyp(new SEP::hypercube(as));
     initData(hyp, vals);
   }
+  void allocate() {
+    std::vector<int> ns = getHyper()->getNs();
+    _mat.reset(new float1D(boost::extents[ns[0]]));
 
-  std::shared_ptr<Vector> clone() const;
-  std::shared_ptr<Vector> cloneSpace() const;
-  virtual void cleanMemory() {
-    _mat = 0;
-    setSpace();
+    setData(_mat->data());
+    ;
   }
+  std::shared_ptr<float1DReg> clone() const;
+  std::shared_ptr<float1DReg> cloneSpace() const;
+  virtual void cleanMemory() { setSpace(); }
   std::shared_ptr<float1D> _mat;
 
  protected:

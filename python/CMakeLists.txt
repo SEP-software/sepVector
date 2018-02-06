@@ -13,12 +13,13 @@ include_directories(${PYTHON_INCLUDE_DIR})
 include_directories(${pybind11_INCLUDE_DIR})
 INCLUDE_DIRECTORIES(${PYTHON_INCLUDE_PATH})
 FIND_PACKAGE( Boost 1.40 COMPONENTS program_options unit_test_framework REQUIRED )
-INCLUDE_DIRECTORIES( ${Boost_INCLUDE_DIR} )
-INCLUDE_DIRECTORIES(${PYTHON_NUMPY_INCLUDE_DIR})
+
 
 pybind11_add_module(pySepVector MODULE pyVector.cpp)
 target_link_libraries(pySepVector PRIVATE  sepVector hypercube)
 install( TARGETS pySepVector DESTINATION lib/python)
+
+
 
 
 else(pybind11_FOUND)
