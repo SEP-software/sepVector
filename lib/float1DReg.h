@@ -6,6 +6,7 @@ typedef boost::multi_array<float, 1> float1D;
 namespace giee {
 class float1DReg : public floatHyper {
  public:
+  float1DReg() { ; }
   float1DReg(std::shared_ptr<SEP::hypercube> hyper) { initNoData(hyper); }
   float1DReg(const int n) {
     std::vector<SEP::axis> a(1, SEP::axis(n));

@@ -9,8 +9,8 @@ from subprocess import Popen,PIPE
 def help():
    print("build[build] - Directory to build project in")
    print("basePrefix - Prefix  where all local packages are installed")
-   print("sepVector [basePrefix/sepVector]  - Where to instal sepVector")
-   print("hypercube  [basePrefix/hypercube]  - Where hypercube is installed")
+   print("sepVector [basePrefixor]  - Where to instal sepVector")
+   print("hypercube  [basePrefix]  - Where hypercube is installed")
    print("defines=[arg=val,arg2=val2]")
    print("Specify arguments on the command line in the form [basePrefix='/opt']")
    print("hypercube,sepVector must be defined ")
@@ -30,7 +30,7 @@ def defaultArgs(required,args):
   if "basePrefix" in args.keys():
      for m in required:
        if m not in args.keys():
-         args[m]=args["basePrefix"]+"/"+m
+         args[m]=args["basePrefix"]
   return args
 
 def checkArgs(required,args):

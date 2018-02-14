@@ -18,7 +18,7 @@ FIND_PACKAGE( Boost 1.40 COMPONENTS program_options unit_test_framework REQUIRED
 pybind11_add_module(pySepVector MODULE pyVector.cpp)
 target_link_libraries(pySepVector PRIVATE  sepVector hypercube)
 install( TARGETS pySepVector DESTINATION lib/python)
-
+install(FILES SepVector.py DESTINATION lib/python)
 
 
 

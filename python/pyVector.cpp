@@ -25,21 +25,28 @@ PYBIND11_MODULE(pySepVector, clsVector) {
            "Set the data pointer")
       .def("getVals", (float *(floatHyper::*)()) & floatHyper::getVals,
            "Get the data pointer")
+      .def("getHyper",
+           (std::shared_ptr<hypercube>(floatHyper::*)()) & floatHyper::getHyper,
+           "Get the hypercube")
       .def_property("_hyper", &floatHyper::getHyper, &floatHyper::setHyper,
                     py::return_value_policy::reference)
 
       .def_property("_vals", &floatHyper::getVals, &floatHyper::setData,
                     py::return_value_policy::reference)
+
+      .def("createMask",
+           (void (floatHyper::*)(const float, const float)) &
+               floatHyper::createMask,
+           "Create a mask weight")
       .def(
           "add",
           (void (floatHyper::*)(std::shared_ptr<floatHyper>)) & floatHyper::add,
           "Add two vectors")
-      .def("scale",
-           (void (floatHyper::*)(const double val)) & floatHyper::scale,
+      .def("scale", (void (floatHyper::*)(const double)) & floatHyper::scale,
            "Scale a vector")
       .def("scaleAdd",
-           (void (floatHyper::*)(const double sc1, std::shared_ptr<floatHyper>,
-                                 const double sc2)) &
+           (void (floatHyper::*)(const double, std::shared_ptr<floatHyper>,
+                                 const double)) &
                floatHyper::scaleAdd,
            "vec=vec*sc1+vec2*sc2")
       .def("random", (void (floatHyper::*)()) & floatHyper::random,
@@ -49,8 +56,7 @@ PYBIND11_MODULE(pySepVector, clsVector) {
                floatHyper::dot,
            "Calculate dot product")
       .def("checkSame",
-           (bool (floatHyper::*)(const std::shared_ptr<floatHyper>,
-                                 const bool checkAlloc) const) &
+           (bool (floatHyper::*)(const std::shared_ptr<floatHyper>) const) &
                floatHyper::checkSame,
            "Check to make sure the vectors exist in the same space");
 
@@ -70,6 +76,7 @@ PYBIND11_MODULE(pySepVector, clsVector) {
            "Make a copy of the vector space")
       .def("allocate", (void (float1DReg::*)()) & float1DReg::allocate,
            "Allocate the array")
+
       .def_buffer([](float1DReg &m) -> py::buffer_info {
         return py::buffer_info(m.getVals(), sizeof(float),
                                py::format_descriptor<float>::format(), 1,
@@ -90,6 +97,7 @@ PYBIND11_MODULE(pySepVector, clsVector) {
            "Make a copy of the vector space")
       .def("allocate", (void (float2DReg::*)()) & float2DReg::allocate,
            "Allocate the array")
+
       .def_buffer([](float2DReg &m) -> py::buffer_info {
         return py::buffer_info(
             m.getVals(), sizeof(float), py::format_descriptor<float>::format(),
@@ -107,7 +115,6 @@ PYBIND11_MODULE(pySepVector, clsVector) {
            "Initialize from an axis")
       .def("allocate", (void (float3DReg::*)()) & float3DReg::allocate,
            "Allocate the array")
-
       .def("clone",
            (std::shared_ptr<float3DReg>(float3DReg::*)() const) &
                float3DReg::clone,

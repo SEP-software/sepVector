@@ -18,6 +18,7 @@ class floatHyper : public Vector {
                         const double sc2);
   virtual void random();
   virtual double dot(std::shared_ptr<floatHyper> vec2) const;
+  void createMask(const float zero, const float err);
   void setData(float *ptr) {
     _vals = ptr;
     setNotSpace();
@@ -29,8 +30,7 @@ class floatHyper : public Vector {
   float min() const;
   virtual void infoStream(const int lev, std::stringstream &x);
   std::shared_ptr<SEP::hypercube> getHyper() const { return _hyper; }
-  virtual bool checkSame(const std::shared_ptr<giee::floatHyper> vec2,
-                         const bool checkAlloc = false) const;
+  virtual bool checkSame(const std::shared_ptr<giee::floatHyper> vec2) const;
   virtual void calcCheckSum();
 
  private:

@@ -4,7 +4,7 @@
 using namespace giee;
 
 void floatHyper::add(const std::shared_ptr<floatHyper> vec2) {
-  assert(checkSame(vec2, true));
+  assert(checkSame(vec2));
   std::shared_ptr<floatHyper> vec2H =
       std::dynamic_pointer_cast<floatHyper>(vec2);
 
@@ -12,7 +12,7 @@ void floatHyper::add(const std::shared_ptr<floatHyper> vec2) {
 }
 void floatHyper::scaleAdd(const double sc1, std::shared_ptr<floatHyper> vec2,
                           const double sc2) {
-  assert(checkSame(vec2, true));
+  assert(checkSame(vec2));
   std::shared_ptr<floatHyper> vec2H =
       std::dynamic_pointer_cast<floatHyper>(vec2);
 
@@ -30,20 +30,27 @@ void floatHyper::random() {
     _vals[i] = ((double)rand() / (RAND_MAX)) - .5;
 }
 double floatHyper::dot(const std::shared_ptr<floatHyper> vec2) const {
-  assert(checkSame(vec2, true));
-  std::cerr << "dot 1" << std::endl;
+  assert(checkSame(vec2));
   std::shared_ptr<floatHyper> vec2H =
       std::dynamic_pointer_cast<floatHyper>(vec2);
-  std::cerr << "dot 1" << std::endl;
 
   double dt = 0.;
   for (long long i = 0; i < _hyper->getN123(); i++) {
     dt += (double)_vals[i] * (double)vec2H->_vals[i];
   }
-  std::cerr << "dot 3 =" << dt << std::endl;
 
   return dt;
 }
+void floatHyper::createMask(const float zero, const float err) {
+  for (long long i = 0; i < _hyper->getN123(); i++) {
+    if (fabs(_vals[i] - zero) > err)
+
+      _vals[i] = 0.;
+    else
+      _vals[i] = 1;
+  }
+}
+
 void floatHyper::infoStream(const int lev, std::stringstream &x) {
   _hyper->infoStream(x);
   if (spaceOnly())
@@ -85,17 +92,10 @@ void floatHyper::calcCheckSum() {
   setCheckSum(sum2 * 2 ^ 32 + sum1);
 }
 
-bool floatHyper::checkSame(const std::shared_ptr<floatHyper> vec2,
-                           bool checkAlloc) const {
+bool floatHyper::checkSame(const std::shared_ptr<floatHyper> vec2) const{
   if (!vec2) {
     std::cerr << "Not the same type" << std::endl;
     return false;
-  }
-  if (checkAlloc) {
-    if (vec2->spaceOnly()) {
-      std::cerr << "vec2 is not allocated" << std::endl;
-      return false;
-    }
   }
   if (_hyper == vec2->getHyper()) return true;
   std::cerr << "Not from the same Hypercube" << std::endl;

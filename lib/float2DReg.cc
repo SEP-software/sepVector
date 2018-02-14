@@ -6,7 +6,6 @@ std::shared_ptr<float2DReg> float2DReg::clone() const {
     std::shared_ptr<float2DReg> x(new float2DReg(getHyper()));
     return x;
   } else {
-    std::cerr << "cloning with data" << std::endl;
     std::shared_ptr<float2DReg> x(new float2DReg(getHyper(), *_mat));
     return x;
   }
@@ -21,7 +20,6 @@ std::shared_ptr<float2DReg> float2DReg::cloneSpace() const {
 void float2DReg::initNoData(std::shared_ptr<SEP::hypercube> hyp) {
   const std::vector<SEP::axis> axes = hyp->getAxes();
   setHyper(hyp);
-  _vecType = "float2d";
 
   assert(axes.size() == 2);
 
