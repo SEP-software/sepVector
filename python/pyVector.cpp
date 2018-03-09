@@ -28,6 +28,10 @@ PYBIND11_MODULE(pySepVector, clsVector) {
       .def("getHyper",
            (std::shared_ptr<hypercube>(floatHyper::*)()) & floatHyper::getHyper,
            "Get the hypercube")
+      .def("isDifferent",
+           (bool (floatHyper::*)(std::shared_ptr<floatHyper>)) &
+               floatHyper::isDifferent,
+           "Check to  see if two vectors are different")
       .def_property("_hyper", &floatHyper::getHyper, &floatHyper::setHyper,
                     py::return_value_policy::reference)
 
@@ -49,6 +53,14 @@ PYBIND11_MODULE(pySepVector, clsVector) {
                                  const double)) &
                floatHyper::scaleAdd,
            "vec=vec*sc1+vec2*sc2")
+      .def("L1Obj", (double (floatHyper::*)() const) & floatHyper::L1Obj,
+           "Calculate L1 norm of a vector")
+      .def("L2Obj", (double (floatHyper::*)() const) & floatHyper::L2Obj,
+           "Calculate L2 norm of a vector")
+      .def("calcNorm", (double (floatHyper::*)() const) & floatHyper::calcNorm,
+           "Calculate norm to use for vector")
+      .def("setNorm", (void (floatHyper::*)(std::string)) & floatHyper::setNorm,
+           "Set the norm to use for vector")
       .def("random", (void (floatHyper::*)()) & floatHyper::random,
            "Fill a vector with random number")
       .def("dot",

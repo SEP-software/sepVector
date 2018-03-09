@@ -1,5 +1,6 @@
 #pragma once
 #include <floatHyper.h>
+#include <cstdint>
 #include <iostream>
 #include "boost/multi_array.hpp"
 typedef boost::multi_array<float, 1> float1D;
@@ -45,6 +46,7 @@ class float1DReg : public floatHyper {
 
  protected:
   void initNoData(std::shared_ptr<SEP::hypercube> hyp);
+  //  void initData(std::shared_ptr<SEP::hypercube> hyp, const float *vals);
   void initData(std::shared_ptr<SEP::hypercube> hyp, const float1D &vals);
 };
 
