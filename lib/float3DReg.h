@@ -5,6 +5,7 @@ typedef boost::multi_array<float, 3> float3D;
 namespace SEP {
 class float3DReg : public floatHyper {
  public:
+  float3DReg() { ; }
   float3DReg(std::shared_ptr<SEP::hypercube> hyper) { initNoData(hyper); }
   float3DReg(const int n1, const int n2, const int n3) {
     std::vector<SEP::axis> a;
@@ -58,6 +59,9 @@ class float3DReg : public floatHyper {
 
  protected:
   void initNoData(std::shared_ptr<SEP::hypercube> hyp);
+  void initData(std::shared_ptr<SEP::hypercube> hyp,
+                std::shared_ptr<float3D> vals);
+
   void initData(std::shared_ptr<SEP::hypercube> hyp, const float3D &vals);
 };
 }  // namespace SEP
