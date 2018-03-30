@@ -1,5 +1,5 @@
 #include <float2DReg.h>
-using namespace giee;
+using namespace SEP;
 
 std::shared_ptr<float2DReg> float2DReg::clone() const {
   if (getSpaceOnly()) {
@@ -9,11 +9,8 @@ std::shared_ptr<float2DReg> float2DReg::clone() const {
 
     return x;
   } else {
-    std::cerr<<"in else"<<std::endl;
     std::shared_ptr<float2DReg> x(new float2DReg(getHyper(), *_mat));
-    std::cerr<<"in else"<<std::endl;
     x->setNorm(getNorm());
-    std::cerr<<"in else"<<std::endl;
 
     return x;
   }

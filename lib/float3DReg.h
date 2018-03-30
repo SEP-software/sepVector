@@ -2,7 +2,7 @@
 #include <floatHyper.h>
 #include "boost/multi_array.hpp"
 typedef boost::multi_array<float, 3> float3D;
-namespace giee {
+namespace SEP {
 class float3DReg : public floatHyper {
  public:
   float3DReg(std::shared_ptr<SEP::hypercube> hyper) { initNoData(hyper); }
@@ -45,7 +45,6 @@ class float3DReg : public floatHyper {
     std::vector<int> ns = getHyper()->getNs();
     _mat.reset(new float3D(boost::extents[ns[2]][ns[1]][ns[0]]));
 
-    std::cerr << "in allocate" << ns[0] << std::endl;
     setData(_mat->data());
     ;
   }
@@ -57,8 +56,8 @@ class float3DReg : public floatHyper {
   }
   std::shared_ptr<float3D> _mat;
 
- private:
+ protected:
   void initNoData(std::shared_ptr<SEP::hypercube> hyp);
   void initData(std::shared_ptr<SEP::hypercube> hyp, const float3D &vals);
 };
-}  // namespace giee
+}  // namespace SEP

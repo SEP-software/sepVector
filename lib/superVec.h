@@ -1,8 +1,8 @@
 #pragma once
 #include <Vector.h>
-namespace giee {
+namespace SEP {
 template <class V1, class V2>
-class superVec : public giee::Vector {
+class superVec : public SEP::Vector {
  public:
   superVec(std::shared_ptr<V1> vec1, std::shared_ptr<V2> vec2) {
     _v1 = vec1->clone();
@@ -87,4 +87,4 @@ class superVec : public giee::Vector {
   std::shared_ptr<V1> _v1;
   std::shared_ptr<V2> _v2;
 };
-}  // namespace giee
+}  // namespace SEP

@@ -2,7 +2,7 @@
 #include <cassert>
 #include <cmath>
 #include <iostream>
-using namespace giee;
+using namespace SEP;
 superVec::superVec(std::shared_ptr<Vector> vec1, std::shared_ptr<Vector> vec2) {
   _v1 = vec1->clone();
   _v2 = vec2->clone();

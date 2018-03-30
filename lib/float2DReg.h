@@ -2,7 +2,7 @@
 #include <floatHyper.h>
 #include "boost/multi_array.hpp"
 typedef boost::multi_array<float, 2> float2D;
-namespace giee {
+namespace SEP {
 class float2DReg : public floatHyper {
  public:
   float2DReg(std::shared_ptr<SEP::hypercube> hyper) { initNoData(hyper); }
@@ -53,4 +53,4 @@ class float2DReg : public floatHyper {
   void initNoData(std::shared_ptr<SEP::hypercube> hyp);
   void initData(std::shared_ptr<SEP::hypercube> hyp, const float2D &vals);
 };
-}  // namespace giee
+}  // namespace SEP

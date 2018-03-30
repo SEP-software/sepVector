@@ -3,7 +3,7 @@
 #include <cstdint>
 #include <memory>
 #include <sstream>
-namespace giee {
+namespace SEP {
 class Vector {
  public:
   Vector() : _spaceOnly(false), _vecType(std::string("base")) { ; }
@@ -41,4 +41,4 @@ class Vector {
   uint64_t _checkSum;
 };
 
-}  // namespace giee
+}  // namespace SEP

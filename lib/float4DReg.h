@@ -4,7 +4,7 @@
 #include <floatHyper.h>
 
 typedef boost::multi_array<float, 4> float4D;
-namespace giee {
+namespace SEP {
 class float4DReg : public floatHyper {
  public:
   float4DReg(std::shared_ptr<SEP::hypercube> hyper) { initNoData(hyper); }
@@ -69,4 +69,4 @@ class float4DReg : public floatHyper {
   void initNoData(std::shared_ptr<SEP::hypercube> hyp);
   void initData(std::shared_ptr<SEP::hypercube> hyp, const float4D &vals);
 };
-}  // namespace giee
+}  // namespace SEP

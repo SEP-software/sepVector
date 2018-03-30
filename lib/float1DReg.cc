@@ -1,5 +1,5 @@
 #include <float1DReg.h>
-using namespace giee;
+using namespace SEP;
 std::shared_ptr<float1DReg> float1DReg::clone() const {
   if (getSpaceOnly()) {
     std::shared_ptr<float1DReg> x(new float1DReg(getHyper()));

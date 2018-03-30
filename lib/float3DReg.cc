@@ -1,5 +1,5 @@
 #include <float3DReg.h>
-using namespace giee;
+using namespace SEP;
 
 std::shared_ptr<float3DReg> float3DReg::clone() const {
   if (getSpaceOnly()) {

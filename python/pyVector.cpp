@@ -8,7 +8,7 @@
 #include "float3DReg.h"
 #include "float4DReg.h"
 namespace py = pybind11;
-namespace giee {
+namespace SEP {
 using namespace SEP;
 
 PYBIND11_MODULE(pySepVector, clsVector) {
@@ -21,6 +21,8 @@ PYBIND11_MODULE(pySepVector, clsVector) {
       .def("getSpaceOnly", (bool (floatHyper::*)()) & floatHyper::getSpaceOnly,
            "Check to see if this only a description of the vector space")
 
+      .def("getNorm", (std::string (floatHyper::*)()) & floatHyper::getNorm,
+           "Get the current norm of a vector")
       .def("setData", (void (floatHyper::*)(float *)) & floatHyper::setData,
            "Set the data pointer")
       .def("getVals", (float *(floatHyper::*)()) & floatHyper::getVals,
@@ -53,6 +55,9 @@ PYBIND11_MODULE(pySepVector, clsVector) {
                                  const double)) &
                floatHyper::scaleAdd,
            "vec=vec*sc1+vec2*sc2")
+      .def("calcCheckSum",
+           (double (floatHyper::*)() const) & floatHyper::calcCheckSum,
+           "Calculate checksum of a vector")
       .def("L1Obj", (double (floatHyper::*)() const) & floatHyper::L1Obj,
            "Calculate L1 norm of a vector")
       .def("L2Obj", (double (floatHyper::*)() const) & floatHyper::L2Obj,
@@ -61,6 +66,8 @@ PYBIND11_MODULE(pySepVector, clsVector) {
            "Calculate norm to use for vector")
       .def("setNorm", (void (floatHyper::*)(std::string)) & floatHyper::setNorm,
            "Set the norm to use for vector")
+      .def("signum", (void (floatHyper::*)()) & floatHyper::signum,
+           "Fill a vector with it's signum")
       .def("random", (void (floatHyper::*)()) & floatHyper::random,
            "Fill a vector with random number")
       .def("dot",
@@ -176,4 +183,4 @@ PYBIND11_MODULE(pySepVector, clsVector) {
              sizeof(float) * m.getHyper()->getAxis(1).n, sizeof(float)});
       });
 }
-}  // namespace giee
+}  // namespace SEP

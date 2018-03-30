@@ -1,6 +1,6 @@
 #include <float4DReg.h>
 
-using namespace giee;
+using namespace SEP;
 
 std::shared_ptr<float4DReg> float4DReg::clone() const {
   if (getSpaceOnly()) {

@@ -1,5 +1,5 @@
 #include<Vector.h>
-using namespace giee;
+using namespace SEP;
 std::string Vector::info(const std::string & nm, const int lev){
  
  std::stringstream ss;ss<<nm<<std::endl;

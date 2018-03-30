@@ -2,7 +2,7 @@
 #include <hypercube.h>
 #include<iostream>
 #include <random>
-using namespace giee;
+using namespace SEP;
 
 void floatHyper::add(const std::shared_ptr<floatHyper> vec2) {
   assert(checkSame(vec2));
@@ -22,6 +22,15 @@ void floatHyper::scaleAdd(const double sc1, std::shared_ptr<floatHyper> vec2,
     _vals[i] = _vals[i] * sc1 + sc2 * vec2H->_vals[i];
   calcCheckSum();
 }
+void floatHyper::signum() {
+  assert(!spaceOnly());
+  for (long long i = 0; i < _hyper->getN123(); i++) {
+    if(_vals[i]>1e-20) _vals[i]=1;
+    else if(_vals[i]<-1e-20) _vals[i]=-1;
+    else _vals[i]=0;
+  }
+  calcCheckSum();
+}
 void floatHyper::scale(double sc) {
   assert(!spaceOnly());
   for (long long i = 0; i < _hyper->getN123(); i++) _vals[i] = _vals[i] * sc;
@@ -35,12 +44,14 @@ void floatHyper::random() {
 }
 double floatHyper::L2Obj() const {
   double x = 0;
+  std::cerr<<"running l2 norm"<<std::endl;
   for (long long i = 0; i < _hyper->getN123(); i++) {
     x += _vals[i] * _vals[i];
   }
   return x;
 }
 double floatHyper::L1Obj() const {
+  std::cerr<<"running l1 norm"<<std::endl;
   double x = 0;
   for (long long i = 0; i < _hyper->getN123(); i++) {
     x += fabs(_vals[i]);

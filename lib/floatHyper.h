@@ -4,7 +4,7 @@
 #include <cstdint>
 #include <sstream>
 #include "Vector.h"
-namespace giee {
+namespace SEP {
 
 class floatHyper : public Vector {
  public:
@@ -18,6 +18,7 @@ class floatHyper : public Vector {
   virtual void scaleAdd(const double sc1, std::shared_ptr<floatHyper> vec2,
                         const double sc2);
   virtual void random();
+  virtual void signum();
   virtual double dot(std::shared_ptr<floatHyper> vec2) const;
   void createMask(const float zero, const float err);
   void setData(float *ptr) {
@@ -27,25 +28,24 @@ class floatHyper : public Vector {
   void calcCheckSum();
   void setCheckSum(const uint64_t x) { _checkSum = x; }
   bool isDifferent(std::shared_ptr<floatHyper> vec2) {
+    calcCheckSum();
     if (vec2->getCheckSum() != getCheckSum()) return true;
     return false;
   }
   void setNorm(std::string nrm) {
-    if (nrm == std::string("L2")){
+    if (nrm == std::string("L2")) {
       this->norm = nrm;
-return;
-} 
-    else if (nrm == std::string("L1")){
+      return;
+    } else if (nrm == std::string("L1")) {
       this->norm = nrm;
-return;
-}
+      return;
+    }
     assert(1 == 2);
   }
-  std::string getNorm() const { 
-     if(this->norm==std::string("")) return "L2";
-      return this->norm; 
-
-}
+  std::string getNorm() const {
+    if (this->norm == std::string("")) return "L2";
+    return this->norm;
+  }
   double calcNorm() const {
     if (this->norm == std::string("L2"))
       return this->L2Obj();
@@ -62,7 +62,7 @@ return;
   float min() const;
   virtual void infoStream(const int lev, std::stringstream &x);
   std::shared_ptr<SEP::hypercube> getHyper() const { return _hyper; }
-  virtual bool checkSame(const std::shared_ptr<giee::floatHyper> vec2) const;
+  virtual bool checkSame(const std::shared_ptr<SEP::floatHyper> vec2) const;
   uint64_t getCheckSum() { return _checkSum; }
 
  private:
@@ -72,4 +72,4 @@ return;
   std::string norm;
 };
 
-}  // namespace giee
+}  // namespace SEP
