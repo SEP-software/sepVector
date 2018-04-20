@@ -106,10 +106,16 @@ float floatHyper::absMax() const {
     val = std::max(val, fabsf(_vals[i]));
   return val;
 }
+float floatHyper::max() const {
+  float val = fabsf(_vals[0]);
+  for (int i = 1; i < _hyper->getN123(); i++)
+    val = std::max(val, _vals[i]);
+  return val;
+}
 float floatHyper::min() const {
   float val = fabsf(_vals[0]);
   for (int i = 1; i < _hyper->getN123(); i++)
-    val = std::min(val, fabsf(_vals[i]));
+    val = std::min(val, _vals[i]);
   return val;
 }
 void floatHyper::calcCheckSum() {

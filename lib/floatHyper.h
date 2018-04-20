@@ -60,6 +60,7 @@ class floatHyper : public Vector {
   virtual void softClip(const float val);
   virtual float absMax() const;
   float min() const;
+  float max() const;
   virtual void infoStream(const int lev, std::stringstream &x);
   std::shared_ptr<SEP::hypercube> getHyper() const { return _hyper; }
   virtual bool checkSame(const std::shared_ptr<SEP::floatHyper> vec2) const;
