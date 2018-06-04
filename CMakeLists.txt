@@ -15,7 +15,13 @@ set(sepVector_VERSION_STRING
  SET(sepVector_DIRNAME_lib     "lib")
  SET(sepVector_DIRNAME_include "include")
 
-
+include(${CMAKE_ROOT}/Modules/ExternalProject.cmake)
+ExternalProject_Add (
+       HYPERCUBE
+       CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX}
+      GIT_REPOSITORY "git@zapad.Stanford.EDU:bob/hypercube.git"
+      GIT_TAG "271ab2be3b446a42e3d3d71af89f92d2cd44c78f"
+     )
 
 
 # add the binary tree to the search path for include files
