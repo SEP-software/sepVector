@@ -16,12 +16,28 @@ set(sepVector_VERSION_STRING
  SET(sepVector_DIRNAME_include "include")
 
 include(${CMAKE_ROOT}/Modules/ExternalProject.cmake)
-ExternalProject_Add (
-       HYPERCUBE
-       CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX}
-      GIT_REPOSITORY "git@zapad.Stanford.EDU:bob/hypercube.git"
-      GIT_TAG "271ab2be3b446a42e3d3d71af89f92d2cd44c78f"
-     )
+
+FIND_PACKAGE(hypercube)
+if(hypercube_FOUND)
+  message("Found hypercube")
+  INCLUDE_DIRECTORIES(${hypercube_DIRNAME_include})
+  
+else(hypercube_FOUND)
+   message("Unable to find hypercube")
+
+    # we have a submodule setup for foo, assume it is under external/foo
+    # now we need to clone this submodule
+    execute_process(COMMAND git submodule update --init -- external/hypercube
+                    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
+    message("before add subdirectory")
+    add_subdirectory(external/hypercube)
+    INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/external/hypercube/lib)
+
+    message("after add subdirectory")
+endif(hypercube_FOUND)
+
+
+
 
 
 # add the binary tree to the search path for include files
@@ -42,8 +58,6 @@ endif()
 enable_language(C CXX)
 
 
-FIND_PACKAGE(hypercube NO_MODULE REQUIRED)
-INCLUDE_DIRECTORIES(${hypercube_DIRNAME_include})
 
 
 
