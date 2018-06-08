@@ -1,3 +1,3 @@
 [submodule "external/hypercube"]
 	path = external/hypercube
-	url = git@zapad.Stanford.EDU:bob/hypercube.git
+	url = http://zapad.Stanford.EDU/bob/hypercube.git

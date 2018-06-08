@@ -8,7 +8,7 @@ list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake")
 
 find_package(NumPy  REQUIRED)
 set(sepVector_MAJOR_VERSION 0)
-set(sepVector_MINOR_VERSION 1)
+set(sepVector_MINOR_VERSION 2)
 set(sepVector_VERSION_STRING
   ${sepVector_MAJOR_VERSION}.${sepVector_MINOR_VERSION})
 
@@ -27,13 +27,12 @@ else(hypercube_FOUND)
 
     # we have a submodule setup for foo, assume it is under external/foo
     # now we need to clone this submodule
-    execute_process(COMMAND git submodule update --init -- external/hypercube
+    execute_process(COMMAND git submodule update --init --recursive -- external/hypercube
                     WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
     message("before add subdirectory")
     add_subdirectory(external/hypercube)
     INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/external/hypercube/lib)
 
-    message("after add subdirectory")
 endif(hypercube_FOUND)
 
 
@@ -94,3 +93,13 @@ enable_language(C CXX)
 add_subdirectory(lib)
 add_subdirectory(python)
 add_subdirectory(env-modules)
+
+include(InstallRequiredSystemLibraries)
+set(CPACK_RESOURCE_FILE_LICENSE "${PROJECT_SOURCE_DIR}/LICENSE")
+set(CPACK_PACKAGE_VERSION_MAJOR "${sepVector_MAJOR_VERSION}")
+set(CPACK_PACKAGE_VERSION_MINOR "${sepVector_MINOR_VERSION}")
+set(CPACK_PACKAGE_VERSION_PATCH "0")
+set(CPACK_PACKAGE_NAME "sepVector")
+set(CPACK_PACKAGE_CONTACT "Robert Clapp")
+include(CPack)
+
