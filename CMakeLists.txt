@@ -69,7 +69,7 @@ enable_language(C CXX)
   "${CMAKE_CURRENT_SOURCE_DIR}/sepVectorConfig.cmake.in"
   "${CMAKE_CURRENT_BINARY_DIR}/sepVectorConfig.cmake"
   INSTALL_DESTINATION
-    ${sepVector_DIRNAME_lib}
+    ${sepVector_DIRNAME_cmake}
   PATH_VARS
     sepVector_DIRNAME_include
     sepVector_DIRNAME_lib
