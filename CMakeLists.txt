@@ -63,6 +63,7 @@ enable_language(C CXX)
 
  SET(sepVector_DIRNAME_lib     "lib")
  SET(sepVector_DIRNAME_include "include")
+ SET(sepVector_DIRNAME_cmake "cmake")
   INCLUDE(CMakePackageConfigHelpers)
 
   CONFIGURE_PACKAGE_CONFIG_FILE(
