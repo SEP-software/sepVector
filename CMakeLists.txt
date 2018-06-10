@@ -21,7 +21,7 @@ FIND_PACKAGE(hypercube)
 if(hypercube_FOUND)
   message("Found hypercube")
   INCLUDE_DIRECTORIES(${hypercube_DIRNAME_include})
-  
+  link_directories(hypercube_DIRNAME_lib)
 else(hypercube_FOUND)
    message("Unable to find hypercube")
 
