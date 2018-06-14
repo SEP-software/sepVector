@@ -80,7 +80,7 @@ enable_language(C CXX)
   FILES
     ${CMAKE_CURRENT_BINARY_DIR}/sepVectorConfig.cmake
   DESTINATION
-    lib
+    cmake
   )
 
 
@@ -88,7 +88,7 @@ enable_language(C CXX)
   EXPORT
     sepVectorExports
   DESTINATION
-   lib
+   cmake
   )
   
 add_subdirectory(lib)
