@@ -12,7 +12,7 @@ MESSAGE("found pybind")
 include_directories(${PYTHON_INCLUDE_DIR})
 include_directories(${pybind11_INCLUDE_DIR})
 INCLUDE_DIRECTORIES(${PYTHON_INCLUDE_PATH})
-FIND_PACKAGE( Boost 1.40 COMPONENTS program_options unit_test_framework REQUIRED )
+FIND_PACKAGE( Boost 1.40  REQUIRED )
 
 
 pybind11_add_module(pySepVector MODULE pyVector.cpp)
