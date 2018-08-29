@@ -18,13 +18,13 @@ set(sepVector_VERSION_STRING
 
 include(${CMAKE_ROOT}/Modules/ExternalProject.cmake)
 
-FIND_PACKAGE(hypercube)
-if(hypercube_FOUND)
-  message("Found hypercube")
-  INCLUDE_DIRECTORIES(${hypercube_DIRNAME_include})
-  link_directories(hypercube_DIRNAME_lib)
-else(hypercube_FOUND)
-   message("Unable to find hypercube")
+#FIND_PACKAGE(hypercube)
+#if(hypercube_FOUND)
+#  message("Found hypercube")
+#  INCLUDE_DIRECTORIES(${hypercube_DIRNAME_include})
+#  link_directories(hypercube_DIRNAME_lib)
+#else(hypercube_FOUND)
+#   message("Unable to find hypercube")
 
     # we have a submodule setup for foo, assume it is under external/foo
     # now we need to clone this submodule
@@ -33,10 +33,7 @@ else(hypercube_FOUND)
     message("before add subdirectory")
     add_subdirectory(external/hypercube)
     INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/external/hypercube/lib)
-
-endif(hypercube_FOUND)
-
-
+#endif(hypercube_FOUND)
 
 
 

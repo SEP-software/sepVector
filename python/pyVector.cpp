@@ -21,8 +21,7 @@ PYBIND11_MODULE(pySepVector, clsVector) {
       .def("getSpaceOnly", (bool (floatHyper::*)()) & floatHyper::getSpaceOnly,
            "Check to see if this only a description of the vector space")
 
-      .def("getNorm", (std::string (floatHyper::*)()) & floatHyper::getNorm,
-           "Get the current norm of a vector")
+    
       .def("setData", (void (floatHyper::*)(float *)) & floatHyper::setData,
            "Set the data pointer")
       .def("getVals", (float *(floatHyper::*)()) & floatHyper::getVals,
@@ -50,26 +49,31 @@ PYBIND11_MODULE(pySepVector, clsVector) {
           "Add two vectors")
       .def("scale", (void (floatHyper::*)(const double)) & floatHyper::scale,
            "Scale a vector")
+       
       .def("scaleAdd",
-           (void (floatHyper::*)(const double, std::shared_ptr<floatHyper>,
+           (void (floatHyper::*)( std::shared_ptr<floatHyper>,const double,
                                  const double)) &
                floatHyper::scaleAdd,
            "vec=vec*sc1+vec2*sc2")
       .def("calcCheckSum",
            (double (floatHyper::*)() const) & floatHyper::calcCheckSum,
            "Calculate checksum of a vector")
-      .def("L1Obj", (double (floatHyper::*)() const) & floatHyper::L1Obj,
-           "Calculate L1 norm of a vector")
-      .def("L2Obj", (double (floatHyper::*)() const) & floatHyper::L2Obj,
-           "Calculate L2 norm of a vector")
-      .def("calcNorm", (double (floatHyper::*)() const) & floatHyper::calcNorm,
-           "Calculate norm to use for vector")
-      .def("setNorm", (void (floatHyper::*)(std::string)) & floatHyper::setNorm,
-           "Set the norm to use for vector")
+      
+          .def("norm", (double (floatHyper::*)(const int n) const) & floatHyper::norm,
+           "Calculate n-norm of a vector")
+      .def("zero",(void (floatHyper::*)()) & floatHyper::zero,
+           "Fill a vector with zero")
+
+
       .def("signum", (void (floatHyper::*)()) & floatHyper::signum,
            "Fill a vector with it's signum")
-      .def("random", (void (floatHyper::*)()) & floatHyper::random,
+      .def("rand", (void (floatHyper::*)()) & floatHyper::random,
            "Fill a vector with random number")
+
+         .def("mult",
+           (void (floatHyper::*)(std::shared_ptr<floatHyper>)) &
+               floatHyper::mult,
+           "vec=vec*vec2")
       .def("dot",
            (double (floatHyper::*)(std::shared_ptr<floatHyper>) const) &
                floatHyper::dot,

@@ -4,11 +4,9 @@ using namespace SEP;
 std::shared_ptr<float3DReg> float3DReg::clone() const {
   if (getSpaceOnly()) {
     std::shared_ptr<float3DReg> x(new float3DReg(getHyper()));
-    x->setNorm(getNorm());
     return x;
   } else {
     std::shared_ptr<float3DReg> x(new float3DReg(getHyper(), *_mat));
-    x->setNorm(getNorm());
 
     return x;
   }
@@ -17,7 +15,6 @@ std::shared_ptr<float3DReg> float3DReg::cloneSpace() const {
   std::shared_ptr<float3DReg> x(new float3DReg(getHyper()));
   x->_mat = 0;
   x->setSpace();
-  x->setNorm(getNorm());
 
   return x;
 }
