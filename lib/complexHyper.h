@@ -1,58 +1,61 @@
 #pragma once
 #include <hypercube.h>
 #include <cassert>
+#include <complex>
 #include <cstdint>
 #include <sstream>
-#include "Vector.h"
+#include "regSpace.h"
+
 namespace SEP {
 
-class floatHyper : public Vector {
+class complexHyper : public regSpace {
  public:
-  floatHyper() { ; }
-
-  void setHyper(std::shared_ptr<SEP::hypercube> h) { _hyper = h->clone(); }
+  complexHyper() { ; }
 
   bool getSpaceOnly() const { return _spaceOnly; }
-  virtual void add(std::shared_ptr<floatHyper> vec);
-  virtual void scale(const double val);
-  virtual void scaleAdd(std::shared_ptr<floatHyper> vec2,const double sc1, 
-                        const double sc2);
+  virtual void add(std::shared_ptr<complexHyper> vec);
+  /*
+   virtual void scale(const std::complex<double> val);
+   virtual void scaleAdd(std::shared_ptr<complexHyper> vec2,
+                         const std::complex<double> sc1,
+                         const std::complex<double> sc2);
+                         */
   virtual void random();
   virtual void norm(int norm);
   virtual void signum();
-  virtual void mult(std::shared_ptr<floatHyper> vec2) ;
-  virtual double dot(std::shared_ptr<floatHyper> vec2) const;
-  void createMask(const float zero, const float err);
-  void setData(float *ptr) {
+  virtual void mult(std::shared_ptr<complexHyper> vec2);
+  virtual double dot(std::shared_ptr<complexHyper> vec2) const;
+  void setData(std::complex<float> *ptr) {
     _vals = ptr;
     setNotSpace();
+    setMemPtr((void *)ptr, sizeof(std::complex<float>));
   }
+  virtual void setSpace() { _spaceOnly = true; }
+  virtual void setNotSpace() { _spaceOnly = false; }
+  inline bool spaceOnly() const { return _spaceOnly; }
+
   void calcCheckSum();
   void setCheckSum(const uint64_t x) { _checkSum = x; }
-  bool isDifferent(std::shared_ptr<floatHyper> vec2) {
+  bool isDifferent(std::shared_ptr<complexHyper> vec2) {
     calcCheckSum();
     if (vec2->getCheckSum() != getCheckSum()) return true;
     return false;
   }
 
-
-  double norm(const int n) const;
   void zero();
 
-  float *getVals() { return _vals; }
-  const float *getCVals() const { return _vals; }
-  virtual void softClip(const float val);
-  virtual float absMax() const;
-  float min() const;
-  float max() const;
+  std::complex<float> *getVals() { return _vals; }
+  const std::complex<float> *getCVals() const { return _vals; }
+
   virtual void infoStream(const int lev, std::stringstream &x);
-  std::shared_ptr<SEP::hypercube> getHyper() const { return _hyper; }
-  virtual bool checkSame(const std::shared_ptr<SEP::floatHyper> vec2) const;
+  virtual bool checkSame(const std::shared_ptr<SEP::complexHyper> vec2) const;
   uint64_t getCheckSum() { return _checkSum; }
+  std::string _vecType;
 
  private:
-  std::shared_ptr<SEP::hypercube> _hyper;
-  float *_vals;
+  std::complex<float> *_vals;
+  bool _spaceOnly;
+
   uint64_t _checkSum;
 };
 

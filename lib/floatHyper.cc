@@ -1,6 +1,6 @@
 #include <floatHyper.h>
 #include <hypercube.h>
-#include<iostream>
+#include <iostream>
 #include <random>
 using namespace SEP;
 
@@ -9,66 +9,68 @@ void floatHyper::add(const std::shared_ptr<floatHyper> vec2) {
   std::shared_ptr<floatHyper> vec2H =
       std::dynamic_pointer_cast<floatHyper>(vec2);
 
-  for (long long i = 0; i < _hyper->getN123(); i++) _vals[i] += vec2H->_vals[i];
+  for (long long i = 0; i < getHyper()->getN123(); i++)
+    _vals[i] += vec2H->_vals[i];
   calcCheckSum();
 }
-void floatHyper::mult(const std::shared_ptr<floatHyper> vec2)  {
+void floatHyper::mult(const std::shared_ptr<floatHyper> vec2) {
   assert(checkSame(vec2));
   std::shared_ptr<floatHyper> vec2H =
       std::dynamic_pointer_cast<floatHyper>(vec2);
 
-  for (long long i = 0; i < _hyper->getN123(); i++) _vals[i] *= vec2H->_vals[i];
+  for (long long i = 0; i < getHyper()->getN123(); i++)
+    _vals[i] *= vec2H->_vals[i];
   calcCheckSum();
 }
-void floatHyper::scaleAdd( std::shared_ptr<floatHyper> vec2,const double sc1,
+void floatHyper::scaleAdd(std::shared_ptr<floatHyper> vec2, const double sc1,
                           const double sc2) {
   assert(checkSame(vec2));
   std::shared_ptr<floatHyper> vec2H =
       std::dynamic_pointer_cast<floatHyper>(vec2);
 
-  for (long long i = 0; i < _hyper->getN123(); i++)
+  for (long long i = 0; i < getHyper()->getN123(); i++)
     _vals[i] = _vals[i] * sc1 + sc2 * vec2H->_vals[i];
   calcCheckSum();
 }
 void floatHyper::signum() {
   assert(!spaceOnly());
-  for (long long i = 0; i < _hyper->getN123(); i++) {
-    if(_vals[i]>1e-20) _vals[i]=1;
-    else if(_vals[i]<-1e-20) _vals[i]=-1;
-    else _vals[i]=0;
+  for (long long i = 0; i < getHyper()->getN123(); i++) {
+    if (_vals[i] > 1e-20)
+      _vals[i] = 1;
+    else if (_vals[i] < -1e-20)
+      _vals[i] = -1;
+    else
+      _vals[i] = 0;
   }
   calcCheckSum();
 }
 void floatHyper::scale(double sc) {
   assert(!spaceOnly());
-  for (long long i = 0; i < _hyper->getN123(); i++) _vals[i] = _vals[i] * sc;
+  for (long long i = 0; i < getHyper()->getN123(); i++)
+    _vals[i] = _vals[i] * sc;
   calcCheckSum();
 }
 void floatHyper::random() {
   assert(!spaceOnly());
-  for (long long i = 0; i < _hyper->getN123(); i++)
+  for (long long i = 0; i < getHyper()->getN123(); i++)
     _vals[i] = ((double)rand() / (RAND_MAX)) - .5;
   calcCheckSum();
 }
 
-double floatHyper::norm(const int n) const{
-  double dt=0;
- if(n==1){
+double floatHyper::norm(const int n) const {
+  double dt = 0;
+  if (n == 1) {
+    for (long long i = 0; i < getHyper()->getN123(); i++) dt += fabsf(_vals[i]);
 
-  for (long long i = 0; i < _hyper->getN123(); i++) dt+=fabsf(_vals[i]);
-
+  } else if (n == 2) {
+    for (long long i = 0; i < getHyper()->getN123(); i++)
+      dt += _vals[i] * _vals[i];
+  }
+  return dt;
 }
-else if(n==2){
-  for (long long i = 0; i < _hyper->getN123(); i++) dt+=_vals[i]*_vals[i];
-
-
-}
-return dt;
-}
-void floatHyper::zero(){
- for (long long i = 0; i < _hyper->getN123(); i++)  _vals[i]=0;
+void floatHyper::zero() {
+  for (long long i = 0; i < getHyper()->getN123(); i++) _vals[i] = 0;
   calcCheckSum();
-
 }
 double floatHyper::dot(const std::shared_ptr<floatHyper> vec2) const {
   assert(checkSame(vec2));
@@ -76,14 +78,14 @@ double floatHyper::dot(const std::shared_ptr<floatHyper> vec2) const {
       std::dynamic_pointer_cast<floatHyper>(vec2);
 
   double dt = 0.;
-  for (long long i = 0; i < _hyper->getN123(); i++) {
+  for (long long i = 0; i < getHyper()->getN123(); i++) {
     dt += (double)_vals[i] * (double)vec2H->_vals[i];
   }
 
   return dt;
 }
 void floatHyper::createMask(const float zero, const float err) {
-  for (long long i = 0; i < _hyper->getN123(); i++) {
+  for (long long i = 0; i < getHyper()->getN123(); i++) {
     if (fabs(_vals[i] - zero) > err)
 
       _vals[i] = 0.;
@@ -94,7 +96,7 @@ void floatHyper::createMask(const float zero, const float err) {
 }
 
 void floatHyper::infoStream(const int lev, std::stringstream &x) {
-  _hyper->infoStream(x);
+  getHyper()->infoStream(x);
   if (spaceOnly())
     x << "Only space\n";
   else {
@@ -107,34 +109,32 @@ void floatHyper::infoStream(const int lev, std::stringstream &x) {
 }
 void floatHyper::softClip(const float scale) {
   float sc2 = scale * scale;
-  for (int i = 0; i < _hyper->getN123(); i++)
+  for (int i = 0; i < getHyper()->getN123(); i++)
     _vals[i] = scale * _vals[i] / sqrtf(1. + sc2 * _vals[i] * _vals[i]);
   calcCheckSum();
 }
 
-float floatHyper::absMax() const {
+double floatHyper::absMax() const {
   float val = fabsf(_vals[0]);
-  for (int i = 1; i < _hyper->getN123(); i++)
+  for (int i = 1; i < getHyper()->getN123(); i++)
     val = std::max(val, fabsf(_vals[i]));
-  return val;
+  return (double)val;
 }
-float floatHyper::max() const {
+double floatHyper::max() const {
   float val = fabsf(_vals[0]);
-  for (int i = 1; i < _hyper->getN123(); i++)
-    val = std::max(val, _vals[i]);
-  return val;
+  for (int i = 1; i < getHyper()->getN123(); i++) val = std::max(val, _vals[i]);
+  return (double)val;
 }
-float floatHyper::min() const {
+double floatHyper::min() const {
   float val = fabsf(_vals[0]);
-  for (int i = 1; i < _hyper->getN123(); i++)
-    val = std::min(val, _vals[i]);
-  return val;
+  for (int i = 1; i < getHyper()->getN123(); i++) val = std::min(val, _vals[i]);
+  return (double)val;
 }
 void floatHyper::calcCheckSum() {
   uint32_t sum1 = 0, sum2 = 0;
   uint32_t *data = (uint32_t *)_vals;
   uint32_t mx = 4294967295;
-  for (long long i = 0; i < _hyper->getN123(); i++) {
+  for (long long i = 0; i < getHyper()->getN123(); i++) {
     sum1 = (sum1 + data[i]) % mx;
     sum2 = (sum2 + sum1) % mx;
   }
@@ -146,9 +146,10 @@ bool floatHyper::checkSame(const std::shared_ptr<floatHyper> vec2) const {
     std::cerr << "Not allocated vec2" << std::endl;
     return false;
   }
-//  if (_hyper == vec2->getHyper()) return true;
+  //  if (getHyper() == vec2->getHyper()) return true;
   return true;
-  std::cerr<<_hyper->getAxis(1).n<<" "<<vec2->getHyper()->getAxis(1).n<<std::endl;
+  std::cerr << getHyper()->getAxis(1).n << " " << vec2->getHyper()->getAxis(1).n
+            << std::endl;
   std::cerr << "Not from the same Hypercube" << std::endl;
 
   return false;

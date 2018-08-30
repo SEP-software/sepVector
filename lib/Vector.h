@@ -4,7 +4,8 @@
 #include <memory>
 #include <sstream>
 namespace SEP {
-class Vector {
+
+class Vector{
  public:
   Vector() : _spaceOnly(false), _vecType(std::string("base")) { ; }
   virtual void add(const std::shared_ptr<Vector> vec) { assert(1 == 2); }
@@ -15,7 +16,7 @@ class Vector {
   }
   virtual void random() { assert(1 == 2); }
   virtual void softClip(float val) { assert(1 == 2); }
-  virtual float absMax() const { assert(1 == 2); }
+  virtual double absMax() const { assert(1 == 2); }
   virtual double dot(const std::shared_ptr<Vector> vec2) const {
     assert(1 == 2);
   }
