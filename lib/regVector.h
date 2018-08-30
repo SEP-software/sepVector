@@ -1,3 +1,4 @@
+#include <ioTypes.h>
 #include "byte1DReg.h"
 #include "byte2DReg.h"
 #include "byte3DReg.h"
@@ -29,7 +30,6 @@
 #include "int5DReg.h"
 #include "int6DReg.h"
 namespace SEP {
-enum dataType { DATA_BYTE, DATA_INT, DATA_FLOAT, DATA_COMPLEX, DATA_DOUBLE };
 
 std::shared_ptr<regSpace> vecFromHyper(const std::shared_ptr<hypercube> hyper,
                                        const dataType typ,
