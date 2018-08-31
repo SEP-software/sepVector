@@ -13,6 +13,7 @@ float5DReg.cc float6DReg.cc
  doubleHyper.cc double1DReg.cc double2DReg.cc  double3DReg.cc double4DReg.cc double5DReg.cc double6DReg.cc
 regVector.cc
   )
+
 set(INCLUDES  Vector.h	superVec.h regSpace.h
 float1DReg.h	float2DReg.h	float3DReg.h	 floatHyper.h float4DReg.h  float5DReg.h float6DReg.h
 intHyper.h int1DReg.h int2DReg.h int3DReg.h int4DReg.h int5DReg.h int6DReg.h
@@ -21,7 +22,8 @@ complexHyper.h complex1DReg.h complex2DReg.h  complex3DReg.h complex4DReg.h comp
 doubleHyper.h double1DReg.h double2DReg.h double3DReg.h double4DReg.h double5DReg.h double6DReg.h
   regVector.h
   )
-
+set(SEPVECTOR_INTERNAL_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR})
+message("CHECK HYPER "${HYPERCUBE_INTERNAL_INCLUDE_DIR})
 add_library(sepVector  ${SOURCES} ${INCLUDES})
 TARGET_LINK_LIBRARIES(sepVector ${LIBTBB})
 install(FILES ${INCLUDES} DESTINATION include)
