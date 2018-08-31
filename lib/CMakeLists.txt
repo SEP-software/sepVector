@@ -3,7 +3,7 @@ project(sepVector-lib)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 FIND_PACKAGE( Boost 1.40 COMPONENTS program_options unit_test_framework REQUIRED )
 INCLUDE_DIRECTORIES( ${Boost_INCLUDE_DIR} )
-
+include_directories(${TBB_INCLUDE_DIRS})
 
 set(SOURCES Vector.cc float1DReg.cc	float2DReg.cc	float3DReg.cc floatHyper.cc float4DReg.cc 
 float5DReg.cc float6DReg.cc
@@ -23,5 +23,6 @@ doubleHyper.h double1DReg.h double2DReg.h double3DReg.h double4DReg.h double5DRe
   )
 
 add_library(sepVector  ${SOURCES} ${INCLUDES})
+TARGET_LINK_LIBRARIES(sepVector ${LIBTBB})
 install(FILES ${INCLUDES} DESTINATION include)
 install(TARGETS sepVector DESTINATION lib EXPORT sepVectorExports )

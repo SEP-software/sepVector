@@ -1,5 +1,9 @@
 #include <complexHyper.h>
 #include <hypercube.h>
+#include <tbb/blocked_range.h>
+#include <tbb/parallel_for.h>
+#include <tbb/parallel_reduce.h>
+#include <tbb/tbb.h>
 #include <iostream>
 #include <random>
 using namespace SEP;
@@ -10,16 +14,25 @@ void complexHyper::add(const std::shared_ptr<complexHyper> vec2) {
       std::dynamic_pointer_cast<complexHyper>(vec2);
 
   for (long long i = 0; i < getHyper()->getN123(); i++)
-    _vals[i] += vec2H->_vals[i];
+
+    tbb::parallel_for(tbb::blocked_range<long long>(0, getHyper()->getN123()),
+                      [&](const tbb::blocked_range<long long> &r) {
+                        for (long long i = r.begin(); i != r.end(); ++i)
+                          _vals[i] += vec2H->_vals[i];
+                      });
   calcCheckSum();
 }
 void complexHyper::mult(const std::shared_ptr<complexHyper> vec2) {
   assert(checkSame(vec2));
   std::shared_ptr<complexHyper> vec2H =
       std::dynamic_pointer_cast<complexHyper>(vec2);
-
   for (long long i = 0; i < getHyper()->getN123(); i++)
-    _vals[i] *= vec2H->_vals[i];
+
+    tbb::parallel_for(tbb::blocked_range<long long>(0, getHyper()->getN123()),
+                      [&](const tbb::blocked_range<long long> &r) {
+                        for (long long i = r.begin(); i != r.end(); ++i)
+                          _vals[i] *= vec2H->_vals[i];
+                      });
   calcCheckSum();
 }
 /*

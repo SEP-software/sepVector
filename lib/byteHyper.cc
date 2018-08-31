@@ -1,18 +1,30 @@
 #include <byteHyper.h>
 #include <hypercube.h>
+#include <tbb/blocked_range.h>
+#include <tbb/parallel_for.h>
+#include <tbb/parallel_reduce.h>
+#include <tbb/tbb.h>
 #include <iostream>
 #include <random>
 using namespace SEP;
 
 void byteHyper::random() {
   assert(!spaceOnly());
-  for (long long i = 0; i < getHyper()->getN123(); i++)
-    _vals[i] = ((double)rand() / (RAND_MAX)) * 256;
+
+  tbb::parallel_for(tbb::blocked_range<long long>(0, getHyper()->getN123()),
+                    [&](const tbb::blocked_range<long long> &r) {
+                      for (long long i = r.begin(); i != r.end(); ++i)
+                        _vals[i] = ((double)rand() / (RAND_MAX)) * 256;
+                    });
   calcCheckSum();
 }
 
 void byteHyper::zero() {
-  for (long long i = 0; i < getHyper()->getN123(); i++) _vals[i] = 0;
+  tbb::parallel_for(tbb::blocked_range<long long>(0, getHyper()->getN123()),
+                    [&](const tbb::blocked_range<long long> &r) {
+                      for (long long i = r.begin(); i != r.end(); ++i)
+                        _vals[i] = 0;
+                    });
   calcCheckSum();
 }
 
@@ -30,21 +42,48 @@ void byteHyper::infoStream(const int lev, std::stringstream &x) {
 }
 
 int byteHyper::absMax() const {
-  int val = abs(_vals[0]);
-  for (int i = 1; i < getHyper()->getN123(); i++)
-    val = std::max(val, abs((int)_vals[i]));
+  int val = tbb::parallel_reduce(
+      tbb::blocked_range<size_t>(0, getHyper()->getN123()), -1e31,
+      [&](const tbb::blocked_range<size_t> &r, int v) {
+        for (size_t i = r.begin(); i != r.end(); ++i) {
+          v = std::max(v, abs((int)_vals[i]));
+        }
+        return v;
+      },
+      [](int a, int b) {
+        if (a > b) return a;
+        return b;
+      });
   return val;
 }
 int byteHyper::max() const {
-  int val = abs(_vals[0]);
-  for (int i = 1; i < getHyper()->getN123(); i++)
-    val = std::max(val, (int)_vals[i]);
+  int val = tbb::parallel_reduce(
+      tbb::blocked_range<size_t>(0, getHyper()->getN123()), -1e31,
+      [&](const tbb::blocked_range<size_t> &r, int v) {
+        for (size_t i = r.begin(); i != r.end(); ++i) {
+          v = std::max(v, (int)_vals[i]);
+        }
+        return v;
+      },
+      [](int a, int b) {
+        if (a > b) return a;
+        return b;
+      });
   return val;
 }
 int byteHyper::min() const {
-  int val = abs(_vals[0]);
-  for (int i = 1; i < getHyper()->getN123(); i++)
-    val = std::min(val, (int)_vals[i]);
+  int val = tbb::parallel_reduce(
+      tbb::blocked_range<size_t>(0, getHyper()->getN123()), 1e31,
+      [&](const tbb::blocked_range<size_t> &r, int v) {
+        for (size_t i = r.begin(); i != r.end(); ++i) {
+          v = std::min(v, (int)_vals[i]);
+        }
+        return v;
+      },
+      [](int a, int b) {
+        if (a > b) return b;
+        return a;
+      });
   return val;
 }
 void byteHyper::calcCheckSum() {

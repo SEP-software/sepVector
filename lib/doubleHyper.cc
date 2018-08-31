@@ -1,5 +1,9 @@
 #include <doubleHyper.h>
 #include <hypercube.h>
+#include <tbb/blocked_range.h>
+#include <tbb/parallel_for.h>
+#include <tbb/parallel_reduce.h>
+#include <tbb/tbb.h>
 #include <iostream>
 #include <random>
 using namespace SEP;
@@ -8,9 +12,11 @@ void doubleHyper::add(const std::shared_ptr<doubleHyper> vec2) {
   assert(checkSame(vec2));
   std::shared_ptr<doubleHyper> vec2H =
       std::dynamic_pointer_cast<doubleHyper>(vec2);
-
-  for (long long i = 0; i < getHyper()->getN123(); i++)
-    _vals[i] += vec2H->_vals[i];
+  tbb::parallel_for(tbb::blocked_range<long long>(0, getHyper()->getN123()),
+                    [&](const tbb::blocked_range<long long> &r) {
+                      for (long long i = r.begin(); i != r.end(); ++i)
+                        _vals[i] += vec2H->_vals[i];
+                    });
   calcCheckSum();
 }
 void doubleHyper::mult(const std::shared_ptr<doubleHyper> vec2) {
@@ -18,8 +24,11 @@ void doubleHyper::mult(const std::shared_ptr<doubleHyper> vec2) {
   std::shared_ptr<doubleHyper> vec2H =
       std::dynamic_pointer_cast<doubleHyper>(vec2);
 
-  for (long long i = 0; i < getHyper()->getN123(); i++)
-    _vals[i] *= vec2H->_vals[i];
+  tbb::parallel_for(tbb::blocked_range<long long>(0, getHyper()->getN123()),
+                    [&](const tbb::blocked_range<long long> &r) {
+                      for (long long i = r.begin(); i != r.end(); ++i)
+                        _vals[i] *= vec2H->_vals[i];
+                    });
   calcCheckSum();
 }
 void doubleHyper::scaleAdd(std::shared_ptr<doubleHyper> vec2, const double sc1,
@@ -27,49 +36,72 @@ void doubleHyper::scaleAdd(std::shared_ptr<doubleHyper> vec2, const double sc1,
   assert(checkSame(vec2));
   std::shared_ptr<doubleHyper> vec2H =
       std::dynamic_pointer_cast<doubleHyper>(vec2);
-
-  for (long long i = 0; i < getHyper()->getN123(); i++)
-    _vals[i] = _vals[i] * sc1 + sc2 * vec2H->_vals[i];
+  tbb::parallel_for(tbb::blocked_range<long long>(0, getHyper()->getN123()),
+                    [&](const tbb::blocked_range<long long> &r) {
+                      for (long long i = r.begin(); i != r.end(); ++i)
+                        _vals[i] = _vals[i] * sc1 + sc2 * vec2H->_vals[i];
+                    });
   calcCheckSum();
 }
 void doubleHyper::signum() {
   assert(!spaceOnly());
-  for (long long i = 0; i < getHyper()->getN123(); i++) {
-    if (_vals[i] > 1e-20)
-      _vals[i] = 1;
-    else if (_vals[i] < -1e-20)
-      _vals[i] = -1;
-    else
-      _vals[i] = 0;
-  }
+  tbb::parallel_for(tbb::blocked_range<long long>(0, getHyper()->getN123()),
+                    [&](const tbb::blocked_range<long long> &r) {
+                      for (long long i = r.begin(); i != r.end(); ++i) {
+                        if (_vals[i] > 1e-20)
+                          _vals[i] = 1;
+                        else if (_vals[i] < -1e-20)
+                          _vals[i] = -1;
+                        else
+                          _vals[i] = 0;
+                      }
+                    });
+
   calcCheckSum();
 }
 void doubleHyper::scale(double sc) {
   assert(!spaceOnly());
-  for (long long i = 0; i < getHyper()->getN123(); i++)
-    _vals[i] = _vals[i] * sc;
+  tbb::parallel_for(tbb::blocked_range<long long>(0, getHyper()->getN123()),
+                    [&](const tbb::blocked_range<long long> &r) {
+                      for (long long i = r.begin(); i != r.end(); ++i)
+                        _vals[i] = _vals[i] * sc;
+                    });
   calcCheckSum();
 }
 void doubleHyper::random() {
-  assert(!spaceOnly());
-  for (long long i = 0; i < getHyper()->getN123(); i++)
-    _vals[i] = ((double)rand() / (RAND_MAX)) - .5;
+  tbb::parallel_for(tbb::blocked_range<long long>(0, getHyper()->getN123()),
+                    [&](const tbb::blocked_range<long long> &r) {
+                      for (long long i = r.begin(); i != r.end(); ++i)
+                        _vals[i] = ((double)rand() / (RAND_MAX)) - .5;
+                    });
   calcCheckSum();
 }
 
 double doubleHyper::norm(const int n) const {
-  double dt = 0;
-  if (n == 1) {
-    for (long long i = 0; i < getHyper()->getN123(); i++) dt += fabsf(_vals[i]);
+  double dt = tbb::parallel_reduce(
+      tbb::blocked_range<size_t>(0, getHyper()->getN123()), 0.,
+      [&](const tbb::blocked_range<size_t> &r, float v) {
+        if (n == 1) {
+          for (size_t i = r.begin(); i != r.end(); ++i) {
+            v += (double)fabs(_vals[i]);
+          }
+        } else {
+          for (size_t i = r.begin(); i != r.end(); ++i) {
+            v += (double)_vals[i] * (double)_vals[i];
+          }
+        }
+        return v;
+      },
+      [](double a, double b) { return a + b; });
 
-  } else if (n == 2) {
-    for (long long i = 0; i < getHyper()->getN123(); i++)
-      dt += _vals[i] * _vals[i];
-  }
   return dt;
 }
 void doubleHyper::zero() {
-  for (long long i = 0; i < getHyper()->getN123(); i++) _vals[i] = 0;
+  tbb::parallel_for(tbb::blocked_range<long long>(0, getHyper()->getN123()),
+                    [&](const tbb::blocked_range<long long> &r) {
+                      for (long long i = r.begin(); i != r.end(); ++i)
+                        _vals[i] = 0;
+                    });
   calcCheckSum();
 }
 double doubleHyper::dot(const std::shared_ptr<doubleHyper> vec2) const {
@@ -77,21 +109,29 @@ double doubleHyper::dot(const std::shared_ptr<doubleHyper> vec2) const {
   std::shared_ptr<doubleHyper> vec2H =
       std::dynamic_pointer_cast<doubleHyper>(vec2);
 
-  double dt = 0.;
-  for (long long i = 0; i < getHyper()->getN123(); i++) {
-    dt += (double)_vals[i] * (double)vec2H->_vals[i];
-  }
+  double dot = tbb::parallel_reduce(
+      tbb::blocked_range<size_t>(0, getHyper()->getN123()), 0.,
+      [&](const tbb::blocked_range<size_t> &r, float v) {
+        for (size_t i = r.begin(); i != r.end(); ++i) {
+          v += (double)_vals[i] * (double)vec2H->_vals[i];
+        }
+        return v;
+      },
+      [](double a, double b) { return a + b; });
 
-  return dt;
+  return dot;
 }
 void doubleHyper::createMask(const float zero, const float err) {
-  for (long long i = 0; i < getHyper()->getN123(); i++) {
-    if (fabs(_vals[i] - zero) > err)
+  tbb::parallel_for(tbb::blocked_range<long long>(0, getHyper()->getN123()),
+                    [&](const tbb::blocked_range<long long> &r) {
+                      for (long long i = r.begin(); i != r.end(); ++i) {
+                        if (fabs(_vals[i] - zero) > err)
 
-      _vals[i] = 0.;
-    else
-      _vals[i] = 1;
-  }
+                          _vals[i] = 0.;
+                        else
+                          _vals[i] = 1;
+                      }
+                    });
   calcCheckSum();
 }
 
@@ -109,26 +149,59 @@ void doubleHyper::infoStream(const int lev, std::stringstream &x) {
 }
 void doubleHyper::softClip(const float scale) {
   float sc2 = scale * scale;
-  for (int i = 0; i < getHyper()->getN123(); i++)
-    _vals[i] = scale * _vals[i] / sqrtf(1. + sc2 * _vals[i] * _vals[i]);
+  tbb::parallel_for(tbb::blocked_range<long long>(0, getHyper()->getN123()),
+                    [&](const tbb::blocked_range<long long> &r) {
+                      for (long long i = r.begin(); i != r.end(); ++i)
+                        _vals[i] = scale * _vals[i] /
+                                   sqrtf(1. + sc2 * _vals[i] * _vals[i]);
+                    });
   calcCheckSum();
 }
 
 double doubleHyper::absMax() const {
-  double val = fabs(_vals[0]);
-  for (int i = 1; i < getHyper()->getN123(); i++)
-    val = std::max(val, fabs(_vals[i]));
-  return val;
+  double val = tbb::parallel_reduce(
+      tbb::blocked_range<size_t>(0, getHyper()->getN123()), -1.e31,
+      [&](const tbb::blocked_range<size_t> &r, double v) {
+        for (size_t i = r.begin(); i != r.end(); ++i) {
+          v = std::max(v, fabs(_vals[i]));
+        }
+        return v;
+      },
+      [](double a, double b) {
+        if (a > b) return a;
+        return b;
+      });
+  return (double)val;
 }
 double doubleHyper::max() const {
-  double val = fabs(_vals[0]);
-  for (int i = 1; i < getHyper()->getN123(); i++) val = std::max(val, _vals[i]);
-  return val;
+  double val = tbb::parallel_reduce(
+      tbb::blocked_range<size_t>(0, getHyper()->getN123()), -1.e31,
+      [&](const tbb::blocked_range<size_t> &r, double v) {
+        for (size_t i = r.begin(); i != r.end(); ++i) {
+          v = std::max(v, _vals[i]);
+        }
+        return v;
+      },
+      [](double a, double b) {
+        if (a > b) return a;
+        return b;
+      });
+  return (double)val;
 }
 double doubleHyper::min() const {
-  double val = fabsf(_vals[0]);
-  for (int i = 1; i < getHyper()->getN123(); i++) val = std::min(val, _vals[i]);
-  return val;
+  double val = tbb::parallel_reduce(
+      tbb::blocked_range<size_t>(0, getHyper()->getN123()), 1.e31,
+      [&](const tbb::blocked_range<size_t> &r, double v) {
+        for (size_t i = r.begin(); i != r.end(); ++i) {
+          v = std::min(v, _vals[i]);
+        }
+        return v;
+      },
+      [](double a, double b) {
+        if (a > b) return b;
+        return a;
+      });
+  return (double)val;
 }
 void doubleHyper::calcCheckSum() {
   uint32_t sum1 = 0, sum2 = 0;

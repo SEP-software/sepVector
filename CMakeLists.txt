@@ -8,6 +8,7 @@ find_package(Boost REQUIRED)
 
 
 find_package(NumPy  REQUIRED)
+FIND_PACKAGE(TBB REQUIRED)
 set(sepVector_MAJOR_VERSION 0)
 set(sepVector_MINOR_VERSION 2)
 set(sepVector_VERSION_STRING
