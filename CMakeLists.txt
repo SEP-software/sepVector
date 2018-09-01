@@ -31,11 +31,10 @@ include(${CMAKE_ROOT}/Modules/ExternalProject.cmake)
     # now we need to clone this submodule
 if(NOT TARGET hypercube)
 
-  message("IN HYPERCUBE")
     execute_process(COMMAND git submodule update --init --recursive -- external/hypercube
                     WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
     add_subdirectory(external/hypercube)
-    INCLUDE_DIRECTORIES(${HYPERCUBE_INTERNAL_INCLUDE_DIR})
+    INCLUDE_DIRECTORIES(external/hypercube/lib)
 endif(NOT TARGET hypercube)
 #endif(hypercube_FOUND)
 
