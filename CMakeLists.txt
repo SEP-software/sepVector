@@ -32,6 +32,7 @@ include(${CMAKE_ROOT}/Modules/ExternalProject.cmake)
     # we have a submodule setup for foo, assume it is under external/foo
     # now we need to clone this submodule
 if(NOT TARGET hypercube)
+   message("ADDING HYPERCUBE IN SEPVECTOR")
     execute_process(COMMAND git submodule update --init --recursive -- external/hypercube
                     WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
     add_subdirectory(external/hypercube)
