@@ -6,5 +6,5 @@ CXX_FLAGS = -O3 -fpic -std=c++11
 
 CXX_DEFINES = 
 
-CXX_INCLUDES = -I/Users/bob/Src/sepVector/src/lib -I/Users/bob/Src/sepVector/src -I/opt/local/include 
+CXX_INCLUDES = -I/Users/bob/Src/sepVector/src/lib -I/Users/bob/Src/sepVector/src/external/hypercube/lib -I/Users/bob/Src/sepVector/src -I/opt/local/include 
 

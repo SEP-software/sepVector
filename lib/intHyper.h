@@ -16,7 +16,6 @@ class intHyper : public regSpace {
   virtual void scaleAdd(std::shared_ptr<intHyper> vec2, const double sc1,
                         const double sc2);
   virtual void random();
-  virtual void norm(int norm);
   virtual void signum();
   virtual void mult(std::shared_ptr<intHyper> vec2);
   virtual double dot(std::shared_ptr<intHyper> vec2) const;
