@@ -22,7 +22,6 @@ class complexHyper : public regSpace {
                          */
   virtual void random();
   virtual void mult(std::shared_ptr<complexHyper> vec2);
-  virtual double dot(std::shared_ptr<complexHyper> vec2) const;
   void setData(std::complex<float> *ptr) {
     _vals = ptr;
     setNotSpace();
