@@ -1,6 +1,6 @@
 #include "regVector.h"
 using namespace SEP;
-std::shared_ptr<regSpace> vecFromHyper(const std::shared_ptr<hypercube> hyper,
+std::shared_ptr<regSpace> SEP::vecFromHyper(const std::shared_ptr<hypercube> hyper,
                                        const dataType typ, const bool g1) {
   std::vector<axis> axesIn = hyper->getAxes(), axesOut;
   int ndim = hyper->getNdim();
@@ -152,7 +152,7 @@ std::shared_ptr<regSpace> vecFromHyper(const std::shared_ptr<hypercube> hyper,
       break;
   }
 }
-std::shared_ptr<regSpace> subCubeFromHyper(
+std::shared_ptr<regSpace> SEP::subCubeFromHyper(
     const std::shared_ptr<hypercube> hyper, const dataType typ,
     const int &ndim) {
   std::vector<axis> axesIn = hyper->getAxes(), axesOut;
@@ -163,7 +163,7 @@ std::shared_ptr<regSpace> subCubeFromHyper(
   std::shared_ptr<hypercube> hyper2(new hypercube(axesOut));
   return vecFromHyper(hyper2, typ);
 }
-std::shared_ptr<regSpace> windowFromHyper(
+std::shared_ptr<regSpace> SEP::windowFromHyper(
     const std::shared_ptr<hypercube> hyper, const std::vector<int> &nw,
     const std::vector<int> &fw, const std::vector<int> &jw,
     const dataType typ) {
@@ -186,7 +186,7 @@ std::shared_ptr<regSpace> windowFromHyper(
   std::shared_ptr<hypercube> hyper2(new hypercube(axesOut));
   return vecFromHyper(hyper2, typ);
 }
-std::shared_ptr<regSpace> cloneRegSpace(std::shared_ptr<regSpace> storage) {
+std::shared_ptr<regSpace> SEP::cloneRegSpace(std::shared_ptr<regSpace> storage) {
   std::shared_ptr<float1DReg> v1 =
       std::dynamic_pointer_cast<float1DReg>(storage);
   if (v1) return v1->clone();
