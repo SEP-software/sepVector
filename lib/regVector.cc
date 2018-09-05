@@ -1,7 +1,7 @@
 #include "regVector.h"
 using namespace SEP;
 std::shared_ptr<regSpace> vecFromHyper(const std::shared_ptr<hypercube> hyper,
-                                       const dataType typ, bool g1) {
+                                       const dataType typ, const bool g1) {
   std::vector<axis> axesIn = hyper->getAxes(), axesOut;
   int ndim = hyper->getNdim();
   if (g1) ndim = hyper->getNdimG1();
