@@ -24,8 +24,9 @@ std::cerr<<"WHAT 1"<<std::endl;
   const std::vector<SEP::axis> axes = hyp->getAxes();
 std::cerr<<"WHAT 2"<<std::endl;
   setHyper(hyp);
-std::cerr<<"WHAT 1"<<std::endl;
+std::cerr<<"WHATf1"<<std::endl;
 
+  std::cerr<<"NMM "<<axes.size()<<std::endl;
   assert(axes.size() == 3);
 std::cerr<<"WHAT 3 "axes[2].n<<" 2-1 "<<axes[1].n<<" "<<axes[0].n<<std::endl;
 
