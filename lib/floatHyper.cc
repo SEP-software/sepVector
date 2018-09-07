@@ -9,21 +9,16 @@
 using namespace SEP;
 
 void floatHyper::add(const std::shared_ptr<floatHyper> vec2) {
- std::cerr<<"1bb"<<std::endl;
   assert(checkSame(vec2));
- std::cerr<<"2bb"<<std::endl;
   std::shared_ptr<floatHyper> vec2H =
       std::dynamic_pointer_cast<floatHyper>(vec2);
- std::cerr<<"3bb"<<std::endl;
 
   tbb::parallel_for(tbb::blocked_range<long long>(0, getHyper()->getN123()),
                     [&](const tbb::blocked_range<long long> &r) {
                       for (long long i = r.begin(); i != r.end(); ++i)
                         _vals[i] += vec2H->_vals[i];
                     });
- std::cerr<<"4bb"<<std::endl;
   calcCheckSum();
- std::cerr<<"5bb"<<std::endl;
 }
 void floatHyper::mult(const std::shared_ptr<floatHyper> vec2) {
   assert(checkSame(vec2));
