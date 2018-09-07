@@ -2,12 +2,14 @@
 using namespace SEP;
 std::shared_ptr<regSpace> SEP::vecFromHyper(const std::shared_ptr<hypercube> hyper,
                                        const dataType typ, const bool g1) {
+std::cerr<<"what 2roblem 1"<<std::endl;
   std::vector<axis> axesIn = hyper->getAxes(), axesOut;
   int ndim = hyper->getNdim();
   if (g1) ndim = hyper->getNdimG1();
   for (int i = 0; i < ndim; i++) {
     axesOut.push_back(axesIn[i]);
   }
+std::cerr<<"what 3roblem 1"<<std::endl;
   std::shared_ptr<hypercube> hyper2(new hypercube(axesOut));
   switch (typ) {
     case DATA_FLOAT:
@@ -21,7 +23,9 @@ std::shared_ptr<regSpace> SEP::vecFromHyper(const std::shared_ptr<hypercube> hyp
           return a;
         } break;
         case 3: {
+std::cerr<<"what 4roblem 1"<<std::endl;
           std::shared_ptr<float3DReg> a(new float3DReg(hyper2));
+std::cerr<<"what 5roblem 1"<<std::endl;
           return a;
         } break;
         case 4: {
