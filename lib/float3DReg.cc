@@ -28,7 +28,7 @@ std::cerr<<"WHATf1"<<std::endl;
 
   std::cerr<<"NMM "<<axes.size()<<std::endl;
   assert(axes.size() == 3);
-std::cerr<<"WHAT 3 "axes[2].n<<" 2-1 "<<axes[1].n<<" "<<axes[0].n<<std::endl;
+std::cerr<<"WHAT 3 "<<axes[2].n<<" 2-1 "<<axes[1].n<<" "<<axes[0].n<<std::endl;
 
   _mat.reset(new float3D(boost::extents[axes[2].n][axes[1].n][axes[0].n]));
 std::cerr<<"WHAT 4"<<std::endl;
