@@ -23,7 +23,6 @@ void float3DReg::initNoData(std::shared_ptr<SEP::hypercube> hyp) {
   const std::vector<SEP::axis> axes = hyp->getAxes();
   setHyper(hyp);
 
-  std::cerr<<"NMM "<<axes.size()<<std::endl;
   assert(axes.size() == 3);
 
   _mat.reset(new float3D(boost::extents[axes[2].n][axes[1].n][axes[0].n]));
