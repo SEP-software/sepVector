@@ -20,20 +20,14 @@ std::shared_ptr<float3DReg> float3DReg::cloneSpace() const {
 }
 
 void float3DReg::initNoData(std::shared_ptr<SEP::hypercube> hyp) {
-std::cerr<<"WHAT 1"<<std::endl;
   const std::vector<SEP::axis> axes = hyp->getAxes();
-std::cerr<<"WHAT 2"<<std::endl;
   setHyper(hyp);
-std::cerr<<"WHATf1"<<std::endl;
 
   std::cerr<<"NMM "<<axes.size()<<std::endl;
   assert(axes.size() == 3);
-std::cerr<<"WHAT 3 "<<axes[2].n<<" 2-1 "<<axes[1].n<<" "<<axes[0].n<<std::endl;
 
   _mat.reset(new float3D(boost::extents[axes[2].n][axes[1].n][axes[0].n]));
-std::cerr<<"WHAT 4"<<std::endl;
   setData(_mat->data());
-std::cerr<<"WHAT 5"<<std::endl;
 }
 void float3DReg::initData(std::shared_ptr<SEP::hypercube> hyp,
                           const float3D &vals) {
