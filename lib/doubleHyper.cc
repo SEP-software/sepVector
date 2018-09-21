@@ -80,7 +80,7 @@ void doubleHyper::random() {
 double doubleHyper::norm(const int n) const {
   double dt = tbb::parallel_reduce(
       tbb::blocked_range<size_t>(0, getHyper()->getN123()), 0.,
-      [&](const tbb::blocked_range<size_t> &r, float v) {
+      [&](const tbb::blocked_range<size_t> &r, double v) {
         if (n == 1) {
           for (size_t i = r.begin(); i != r.end(); ++i) {
             v += (double)fabs(_vals[i]);
@@ -111,7 +111,7 @@ double doubleHyper::dot(const std::shared_ptr<doubleHyper> vec2) const {
 
   double dot = tbb::parallel_reduce(
       tbb::blocked_range<size_t>(0, getHyper()->getN123()), 0.,
-      [&](const tbb::blocked_range<size_t> &r, float v) {
+      [&](const tbb::blocked_range<size_t> &r, double v) {
         for (size_t i = r.begin(); i != r.end(); ++i) {
           v += (double)_vals[i] * (double)vec2H->_vals[i];
         }
