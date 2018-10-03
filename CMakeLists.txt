@@ -7,7 +7,6 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_POSITION_INDEPENDENT_CODE True)
 
 project(sepVector)
-cmake_minimum_required(VERSION 2.8)
 set(CMAKE_INCLUDE_CURRENT_DIR TRUE)
 
 # configure a header file to pass some of the CMake settings
@@ -27,14 +26,12 @@ include(${CMAKE_ROOT}/Modules/ExternalProject.cmake)
 
 #
 if(NOT TARGET hypercube)
-  message("ADDING HYPERCUBE IN SEPVECTOR")
   execute_process(COMMAND git submodule update --init --recursive --
                           external/hypercube
                   WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
   add_subdirectory(external/hypercube)
   include_directories(${CMAKE_CURRENT_SOURCE_DIR}/external/hypercube/lib)
 endif(NOT TARGET hypercube)
-# endif(hypercube_FOUND)
 
 include_directories("${PROJECT_BINARY_DIR}")
 
