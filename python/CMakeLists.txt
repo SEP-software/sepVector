@@ -11,7 +11,7 @@ if(pybind11_FOUND)
   find_package(Boost 1.40 REQUIRED)
 
   pybind11_add_module(pySepVector MODULE pyVector.cpp)
-  target_link_libraries(pySepVector PRIVATE sepVector hypercube)
+  target_link_libraries(pySepVector PRIVATE sepVector hypercube ${LIBTBB})
   install(TARGETS pySepVector DESTINATION lib/python)
   install(FILES SepVector.py DESTINATION lib/python)
 
