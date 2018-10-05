@@ -25,6 +25,6 @@ doubleHyper.h double1DReg.h double2DReg.h double3DReg.h double4DReg.h double5DRe
 set(SEPVECTOR_INTERNAL_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR})
 message("CHECK HYPER "${HYPERCUBE_INTERNAL_INCLUDE_DIR})
 add_library(sepVector  ${SOURCES} ${INCLUDES})
-TARGET_LINK_LIBRARIES(sepVector ${LIBTBB})
+TARGET_LINK_LIBRARIES(sepVector ${TBB_LIBRARIES})
 install(FILES ${INCLUDES} DESTINATION include)
 install(TARGETS sepVector DESTINATION lib EXPORT sepVectorExports )
