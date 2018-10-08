@@ -7,6 +7,7 @@
 #include "float2DReg.h"
 #include "float3DReg.h"
 #include "float4DReg.h"
+#include "regSpace.h"
 namespace py = pybind11;
 namespace SEP {
 using namespace SEP;
@@ -15,26 +16,34 @@ PYBIND11_MODULE(pySepVector, clsVector) {
   py::class_<Vector, std::shared_ptr<Vector>>(clsVector, "Vector")
       .def(py::init<>(), "Initlialize a new Vector (don't use this");
 
-  py::class_<floatHyper, Vector, std::shared_ptr<floatHyper>>(clsVector,
-                                                              "floatHyper")  //
+  py::class_<regSpace, std::shared_ptr<regSpace>>(clsVector, "regSpace")
+      .def(py::init<>(), "Initlialize a new regSpace (don't use this")
+      .def("getHyper",
+           (std::shared_ptr<hypercube>(regSpace::*)()) & regSpace::getHyper,
+           "Get the hypercube")
+      .def_property("_hyper", &regSpace::getHyper, &regSpace::setHyper,
+                    py::return_value_policy::reference)
+      .def("getVoidPtr", (void *(regSpace::*)()) & regSpace::getVoidPtr,
+           "Get a void ptr")
+      .def("getEsize", (int (regSpace::*)()) & regSpace::getEsize,
+           "Get the element size");
+
+  py::class_<floatHyper, Vector, regSpace, std::shared_ptr<floatHyper>>(
+      clsVector,
+      "floatHyper")  //
       .def(py::init<>(), "Initlialize a new Float Hyper (don't use this")
       .def("getSpaceOnly", (bool (floatHyper::*)()) & floatHyper::getSpaceOnly,
            "Check to see if this only a description of the vector space")
 
-    
       .def("setData", (void (floatHyper::*)(float *)) & floatHyper::setData,
            "Set the data pointer")
       .def("getVals", (float *(floatHyper::*)()) & floatHyper::getVals,
            "Get the data pointer")
-      .def("getHyper",
-           (std::shared_ptr<hypercube>(floatHyper::*)()) & floatHyper::getHyper,
-           "Get the hypercube")
+
       .def("isDifferent",
            (bool (floatHyper::*)(std::shared_ptr<floatHyper>)) &
                floatHyper::isDifferent,
            "Check to  see if two vectors are different")
-      .def_property("_hyper", &floatHyper::getHyper, &floatHyper::setHyper,
-                    py::return_value_policy::reference)
 
       .def_property("_vals", &floatHyper::getVals, &floatHyper::setData,
                     py::return_value_policy::reference)
@@ -49,28 +58,28 @@ PYBIND11_MODULE(pySepVector, clsVector) {
           "Add two vectors")
       .def("scale", (void (floatHyper::*)(const double)) & floatHyper::scale,
            "Scale a vector")
-       
+
       .def("scaleAdd",
-           (void (floatHyper::*)( std::shared_ptr<floatHyper>,const double,
+           (void (floatHyper::*)(std::shared_ptr<floatHyper>, const double,
                                  const double)) &
                floatHyper::scaleAdd,
            "vec=vec*sc1+vec2*sc2")
       .def("calcCheckSum",
            (double (floatHyper::*)() const) & floatHyper::calcCheckSum,
            "Calculate checksum of a vector")
-      
-          .def("norm", (double (floatHyper::*)(const int n) const) & floatHyper::norm,
-           "Calculate n-norm of a vector")
-      .def("zero",(void (floatHyper::*)()) & floatHyper::zero,
-           "Fill a vector with zero")
 
+      .def("norm",
+           (double (floatHyper::*)(const int n) const) & floatHyper::norm,
+           "Calculate n-norm of a vector")
+      .def("zero", (void (floatHyper::*)()) & floatHyper::zero,
+           "Fill a vector with zero")
 
       .def("signum", (void (floatHyper::*)()) & floatHyper::signum,
            "Fill a vector with it's signum")
       .def("rand", (void (floatHyper::*)()) & floatHyper::random,
            "Fill a vector with random number")
 
-         .def("mult",
+      .def("mult",
            (void (floatHyper::*)(std::shared_ptr<floatHyper>)) &
                floatHyper::mult,
            "vec=vec*vec2")
@@ -126,7 +135,6 @@ PYBIND11_MODULE(pySepVector, clsVector) {
             m.getVals(), sizeof(float), py::format_descriptor<float>::format(),
             2, {m.getHyper()->getAxis(2).n, m.getHyper()->getAxis(1).n},
             {sizeof(float) * m.getHyper()->getAxis(1).n, sizeof(float)});
-
       });
 
   py::class_<float3DReg, floatHyper, std::shared_ptr<float3DReg>>(
