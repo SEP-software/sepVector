@@ -1,4 +1,6 @@
 #include <ioTypes.h>
+#include "short1DReg.h"
+
 #include "byte1DReg.h"
 #include "byte2DReg.h"
 #include "byte3DReg.h"
