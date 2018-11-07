@@ -44,7 +44,7 @@ class floatHyper : public Vector, public regSpace {
   virtual double absMax() const;
   double min() const;
   double max() const;
-  virtual void infoStream(const int lev, std::stringstream &x);
+  virtual void infoStream(const int lev, std::stringstream &x) override;
 
   virtual bool checkSame(const std::shared_ptr<SEP::floatHyper> vec2) const;
   uint64_t getCheckSum() { return _checkSum; }
