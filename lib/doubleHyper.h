@@ -42,7 +42,7 @@ class doubleHyper : public Vector, public regSpace {
   double *getVals() { return _vals; }
   const double *getCVals() const { return _vals; }
   virtual void softClip(const float val);
-  virtual double absMax() const;
+  virtual double absMax() const override;
   double min() const;
   double max() const;
   virtual void infoStream(const int lev, std::stringstream &x);
