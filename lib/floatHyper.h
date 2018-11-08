@@ -33,7 +33,7 @@ class floatHyper : public Vector, public regSpace {
     setNotSpace();
     setMemPtr((void *)ptr, sizeof(float));
   }
-  void calcCheckSum();
+  void calcCheckSum() override;
   void setCheckSum(const uint64_t x) { _checkSum = x; }
   bool isDifferent(std::shared_ptr<floatHyper> vec2) {
     calcCheckSum();
@@ -48,7 +48,7 @@ class floatHyper : public Vector, public regSpace {
 
   float *getVals() { return _vals; }
   const float *getCVals() const { return _vals; }
-  virtual void softClip(const float val);
+  virtual void softClip(const float val) override;
   virtual double absMax() const override;
   double min() const;
   double max() const;
