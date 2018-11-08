@@ -1,5 +1,10 @@
 cmake_minimum_required(VERSION 3.5 FATAL_ERROR)
 
+if(NOT SUBPACKAGE) 
+  option(BUILD_PYTHON "Build python interfaces" ON)
+endif(NOT SUBPACKAGE)
+set(SUBPACKAGE true)
+
 project(sepVector LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -55,7 +60,6 @@ install(FILES ${CMAKE_CURRENT_BINARY_DIR}/sepVectorConfig.cmake
 install(EXPORT sepVectorExports DESTINATION cmake)
 
 add_subdirectory(lib)
-option(BUILD_PYTHON "Build python interfaces" ON)
 if(BUILD_PYTHON)
   add_subdirectory(python)
 endif(BUILD_PYTHON)
