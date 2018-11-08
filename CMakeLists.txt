@@ -1,8 +1,36 @@
 cmake_minimum_required(VERSION 3.5 FATAL_ERROR)
 
-if(NOT SUBPACKAGE) 
+if(NOT SUBPACKAGE)
   option(BUILD_PYTHON "Build python interfaces" ON)
 endif(NOT SUBPACKAGE)
+option(BUILD_DOUBLE "Build double support" ON)
+option(BUILD_INT "Build int support" ON)
+option(BUILD_COMPLEX "Build complex support" ON)
+option(BUILD_BYTE "Build byte support" ON)
+option(BUILD_SHORT "Build short support" ON)
+
+message("DOUBLE" ${BUILD_DOUBLE})
+if(BUILD_DOUBLE)
+    set(USE_DOUBLE true)
+endif(BUILD_DOUBLE)
+
+
+if(BUILD_COMPLEX)
+    set(USE_DOUBLE true)
+endif(BUILD_COMPLEX)
+
+
+if(BUILD_INT)
+    set(USE_INT true)
+endif(BUILD_INT)
+
+
+if(BUILD_BYTE)
+    set(USE_BYTE true)
+endif(BUILD_BYTE)
+if(BUILD_SHORT)
+    set(USE_SHORT true)
+endif(BUILD_SHORT)
 set(SUBPACKAGE true)
 
 project(sepVector LANGUAGES CXX)
@@ -37,6 +65,9 @@ if(NOT TARGET hypercube)
   add_subdirectory(external/hypercube)
   include_directories(${CMAKE_CURRENT_SOURCE_DIR}/external/hypercube/lib)
 endif(NOT TARGET hypercube)
+
+configure_file("${PROJECT_SOURCE_DIR}/sepVectorConfig.h.in"
+               "${PROJECT_BINARY_DIR}/sepVectorConfig.h")
 
 include_directories("${PROJECT_BINARY_DIR}")
 

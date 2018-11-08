@@ -1,4 +1,5 @@
 #include "regVector.h"
+#include "sepVectorConfig.h"
 using namespace SEP;
 std::shared_ptr<regSpace> SEP::vecFromHyper(
     const std::shared_ptr<hypercube> hyper, const dataType typ, const bool g1) {
@@ -38,7 +39,9 @@ std::shared_ptr<regSpace> SEP::vecFromHyper(
         } break;
       }
       break;
+
     case DATA_COMPLEX:
+#ifdef USE_COMPLEX
       switch (ndim) {
         case 1: {
           std::shared_ptr<complex1DReg> a(new complex1DReg(hyper2));
@@ -65,8 +68,13 @@ std::shared_ptr<regSpace> SEP::vecFromHyper(
           return a;
         } break;
       }
+#else
+      std::cerr << "sepVector not build with complex support" << std::endl;
+      assert(1 == 2);
+#endif
       break;
     case DATA_BYTE:
+#ifdef USE_BYTE
       switch (ndim) {
         case 1: {
           std::shared_ptr<byte1DReg> a(new byte1DReg(hyper2));
@@ -93,8 +101,13 @@ std::shared_ptr<regSpace> SEP::vecFromHyper(
           return a;
         } break;
       }
+#else
+      std::cerr << "sepVector not build with byte support" << std::endl;
+      assert(1 == 2);
+#endif
       break;
     case DATA_SHORT:
+#ifdef USE_SHORT
       switch (ndim) {
         case 1: {
           std::shared_ptr<short1DReg> a(new short1DReg(hyper2));
@@ -129,8 +142,13 @@ std::shared_ptr<regSpace> SEP::vecFromHyper(
           return a;
         } break;
       }
+#else
+      std::cerr << "sepVector not build with int support" << std::endl;
+      assert(1 == 2);
+#endif
       break;
     case DATA_DOUBLE:
+#ifdef USE_DOUBLE
       switch (ndim) {
         case 1: {
           std::shared_ptr<double1DReg> a(new double1DReg(hyper2));
@@ -157,8 +175,16 @@ std::shared_ptr<regSpace> SEP::vecFromHyper(
           return a;
         } break;
       }
+#else
+      std::cerr << "sepVector not build with double support" << std::endl;
+      assert(1 == 2);
+#endif
       break;
+    default:
+      std::cerr << "Unhandled data type" << std::endl;
+      assert(1 == 2);
   }
+  return nullptr;
 }
 std::shared_ptr<regSpace> SEP::subCubeFromHyper(
     const std::shared_ptr<hypercube> hyper, const dataType typ,
@@ -170,6 +196,7 @@ std::shared_ptr<regSpace> SEP::subCubeFromHyper(
   }
   std::shared_ptr<hypercube> hyper2(new hypercube(axesOut));
   return vecFromHyper(hyper2, typ);
+  return nullptr;
 }
 std::shared_ptr<regSpace> SEP::windowFromHyper(
     const std::shared_ptr<hypercube> hyper, const std::vector<int> &nw,
@@ -219,7 +246,7 @@ std::shared_ptr<regSpace> SEP::cloneRegSpace(
   std::shared_ptr<float6DReg> v6 =
       std::dynamic_pointer_cast<float6DReg>(storage);
   if (v6) return v6->clone();
-
+#ifdef USE_INT
   std::shared_ptr<int1DReg> va = std::dynamic_pointer_cast<int1DReg>(storage);
   if (va) return va->clone();
 
@@ -240,7 +267,8 @@ std::shared_ptr<regSpace> SEP::cloneRegSpace(
 
   std::shared_ptr<byte1DReg> vg = std::dynamic_pointer_cast<byte1DReg>(storage);
   if (vg) return vg->clone();
-
+#endif
+#ifdef USE_BYTE
   std::shared_ptr<byte2DReg> vh = std::dynamic_pointer_cast<byte2DReg>(storage);
   if (vh) return vh->clone();
 
@@ -255,7 +283,8 @@ std::shared_ptr<regSpace> SEP::cloneRegSpace(
 
   std::shared_ptr<byte6DReg> vl = std::dynamic_pointer_cast<byte6DReg>(storage);
   if (vl) return vl->clone();
-
+#endif
+#ifdef USE_COMPLEX
   std::shared_ptr<complex1DReg> vm =
       std::dynamic_pointer_cast<complex1DReg>(storage);
   if (vm) return vm->clone();
@@ -279,7 +308,8 @@ std::shared_ptr<regSpace> SEP::cloneRegSpace(
   std::shared_ptr<complex6DReg> vr =
       std::dynamic_pointer_cast<complex6DReg>(storage);
   if (vr) return vr->clone();
-
+#endif
+#ifdef USE_DOUBLE
   std::shared_ptr<double1DReg> vs =
       std::dynamic_pointer_cast<double1DReg>(storage);
   if (vs) return vs->clone();
@@ -303,4 +333,6 @@ std::shared_ptr<regSpace> SEP::cloneRegSpace(
   std::shared_ptr<double6DReg> vx =
       std::dynamic_pointer_cast<double6DReg>(storage);
   if (vx) return vx->clone();
+#endif
+  return nullptr;
 }

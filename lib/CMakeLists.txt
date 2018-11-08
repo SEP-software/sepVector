@@ -5,14 +5,28 @@ FIND_PACKAGE( Boost 1.40 COMPONENTS program_options unit_test_framework REQUIRED
 INCLUDE_DIRECTORIES( ${Boost_INCLUDE_DIR} )
 include_directories(${TBB_INCLUDE_DIRS})
 
-set(SOURCES Vector.cc float1DReg.cc	float2DReg.cc	float3DReg.cc floatHyper.cc float4DReg.cc 
-float5DReg.cc float6DReg.cc
- intHyper.cc int1DReg.cc int2DReg.cc int3DReg.cc int4DReg.cc int5DReg.cc  int6DReg.cc
- byteHyper.cc byte1DReg.cc byte2DReg.cc  byte3DReg.cc byte4DReg.cc  byte5DReg.cc byte6DReg.cc
- complexHyper.cc  complex1DReg.cc complex2DReg.cc complex3DReg.cc complex4DReg.cc complex5DReg.cc complex6DReg.cc
- doubleHyper.cc double1DReg.cc double2DReg.cc  double3DReg.cc double4DReg.cc double5DReg.cc double6DReg.cc
-regVector.cc short1DReg.cc shortHyper.cc
-  )
+set(SOURCES Vector.cc float1DReg.cc	float2DReg.cc	float3DReg.cc floatHyper.cc float4DReg.cc regVector.cc regSpace.cc
+float5DReg.cc float6DReg.cc)
+
+if (BUILD_INT)
+set(SOURCES ${SOURCES} intHyper.cc int1DReg.cc int2DReg.cc int3DReg.cc int4DReg.cc int5DReg.cc  int6DReg.cc)
+endif(BUILD_INT)
+
+if(BUILD_BYTE)
+ set(SOURCES ${SOURCES} byteHyper.cc byte1DReg.cc byte2DReg.cc  byte3DReg.cc byte4DReg.cc  byte5DReg.cc byte6DReg.cc)
+endif(BUILD_BYTE)
+
+if(BUILD_COMPLEX)
+ set(SOURCES ${SOURCES}  complexHyper.cc  complex1DReg.cc complex2DReg.cc complex3DReg.cc complex4DReg.cc complex5DReg.cc complex6DReg.cc)
+ endif(BUILD_COMPLEX)
+
+ if(BUILD_DOUBLE)
+ set(SOURCES ${SOURCES} doubleHyper.cc double1DReg.cc double2DReg.cc  double3DReg.cc double4DReg.cc double5DReg.cc double6DReg.cc)
+endif(BUILD_DOUBLE)
+
+if(BUILD_SHORT)
+  set(SOURCES ${SOURCES} short1DReg.cc shortHyper.cc)
+endif(BUILD_SHORT)
 
 set(INCLUDES  Vector.h	superVec.h regSpace.h
 float1DReg.h	float2DReg.h	float3DReg.h	 floatHyper.h float4DReg.h  float5DReg.h float6DReg.h

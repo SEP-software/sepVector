@@ -1,5 +1,6 @@
 #include <pybind11/chrono.h>
 #include <pybind11/complex.h>
+#include "sepVectorConfig.h"
 #include <pybind11/functional.h>
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
@@ -216,6 +217,8 @@ PYBIND11_MODULE(pySepVector, clsVector) {
                  m.getHyper()->getAxis(2).n,
              sizeof(float) * m.getHyper()->getAxis(1).n, sizeof(float)});
       });
+
+#ifdef USE_DOUBLE
   py::class_<doubleHyper, regSpace, std::shared_ptr<doubleHyper>>(
       clsVector,
       "doubleHyper")  //
@@ -458,7 +461,8 @@ PYBIND11_MODULE(pySepVector, clsVector) {
                  m.getHyper()->getAxis(2).n,
              sizeof(double) * m.getHyper()->getAxis(1).n, sizeof(double)});
       });
-
+#endif
+#ifdef BUILD_SHORT
   py::class_<shortHyper, regSpace, std::shared_ptr<shortHyper>>(
       clsVector,
       "shortHyper")  //
@@ -531,7 +535,8 @@ PYBIND11_MODULE(pySepVector, clsVector) {
                                py::format_descriptor<int>::format(), 1,
                                {m.getHyper()->getAxis(1).n}, {sizeof(short)});
       });
-
+#endif
+#ifdef BUILD_INT
   py::class_<intHyper, regSpace, std::shared_ptr<intHyper>>(clsVector,
                                                             "intHyper")  //
       .def(py::init<>(), "Initlialize a new int Hyper (don't use this")
@@ -744,7 +749,8 @@ PYBIND11_MODULE(pySepVector, clsVector) {
                  m.getHyper()->getAxis(2).n,
              sizeof(int) * m.getHyper()->getAxis(1).n, sizeof(int)});
       });
-
+#endif
+#ifdef BUILD_BYTE
   py::class_<byteHyper, regSpace, std::shared_ptr<byteHyper>>(clsVector,
                                                               "byteHyper")  //
       .def(py::init<>(), "Initlialize a new byte Hyper (don't use this")
@@ -963,5 +969,6 @@ PYBIND11_MODULE(pySepVector, clsVector) {
              sizeof(unsigned char) * m.getHyper()->getAxis(1).n,
              sizeof(unsigned char)});
       });
+#endif
 }
 }  // namespace SEP
