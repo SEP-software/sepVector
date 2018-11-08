@@ -39,7 +39,11 @@ class complexHyper : public regSpace {
     return false;
   }
 
-  void zero();
+  void zero() {
+    std::complex<float> val = {0., 0.};
+    set(val);
+  }
+  void set(const std::complex<float> val);
 
   std::complex<float> *getVals() { return _vals; }
   const std::complex<float> *getCVals() const { return _vals; }

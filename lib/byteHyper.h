@@ -33,7 +33,8 @@ class byteHyper : public regSpace {
   }
 
   long long norm(const int n) const;
-  void zero();
+  void zero() { set(0); }
+  void set(const unsigned char val);
 
   unsigned char *getVals() { return _vals; }
   const unsigned char *getCVals() const { return _vals; }

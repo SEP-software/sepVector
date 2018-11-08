@@ -96,11 +96,11 @@ double doubleHyper::norm(const int n) const {
 
   return dt;
 }
-void doubleHyper::zero() {
+void doubleHyper::set(const double val) {
   tbb::parallel_for(tbb::blocked_range<long long>(0, getHyper()->getN123()),
                     [&](const tbb::blocked_range<long long> &r) {
                       for (long long i = r.begin(); i != r.end(); ++i)
-                        _vals[i] = 0;
+                        _vals[i] = val;
                     });
   calcCheckSum();
 }

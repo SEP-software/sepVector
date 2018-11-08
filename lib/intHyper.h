@@ -37,7 +37,8 @@ class intHyper : public regSpace {
   }
 
   long long norm(const int n) const;
-  void zero();
+  void set(const int val);
+  void zero() { set(0); }
 
   int *getVals() { return _vals; }
   const int *getCVals() const { return _vals; }

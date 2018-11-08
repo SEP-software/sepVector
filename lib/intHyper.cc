@@ -95,11 +95,11 @@ long long intHyper::norm(const int n) const {
       [](long long a, long long b) { return a + b; });
   return dt;
 }
-void intHyper::zero() {
+void intHyper::set(const int val) {
   tbb::parallel_for(tbb::blocked_range<long long>(0, getHyper()->getN123()),
                     [&](const tbb::blocked_range<long long> &r) {
                       for (long long i = r.begin(); i != r.end(); ++i)
-                        _vals[i] = 0;
+                        _vals[i] = val;
                     });
   calcCheckSum();
 }

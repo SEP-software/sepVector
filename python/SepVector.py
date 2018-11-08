@@ -8,11 +8,12 @@ import numpy
 
 class vector:
 	"""Generic sepVector class"""
-	def __init__(self,**kw):
-      if "fromCpp" in kw:
-      	self.cppMode=kw["fromCpp"]
-      elif "fromHyper" in kw:
-      	self.cppMode=getCppSepVector(kw["fromHyper"],kw)
+	def __init__(self):
+		"""Initialize a vector object"""
+		if "fromCpp" in self.kw:
+			self.cppMode=self.kw["fromCpp"]
+		elif "fromHyper" in self.kw:
+			self.cppMode=getCppSepVector(self.kw["fromHyper"],self.kw)
 
 	def getCpp(self):
 		"""Return the associated cpp object"""
@@ -21,29 +22,33 @@ class vector:
 	def getStorageType(self):
 		"""Return type of storage"""
 		return self.storage
-
+	def zero(self):
+		"""Function to zero out a vector"""
+		self.cppMode.zero()
+	def set(self,val):
+		"""Function to a vector to a value"""
+		self.cppMode.set(val)
 	def getHyper(self):
 		"""Return the hypercube associated with the vector"""
 		return Hypercube.hypercube(hypercube=self.cppMode.getHyper())
 
 	def getNdArray(self):
-		return np.array(self.cppMode,copy=False)
+		return numpy.array(self.cppMode,copy=False)
 
 
-def floatVector:
+class floatVector(vector):
 	"""Generic float vector class"""
 	def __init__(self,**kw):
-		super().__init__(kw)
+		self.kw=kw
+		super().__init__()
 		self.storage="dataFloat"
-    def norm(self,N):
+	def norm(self,N):
 		"""Function to compute vector N-norm"""
-    	self.cppMode.norm(N)
-    def zero(self):
-		"""Function to zero out a vector"""
-		self.cppMode.zero()
+		self.cppMode.norm(N)
+
 	def scale(self,sc):
-		 """Function to scale a vector"""	
-		 self.cppMode.scale(sc)
+		"""Function to scale a vector"""	
+		self.cppMode.scale(sc)
 	def rand(self):
 		"""Function to fill with random numbers"""
 		self.cppMode.rand()
@@ -59,27 +64,26 @@ def floatVector:
 	def dot(self,vec2):
 		"""Compute dot product of two vectors"""
 		return self.cppMode.dot(vec2)
-    def multiply(self,vec2):
-    	"""self=vec2*self"""
-    	self.cppMode.multiply(vec2)
-    def isDifferent(self,vec2):
-    	"""Function to check if two vectors belong to the same vector space"""
-    	return self.cppMode.isDifferent(vec2)   
+	def multiply(self,vec2):
+		"""self=vec2*self"""
+		self.cppMode.multiply(vec2)
+	def isDifferent(self,vec2):
+		"""Function to check if two vectors belong to the same vector space"""
+		return self.cppMode.isDifferent(vec2)   
 
-def doubleVector:
+class doubleVector(vector):
 	"""Generic double vector class"""
 	def __init__(self,**kw):
-		super().__init__(kw)
+		self.kw=kw
+		super().__init__()
 		self.storage="dataDouble"
-    def norm(self,N):
+	def norm(self,N):
 		"""Function to compute vector N-norm"""
-    	self.cppMode.norm(N)
-    def zero(self):
-		"""Function to zero out a vector"""
-		self.cppMode.zero()
+		self.cppMode.norm(N)
+
 	def scale(self,sc):
-		 """Function to scale a vector"""	
-		 self.cppMode.scale(sc)
+		"""Function to scale a vector"""	
+		self.cppMode.scale(sc)
 	def rand(self):
 		"""Function to fill with random numbers"""
 		self.cppMode.rand()
@@ -95,28 +99,31 @@ def doubleVector:
 	def dot(self,vec2):
 		"""Compute dot product of two vectors"""
 		return self.cppMode.dot(vec2)
-    def multiply(self,vec2):
-    	"""self=vec2*self"""
-    	self.cppMode.multiply(vec2)
-    def isDifferent(self,vec2):
-    	"""Function to check if two vectors belong to the same vector space"""
-    	return self.cppMode.isDifferent(vec2)   
-def intVector:
+	def multiply(self,vec2):
+		"""self=vec2*self"""
+		self.cppMode.multiply(vec2)
+	def isDifferent(self,vec2):
+		"""Function to check if two vectors belong to the same vector space"""
+		return self.cppMode.isDifferent(vec2)     
+class intVector(vector):
 	"""Generic int vector class"""
 	def __init__(self,**kw):
-		super().__init__(kw)
+		self.kw=kw
+		super().__init__()
 		self.storage="dataInt"
 
-def complexVector:
+class complexVector(vector):
 	"""Generic complex vector class"""
 	def __init__(self,**kw):
-		super().__init__(kw)
+		self.kw=kw
+		super().__init__()
 		self.storage="dataComplex"
 
-def byteVector:
+class byteVector(vector):
 	"""Generic byte vector class"""
 	def __init__(self,**kw):
-		super().__init__(kw)
+		self.kw=kw
+		super().__init__()
 		self.storage="dataByte"
 
 def getSepVector(hyper,**keys):
@@ -124,7 +131,7 @@ def getSepVector(hyper,**keys):
 	myt="dataFloat"
 	if "storage" in keys:
 		myt=keys["storage"]
-	if myt == "datFloat":
+	if myt == "dataFloat":
 		x=getFloatVector(hyper)
 		return floatVector(fromCpp=x)
 	elif myt=="dataComplex":
@@ -140,7 +147,7 @@ def getSepVector(hyper,**keys):
 		x=getByteVector(hyper)
 		return byteVector(fromCpp=x)
 	else:
-		raise Exception("Unknown type"%myt)
+		raise Exception("Unknown type %s"%myt)
 
 def getCppSepVector(hyper,**keys):
 		h=hyper.getCpp()

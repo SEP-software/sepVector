@@ -94,7 +94,8 @@ PYBIND11_MODULE(pySepVector, clsVector) {
            "Calculate n-norm of a vector")
       .def("zero", (void (floatHyper::*)()) & floatHyper::zero,
            "Fill a vector with zero")
-
+      .def("set", (void (floatHyper::*)(const float)) & floatHyper::set,
+           "Fill a vector with a value")
       .def("signum", (void (floatHyper::*)()) & floatHyper::signum,
            "Fill a vector with it's signum")
       .def("rand", (void (floatHyper::*)()) & floatHyper::random,
@@ -261,7 +262,8 @@ PYBIND11_MODULE(pySepVector, clsVector) {
            "Calculate n-norm of a vector")
       .def("zero", (void (doubleHyper::*)()) & doubleHyper::zero,
            "Fill a vector with zero")
-
+      .def("set", (void (doubleHyper::*)(const double)) & doubleHyper::set,
+           "Fill a vector with a value")
       .def("signum", (void (doubleHyper::*)()) & doubleHyper::signum,
            "Fill a vector with it's signum")
       .def("rand", (void (doubleHyper::*)()) & doubleHyper::random,
@@ -493,7 +495,8 @@ PYBIND11_MODULE(pySepVector, clsVector) {
            "Calculate checksum of a vector")
       .def("zero", (void (shortHyper::*)()) & shortHyper::zero,
            "Fill a vector with zero")
-
+      .def("set", (void (shortHyper::*)(const short)) & shortHyper::set,
+           "Fill a vector with a value")
       .def("signum", (void (shortHyper::*)()) & shortHyper::signum,
            "Fill a vector with it's signum")
       .def("rand", (void (shortHyper::*)()) & shortHyper::random,
@@ -562,7 +565,8 @@ PYBIND11_MODULE(pySepVector, clsVector) {
            "Calculate checksum of a vector")
       .def("zero", (void (intHyper::*)()) & intHyper::zero,
            "Fill a vector with zero")
-
+      .def("set", (void (intHyper::*)(const int)) & intHyper::set,
+           "Fill a vector with a value")
       .def("signum", (void (intHyper::*)()) & intHyper::signum,
            "Fill a vector with it's signum")
       .def("rand", (void (intHyper::*)()) & intHyper::random,
@@ -767,7 +771,8 @@ PYBIND11_MODULE(pySepVector, clsVector) {
 
       .def("zero", (void (byteHyper::*)()) & byteHyper::zero,
            "Fill a vector with zero")
-
+      .def("set", (void (byteHyper::*)(const unsigned char)) & byteHyper::set,
+           "Fill a vector with a value")
       .def("rand", (void (byteHyper::*)()) & byteHyper::random,
            "Fill a vector with random number")
 

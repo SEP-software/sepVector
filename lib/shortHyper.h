@@ -37,8 +37,8 @@ class shortHyper : public regSpace {
   }
 
   long long norm(const int n) const;
-  void zero();
-
+  void zero() { set(0); }
+  void set(const short val);
   short *getVals() { return _vals; }
   const short *getCVals() const { return _vals; }
   virtual void softClip(const float val);

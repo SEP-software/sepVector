@@ -63,8 +63,8 @@ void complexHyper::random() {
   calcCheckSum();
 }
 
-void complexHyper::zero() {
-  for (long long i = 0; i < getHyper()->getN123(); i++) _vals[i] = 0;
+void complexHyper::set(const std::complex<float> val) {
+  for (long long i = 0; i < getHyper()->getN123(); i++) _vals[i] = val;
   calcCheckSum();
 }
 

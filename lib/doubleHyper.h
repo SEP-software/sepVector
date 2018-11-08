@@ -36,7 +36,8 @@ class doubleHyper : public Vector, public regSpace {
   }
 
   double norm(const int n) const;
-  void zero();
+  void set(const double val);
+  void zero() { set(0.); }
 
   double *getVals() { return _vals; }
   const double *getCVals() const { return _vals; }
