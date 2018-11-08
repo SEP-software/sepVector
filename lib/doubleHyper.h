@@ -14,10 +14,10 @@ class doubleHyper : public Vector, public regSpace {
 
   bool getSpaceOnly() const { return _spaceOnly; }
   virtual void add(std::shared_ptr<doubleHyper> vec);
-  virtual void scale(const double val);
+  virtual void scale(const double val) override;
   virtual void scaleAdd(std::shared_ptr<doubleHyper> vec2, const double sc1,
                         const double sc2);
-  virtual void random();
+  virtual void random() override;
   virtual void signum();
   virtual void mult(std::shared_ptr<doubleHyper> vec2);
   virtual double dot(std::shared_ptr<doubleHyper> vec2) const;
@@ -45,7 +45,7 @@ class doubleHyper : public Vector, public regSpace {
   virtual double absMax() const override;
   double min() const;
   double max() const;
-  virtual void infoStream(const int lev, std::stringstream &x);
+  virtual void infoStream(const int lev, std::stringstream &x) override;
   virtual bool checkSame(const std::shared_ptr<SEP::doubleHyper> vec2) const;
   uint64_t getCheckSum() { return _checkSum; }
 
