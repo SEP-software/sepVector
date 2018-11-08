@@ -4,62 +4,163 @@ import Hypercube
 import numpy
 
 
+
+
+class vector:
+	"""Generic sepVector class"""
+	def __init__(self,**kw):
+      if "fromCpp" in kw:
+      	self.cppMode=kw["fromCpp"]
+      elif "fromHyper" in kw:
+      	self.cppMode=getCppSepVector(kw["fromHyper"],kw)
+
+	def getCpp(self):
+		"""Return the associated cpp object"""
+		return self.cppMode
+
+	def getStorageType(self):
+		"""Return type of storage"""
+		return self.storage
+
+	def getHyper(self):
+		"""Return the hypercube associated with the vector"""
+		return Hypercube.hypercube(hypercube=self.cppMode.getHyper())
+
+	def getNdArray(self):
+		return np.array(self.cppMode,copy=False)
+
+
+def floatVector:
+	"""Generic float vector class"""
+	def __init__(self,**kw):
+		super().__init__(kw)
+		self.storage="dataFloat"
+    def norm(self,N):
+		"""Function to compute vector N-norm"""
+    	self.cppMode.norm(N)
+    def zero(self):
+		"""Function to zero out a vector"""
+		self.cppMode.zero()
+	def scale(self,sc):
+		 """Function to scale a vector"""	
+		 self.cppMode.scale(sc)
+	def rand(self):
+		"""Function to fill with random numbers"""
+		self.cppMode.rand()
+	def clone(self):
+		"""Function to clone (deep copy) a vector"""
+		return self.cppMode.clone()
+	def cloneSpace(self):
+		"""Funtion tor return the space of a vector"""
+		return self.cppMode.cloneSpace()
+	def scaleAdd(self,vec2,sc1,sc2):
+		"""self=self*sc1+sc2*vec2"""
+		self.cppMode.scaleAdd(vec2,sc1,sc2)
+	def dot(self,vec2):
+		"""Compute dot product of two vectors"""
+		return self.cppMode.dot(vec2)
+    def multiply(self,vec2):
+    	"""self=vec2*self"""
+    	self.cppMode.multiply(vec2)
+    def isDifferent(self,vec2):
+    	"""Function to check if two vectors belong to the same vector space"""
+    	return self.cppMode.isDifferent(vec2)   
+
+def doubleVector:
+	"""Generic double vector class"""
+	def __init__(self,**kw):
+		super().__init__(kw)
+		self.storage="dataDouble"
+    def norm(self,N):
+		"""Function to compute vector N-norm"""
+    	self.cppMode.norm(N)
+    def zero(self):
+		"""Function to zero out a vector"""
+		self.cppMode.zero()
+	def scale(self,sc):
+		 """Function to scale a vector"""	
+		 self.cppMode.scale(sc)
+	def rand(self):
+		"""Function to fill with random numbers"""
+		self.cppMode.rand()
+	def clone(self):
+		"""Function to clone (deep copy) a vector"""
+		return self.cppMode.clone()
+	def cloneSpace(self):
+		"""Funtion tor return the space of a vector"""
+		return self.cppMode.cloneSpace()
+	def scaleAdd(self,vec2,sc1,sc2):
+		"""self=self*sc1+sc2*vec2"""
+		self.cppMode.scaleAdd(vec2,sc1,sc2)
+	def dot(self,vec2):
+		"""Compute dot product of two vectors"""
+		return self.cppMode.dot(vec2)
+    def multiply(self,vec2):
+    	"""self=vec2*self"""
+    	self.cppMode.multiply(vec2)
+    def isDifferent(self,vec2):
+    	"""Function to check if two vectors belong to the same vector space"""
+    	return self.cppMode.isDifferent(vec2)   
+def intVector:
+	"""Generic int vector class"""
+	def __init__(self,**kw):
+		super().__init__(kw)
+		self.storage="dataInt"
+
+def complexVector:
+	"""Generic complex vector class"""
+	def __init__(self,**kw):
+		super().__init__(kw)
+		self.storage="dataComplex"
+
+def byteVector:
+	"""Generic byte vector class"""
+	def __init__(self,**kw):
+		super().__init__(kw)
+		self.storage="dataByte"
+
 def getSepVector(hyper,**keys):
+	""" Get a sepVector object"""
+	myt="dataFloat"
+	if "storage" in keys:
+		myt=keys["storage"]
+	if myt == "datFloat":
+		x=getFloatVector(hyper)
+		return floatVector(fromCpp=x)
+	elif myt=="dataComplex":
+		x=getComplexVector(hyper)
+		return complexVector(fromCpp=x)
+	elif myt=="dataDouble":
+		x=getDoubleVector(hyper)
+		return doubleVector(fromCpp=x)
+	elif myt=="dataInt":
+		x=getIntVector(hyper)
+		return intVector(fromCpp=x)
+	elif myt=="dataByte":
+		x=getByteVector(hyper)
+		return byteVector(fromCpp=x)
+	else:
+		raise Exception("Unknown type"%myt)
+
+def getCppSepVector(hyper,**keys):
 		h=hyper.getCpp()
-		myt="float"
-		if "type" in keys:
-			myt=keys["type"]
-		if myt == "float":
+		myt="dataFloat"
+		if "storage" in keys:
+			myt=keys["storage"]
+		if myt == "datFloat":
 			x=getFloatVector(hyper)
-		elif myt=="complex":
+		elif myt=="dataComplex":
 			x=getComplexVector(hyper)
-		elif myt=="double":
+		elif myt=="dataDouble":
 			x=getDoubleVector(hyper)
-		elif myt=="int":
+		elif myt=="dataInt":
 			x=getIntVector(hyper)
-		elif myt=="byte":
+		elif myt=="dataByte":
 			x=getByteVector(hyper)
 		else:
 			raise Exception("Unknown type"%myt)
 
-		if "fill" in keys:
-			checkSanity(myt,hyper,keys["fill"])
-
-		if len (hyper.axes)==1:
-			y=numpy.array(x,copy=False)
-			for i1 in range(hyper.axes[0].n):
-				y[i]=keys["fill"][i1]
-		elif len(hyper.axes)==2:
-			for i2 in range(hyper.axes[1].n):
-				for i1 in range(hyper.axes[0].n):
-					y[i2][i1]=keys["fill"][i2][i1]
-		elif len(hyper.axes)==3:
-			for i3 in range(hyper.axes[2].n):
-				for i2 in range(hyper.axes[1].n):
-					for i1 in range(hyper.axes[0].n):
-						y[i3][i2][i1]=keys["fill"][i3][i2][i1]				
-		elif len(hyper.axes)==4:
-			for i4 in range(hyper.axes[3].n):
-				for i3 in range(hyper.axes[2].n):
-					for i2 in range(hyper.axes[1].n):
-						for i1 in range(hyper.axes[0].n):
-							y[i4][i3][i2][i1]=keys["fill"][i4][i3][i2][i1]
-		elif len(hyper.axes)==5:
-			for i5 in range(hyper.axes[4].n):
-				for i4 in range(hyper.axes[3].n):
-					for i3 in range(hyper.axes[2].n):
-						for i2 in range(hyper.axes[1].n):
-							for i1 in range(hyper.axes[0].n):
-								y[i5][i4][i3][i2][i1]=keys["fill"][i5][i4][i3][i2][i1]	
-		elif len(hyper.axes)==6:
-			for i6 in range(hyper.axes[5].n):
-				for i5 in range(hyper.axes[4].n):
-					for i4 in range(hyper.axes[3].n):
-						for i3 in range(hyper.axes[2].n):
-							for i2 in range(hyper.axes[1].n):
-								for i1 in range(hyper.axes[0].n):
-									y[i6][i5][i4][i3][i2][i1]=keys["fill"][i6][i5][i4][i3][i2][i1]	
-		return x;
+		
 
 
 def getFloatVector(hyper):
@@ -137,31 +238,6 @@ def getIntVector(hyper):
 		return pySepVector.int4DReg(h)
 	elif len(hyper.axes) ==6:
 		return pySepVector.int6DReg(h)
-
-def checkSanity(myt,hyper,fill):
-	if isinstance(fill,list):
-		if len(hyper.axes) !=1:
-			raise Exception("If passing a list for fill must be 1-D array")
-		return
-	if not isinstance(fill, numpy.ndarray):
-		raise Exception("Must pass ndarray as initializer")
-	if myt=="float" and fill.dtype!=numpy.float32:
-		raise Exception("Must numpy.float32 to fill a floatHyer")
-	if myt=="int" and fill.dtype!=numpy.int32:
-		raise Exception("Must numpy.int32 to fill a intHyper")	
-	if myt=="double" and fill.dtype!=numpy.float64:
-		raise Exception("Must numpy.float64 to fill a doubleHyper")
-	if myt=="complex" and fill.dtype!=numpy.complex64:
-		raise Exception("Must numpy.complex64 to fill a complexHyper")
-	if myt=="byte" and fill.dtype!=numpy.int8:
-		raise Exception("Must numpy.int8 to fill a byteHyper")
-
-	if len(fill.shape) != len(hyper.axes):
-		raise Exception("Fill and hyper not the same number of dimensions")
-
-	for i in range(fill.shape):
-		if hyper.axes[i].n != fill.shape[len(fill.shape)-1-i]:
-			raise Exception("Fill and hyper not the same size axis %d"%(i+1))
 
 
 
