@@ -74,6 +74,7 @@ set(sepVector_DIRNAME_include "include")
 set(sepVector_DIRNAME_cmake "cmake")
 include(CMakePackageConfigHelpers)
 
+if(NOT SUPPORT_LIBRARIES_BUILD)
 configure_package_config_file(
   "${CMAKE_CURRENT_SOURCE_DIR}/sepVectorConfig.cmake.in"
   "${CMAKE_CURRENT_BINARY_DIR}/sepVectorConfig.cmake"
@@ -87,6 +88,7 @@ install(FILES ${CMAKE_CURRENT_BINARY_DIR}/sepVectorConfig.cmake
         DESTINATION cmake)
 
 install(EXPORT sepVectorExports DESTINATION cmake)
+endif(NOT SUPPORT_LIBRARIES_BUILD)
 
 add_subdirectory(lib)
 if(BUILD_PYTHON)
