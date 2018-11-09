@@ -44,7 +44,6 @@ set(CMAKE_INCLUDE_CURRENT_DIR TRUE)
 # configure a header file to pass some of the CMake settings
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake")
 find_package(Boost REQUIRED)
-find_package(NumPy REQUIRED)
 find_package(TBB REQUIRED)
 set(sepVector_MAJOR_VERSION 0)
 set(sepVector_MINOR_VERSION 2)
