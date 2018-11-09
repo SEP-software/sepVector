@@ -88,13 +88,13 @@ install(FILES ${CMAKE_CURRENT_BINARY_DIR}/sepVectorConfig.cmake
         DESTINATION cmake)
 
 install(EXPORT sepVectorExports DESTINATION cmake)
+add_subdirectory(env-modules)
 endif(NOT SUPPORT_LIBRARIES_BUILD)
 
 add_subdirectory(lib)
 if(BUILD_PYTHON)
   add_subdirectory(python)
 endif(BUILD_PYTHON)
-add_subdirectory(env-modules)
 
 include(InstallRequiredSystemLibraries)
 set(CPACK_RESOURCE_FILE_LICENSE "${PROJECT_SOURCE_DIR}/LICENSE")
