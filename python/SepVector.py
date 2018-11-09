@@ -3,13 +3,7 @@ import pySepVector
 import Hypercube
 import numpy
 
-storageConvert={"dataFloat":pySepVector::dataFloat,
-"dataInt":pySepVector::dataInt
-"dataShort":pySepVector::dataShort
-"dataByte":pySepVector::dataByte
-"dataComplex":pySepVector::dataComplex
-"dataDouble":pySepVector::dataDouble
-}
+
 
 
 class vector:
