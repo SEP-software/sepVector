@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 3.5 FATAL_ERROR)
 
 if(NOT SUBPACKAGE)
   option(BUILD_PYTHON "Build python interfaces" ON)
+option(INSTALL_CMAKE_ENV "Install cmake build environment" ON)
 endif(NOT SUBPACKAGE)
 option(BUILD_DOUBLE "Build double support" ON)
 option(BUILD_INT "Build int support" ON)
