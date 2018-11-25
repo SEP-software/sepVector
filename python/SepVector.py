@@ -36,7 +36,7 @@ class vector:
 		return numpy.array(self.cppMode,copy=False)
 	def checkSame(self,vec2):
 		"""Function to check if two vectors belong to the same vector space"""
-		return self.cppMode.checkSame(vec2)  
+		return self.cppMode.checkSame(vec2.cppMode)  
 
 class floatVector(vector):
 	"""Generic float vector class"""
