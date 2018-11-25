@@ -34,7 +34,9 @@ class vector:
 
 	def getNdArray(self):
 		return numpy.array(self.cppMode,copy=False)
-
+	def checkSame(self,vec2):
+		"""Function to check if two vectors belong to the same vector space"""
+		return self.cppMode.checkSame(vec2)  
 
 class floatVector(vector):
 	"""Generic float vector class"""
@@ -57,7 +59,7 @@ class floatVector(vector):
 		return self.cppMode.clone()
 	def cloneSpace(self):
 		"""Funtion tor return the space of a vector"""
-		return self.cppMode.cloneSpace()
+		return floatVector(fromCpp=self.cppMode.cloneSpace())
 	def scaleAdd(self,vec2,sc1,sc2):
 		"""self=self*sc1+sc2*vec2"""
 		self.cppMode.scaleAdd(vec2,sc1,sc2)
