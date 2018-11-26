@@ -36,10 +36,10 @@ class vector:
 		return numpy.array(self.cppMode,copy=False)
 	def checkSame(self,vec2):
 		"""Function to check if two vectors belong to the same vector space"""
+		print("IN SEPVE checkSAME")
 		print (self,"<-a b->",vec2);
 		print (self.cppMode,"<-1 2->",vec2.getCpp());
-		return True
-		return self.cppMode.checkSame(vec2.getCpp())
+		return self.getCpp().checkSame(vec2.getCpp())
 
 class floatVector(vector):
 	"""Generic float vector class"""
@@ -59,7 +59,7 @@ class floatVector(vector):
 		self.cppMode.rand()
 	def clone(self):
 		"""Function to clone (deep copy) a vector"""
-		return self.cppMode.clone()
+		return floatVector(fromCpp=self.cppMode.clone())
 	def cloneSpace(self):
 		"""Funtion tor return the space of a vector"""
 		return floatVector(fromCpp=self.cppMode.cloneSpace())
