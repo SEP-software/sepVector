@@ -1,0 +1,151 @@
+Created temporary directory: /private/var/folders/8f/tfw3dnz15kq_g8f2wgzbc22h0000gn/T/pip-ephem-wheel-cache-to4teg52
+Created temporary directory: /private/var/folders/8f/tfw3dnz15kq_g8f2wgzbc22h0000gn/T/pip-install-6kmtouma
+Processing /Users/bob/Src/sepVector/src
+  Created temporary directory: /private/var/folders/8f/tfw3dnz15kq_g8f2wgzbc22h0000gn/T/pip-req-build-kdygay9h
+  Running setup.py (path:/private/var/folders/8f/tfw3dnz15kq_g8f2wgzbc22h0000gn/T/pip-req-build-kdygay9h/setup.py) egg_info for package from file:///Users/bob/Src/sepVector/src
+    Running command python setup.py egg_info
+    running egg_info
+    creating pip-egg-info/sepVector.egg-info
+    writing pip-egg-info/sepVector.egg-info/PKG-INFO
+    writing dependency_links to pip-egg-info/sepVector.egg-info/dependency_links.txt
+    writing top-level names to pip-egg-info/sepVector.egg-info/top_level.txt
+    writing manifest file 'pip-egg-info/sepVector.egg-info/SOURCES.txt'
+    reading manifest file 'pip-egg-info/sepVector.egg-info/SOURCES.txt'
+    writing manifest file 'pip-egg-info/sepVector.egg-info/SOURCES.txt'
+  Source in /private/var/folders/8f/tfw3dnz15kq_g8f2wgzbc22h0000gn/T/pip-req-build-kdygay9h has version 0.1, which satisfies requirement sepVector==0.1 from file:///Users/bob/Src/sepVector/src
+Could not parse version from link: file:///Users/bob/Src/sepVector/src
+Building wheels for collected packages: sepVector
+  Created temporary directory: /private/var/folders/8f/tfw3dnz15kq_g8f2wgzbc22h0000gn/T/pip-wheel-9y_bsbm4
+  Running setup.py bdist_wheel for sepVector: started
+  Destination directory: /private/var/folders/8f/tfw3dnz15kq_g8f2wgzbc22h0000gn/T/pip-wheel-9y_bsbm4
+  Running command /anaconda3/bin/python -u -c "import setuptools, tokenize;__file__='/private/var/folders/8f/tfw3dnz15kq_g8f2wgzbc22h0000gn/T/pip-req-build-kdygay9h/setup.py';f=getattr(tokenize, 'open', open)(__file__);code=f.read().replace('\r\n', '\n');f.close();exec(compile(code, __file__, 'exec'))" bdist_wheel -d /private/var/folders/8f/tfw3dnz15kq_g8f2wgzbc22h0000gn/T/pip-wheel-9y_bsbm4 --python-tag cp36
+  running bdist_wheel
+  running build
+  running build_py
+  creating build
+  creating build/lib.macosx-10.7-x86_64-3.6
+  creating build/lib.macosx-10.7-x86_64-3.6/SEP
+  copying SEP/SepVector.py -> build/lib.macosx-10.7-x86_64-3.6/SEP
+  running build_ext
+  Traceback (most recent call last):
+    File "<string>", line 1, in <module>
+    File "/private/var/folders/8f/tfw3dnz15kq_g8f2wgzbc22h0000gn/T/pip-req-build-kdygay9h/setup.py", line 88, in <module>
+      zip_safe=False,
+    File "/anaconda3/lib/python3.6/site-packages/setuptools/__init__.py", line 129, in setup
+      return distutils.core.setup(**attrs)
+    File "/anaconda3/lib/python3.6/distutils/core.py", line 148, in setup
+      dist.run_commands()
+    File "/anaconda3/lib/python3.6/distutils/dist.py", line 955, in run_commands
+      self.run_command(cmd)
+    File "/anaconda3/lib/python3.6/distutils/dist.py", line 974, in run_command
+      cmd_obj.run()
+    File "/anaconda3/lib/python3.6/site-packages/wheel/bdist_wheel.py", line 202, in run
+      self.run_command('build')
+    File "/anaconda3/lib/python3.6/distutils/cmd.py", line 313, in run_command
+      self.distribution.run_command(command)
+    File "/anaconda3/lib/python3.6/distutils/dist.py", line 974, in run_command
+      cmd_obj.run()
+    File "/anaconda3/lib/python3.6/distutils/command/build.py", line 135, in run
+      self.run_command(cmd_name)
+    File "/anaconda3/lib/python3.6/distutils/cmd.py", line 313, in run_command
+      self.distribution.run_command(command)
+    File "/anaconda3/lib/python3.6/distutils/dist.py", line 974, in run_command
+      cmd_obj.run()
+    File "/private/var/folders/8f/tfw3dnz15kq_g8f2wgzbc22h0000gn/T/pip-req-build-kdygay9h/setup.py", line 35, in run
+      self.build_extension(ext)
+    File "/private/var/folders/8f/tfw3dnz15kq_g8f2wgzbc22h0000gn/T/pip-req-build-kdygay9h/setup.py", line 64, in build_extension
+      cwd=self.build_temp, env=env)
+  TypeError: 'cwd' is an invalid keyword argument for this function
+  Running setup.py bdist_wheel for sepVector: finished with status 'error'
+  Failed building wheel for sepVector
+  Running setup.py clean for sepVector
+  Running command /anaconda3/bin/python -u -c "import setuptools, tokenize;__file__='/private/var/folders/8f/tfw3dnz15kq_g8f2wgzbc22h0000gn/T/pip-req-build-kdygay9h/setup.py';f=getattr(tokenize, 'open', open)(__file__);code=f.read().replace('\r\n', '\n');f.close();exec(compile(code, __file__, 'exec'))" clean --all
+  running clean
+  removing 'build/temp.macosx-10.7-x86_64-3.6' (and everything under it)
+  removing 'build/lib.macosx-10.7-x86_64-3.6' (and everything under it)
+  'build/bdist.macosx-10.7-x86_64' does not exist -- can't clean it
+  'build/scripts-3.6' does not exist -- can't clean it
+  removing 'build'
+Failed to build sepVector
+distributed 1.21.8 requires msgpack, which is not installed.
+Installing collected packages: sepVector
+  Found existing installation: sepVector 0.1
+    Uninstalling sepVector-0.1:
+      Created temporary directory: /private/var/folders/8f/tfw3dnz15kq_g8f2wgzbc22h0000gn/T/pip-uninstall-uzbp6di1
+      Removing file or directory /anaconda3/lib/python3.6/site-packages/SEP/SepVector.py
+      Removing file or directory /anaconda3/lib/python3.6/site-packages/SEP/__pycache__/SepVector.cpython-36.pyc
+      Removing file or directory /anaconda3/lib/python3.6/site-packages/sepVector-0.1.dist-info/INSTALLER
+      Removing file or directory /anaconda3/lib/python3.6/site-packages/sepVector-0.1.dist-info/METADATA
+      Removing file or directory /anaconda3/lib/python3.6/site-packages/sepVector-0.1.dist-info/RECORD
+      Removing file or directory /anaconda3/lib/python3.6/site-packages/sepVector-0.1.dist-info/WHEEL
+      Removing file or directory /anaconda3/lib/python3.6/site-packages/sepVector-0.1.dist-info/top_level.txt
+      Successfully uninstalled sepVector-0.1
+  Created temporary directory: /private/var/folders/8f/tfw3dnz15kq_g8f2wgzbc22h0000gn/T/pip-record-h5tejhmn
+  Running setup.py install for sepVector: started
+    Running command /anaconda3/bin/python -u -c "import setuptools, tokenize;__file__='/private/var/folders/8f/tfw3dnz15kq_g8f2wgzbc22h0000gn/T/pip-req-build-kdygay9h/setup.py';f=getattr(tokenize, 'open', open)(__file__);code=f.read().replace('\r\n', '\n');f.close();exec(compile(code, __file__, 'exec'))" install --record /private/var/folders/8f/tfw3dnz15kq_g8f2wgzbc22h0000gn/T/pip-record-h5tejhmn/install-record.txt --single-version-externally-managed --compile
+    running install
+    running build
+    running build_py
+    creating build
+    creating build/lib.macosx-10.7-x86_64-3.6
+    creating build/lib.macosx-10.7-x86_64-3.6/SEP
+    copying SEP/SepVector.py -> build/lib.macosx-10.7-x86_64-3.6/SEP
+    running build_ext
+    Traceback (most recent call last):
+      File "<string>", line 1, in <module>
+      File "/private/var/folders/8f/tfw3dnz15kq_g8f2wgzbc22h0000gn/T/pip-req-build-kdygay9h/setup.py", line 88, in <module>
+        zip_safe=False,
+      File "/anaconda3/lib/python3.6/site-packages/setuptools/__init__.py", line 129, in setup
+        return distutils.core.setup(**attrs)
+      File "/anaconda3/lib/python3.6/distutils/core.py", line 148, in setup
+        dist.run_commands()
+      File "/anaconda3/lib/python3.6/distutils/dist.py", line 955, in run_commands
+        self.run_command(cmd)
+      File "/anaconda3/lib/python3.6/distutils/dist.py", line 974, in run_command
+        cmd_obj.run()
+      File "/anaconda3/lib/python3.6/site-packages/setuptools/command/install.py", line 61, in run
+        return orig.install.run(self)
+      File "/anaconda3/lib/python3.6/distutils/command/install.py", line 545, in run
+        self.run_command('build')
+      File "/anaconda3/lib/python3.6/distutils/cmd.py", line 313, in run_command
+        self.distribution.run_command(command)
+      File "/anaconda3/lib/python3.6/distutils/dist.py", line 974, in run_command
+        cmd_obj.run()
+      File "/anaconda3/lib/python3.6/distutils/command/build.py", line 135, in run
+        self.run_command(cmd_name)
+      File "/anaconda3/lib/python3.6/distutils/cmd.py", line 313, in run_command
+        self.distribution.run_command(command)
+      File "/anaconda3/lib/python3.6/distutils/dist.py", line 974, in run_command
+        cmd_obj.run()
+      File "/private/var/folders/8f/tfw3dnz15kq_g8f2wgzbc22h0000gn/T/pip-req-build-kdygay9h/setup.py", line 35, in run
+        self.build_extension(ext)
+      File "/private/var/folders/8f/tfw3dnz15kq_g8f2wgzbc22h0000gn/T/pip-req-build-kdygay9h/setup.py", line 64, in build_extension
+        cwd=self.build_temp, env=env)
+    TypeError: 'cwd' is an invalid keyword argument for this function
+    Running setup.py install for sepVector: finished with status 'error'
+  Rolling back uninstall of sepVector
+  Replacing /anaconda3/lib/python3.6/site-packages/SEP/SepVector.py
+  Replacing /anaconda3/lib/python3.6/site-packages/SEP/__pycache__/SepVector.cpython-36.pyc
+  Replacing /anaconda3/lib/python3.6/site-packages/sepVector-0.1.dist-info/INSTALLER
+  Replacing /anaconda3/lib/python3.6/site-packages/sepVector-0.1.dist-info/METADATA
+  Replacing /anaconda3/lib/python3.6/site-packages/sepVector-0.1.dist-info/RECORD
+  Replacing /anaconda3/lib/python3.6/site-packages/sepVector-0.1.dist-info/WHEEL
+  Replacing /anaconda3/lib/python3.6/site-packages/sepVector-0.1.dist-info/top_level.txt
+Cleaning up...
+  Removing source in /private/var/folders/8f/tfw3dnz15kq_g8f2wgzbc22h0000gn/T/pip-req-build-kdygay9h
+Command "/anaconda3/bin/python -u -c "import setuptools, tokenize;__file__='/private/var/folders/8f/tfw3dnz15kq_g8f2wgzbc22h0000gn/T/pip-req-build-kdygay9h/setup.py';f=getattr(tokenize, 'open', open)(__file__);code=f.read().replace('\r\n', '\n');f.close();exec(compile(code, __file__, 'exec'))" install --record /private/var/folders/8f/tfw3dnz15kq_g8f2wgzbc22h0000gn/T/pip-record-h5tejhmn/install-record.txt --single-version-externally-managed --compile" failed with error code 1 in /private/var/folders/8f/tfw3dnz15kq_g8f2wgzbc22h0000gn/T/pip-req-build-kdygay9h/
+Exception information:
+Traceback (most recent call last):
+  File "/anaconda3/lib/python3.6/site-packages/pip/_internal/basecommand.py", line 228, in main
+    status = self.run(options, args)
+  File "/anaconda3/lib/python3.6/site-packages/pip/_internal/commands/install.py", line 335, in run
+    use_user_site=options.use_user_site,
+  File "/anaconda3/lib/python3.6/site-packages/pip/_internal/req/__init__.py", line 49, in install_given_reqs
+    **kwargs
+  File "/anaconda3/lib/python3.6/site-packages/pip/_internal/req/req_install.py", line 779, in install
+    spinner=spinner,
+  File "/anaconda3/lib/python3.6/site-packages/pip/_internal/utils/misc.py", line 698, in call_subprocess
+    % (command_desc, proc.returncode, cwd))
+pip._internal.exceptions.InstallationError: Command "/anaconda3/bin/python -u -c "import setuptools, tokenize;__file__='/private/var/folders/8f/tfw3dnz15kq_g8f2wgzbc22h0000gn/T/pip-req-build-kdygay9h/setup.py';f=getattr(tokenize, 'open', open)(__file__);code=f.read().replace('\r\n', '\n');f.close();exec(compile(code, __file__, 'exec'))" install --record /private/var/folders/8f/tfw3dnz15kq_g8f2wgzbc22h0000gn/T/pip-record-h5tejhmn/install-record.txt --single-version-externally-managed --compile" failed with error code 1 in /private/var/folders/8f/tfw3dnz15kq_g8f2wgzbc22h0000gn/T/pip-req-build-kdygay9h/
+You are using pip version 10.0.1, however version 18.1 is available.
+You should consider upgrading via the 'pip install --upgrade pip' command.

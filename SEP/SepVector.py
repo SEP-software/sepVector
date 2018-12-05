@@ -69,6 +69,9 @@ class floatVector(vector):
 	def multiply(self,vec2):
 		"""self=vec2*self"""
 		self.cppMode.multiply(vec2)
+	def norm(self,nrm):
+		"""Return the norm of a vector"""
+		return self.cppMode.norm(nrm)
 	def isDifferent(self,vec2):
 		"""Function to check if two vectors belong to the same vector space"""
 		return self.cppMode.isDifferent(vec2)   
@@ -104,6 +107,9 @@ class doubleVector(vector):
 	def multiply(self,vec2):
 		"""self=vec2*self"""
 		self.cppMode.multiply(vec2)
+	def norm(self,nrm):
+		"""Return the norm of a vector"""
+		return self.cppMode.norm(nrm)
 	def isDifferent(self,vec2):
 		"""Function to check if two vectors belong to the same vector space"""
 		return self.cppMode.isDifferent(vec2)     

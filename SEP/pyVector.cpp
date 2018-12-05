@@ -1,6 +1,5 @@
 #include <pybind11/chrono.h>
 #include <pybind11/complex.h>
-#include "sepVectorConfig.h"
 #include <pybind11/functional.h>
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
@@ -29,6 +28,7 @@
 #include "int5DReg.h"
 #include "int6DReg.h"
 #include "regSpace.h"
+#include "sepVectorConfig.h"
 #include "short1DReg.h"
 namespace py = pybind11;
 namespace SEP {
@@ -217,7 +217,79 @@ PYBIND11_MODULE(pySepVector, clsVector) {
                  m.getHyper()->getAxis(2).n,
              sizeof(float) * m.getHyper()->getAxis(1).n, sizeof(float)});
       });
+  py::class_<float5DReg, floatHyper, std::shared_ptr<float5DReg>>(
+      clsVector, "float5DReg", py::buffer_protocol())
+      .def(py::init<const int, const int, const int, const int, const int>(),
+           "Initialize giving size")
+      .def(py::init<const axis &, const axis &, const axis &, const axis &,
+                    const axis &>(),
+           "Initialize from an axis")
+      .def(py::init<std::shared_ptr<hypercube>>(), "Initialize with hypercube")
+      .def("allocate", (void (float5DReg::*)()) & float5DReg::allocate,
+           "Allocate the array")
+      .def("clone",
+           (std::shared_ptr<float5DReg>(float5DReg::*)() const) &
+               float5DReg::clone,
+           "Make a copy of the vector")
+      .def("cloneSpace",
+           (std::shared_ptr<float5DReg>(float5DReg::*)() const) &
+               float5DReg::cloneSpace,
+           "Make a copy of the vector space")
+      .def_buffer([](float5DReg &m) -> py::buffer_info {
+        return py::buffer_info(
+            m.getVals(), sizeof(float), py::format_descriptor<float>::format(),
+            5,
+            {m.getHyper()->getAxis(5).n, m.getHyper()->getAxis(4).n,
+             m.getHyper()->getAxis(3).n, m.getHyper()->getAxis(2).n,
+             m.getHyper()->getAxis(1).n},
+            {sizeof(float) * m.getHyper()->getAxis(1).n *
+                 m.getHyper()->getAxis(2).n * m.getHyper()->getAxis(3).n *
+                 m.getHyper()->getAxis(4).n,
+             sizeof(float) * m.getHyper()->getAxis(1).n *
+                 m.getHyper()->getAxis(2).n * m.getHyper()->getAxis(3).n,
+             sizeof(float) * m.getHyper()->getAxis(1).n *
+                 m.getHyper()->getAxis(2).n,
+             sizeof(float) * m.getHyper()->getAxis(1).n, sizeof(float)});
+      });
 
+  py::class_<float6DReg, floatHyper, std::shared_ptr<float6DReg>>(
+      clsVector, "float6DReg", py::buffer_protocol())
+      .def(py::init<const int, const int, const int, const int, const int,
+                    const int>(),
+           "Initialize giving size")
+      .def(py::init<const axis &, const axis &, const axis &, const axis &,
+                    const axis &, const axis &>(),
+           "Initialize from an axis")
+      .def(py::init<std::shared_ptr<hypercube>>(), "Initialize with hypercube")
+      .def("allocate", (void (float6DReg::*)()) & float6DReg::allocate,
+           "Allocate the array")
+      .def("clone",
+           (std::shared_ptr<float6DReg>(float6DReg::*)() const) &
+               float6DReg::clone,
+           "Make a copy of the vector")
+      .def("cloneSpace",
+           (std::shared_ptr<float6DReg>(float6DReg::*)() const) &
+               float6DReg::cloneSpace,
+           "Make a copy of the vector space")
+      .def_buffer([](float6DReg &m) -> py::buffer_info {
+        return py::buffer_info(
+            m.getVals(), sizeof(float), py::format_descriptor<float>::format(),
+            6,
+            {m.getHyper()->getAxis(6).n, m.getHyper()->getAxis(5).n,
+             m.getHyper()->getAxis(4).n, m.getHyper()->getAxis(3).n,
+             m.getHyper()->getAxis(2).n, m.getHyper()->getAxis(1).n},
+            {sizeof(float) * m.getHyper()->getAxis(1).n *
+                 m.getHyper()->getAxis(2).n * m.getHyper()->getAxis(3).n *
+                 m.getHyper()->getAxis(4).n * m.getHyper()->getAxis(5).n,
+             sizeof(float) * m.getHyper()->getAxis(1).n *
+                 m.getHyper()->getAxis(2).n * m.getHyper()->getAxis(3).n *
+                 m.getHyper()->getAxis(4).n,
+             sizeof(float) * m.getHyper()->getAxis(1).n *
+                 m.getHyper()->getAxis(2).n * m.getHyper()->getAxis(3).n,
+             sizeof(float) * m.getHyper()->getAxis(1).n *
+                 m.getHyper()->getAxis(2).n,
+             sizeof(float) * m.getHyper()->getAxis(1).n, sizeof(float)});
+      });
 #ifdef USE_DOUBLE
   py::class_<doubleHyper, regSpace, std::shared_ptr<doubleHyper>>(
       clsVector,
@@ -462,7 +534,7 @@ PYBIND11_MODULE(pySepVector, clsVector) {
              sizeof(double) * m.getHyper()->getAxis(1).n, sizeof(double)});
       });
 #endif
-#ifdef BUILD_SHORT
+#ifdef USE_SHORT
   py::class_<shortHyper, regSpace, std::shared_ptr<shortHyper>>(
       clsVector,
       "shortHyper")  //
@@ -536,7 +608,7 @@ PYBIND11_MODULE(pySepVector, clsVector) {
                                {m.getHyper()->getAxis(1).n}, {sizeof(short)});
       });
 #endif
-#ifdef BUILD_INT
+#ifdef USE_INT
   py::class_<intHyper, regSpace, std::shared_ptr<intHyper>>(clsVector,
                                                             "intHyper")  //
       .def(py::init<>(), "Initlialize a new int Hyper (don't use this")
@@ -750,7 +822,7 @@ PYBIND11_MODULE(pySepVector, clsVector) {
              sizeof(int) * m.getHyper()->getAxis(1).n, sizeof(int)});
       });
 #endif
-#ifdef BUILD_BYTE
+#ifdef USE_BYTE
   py::class_<byteHyper, regSpace, std::shared_ptr<byteHyper>>(clsVector,
                                                               "byteHyper")  //
       .def(py::init<>(), "Initlialize a new byte Hyper (don't use this")

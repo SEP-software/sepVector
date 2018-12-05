@@ -16,7 +16,7 @@ endif(BUILD_DOUBLE)
 
 
 if(BUILD_COMPLEX)
-    set(USE_DOUBLE true)
+    set(USE_COMPLEX true)
 endif(BUILD_COMPLEX)
 
 
@@ -56,7 +56,7 @@ set(sepVector_DIRNAME_include "include")
 
 include(${CMAKE_ROOT}/Modules/ExternalProject.cmake)
 
-#
+
 if(NOT TARGET hypercube)
   execute_process(COMMAND git submodule update --init --recursive --
                           external/hypercube
@@ -96,7 +96,7 @@ endif(NOT SUPPORT_LIBRARIES_BUILD)
 
 add_subdirectory(lib)
 if(BUILD_PYTHON)
-  add_subdirectory(python)
+  add_subdirectory(SEP)
 endif(BUILD_PYTHON)
 
 include(InstallRequiredSystemLibraries)
