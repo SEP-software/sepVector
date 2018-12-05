@@ -189,7 +189,7 @@ def getFloatVector(hyper):
 	elif len(hyper.axes) ==4:
 		return pySepVector.float4DReg(h)	
 	elif len(hyper.axes) ==5:
-		return pySepVector.float4DReg(h)
+		return pySepVector.float5DReg(h)
 	elif len(hyper.axes) ==6:
 		return pySepVector.float6DReg(h)	
 
@@ -205,7 +205,7 @@ def getComplexVector(hyper):
 	elif len(hyper.axes) ==4:
 		return pySepVector.complex4DReg(h)	
 	elif len(hyper.axes) ==5:
-		return pySepVector.complex4DReg(h)
+		return pySepVector.complex5DReg(h)
 	elif len(hyper.axes) ==6:
 		return pySepVector.complex6DReg(h)
 
@@ -221,7 +221,7 @@ def getByteVector(hyper):
 	elif len(hyper.axes) ==4:
 		return pySepVector.byte4DReg(h)	
 	elif len(hyper.axes) ==5:
-		return pySepVector.byte4DReg(h)
+		return pySepVector.byte5DReg(h)
 	elif len(hyper.axes) ==6:
 		return pySepVector.byte6DReg(h)
 
@@ -236,7 +236,7 @@ def getDoubleVector(hyper):
 	elif len(hyper.axes) ==4:
 		return pySepVector.double4DReg(h)	
 	elif len(hyper.axes) ==5:
-		return pySepVector.double4DReg(h)
+		return pySepVector.double5DReg(h)
 	elif len(hyper.axes) ==6:
 		return pySepVector.double6DReg(h)
 
@@ -250,7 +250,7 @@ def getIntVector(hyper):
 	elif len(hyper.axes) ==4:
 		return pySepVector.int4DReg(h)	
 	elif len(hyper.axes) ==5:
-		return pySepVector.int4DReg(h)
+		return pySepVector.int5DReg(h)
 	elif len(hyper.axes) ==6:
 		return pySepVector.int6DReg(h)
 
