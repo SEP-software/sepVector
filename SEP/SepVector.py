@@ -62,19 +62,19 @@ class floatVector(vector):
 		return floatVector(fromCpp=self.cppMode.cloneSpace())
 	def scaleAdd(self,vec2,sc1,sc2):
 		"""self=self*sc1+sc2*vec2"""
-		self.cppMode.scaleAdd(vec2,sc1,sc2)
+		self.cppMode.scaleAdd(vec2.cppMode,sc1,sc2)
 	def dot(self,vec2):
 		"""Compute dot product of two vectors"""
-		return self.cppMode.dot(vec2)
+		return self.cppMode.dot(vec2.cppMode)
 	def multiply(self,vec2):
 		"""self=vec2*self"""
-		self.cppMode.multiply(vec2)
+		self.cppMode.multiply(vec2.cppMode)
 	def norm(self,nrm):
 		"""Return the norm of a vector"""
 		return self.cppMode.norm(nrm)
 	def isDifferent(self,vec2):
 		"""Function to check if two vectors belong to the same vector space"""
-		return self.cppMode.isDifferent(vec2)   
+		return self.cppMode.isDifferent(vec2.cppMode)   
 
 class doubleVector(vector):
 	"""Generic double vector class"""
@@ -100,19 +100,19 @@ class doubleVector(vector):
 		return doubleVector(fromCpp=self.cppMode.cloneSpace())
 	def scaleAdd(self,vec2,sc1,sc2):
 		"""self=self*sc1+sc2*vec2"""
-		self.cppMode.scaleAdd(vec2,sc1,sc2)
+		self.cppMode.scaleAdd(vec2.cppMode,sc1,sc2)
 	def dot(self,vec2):
 		"""Compute dot product of two vectors"""
-		return self.cppMode.dot(vec2)
+		return self.cppMode.dot(vec2.cppMode)
 	def multiply(self,vec2):
 		"""self=vec2*self"""
-		self.cppMode.multiply(vec2)
+		self.cppMode.multiply(vec2.cppMode)
 	def norm(self,nrm):
 		"""Return the norm of a vector"""
 		return self.cppMode.norm(nrm)
 	def isDifferent(self,vec2):
 		"""Function to check if two vectors belong to the same vector space"""
-		return self.cppMode.isDifferent(vec2)     
+		return self.cppMode.isDifferent(vec2.cppMode)     
 class intVector(vector):
 	"""Generic int vector class"""
 	def __init__(self,**kw):
