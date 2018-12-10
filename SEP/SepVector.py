@@ -61,7 +61,7 @@ class floatVector(vector):
 	def cloneSpace(self):
 		"""Funtion tor return the space of a vector"""
 		return floatVector(fromCpp=self.cppMode.cloneSpace())
-	def scaleAdd(self,vec2,sc1,sc2):
+	def scaleAdd(self,vec2,sc1=1.,sc2=1.):
 		"""self=self*sc1+sc2*vec2"""
 		self.cppMode.scaleAdd(vec2.cppMode,sc1,sc2)
 	def copy(self,vec2):
@@ -105,7 +105,7 @@ class doubleVector(vector):
 	def cloneSpace(self):
 		"""Funtion tor return the space of a vector"""
 		return doubleVector(fromCpp=self.cppMode.cloneSpace())
-	def scaleAdd(self,vec2,sc1,sc2):
+	def scaleAdd(self,vec2,sc1=1.,sc2=1.):
 		"""self=self*sc1+sc2*vec2"""
 		self.cppMode.scaleAdd(vec2.cppMode,sc1,sc2)
 	def dot(self,vec2):
