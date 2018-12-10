@@ -9,6 +9,12 @@
 #include "byte4DReg.h"
 #include "byte5DReg.h"
 #include "byte6DReg.h"
+#include "complex1DReg.h"
+#include "complex2DReg.h"
+#include "complex3DReg.h"
+#include "complex4DReg.h"
+#include "complex5DReg.h"
+#include "complex6DReg.h"
 #include "double1DReg.h"
 #include "double2DReg.h"
 #include "double3DReg.h"
@@ -1040,6 +1046,234 @@ PYBIND11_MODULE(pySepVector, clsVector) {
                  m.getHyper()->getAxis(2).n,
              sizeof(unsigned char) * m.getHyper()->getAxis(1).n,
              sizeof(unsigned char)});
+      });
+#endif
+
+#ifdef USE_COMPLEX
+  py::class_<complexHyper, regSpace, std::shared_ptr<complexHyper>>(
+      clsVector,
+      "complexHyper")  //
+      .def(py::init<>(), "Initlialize a new complex Hyper (don't use this")
+      .def("getSpaceOnly",
+           (bool (complexHyper::*)()) & complexHyper::getSpaceOnly,
+           "Check to see if this only a description of the vector space")
+
+      .def("setData",
+           (void (complexHyper::*)(std::complex<float> *)) &
+               complexHyper::setData,
+           "Set the data pointer")
+      .def("getVals",
+           (std::complex<float> * (complexHyper::*)()) & complexHyper::getVals,
+           "Get the data pointer")
+
+      .def("isDifferent",
+           (bool (complexHyper::*)(std::shared_ptr<complexHyper>)) &
+               complexHyper::isDifferent,
+           "Check to  see if two vectors are different")
+
+      .def_property("_vals", &complexHyper::getVals, &complexHyper::setData,
+                    py::return_value_policy::reference)
+
+      .def("calcCheckSum",
+           (unsigned char (complexHyper::*)() const) &
+               complexHyper::calcCheckSum,
+           "Calculate checksum of a vector")
+
+      .def("zero", (void (complexHyper::*)()) & complexHyper::zero,
+           "Fill a vector with zero")
+      .def("set",
+           (void (complexHyper::*)(const std::complex<float>)) &
+               complexHyper::set,
+           "Fill a vector with a value")
+      .def("rand", (void (complexHyper::*)()) & complexHyper::random,
+           "Fill a vector with random number")
+
+      .def("checkSame",
+           (bool (complexHyper::*)(const std::shared_ptr<complexHyper>) const) &
+               complexHyper::checkSame,
+           "Check to make sure the vectors exist in the same space");
+
+  py::class_<complex1DReg, complexHyper, std::shared_ptr<complex1DReg>>(
+      clsVector, "complex1DReg", py::buffer_protocol())
+      .def(py::init<const int>(), "Initialize giving size")
+      .def(py::init<const axis &>(), "Initialize from an axis")
+      .def(py::init<std::shared_ptr<hypercube>>(), "Initialize with hypercube")
+
+      .def("clone",
+           (std::shared_ptr<complex1DReg>(complex1DReg::*)() const) &
+               complex1DReg::clone,
+           "Make a copy of the vector")
+      .def("cloneSpace",
+           (std::shared_ptr<complex1DReg>(complex1DReg::*)() const) &
+               complex1DReg::cloneSpace,
+           "Make a copy of the vector space")
+      .def("allocate", (void (complex1DReg::*)()) & complex1DReg::allocate,
+           "Allocate the array")
+
+      .def_buffer([](complex1DReg &m) -> py::buffer_info {
+        return py::buffer_info(
+            m.getVals(), sizeof(std::complex<float>),
+            py::format_descriptor<std::complex<float>>::format(), 1,
+            {m.getHyper()->getAxis(1).n}, {sizeof(std::complex<float>)});
+      });
+  py::class_<complex2DReg, complexHyper, std::shared_ptr<complex2DReg>>(
+      clsVector, "complex2DReg", py::buffer_protocol())
+      .def(py::init<const int, const int>(), "Initialize giving size")
+      .def(py::init<const axis &, const axis &>(), "Initialize from an axis")
+      .def(py::init<std::shared_ptr<hypercube>>(), "Initialize with hypercube")
+      .def("clone",
+           (std::shared_ptr<complex2DReg>(complex2DReg::*)() const) &
+               complex2DReg::clone,
+           "Make a copy of the vector")
+      .def("cloneSpace",
+           (std::shared_ptr<complex2DReg>(complex2DReg::*)() const) &
+               complex2DReg::cloneSpace,
+           "Make a copy of the vector space")
+      .def("allocate", (void (complex2DReg::*)()) & complex2DReg::allocate,
+           "Allocate the array")
+
+      .def_buffer([](complex2DReg &m) -> py::buffer_info {
+        return py::buffer_info(
+            m.getVals(), sizeof(std::complex<float>),
+            py::format_descriptor<std::complex<float>>::format(), 2,
+            {m.getHyper()->getAxis(2).n, m.getHyper()->getAxis(1).n},
+            {sizeof(std::complex<float>) * m.getHyper()->getAxis(1).n,
+             sizeof(std::complex<float>)});
+      });
+
+  py::class_<complex3DReg, complexHyper, std::shared_ptr<complex3DReg>>(
+      clsVector, "complex3DReg", py::buffer_protocol())
+      .def(py::init<const int, const int, const int>(),
+           "Initialize giving size")
+      .def(py::init<std::shared_ptr<hypercube>>(), "Initialize with hypercube")
+      .def(py::init<const axis &, const axis &, const axis &>(),
+           "Initialize from an axis")
+      .def("allocate", (void (complex3DReg::*)()) & complex3DReg::allocate,
+           "Allocate the array")
+      .def("clone",
+           (std::shared_ptr<complex3DReg>(complex3DReg::*)() const) &
+               complex3DReg::clone,
+           "Make a copy of the vector")
+      .def("cloneSpace",
+           (std::shared_ptr<complex3DReg>(complex3DReg::*)() const) &
+               complex3DReg::cloneSpace,
+           "Make a copy of the vector space")
+      .def_buffer([](complex3DReg &m) -> py::buffer_info {
+        return py::buffer_info(
+            m.getVals(), sizeof(std::complex<float>),
+            py::format_descriptor<std::complex<float>>::format(), 3,
+            {m.getHyper()->getAxis(3).n, m.getHyper()->getAxis(2).n,
+             m.getHyper()->getAxis(1).n},
+            {sizeof(std::complex<float>) * m.getHyper()->getAxis(1).n *
+                 m.getHyper()->getAxis(2).n,
+             sizeof(std::complex<float>) * m.getHyper()->getAxis(1).n,
+             sizeof(std::complex<float>)});
+      });
+
+  py::class_<complex4DReg, complexHyper, std::shared_ptr<complex4DReg>>(
+      clsVector, "complex4DReg", py::buffer_protocol())
+      .def(py::init<const int, const int, const int, const int>(),
+           "Initialize giving size")
+      .def(py::init<const axis &, const axis &, const axis &, const axis &>(),
+           "Initialize from an axis")
+      .def(py::init<std::shared_ptr<hypercube>>(), "Initialize with hypercube")
+      .def("allocate", (void (complex4DReg::*)()) & complex4DReg::allocate,
+           "Allocate the array")
+      .def("clone",
+           (std::shared_ptr<complex4DReg>(complex4DReg::*)() const) &
+               complex4DReg::clone,
+           "Make a copy of the vector")
+      .def("cloneSpace",
+           (std::shared_ptr<complex4DReg>(complex4DReg::*)() const) &
+               complex4DReg::cloneSpace,
+           "Make a copy of the vector space")
+      .def_buffer([](complex4DReg &m) -> py::buffer_info {
+        return py::buffer_info(
+            m.getVals(), sizeof(std::complex<float>),
+            py::format_descriptor<std::complex<float>>::format(), 4,
+            {m.getHyper()->getAxis(4).n, m.getHyper()->getAxis(3).n,
+             m.getHyper()->getAxis(2).n, m.getHyper()->getAxis(1).n},
+            {sizeof(std::complex<float>) * m.getHyper()->getAxis(1).n *
+                 m.getHyper()->getAxis(2).n * m.getHyper()->getAxis(3).n,
+             sizeof(std::complex<float>) * m.getHyper()->getAxis(1).n *
+                 m.getHyper()->getAxis(2).n,
+             sizeof(std::complex<float>) * m.getHyper()->getAxis(1).n,
+             sizeof(std::complex<float>)});
+      });
+  py::class_<complex5DReg, complexHyper, std::shared_ptr<complex5DReg>>(
+      clsVector, "complex5DReg", py::buffer_protocol())
+      .def(py::init<const int, const int, const int, const int, const int>(),
+           "Initialize giving size")
+      .def(py::init<const axis &, const axis &, const axis &, const axis &,
+                    const axis &>(),
+           "Initialize from an axis")
+      .def(py::init<std::shared_ptr<hypercube>>(), "Initialize with hypercube")
+      .def("allocate", (void (complex5DReg::*)()) & complex5DReg::allocate,
+           "Allocate the array")
+      .def("clone",
+           (std::shared_ptr<complex5DReg>(complex5DReg::*)() const) &
+               complex5DReg::clone,
+           "Make a copy of the vector")
+      .def("cloneSpace",
+           (std::shared_ptr<complex5DReg>(complex5DReg::*)() const) &
+               complex5DReg::cloneSpace,
+           "Make a copy of the vector space")
+      .def_buffer([](complex5DReg &m) -> py::buffer_info {
+        return py::buffer_info(
+            m.getVals(), sizeof(std::complex<float>),
+            py::format_descriptor<std::complex<float>>::format(), 5,
+            {m.getHyper()->getAxis(5).n, m.getHyper()->getAxis(4).n,
+             m.getHyper()->getAxis(3).n, m.getHyper()->getAxis(2).n,
+             m.getHyper()->getAxis(1).n},
+            {sizeof(std::complex<float>) * m.getHyper()->getAxis(1).n *
+                 m.getHyper()->getAxis(2).n * m.getHyper()->getAxis(3).n *
+                 m.getHyper()->getAxis(4).n,
+             sizeof(std::complex<float>) * m.getHyper()->getAxis(1).n *
+                 m.getHyper()->getAxis(2).n * m.getHyper()->getAxis(3).n,
+             sizeof(std::complex<float>) * m.getHyper()->getAxis(1).n *
+                 m.getHyper()->getAxis(2).n,
+             sizeof(std::complex<float>) * m.getHyper()->getAxis(1).n,
+             sizeof(std::complex<float>)});
+      });
+
+  py::class_<complex6DReg, complexHyper, std::shared_ptr<complex6DReg>>(
+      clsVector, "complex6DReg", py::buffer_protocol())
+      .def(py::init<const int, const int, const int, const int, const int,
+                    const int>(),
+           "Initialize giving size")
+      .def(py::init<const axis &, const axis &, const axis &, const axis &,
+                    const axis &, const axis &>(),
+           "Initialize from an axis")
+      .def(py::init<std::shared_ptr<hypercube>>(), "Initialize with hypercube")
+      .def("allocate", (void (complex6DReg::*)()) & complex6DReg::allocate,
+           "Allocate the array")
+      .def("clone",
+           (std::shared_ptr<complex6DReg>(complex6DReg::*)() const) &
+               complex6DReg::clone,
+           "Make a copy of the vector")
+      .def("cloneSpace",
+           (std::shared_ptr<complex6DReg>(complex6DReg::*)() const) &
+               complex6DReg::cloneSpace,
+           "Make a copy of the vector space")
+      .def_buffer([](complex6DReg &m) -> py::buffer_info {
+        return py::buffer_info(
+            m.getVals(), sizeof(std::complex<float>),
+            py::format_descriptor<std::complex<float>>::format(), 6,
+            {m.getHyper()->getAxis(6).n, m.getHyper()->getAxis(5).n,
+             m.getHyper()->getAxis(4).n, m.getHyper()->getAxis(3).n,
+             m.getHyper()->getAxis(2).n, m.getHyper()->getAxis(1).n},
+            {sizeof(std::complex<float>) * m.getHyper()->getAxis(1).n *
+                 m.getHyper()->getAxis(2).n * m.getHyper()->getAxis(3).n *
+                 m.getHyper()->getAxis(4).n * m.getHyper()->getAxis(5).n,
+             sizeof(std::complex<float>) * m.getHyper()->getAxis(1).n *
+                 m.getHyper()->getAxis(2).n * m.getHyper()->getAxis(3).n *
+                 m.getHyper()->getAxis(4).n,
+             sizeof(std::complex<float>) * m.getHyper()->getAxis(1).n *
+                 m.getHyper()->getAxis(2).n * m.getHyper()->getAxis(3).n,
+             sizeof(std::complex<float>) * m.getHyper()->getAxis(1).n *
+                 m.getHyper()->getAxis(2).n,
+             sizeof(std::complex<float>) * m.getHyper()->getAxis(1).n,
+             sizeof(std::complex<float>)});
       });
 #endif
 }
