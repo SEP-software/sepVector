@@ -44,7 +44,7 @@ class floatVector(vector):
 		self.kw=kw
 		super().__init__()
 		self.storage="dataFloat"
-	def norm(self,N):
+	def norm(self,N=2):
 		"""Function to compute vector N-norm"""
 		self.cppMode.norm(N)
 
@@ -69,7 +69,7 @@ class floatVector(vector):
 	def multiply(self,vec2):
 		"""self=vec2*self"""
 		self.cppMode.multiply(vec2.cppMode)
-	def norm(self,nrm):
+	def norm(self,nrm=2):
 		"""Return the norm of a vector"""
 		return self.cppMode.norm(nrm)
 	def isDifferent(self,vec2):
