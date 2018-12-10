@@ -65,7 +65,7 @@ class floatVector(vector):
 		self.cppMode.scaleAdd(vec2.cppMode,sc1,sc2)
 	def copy(self,vec2):
 		"""Copy vec2 into self"""
-		self.scaleAdd(vec2.cppMode,0.,1.)
+		self.scaleAdd(vec2,0.,1.)
 	def dot(self,vec2):
 		"""Compute dot product of two vectors"""
 		return self.cppMode.dot(vec2.cppMode)
@@ -100,7 +100,7 @@ class doubleVector(vector):
 		return doubleVector(fromCpp=self.cppMode.clone())
 	def copy(self,vec2):
 		"""Copy vec2 into self"""
-		self.scaleAdd(vec2.cppMode,0.,1.)
+		self.scaleAdd(vec2,0.,1.)
 	def cloneSpace(self):
 		"""Funtion tor return the space of a vector"""
 		return doubleVector(fromCpp=self.cppMode.cloneSpace())
