@@ -65,6 +65,10 @@ if(NOT TARGET hypercube)
   include_directories(${CMAKE_CURRENT_SOURCE_DIR}/external/hypercube/lib)
 endif(NOT TARGET hypercube)
 
+
+add_subdirectory(external/pySolver)
+
+
 configure_file("${PROJECT_SOURCE_DIR}/sepVectorConfig.h.in"
                "${PROJECT_BINARY_DIR}/sepVectorConfig.h")
 

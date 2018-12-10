@@ -2,11 +2,12 @@ import pyHypercube
 import pySepVector
 import Hypercube
 import numpy
+import pyVector
 
 
 
 
-class vector:
+class vector(pyVector.vector):
 	"""Generic sepVector class"""
 	def __init__(self):
 		"""Initialize a vector object"""
