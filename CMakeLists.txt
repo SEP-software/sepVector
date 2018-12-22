@@ -76,7 +76,7 @@ include_directories("${PROJECT_BINARY_DIR}")
 
 set(sepVector_DIRNAME_lib "lib")
 set(sepVector_DIRNAME_include "include")
-set(sepVector_DIRNAME_cmake "cmake")
+set(sepVector_DIRNAME_cmake "lib/cmake")
 include(CMakePackageConfigHelpers)
 
 if(NOT SUPPORT_LIBRARIES_BUILD)
@@ -90,10 +90,10 @@ configure_package_config_file(
   sepVector_DIRNAME_lib)
 
 install(FILES ${CMAKE_CURRENT_BINARY_DIR}/sepVectorConfig.cmake
-        DESTINATION cmake)
+        DESTINATION lib/cmake)
 
 if(NOT INSTALL_CMAKE_ENV)
-install(EXPORT sepVectorExports DESTINATION cmake)
+install(EXPORT sepVectorExports DESTINATION lib/cmake)
 endif(NOT INSTALL_CMAKE_ENV)
 add_subdirectory(env-modules)
 endif(NOT SUPPORT_LIBRARIES_BUILD)
