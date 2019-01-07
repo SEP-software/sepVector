@@ -86,7 +86,7 @@ class doubleVector(vector):
 		self.kw=kw
 		super().__init__()
 		self.storage="dataDouble"
-	def norm(self,N):
+	def norm(self,N=2):
 		"""Function to compute vector N-norm"""
 		self.cppMode.norm(N)
 
