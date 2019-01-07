@@ -97,6 +97,7 @@ double floatHyper::norm(const int n) const {
         return v;
       },
       [](double a, double b) { return a + b; });
+      if(n==2) return sqrtf(dt);
 
   return dt;
 }
