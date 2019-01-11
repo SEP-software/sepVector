@@ -114,7 +114,7 @@ class doubleVector(vector):
 	def multiply(self,vec2):
 		"""self=vec2*self"""
 		self.cppMode.multiply(vec2.cppMode)
-	def norm(self,nrm):
+	def norm(self,nrm=2):
 		"""Return the norm of a vector"""
 		return self.cppMode.norm(nrm)
 	def isDifferent(self,vec2):
