@@ -80,7 +80,7 @@ class float6DReg : public floatHyper {
   }
   std::shared_ptr<float6D> _mat;
 
- private:
+ protected:
   void initNoData(std::shared_ptr<SEP::hypercube> hyp);
   void initData(std::shared_ptr<SEP::hypercube> hyp, const float6D &vals);
 };

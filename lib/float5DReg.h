@@ -74,7 +74,7 @@ class float5DReg : public floatHyper {
   }
   std::shared_ptr<float5D> _mat;
 
- private:
+ protected:
   void initNoData(std::shared_ptr<SEP::hypercube> hyp);
   void initData(std::shared_ptr<SEP::hypercube> hyp, const float5D &vals);
 };

@@ -50,7 +50,7 @@ class float2DReg : public floatHyper {
   virtual void cleanMemory() { setSpace(); }
   std::shared_ptr<float2D> _mat;
 
- private:
+ protected:
   void initNoData(std::shared_ptr<SEP::hypercube> hyp);
   void initData(std::shared_ptr<SEP::hypercube> hyp, const float2D &vals);
 };
