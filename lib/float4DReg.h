@@ -7,6 +7,7 @@ typedef boost::multi_array<float, 4> float4D;
 namespace SEP {
 class float4DReg : public floatHyper {
  public:
+ float4DReg(){;}
   float4DReg(std::shared_ptr<SEP::hypercube> hyper) { initNoData(hyper); }
   float4DReg(const int n1, const int n2, const int n3, const int n4) {
     std::vector<SEP::axis> a;
