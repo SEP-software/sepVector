@@ -1,4 +1,4 @@
- import pyHypercube
+import pyHypercube
 import pySepVector
 import Hypercube
 import numpy
