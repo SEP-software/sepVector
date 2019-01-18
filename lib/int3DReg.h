@@ -55,6 +55,10 @@ class int3DReg : public intHyper {
     _mat = 0;
     setSpace();
   }
+
+  std::shared_ptr<int3DReg> window(const std::vector<int> &nw,
+                                   const std::vector<int> &fw,
+                                   const std::vector<int> &jw) const;
   std::shared_ptr<int3D> _mat;
 
  protected:

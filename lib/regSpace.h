@@ -13,6 +13,13 @@ class regSpace {
     _storage = ptr;
     _esize = esize;
   }
+  void checkWindow(const int n, const int nw, const int fw,
+                   const int jw) const {
+    assert(fw >= 0);
+    assert(jw > 0);
+    assert(nw > 0);
+    assert(fw + jw * (nw - 1) < n);
+  }
   void *getVoidPtr() { return _storage; }
   size_t getEsize() { return _esize; }
   virtual ~regSpace() = default;

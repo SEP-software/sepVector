@@ -5,7 +5,7 @@ typedef boost::multi_array<float, 2> float2D;
 namespace SEP {
 class float2DReg : public floatHyper {
  public:
-  float2DReg(){;}
+  float2DReg() { ; }
   float2DReg(std::shared_ptr<SEP::hypercube> hyper) { initNoData(hyper); }
   float2DReg(const int n1, const int n2) {
     std::vector<SEP::axis> a;
@@ -45,6 +45,9 @@ class float2DReg : public floatHyper {
     setData(_mat->data());
     ;
   }
+  std::shared_ptr<float2DReg> window(const std::vector<int> &nw,
+                                     const std::vector<int> &fw,
+                                     const std::vector<int> &jw) const;
   std::shared_ptr<float2DReg> clone() const;
   std::shared_ptr<float2DReg> cloneSpace() const;
   virtual void cleanMemory() { setSpace(); }

@@ -46,6 +46,9 @@ class complex2DReg : public complexHyper {
   }
   std::shared_ptr<complex2DReg> clone() const;
   std::shared_ptr<complex2DReg> cloneSpace() const;
+  std::shared_ptr<complex2DReg> window(const std::vector<int> &nw,
+                                       const std::vector<int> &fw,
+                                       const std::vector<int> &jw) const;
   virtual void cleanMemory() { setSpace(); }
   std::shared_ptr<complex2D> _mat;
 

@@ -79,6 +79,9 @@ class byte6DReg : public byteHyper {
     setSpace();
   }
   std::shared_ptr<byte6D> _mat;
+  std::shared_ptr<byte6DReg> window(const std::vector<int> &nw,
+                                    const std::vector<int> &fw,
+                                    const std::vector<int> &jw) const;
 
  private:
   void initNoData(std::shared_ptr<SEP::hypercube> hyp);

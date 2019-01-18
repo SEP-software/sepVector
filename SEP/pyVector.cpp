@@ -131,6 +131,17 @@ PYBIND11_MODULE(pySepVector, clsVector) {
            (std::shared_ptr<float1DReg>(float1DReg::*)() const) &
                float1DReg::clone,
            "Make a copy of the vector")
+      .def("window",
+           (std::shared_ptr<float1DReg>(float1DReg::*)(
+               const std::vector<int> &const std::vector<int> &,
+               const std::vector<int> &) const) &
+               float1DReg::window,
+           "Window a vector")
+      .def("window",
+           (std::shared_ptr<float1DReg>(float1DReg::*)(const int const int,
+                                                       const int) const) &
+               float1DReg::window,
+           "Window a vector")
       .def("cloneSpace",
            (std::shared_ptr<float1DReg>(float1DReg::*)() const) &
                float1DReg::cloneSpace,
@@ -158,6 +169,12 @@ PYBIND11_MODULE(pySepVector, clsVector) {
            "Make a copy of the vector space")
       .def("allocate", (void (float2DReg::*)()) & float2DReg::allocate,
            "Allocate the array")
+      .def("window",
+           (std::shared_ptr<float2DReg>(float2DReg::*)(
+               const std::vector<int> &const std::vector<int> &,
+               const std::vector<int> &) const) &
+               float1DReg::window,
+           "Window a vector")
 
       .def_buffer([](float2DReg &m) -> py::buffer_info {
         return py::buffer_info(
@@ -183,6 +200,13 @@ PYBIND11_MODULE(pySepVector, clsVector) {
            (std::shared_ptr<float3DReg>(float3DReg::*)() const) &
                float3DReg::cloneSpace,
            "Make a copy of the vector space")
+      .def("window",
+           (std::shared_ptr<float1DReg>(float3DReg::*)(
+               const std::vector<int> &const std::vector<int> &,
+               const std::vector<int> &) const) &
+               float3DReg::window,
+           "Window a vector")
+
       .def_buffer([](float3DReg &m) -> py::buffer_info {
         return py::buffer_info(
             m.getVals(), sizeof(float), py::format_descriptor<float>::format(),
@@ -211,6 +235,13 @@ PYBIND11_MODULE(pySepVector, clsVector) {
            (std::shared_ptr<float4DReg>(float4DReg::*)() const) &
                float4DReg::cloneSpace,
            "Make a copy of the vector space")
+      .def("window",
+           (std::shared_ptr<float4DReg>(float4DReg::*)(
+               const std::vector<int> &const std::vector<int> &,
+               const std::vector<int> &) const) &
+               float1DReg::window,
+           "Window a vector")
+
       .def_buffer([](float4DReg &m) -> py::buffer_info {
         return py::buffer_info(
             m.getVals(), sizeof(float), py::format_descriptor<float>::format(),
@@ -241,6 +272,13 @@ PYBIND11_MODULE(pySepVector, clsVector) {
            (std::shared_ptr<float5DReg>(float5DReg::*)() const) &
                float5DReg::cloneSpace,
            "Make a copy of the vector space")
+      .def("window",
+           (std::shared_ptr<float5DReg>(float5DReg::*)(
+               const std::vector<int> &const std::vector<int> &,
+               const std::vector<int> &) const) &
+               float1DReg::window,
+           "Window a vector")
+
       .def_buffer([](float5DReg &m) -> py::buffer_info {
         return py::buffer_info(
             m.getVals(), sizeof(float), py::format_descriptor<float>::format(),
@@ -273,6 +311,13 @@ PYBIND11_MODULE(pySepVector, clsVector) {
            (std::shared_ptr<float6DReg>(float6DReg::*)() const) &
                float6DReg::clone,
            "Make a copy of the vector")
+      .def("window",
+           (std::shared_ptr<float6DReg>(float6DReg::*)(
+               const std::vector<int> &const std::vector<int> &,
+               const std::vector<int> &) const) &
+               float1DReg::window,
+           "Window a vector")
+
       .def("cloneSpace",
            (std::shared_ptr<float6DReg>(float6DReg::*)() const) &
                float6DReg::cloneSpace,
@@ -379,7 +424,17 @@ PYBIND11_MODULE(pySepVector, clsVector) {
            "Make a copy of the vector space")
       .def("allocate", (void (double1DReg::*)()) & double1DReg::allocate,
            "Allocate the array")
-
+      .def("window",
+           (std::shared_ptr<double1DReg>(double1DReg::*)(
+               const std::vector<int> &const std::vector<int> &,
+               const std::vector<int> &) const) &
+               double1DReg::window,
+           "Window a vector")
+      .def("window",
+           (std::shared_ptr<double1DReg>(double1DReg::*)(const int const int,
+                                                         const int) const) &
+               double1DReg::window,
+           "Window a vector")
       .def_buffer([](double1DReg &m) -> py::buffer_info {
         return py::buffer_info(m.getVals(), sizeof(double),
                                py::format_descriptor<double>::format(), 1,
@@ -400,6 +455,12 @@ PYBIND11_MODULE(pySepVector, clsVector) {
            "Make a copy of the vector space")
       .def("allocate", (void (double2DReg::*)()) & double2DReg::allocate,
            "Allocate the array")
+      .def("window",
+           (std::shared_ptr<double2DReg>(double2DReg::*)(
+               const std::vector<int> &const std::vector<int> &,
+               const std::vector<int> &) const) &
+               double2DReg::window,
+           "Window a vector")
 
       .def_buffer([](double2DReg &m) -> py::buffer_info {
         return py::buffer_info(
@@ -426,6 +487,13 @@ PYBIND11_MODULE(pySepVector, clsVector) {
            (std::shared_ptr<double3DReg>(double3DReg::*)() const) &
                double3DReg::cloneSpace,
            "Make a copy of the vector space")
+      .def("window",
+           (std::shared_ptr<double3DReg>(double3DReg::*)(
+               const std::vector<int> &const std::vector<int> &,
+               const std::vector<int> &) const) &
+               double3DReg::window,
+           "Window a vector")
+
       .def_buffer([](double3DReg &m) -> py::buffer_info {
         return py::buffer_info(
             m.getVals(), sizeof(double),
@@ -454,6 +522,12 @@ PYBIND11_MODULE(pySepVector, clsVector) {
            (std::shared_ptr<double4DReg>(double4DReg::*)() const) &
                double4DReg::cloneSpace,
            "Make a copy of the vector space")
+      .def("window",
+           (std::shared_ptr<double4DReg>(double4DReg::*)(
+               const std::vector<int> &const std::vector<int> &,
+               const std::vector<int> &) const) &
+               double4DReg::window,
+           "Window a vector")
       .def_buffer([](double4DReg &m) -> py::buffer_info {
         return py::buffer_info(
             m.getVals(), sizeof(double),
@@ -484,6 +558,12 @@ PYBIND11_MODULE(pySepVector, clsVector) {
            (std::shared_ptr<double5DReg>(double5DReg::*)() const) &
                double5DReg::cloneSpace,
            "Make a copy of the vector space")
+      .def("window",
+           (std::shared_ptr<double5DReg>(double5DReg::*)(
+               const std::vector<int> &const std::vector<int> &,
+               const std::vector<int> &) const) &
+               double5DReg::window,
+           "Window a vector")
       .def_buffer([](double5DReg &m) -> py::buffer_info {
         return py::buffer_info(
             m.getVals(), sizeof(double),
@@ -512,6 +592,12 @@ PYBIND11_MODULE(pySepVector, clsVector) {
       .def(py::init<std::shared_ptr<hypercube>>(), "Initialize with hypercube")
       .def("allocate", (void (double6DReg::*)()) & double6DReg::allocate,
            "Allocate the array")
+      .def("window",
+           (std::shared_ptr<double6DReg>(double6DReg::*)(
+               const std::vector<int> &const std::vector<int> &,
+               const std::vector<int> &) const) &
+               double6DReg::window,
+           "Window a vector")
       .def("clone",
            (std::shared_ptr<double6DReg>(double6DReg::*)() const) &
                double6DReg::clone,
@@ -520,6 +606,17 @@ PYBIND11_MODULE(pySepVector, clsVector) {
            (std::shared_ptr<double6DReg>(double6DReg::*)() const) &
                double6DReg::cloneSpace,
            "Make a copy of the vector space")
+      .def("window",
+           (std::shared_ptr<doubleDReg>(double1DReg::*)(
+               const std::vector<int> &const std::vector<int> &,
+               const std::vector<int> &) const) &
+               double1DReg::window,
+           "Window a vector")
+      .def("window",
+           (std::shared_ptr<double1DReg>(double1DReg::*)(const int const int,
+                                                         const int) const) &
+               double1DReg::window,
+           "Window a vector")
       .def_buffer([](double6DReg &m) -> py::buffer_info {
         return py::buffer_info(
             m.getVals(), sizeof(double),
@@ -607,7 +704,17 @@ PYBIND11_MODULE(pySepVector, clsVector) {
            "Make a copy of the vector space")
       .def("allocate", (void (short1DReg::*)()) & short1DReg::allocate,
            "Allocate the array")
-
+      .def("window",
+           (std::shared_ptr<short1DReg>(short1DReg::*)(
+               const std::vector<int> &const std::vector<int> &,
+               const std::vector<int> &) const) &
+               short1DReg::window,
+           "Window a vector")
+      .def("window",
+           (std::shared_ptr<short1DReg>(short1DReg::*)(const int const int,
+                                                       const int) const) &
+               short1DReg::window,
+           "Window a vector")
       .def_buffer([](short1DReg &m) -> py::buffer_info {
         return py::buffer_info(m.getVals(), sizeof(short),
                                py::format_descriptor<int>::format(), 1,
@@ -677,7 +784,17 @@ PYBIND11_MODULE(pySepVector, clsVector) {
            "Make a copy of the vector space")
       .def("allocate", (void (int1DReg::*)()) & int1DReg::allocate,
            "Allocate the array")
-
+      .def("window",
+           (std::shared_ptr<int1DReg>(int1DReg::*)(
+               const std::vector<int> &const std::vector<int> &,
+               const std::vector<int> &) const) &
+               int1DReg::window,
+           "Window a vector")
+      .def("window",
+           (std::shared_ptr<int1DReg>(int1DReg::*)(const int const int,
+                                                   const int) const) &
+               int1DReg::window,
+           "Window a vector")
       .def_buffer([](int1DReg &m) -> py::buffer_info {
         return py::buffer_info(m.getVals(), sizeof(int),
                                py::format_descriptor<int>::format(), 1,
@@ -697,6 +814,12 @@ PYBIND11_MODULE(pySepVector, clsVector) {
            "Make a copy of the vector space")
       .def("allocate", (void (int2DReg::*)()) & int2DReg::allocate,
            "Allocate the array")
+      .def("window",
+           (std::shared_ptr<int2DReg>(int2DReg::*)(
+               const std::vector<int> &const std::vector<int> &,
+               const std::vector<int> &) const) &
+               int2DReg::window,
+           "Window a vector")
 
       .def_buffer([](int2DReg &m) -> py::buffer_info {
         return py::buffer_info(
@@ -721,6 +844,13 @@ PYBIND11_MODULE(pySepVector, clsVector) {
            (std::shared_ptr<int3DReg>(int3DReg::*)() const) &
                int3DReg::cloneSpace,
            "Make a copy of the vector space")
+      .def("window",
+           (std::shared_ptr<int3DReg>(int3DReg::*)(
+               const std::vector<int> &const std::vector<int> &,
+               const std::vector<int> &) const) &
+               int3DReg::window,
+           "Window a vector")
+
       .def_buffer([](int3DReg &m) -> py::buffer_info {
         return py::buffer_info(
             m.getVals(), sizeof(int), py::format_descriptor<int>::format(), 3,
@@ -747,6 +877,12 @@ PYBIND11_MODULE(pySepVector, clsVector) {
            (std::shared_ptr<int4DReg>(int4DReg::*)() const) &
                int4DReg::cloneSpace,
            "Make a copy of the vector space")
+      .def("window",
+           (std::shared_ptr<int4DReg>(int4DReg::*)(
+               const std::vector<int> &const std::vector<int> &,
+               const std::vector<int> &) const) &
+               int4DReg::window,
+           "Window a vector")
       .def_buffer([](int4DReg &m) -> py::buffer_info {
         return py::buffer_info(
             m.getVals(), sizeof(int), py::format_descriptor<int>::format(), 4,
@@ -775,6 +911,12 @@ PYBIND11_MODULE(pySepVector, clsVector) {
            (std::shared_ptr<int5DReg>(int5DReg::*)() const) &
                int5DReg::cloneSpace,
            "Make a copy of the vector space")
+      .def("window",
+           (std::shared_ptr<int5DReg>(int5DReg::*)(
+               const std::vector<int> &const std::vector<int> &,
+               const std::vector<int> &) const) &
+               int5DReg::window,
+           "Window a vector")
       .def_buffer([](int5DReg &m) -> py::buffer_info {
         return py::buffer_info(
             m.getVals(), sizeof(int), py::format_descriptor<int>::format(), 5,
@@ -809,6 +951,12 @@ PYBIND11_MODULE(pySepVector, clsVector) {
            (std::shared_ptr<int6DReg>(int6DReg::*)() const) &
                int6DReg::cloneSpace,
            "Make a copy of the vector space")
+      .def("window",
+           (std::shared_ptr<int6DReg>(int6DReg::*)(
+               const std::vector<int> &const std::vector<int> &,
+               const std::vector<int> &) const) &
+               int6DReg::window,
+           "Window a vector")
       .def_buffer([](int6DReg &m) -> py::buffer_info {
         return py::buffer_info(
             m.getVals(), sizeof(int), py::format_descriptor<int>::format(), 6,
@@ -881,7 +1029,17 @@ PYBIND11_MODULE(pySepVector, clsVector) {
            "Make a copy of the vector space")
       .def("allocate", (void (byte1DReg::*)()) & byte1DReg::allocate,
            "Allocate the array")
-
+      .def("window",
+           (std::shared_ptr<byte1DReg>(byte1DReg::*)(
+               const std::vector<int> &const std::vector<int> &,
+               const std::vector<int> &) const) &
+               byte1DReg::window,
+           "Window a vector")
+      .def("window",
+           (std::shared_ptr<byte1DReg>(byte1DReg::*)(const int const int,
+                                                     const int) const) &
+               byte1DReg::window,
+           "Window a vector")
       .def_buffer([](byte1DReg &m) -> py::buffer_info {
         return py::buffer_info(m.getVals(), sizeof(unsigned char),
                                py::format_descriptor<unsigned char>::format(),
@@ -903,7 +1061,12 @@ PYBIND11_MODULE(pySepVector, clsVector) {
            "Make a copy of the vector space")
       .def("allocate", (void (byte2DReg::*)()) & byte2DReg::allocate,
            "Allocate the array")
-
+      .def("window",
+           (std::shared_ptr<byte2DReg>(byte2DReg::*)(
+               const std::vector<int> &const std::vector<int> &,
+               const std::vector<int> &) const) &
+               byte2DReg::window,
+           "Window a vector")
       .def_buffer([](byte2DReg &m) -> py::buffer_info {
         return py::buffer_info(
             m.getVals(), sizeof(unsigned char),
@@ -930,6 +1093,12 @@ PYBIND11_MODULE(pySepVector, clsVector) {
            (std::shared_ptr<byte3DReg>(byte3DReg::*)() const) &
                byte3DReg::cloneSpace,
            "Make a copy of the vector space")
+      .def("window",
+           (std::shared_ptr<byte3DReg>(byte3DReg::*)(
+               const std::vector<int> &const std::vector<int> &,
+               const std::vector<int> &) const) &
+               byte3DReg::window,
+           "Window a vector")
       .def_buffer([](byte3DReg &m) -> py::buffer_info {
         return py::buffer_info(
             m.getVals(), sizeof(unsigned char),
@@ -959,6 +1128,12 @@ PYBIND11_MODULE(pySepVector, clsVector) {
            (std::shared_ptr<byte4DReg>(byte4DReg::*)() const) &
                byte4DReg::cloneSpace,
            "Make a copy of the vector space")
+      .def("window",
+           (std::shared_ptr<byte4DReg>(byte4DReg::*)(
+               const std::vector<int> &const std::vector<int> &,
+               const std::vector<int> &) const) &
+               byte4DReg::window,
+           "Window a vector")
       .def_buffer([](byte4DReg &m) -> py::buffer_info {
         return py::buffer_info(
             m.getVals(), sizeof(unsigned char),
@@ -990,6 +1165,12 @@ PYBIND11_MODULE(pySepVector, clsVector) {
            (std::shared_ptr<byte5DReg>(byte5DReg::*)() const) &
                byte5DReg::cloneSpace,
            "Make a copy of the vector space")
+      .def("window",
+           (std::shared_ptr<byte5DReg>(byte5DReg::*)(
+               const std::vector<int> &const std::vector<int> &,
+               const std::vector<int> &) const) &
+               byte5DReg::window,
+           "Window a vector")
       .def_buffer([](byte5DReg &m) -> py::buffer_info {
         return py::buffer_info(
             m.getVals(), sizeof(unsigned char),
@@ -1027,6 +1208,12 @@ PYBIND11_MODULE(pySepVector, clsVector) {
            (std::shared_ptr<byte6DReg>(byte6DReg::*)() const) &
                byte6DReg::cloneSpace,
            "Make a copy of the vector space")
+      .def("window",
+           (std::shared_ptr<byte6DReg>(byte6DReg::*)(
+               const std::vector<int> &const std::vector<int> &,
+               const std::vector<int> &) const) &
+               byte6DReg::window,
+           "Window a vector")
       .def_buffer([](byte6DReg &m) -> py::buffer_info {
         return py::buffer_info(
             m.getVals(), sizeof(unsigned char),
@@ -1109,7 +1296,17 @@ PYBIND11_MODULE(pySepVector, clsVector) {
            "Make a copy of the vector space")
       .def("allocate", (void (complex1DReg::*)()) & complex1DReg::allocate,
            "Allocate the array")
-
+      .def("window",
+           (std::shared_ptr<complex1DReg>(complex1DReg::*)(
+               const std::vector<int> &const std::vector<int> &,
+               const std::vector<int> &) const) &
+               complex1DReg::window,
+           "Window a vector")
+      .def("window",
+           (std::shared_ptr<complex1DReg>(complex1DReg::*)(const int const int,
+                                                           const int) const) &
+               complex1DReg::window,
+           "Window a vector")
       .def_buffer([](complex1DReg &m) -> py::buffer_info {
         return py::buffer_info(
             m.getVals(), sizeof(std::complex<float>),
@@ -1131,7 +1328,12 @@ PYBIND11_MODULE(pySepVector, clsVector) {
            "Make a copy of the vector space")
       .def("allocate", (void (complex2DReg::*)()) & complex2DReg::allocate,
            "Allocate the array")
-
+      .def("window",
+           (std::shared_ptr<complex2DReg>(complex2DReg::*)(
+               const std::vector<int> &const std::vector<int> &,
+               const std::vector<int> &) const) &
+               complex2DReg::window,
+           "Window a vector")
       .def_buffer([](complex2DReg &m) -> py::buffer_info {
         return py::buffer_info(
             m.getVals(), sizeof(std::complex<float>),
@@ -1158,6 +1360,12 @@ PYBIND11_MODULE(pySepVector, clsVector) {
            (std::shared_ptr<complex3DReg>(complex3DReg::*)() const) &
                complex3DReg::cloneSpace,
            "Make a copy of the vector space")
+      .def("window",
+           (std::shared_ptr<complex3DReg>(complex3DReg::*)(
+               const std::vector<int> &const std::vector<int> &,
+               const std::vector<int> &) const) &
+               complex3DReg::window,
+           "Window a vector")
       .def_buffer([](complex3DReg &m) -> py::buffer_info {
         return py::buffer_info(
             m.getVals(), sizeof(std::complex<float>),
@@ -1187,6 +1395,12 @@ PYBIND11_MODULE(pySepVector, clsVector) {
            (std::shared_ptr<complex4DReg>(complex4DReg::*)() const) &
                complex4DReg::cloneSpace,
            "Make a copy of the vector space")
+      .def("window",
+           (std::shared_ptr<complex4DReg>(complex4DReg::*)(
+               const std::vector<int> &const std::vector<int> &,
+               const std::vector<int> &) const) &
+               complex4DReg::window,
+           "Window a vector")
       .def_buffer([](complex4DReg &m) -> py::buffer_info {
         return py::buffer_info(
             m.getVals(), sizeof(std::complex<float>),
@@ -1218,6 +1432,12 @@ PYBIND11_MODULE(pySepVector, clsVector) {
            (std::shared_ptr<complex5DReg>(complex5DReg::*)() const) &
                complex5DReg::cloneSpace,
            "Make a copy of the vector space")
+      .def("window",
+           (std::shared_ptr<complex5DReg>(complex5DReg::*)(
+               const std::vector<int> &const std::vector<int> &,
+               const std::vector<int> &) const) &
+               complex5DReg::window,
+           "Window a vector")
       .def_buffer([](complex5DReg &m) -> py::buffer_info {
         return py::buffer_info(
             m.getVals(), sizeof(std::complex<float>),
@@ -1255,6 +1475,12 @@ PYBIND11_MODULE(pySepVector, clsVector) {
            (std::shared_ptr<complex6DReg>(complex6DReg::*)() const) &
                complex6DReg::cloneSpace,
            "Make a copy of the vector space")
+      .def("window",
+           (std::shared_ptr<complex6DReg>(complex6DReg::*)(
+               const std::vector<int> &const std::vector<int> &,
+               const std::vector<int> &) const) &
+               complex6DReg::window,
+           "Window a vector")
       .def_buffer([](complex6DReg &m) -> py::buffer_info {
         return py::buffer_info(
             m.getVals(), sizeof(std::complex<float>),

@@ -46,6 +46,9 @@ class int2DReg : public intHyper {
   }
   std::shared_ptr<int2DReg> clone() const;
   std::shared_ptr<int2DReg> cloneSpace() const;
+  std::shared_ptr<int2DReg> window(const std::vector<int> &nw,
+                                   const std::vector<int> &fw,
+                                   const std::vector<int> &jw) const;
   virtual void cleanMemory() { setSpace(); }
   std::shared_ptr<int2D> _mat;
 

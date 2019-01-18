@@ -78,6 +78,10 @@ class double6DReg : public doubleHyper {
     _mat = 0;
     setSpace();
   }
+  std::shared_ptr<double6DReg> window(const std::vector<int> &nw,
+                                      const std::vector<int> &fw,
+                                      const std::vector<int> &jw) const;
+
   std::shared_ptr<double6D> _mat;
 
  private:

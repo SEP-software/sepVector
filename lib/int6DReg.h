@@ -74,6 +74,9 @@ class int6DReg : public intHyper {
   }
   std::shared_ptr<int6DReg> clone() const;
   std::shared_ptr<int6DReg> cloneSpace() const;
+  std::shared_ptr<int6DReg> window(const std::vector<int> &nw,
+                                   const std::vector<int> &fw,
+                                   const std::vector<int> &jw) const;
   virtual void cleanMemory() {
     _mat = 0;
     setSpace();

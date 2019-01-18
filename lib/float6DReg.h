@@ -74,6 +74,9 @@ class float6DReg : public floatHyper {
   }
   std::shared_ptr<float6DReg> clone() const;
   std::shared_ptr<float6DReg> cloneSpace() const;
+  std::shared_ptr<float6DReg> window(const std::vector<int> &nw,
+                                     const std::vector<int> &fw,
+                                     const std::vector<int> &jw) const;
   virtual void cleanMemory() {
     _mat = 0;
     setSpace();

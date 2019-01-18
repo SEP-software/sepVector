@@ -55,3 +55,34 @@ void complex5DReg::initData(std::shared_ptr<SEP::hypercube> hyp,
     }
   }
 }
+std::shared_ptr<complex5DReg> complex5DReg::window(
+    const std::vector<int> &nw, const std::vector<int> &jw,
+    const std::vector<int> &fw) const {
+  const std::vector<SEP::axis> axes = getHyper()->getAxes();
+  assert(nw.size() == axes.size() && fw.size() == axes.size() &&
+         jw.size() == axes.size());
+  std::vector<axis> aout;
+  for (int i = 0; i < axes.size(); i++) {
+    checkWindow(axes[i].n, nw[i], fw[i], jw[i]);
+    aout.push_back(
+        axis(nw[i], axes[i].o + axes[i].d * fw[i], axes[i].d * jw[i]));
+  }
+  std::shared_ptr<hypercube> hypOut(new hypercube(aout));
+  std::shared_ptr<complex5DReg> out(new complex5DReg(hypOut));
+  for (int i4 = 0; i4 < nw[4]; i4++) {
+    for (int i3 = 0; i3 < nw[3]; i3++) {
+      for (int i2 = 0; i2 < nw[2]; i2++) {
+        for (int i1 = 0; i1 < nw[1]; i1++) {
+          for (int i0 = 0; i0 < nw[0]; i0++) {
+            (*out->_mat)[i4][i3][i2][i1][i0] =
+                (*_mat)[fw[4] + i4 * jw[4]][fw[3] + i3 * jw[3]]
+                       [fw[2] + i2 * jw[2]][fw[1] + i1 * jw[1]]
+                       [fw[0] + i0 * jw[0]];
+          }
+        }
+      }
+    }
+  }
+
+  return out;
+}

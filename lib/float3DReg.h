@@ -50,6 +50,9 @@ class float3DReg : public floatHyper {
     ;
   }
   std::shared_ptr<float3DReg> clone() const;
+  std::shared_ptr<float3DReg> window(const std::vector<int> &nw,
+                                     const std::vector<int> &fw,
+                                     const std::vector<int> &jw) const;
   std::shared_ptr<float3DReg> cloneSpace() const;
   virtual void cleanMemory() {
     _mat = 0;

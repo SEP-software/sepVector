@@ -43,6 +43,18 @@ class byte1DReg : public byteHyper {
   std::shared_ptr<byte1DReg> cloneSpace() const;
   virtual void cleanMemory() { setSpace(); }
   std::shared_ptr<byte1D> _mat;
+  std::shared_ptr<byte1DReg> window(const std::vector<int> &nw,
+                                    const std::vector<int> &fw,
+                                    const std::vector<int> &jw) const;
+  std::shared_ptr<byte1DReg> window(const int nw, const int fw, const int jw) {
+    std::vector<int> nws;
+    nws.push_back(nw);
+    std::vector<int> fws;
+    fws.push_back(fw);
+    std::vector<int> jws;
+    jws.push_back(jw);
+    return (window(nws, fws, jws));
+  }
 
  protected:
   void initNoData(std::shared_ptr<SEP::hypercube> hyp);

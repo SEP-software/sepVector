@@ -72,6 +72,10 @@ class float5DReg : public floatHyper {
     _mat = 0;
     setSpace();
   }
+
+  std::shared_ptr<float5DReg> window(const std::vector<int> &nw,
+                                     const std::vector<int> &fw,
+                                     const std::vector<int> &jw) const;
   std::shared_ptr<float5D> _mat;
 
  protected:

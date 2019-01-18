@@ -68,6 +68,10 @@ class double5DReg : public doubleHyper {
   }
   std::shared_ptr<double5DReg> clone() const;
   std::shared_ptr<double5DReg> cloneSpace() const;
+
+  std::shared_ptr<double5DReg> window(const std::vector<int> &nw,
+                                      const std::vector<int> &fw,
+                                      const std::vector<int> &jw) const;
   virtual void cleanMemory() {
     _mat = 0;
     setSpace();

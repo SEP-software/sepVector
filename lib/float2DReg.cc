@@ -3,7 +3,6 @@ using namespace SEP;
 
 std::shared_ptr<float2DReg> float2DReg::clone() const {
   if (getSpaceOnly()) {
-
     std::shared_ptr<float2DReg> x(new float2DReg(getHyper()));
 
     return x;
@@ -44,4 +43,26 @@ void float2DReg::initData(std::shared_ptr<SEP::hypercube> hyp,
       (*_mat)[j][i] = vals[j][i];
     }
   }
+}
+std::shared_ptr<float2DReg> float2DReg::window(
+    const std::vector<int> &nw, const std::vector<int> &jw,
+    const std::vector<int> &fw) const {
+  const std::vector<SEP::axis> axes = getHyper()->getAxes();
+  assert(nw.size() == axes.size() && fw.size() == axes.size() &&
+         jw.size() == axes.size());
+  std::vector<axis> aout;
+  for (int i = 0; i < axes.size(); i++) {
+    checkWindow(axes[i].n, nw[i], fw[i], jw[i]);
+    aout.push_back(
+        axis(nw[i], axes[i].o + axes[i].d * fw[i], axes[i].d * jw[i]));
+  }
+  std::shared_ptr<hypercube> hypOut(new hypercube(aout));
+  std::shared_ptr<float2DReg> out(new float2DReg(hypOut));
+  for (int i1 = 0; i1 < nw[1]; i1++) {
+    for (int i0 = 0; i0 < nw[0]; i0++) {
+      (*out->_mat)[i1][i0] = (*_mat)[fw[1] + i1 * jw[1]][fw[0] + i0 * jw[0]];
+    }
+  }
+
+  return out;
 }

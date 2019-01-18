@@ -78,6 +78,9 @@ class complex6DReg : public complexHyper {
     _mat = 0;
     setSpace();
   }
+  std::shared_ptr<complex6DReg> window(const std::vector<int> &nw,
+                                       const std::vector<int> &fw,
+                                       const std::vector<int> &jw) const;
   std::shared_ptr<complex6D> _mat;
 
  private:

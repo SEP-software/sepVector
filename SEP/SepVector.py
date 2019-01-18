@@ -34,7 +34,70 @@ class vector(pyVector.vector):
 		return Hypercube.hypercube(hypercube=self.cppMode.getHyper())
 
 	def getNdArray(self):
+		"""Return a numpy version of the array (same memory"""
 		return numpy.array(self.cppMode,copy=False)
+	def window(self,**kw):
+		"""Window a vector return another vector (of the same dimension
+		    specify min1..min6, max1...max6, f1...f6, j1...j6, n1...n6, or
+		    any of these by lists.
+		    Can not specify n and min or max """
+		axes=getHyper().axes
+		ndim=len(axes)
+		for i in range(1,ndim+1):
+			nset=False
+			fset=False
+			jset=False
+			if "n%d"%i in kw: 
+				nset=True
+				n=int(kw["n%d"%i])
+			if "f%d"%i in kw: 
+				jset=True
+				j=int(kw["j%d"%i])
+			if "j%d"%i in kw: 
+				fset=True
+				f=int(kw["f%d"%i])
+			biSet=False
+			eiSet=False
+			if "min%d"%i in kw:
+				bi=int(float(kw["min"%i] - axes[i-1].o)/axes[i-1].d+.5)
+				biSet=True
+			if "max%d"%i in kw:
+				ei=int(float(kw["max"%i] - axes[i-1].o)/axes[i-1].d+.5)	
+				eiSet=True		
+			if fset:
+				if axes[i-1].n <= f:
+					raise Exception("invalid f%d=%d parameter n%d of data=%d"%(i,f,i,axes[i-1].n))
+			if nset:
+				if axes[i-1].n < n:
+					raise Exception("invalid n%d=%d parameter n%d of data=%d"%(i,n,i,axes[i-1].n))
+			if jset and j <=0:
+				raise Exception("invalid j%d=%d "%(i,j))
+			if not jset:
+				j=1
+			if not nset:
+				if not fset:
+					if not biSet:
+						f=0
+					elif bi < 0 or bi >= axes[i-1].n:
+						raise Exception("Invalid min%d=%f"%(i,kw["min%d"%i]))
+					else:
+						f=bi
+				if  eiSet:
+					if ei <=f or ei >= axes[i-1].n:
+						raise Exception("Invalid max%d=%f"%(i,kw["max%d"%i]))
+					else:
+						n=(ei-f-1)/j+1
+			elif not fset:
+				if not biSet:
+					f=0
+				elif bi < 0 || bi >= axes[i-1].n:
+					raise Exception("Invalid min%d=%f"%(i,kw["min%d"%i]))
+				else:
+					f=fi
+			if axes[i-1].n < (1+f+j*(n-1)):
+				raise Exception("Invalid window parameter")
+
+
 	def checkSame(self,vec2):
 		"""Function to check if two vectors belong to the same vector space"""
 		return self.getCpp().checkSame(vec2.getCpp())
