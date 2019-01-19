@@ -204,9 +204,27 @@ class byteVector(vector):
 		super().__init__()
 		self.storage="dataByte"
 
-def getSepVector(hyper,**keys):
-	""" Get a sepVector object"""
+def getSepVector(*args,**keys):
+	""" Get a sepVector object
+		Option 1 (supply hypercube):
+			hyper, kw args
+		Option 2 (build hypercube):
+			ns=[] -list of sizes
+			os=[] - list of origins
+			ds=[] - list os sampling
+			labels=[] list of labels
+			axes=[] list of axes
+		storage= StorageType (dataFloat[default],dataComplex,dataDouble,dataInt,dataByte)
+	"""
 	myt="dataFloat"
+	if len(args)==1:
+		hyper=args[0]
+	elif len(args>1):
+		if "axes" in keys or "ns" in keys:
+		hyper=Hypercube.hypercube(**keys)
+	else:
+		raise Exception("Must supply Hypercube or ns/axes")
+
 	if "storage" in keys:
 		myt=keys["storage"]
 	if myt == "dataFloat":
