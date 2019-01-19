@@ -1,4 +1,5 @@
 #include <float2DReg.h>
+#include "SEPException.h"
 using namespace SEP;
 
 std::shared_ptr<float2DReg> float2DReg::clone() const {
@@ -24,7 +25,8 @@ void float2DReg::initNoData(std::shared_ptr<SEP::hypercube> hyp) {
   const std::vector<SEP::axis> axes = hyp->getAxes();
   setHyper(hyp);
 
-  assert(axes.size() == 2);
+  if (axes.size() != 2)
+    throw SEPException(std::string("Expecting 2-D hyperube"));
 
   _mat.reset(new float2D(boost::extents[axes[1].n][axes[0].n]));
   setData(_mat->data());
@@ -48,6 +50,10 @@ std::shared_ptr<float2DReg> float2DReg::window(
     const std::vector<int> &nw, const std::vector<int> &jw,
     const std::vector<int> &fw) const {
   const std::vector<SEP::axis> axes = getHyper()->getAxes();
+  if (nw.size() != axes.size())
+    throw SEPException(std::string("Expecting 2-D, got nw.size()=") +
+                       std::to_string(nw.size()));
+
   assert(nw.size() == axes.size() && fw.size() == axes.size() &&
          jw.size() == axes.size());
   std::vector<axis> aout;

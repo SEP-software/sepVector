@@ -41,7 +41,7 @@ class vector(pyVector.vector):
 		    specify min1..min6, max1...max6, f1...f6, j1...j6, n1...n6, or
 		    any of these by lists.
 		    Can not specify n and min or max """
-		axes=getHyper().axes
+		axes=self.getHyper().axes
 		ndim=len(axes)
 		for i in range(1,ndim+1):
 			nset=False
@@ -90,7 +90,7 @@ class vector(pyVector.vector):
 			elif not fset:
 				if not biSet:
 					f=0
-				elif bi < 0 || bi >= axes[i-1].n:
+				elif bi < 0 or bi >= axes[i-1].n:
 					raise Exception("Invalid min%d=%f"%(i,kw["min%d"%i]))
 				else:
 					f=fi
@@ -219,11 +219,14 @@ def getSepVector(*args,**keys):
 	myt="dataFloat"
 	if len(args)==1:
 		hyper=args[0]
-	elif len(args>1):
+	elif len(args)==0:
 		if "axes" in keys or "ns" in keys:
-		hyper=Hypercube.hypercube(**keys)
+			hyper=Hypercube.hypercube(**keys)
+			print("HYPER ",len(hyper.axes))
+		else:
+			raise Exception("Must supply Hypercube or ns/axes")
 	else:
-		raise Exception("Must supply Hypercube or ns/axes")
+		raise Exception("Only understand 0 or 1 (hypercube) non-keyword arguments")
 
 	if "storage" in keys:
 		myt=keys["storage"]
