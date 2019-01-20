@@ -23,8 +23,7 @@ std::shared_ptr<complex2DReg> complex2DReg::cloneSpace() const {
 void complex2DReg::initNoData(std::shared_ptr<SEP::hypercube> hyp) {
   const std::vector<SEP::axis> axes = hyp->getAxes();
   setHyper(hyp);
-
-  assert(axes.size() == 2);
+  if (2 != axes.size()) throw(SEPException("axes must of length 2"));
 
   _mat.reset(new complex2D(boost::extents[axes[1].n][axes[0].n]));
   setData(_mat->data());
@@ -34,8 +33,17 @@ void complex2DReg::initData(std::shared_ptr<SEP::hypercube> hyp,
   const std::vector<SEP::axis> axes = hyp->getAxes();
   setHyper(hyp);
 
-  assert(axes.size() == 2);
-  assert(axes[0].n == vals.shape()[1] && axes[1].n == vals.shape()[0]);
+  if (axes.size() != 2)
+    throw(SEPException(std::string("Axes size must be 3 is ") +
+                       std::to_string(axes.size())));
+  if (axes[0].n != vals.shape()[1])
+    throw(SEPException(std::string("Axis 1 not the same (") +
+                       std::to_string(axes[0].n) + std::string(",") +
+                       std::to_string(vals.shape()[1]) + std::string(")")));
+  if (axes[1].n != vals.shape()[0])
+    throw(SEPException(std::string("Axis 2 not the same (") +
+                       std::to_string(axes[1].n) + std::string(",") +
+                       std::to_string(vals.shape()[0]) + std::string(")")));
   _mat.reset(new complex2D(boost::extents[axes[1].n][axes[0].n]));
   setData(_mat->data());
   for (long long j = 0; j < axes[1].n; j++) {
@@ -48,8 +56,9 @@ std::shared_ptr<complex2DReg> complex2DReg::window(
     const std::vector<int> &nw, const std::vector<int> &jw,
     const std::vector<int> &fw) const {
   const std::vector<SEP::axis> axes = getHyper()->getAxes();
-  assert(nw.size() == axes.size() && fw.size() == axes.size() &&
-         jw.size() == axes.size());
+  if (nw.size() != axes.size()) throw(SEPException("nw must of length 2"));
+  if (fw.size() != axes.size()) throw(SEPException("fw must of length 2"));
+  if (jw.size() != axes.size()) throw(SEPException("jw must of length 2"));
   std::vector<axis> aout;
   for (int i = 0; i < axes.size(); i++) {
     checkWindow(axes[i].n, nw[i], fw[i], jw[i]);

@@ -1,5 +1,6 @@
 #pragma once
 #include <Vector.h>
+#include "SEPException.h"
 namespace SEP {
 template <class V1, class V2>
 class superVec : public SEP::Vector {
@@ -22,7 +23,7 @@ class superVec : public SEP::Vector {
     return v;
   }
   virtual void add(std::shared_ptr<superVec(V1, V2)> vec) {
-    assert(checkSame(vec));
+    if (!checkSame(vec)) throw(std::string("Vectors not from the same space"));
     _v1->add(vec->getVec1());
     _v2->add(vec->getVec2());
   }
@@ -33,7 +34,7 @@ class superVec : public SEP::Vector {
   virtual void scaleAdd(const double sc1,
                         const std::shared_ptr<superVec<V1, V2>> vec2,
                         const double sc2) {
-    assert(checkSame(vec2));
+    if (!checkSame(vec)) throw(std::string("Vectors not from the same space"));
 
     _v1->scaleAdd(sc1, vec2->getVec1(), sc2);
     _v2->scaleAdd(sc1, vec2->getVec2(), sc2);
@@ -43,18 +44,16 @@ class superVec : public SEP::Vector {
     _v2->random();
   }
   virtual double dot(const std::shared_ptr<superVec<V1, V2>> vec2) const {
-    assert(checkSame(vec2));
+    if (!checkSame(vec)) throw(std::string("Vectors not from the same space"));
     return _v1->dot(vec2->getVec1()) + _v2->dot(vec2->getVec2());
   }
   virtual bool checkSame(const std::shared_ptr<superVec<V1, V2>> vec2,
                          const bool checkAllocated = false) const {
     if (!_v1->checkSame(vec2->getVec1(), checkAllocated)) {
-      std::cerr << "Vec1 does not match" << std::endl;
-      return false;
+      if (!checkSame(vec)) throw(std::string("Vec1 not from the same space"));
     }
     if (!_v2->checkSame(vec2->getVec2(), checkAllocated)) {
-      std::cerr << "Vec2 does not match" << std::endl;
-      return false;
+      if (!checkSame(vec)) throw(std::string("vec2 not from the same space"));
     }
     return true;
   }

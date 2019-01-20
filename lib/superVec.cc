@@ -1,5 +1,4 @@
 #include <superVec.h>
-#include <cassert>
 #include <cmath>
 #include <iostream>
 using namespace SEP;
@@ -26,7 +25,7 @@ void superVec::calcCheckSum() {
   setCheckSum(llabs(_v1->getCheckSum() - _v2->getCheckSum()));
 }
 void superVec::add(const std::shared_ptr<Vector> vec) {
-  assert(checkSame(vec));
+  if (!checkSame(vec)) throw(std::string("Vectors not from the same space"));
   std::shared_ptr<superVec> vec2H = std::dynamic_pointer_cast<superVec>(vec);
   _v1->add(vec2H->getVec1());
   _v2->add(vec2H->getVec2());
@@ -37,7 +36,7 @@ void superVec::scale(const double val) {
 }
 void superVec::scaleAdd(const double sc1, const std::shared_ptr<Vector> vec2,
                         const double sc2) {
-  assert(checkSame(vec2));
+  if (!checkSame(vec2)) throw(std::string("Vectors not from the same space"));
   std::shared_ptr<superVec> vec2H = std::dynamic_pointer_cast<superVec>(vec2);
   _v1->scaleAdd(sc1, vec2H->getVec1(), sc2);
   _v2->scaleAdd(sc1, vec2H->getVec2(), sc2);
@@ -55,7 +54,7 @@ float superVec::absMax() const {
 }
 
 double superVec::dot(const std::shared_ptr<Vector> vec2) const {
-  assert(checkSame(vec2));
+  if (!checkSame(vec2)) throw(std::string("Vectors not from the same space"));
   std::shared_ptr<superVec> vec2H = std::dynamic_pointer_cast<superVec>(vec2);
   return _v1->dot(vec2H->getVec1()) + _v2->dot(vec2H->getVec2());
 }

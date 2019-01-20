@@ -1,36 +1,54 @@
 #pragma once
-#include <cassert>
 #include <cstdint>
 #include <memory>
 #include <sstream>
+#include "SEPException.h"
 namespace SEP {
 
-class Vector{
+class Vector {
  public:
   Vector() : _spaceOnly(false), _vecType(std::string("base")) { ; }
-  virtual void add(const std::shared_ptr<Vector> vec) { assert(1 == 2); }
-  virtual void scale(const double val) { assert(1 == 2); }
+  virtual void add(const std::shared_ptr<Vector> vec) {
+    throw SEPException(std::string("Must override add"));
+  }
+  virtual void scale(const double val) {
+    throw SEPException(std::string("Must override scale"));
+  }
   virtual void scaleAdd(const double sc1, const std::shared_ptr<Vector>,
                         const double sc2) {
-    assert(1 == 2);
+    throw SEPException(std::string("Must override scaleAdd"));
   }
-  virtual void random() { assert(1 == 2); }
-  virtual void softClip(float val) { assert(1 == 2); }
-  virtual double absMax() const { assert(1 == 2); }
+  virtual void random() {
+    throw SEPException(std::string("Must override random"));
+  }
+
+  virtual void softClip(float val) {
+    throw SEPException(std::string("Must override softclip"));
+  }
+  virtual double absMax() const {
+    throw SEPException(std::string("Must override absMax"));
+  }
   virtual double dot(const std::shared_ptr<Vector> vec2) const {
-    assert(1 == 2);
+    throw SEPException(std::string("Must override dot"));
   }
   virtual bool checkSame(const std::shared_ptr<Vector> vec2,
                          const bool checkAlloc = false) const {
-    assert(1 == 2);
+    throw SEPException(std::string("Must override checkSame"));
   }
-  virtual void cleanMemory() { assert(1 == 2); }
+  virtual void cleanMemory() {
+    throw SEPException(std::string("Must override cleanMemory"));
+  }
+
   virtual void setSpace() { _spaceOnly = true; }
   virtual void infoStream(const int lev, std::stringstream &x) {
-    assert(1 == 2);
+    throw SEPException(std::string("Must override infoStream"));
   }
+
   std::string info(const std::string &nm, const int lev);
-  virtual void calcCheckSum() { assert(1 == 2); }
+  virtual void calcCheckSum() {
+    throw SEPException(std::string("Must override calcCheckSum"));
+  }
+
   void setCheckSum(const uint64_t x) { _checkSum = x; }
   uint64_t getCheckSum() { return _checkSum; }
   inline bool spaceOnly() const { return _spaceOnly; }

@@ -1,6 +1,5 @@
 #pragma once
 #include <hypercube.h>
-#include <cassert>
 #include <complex>
 #include <cstdint>
 #include <sstream>

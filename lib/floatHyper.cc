@@ -9,7 +9,7 @@
 using namespace SEP;
 
 void floatHyper::add(const std::shared_ptr<floatHyper> vec2) {
-  assert(checkSame(vec2));
+  if (!checkSame(vec2)) throw(std::string("Vectors not of the same space"));
   std::shared_ptr<floatHyper> vec2H =
       std::dynamic_pointer_cast<floatHyper>(vec2);
 
@@ -21,7 +21,7 @@ void floatHyper::add(const std::shared_ptr<floatHyper> vec2) {
   calcCheckSum();
 }
 void floatHyper::mult(const std::shared_ptr<floatHyper> vec2) {
-  assert(checkSame(vec2));
+  if (!checkSame(vec2)) throw(std::string("Vectors not of the same space"));
   std::shared_ptr<floatHyper> vec2H =
       std::dynamic_pointer_cast<floatHyper>(vec2);
 
@@ -34,7 +34,7 @@ void floatHyper::mult(const std::shared_ptr<floatHyper> vec2) {
 }
 void floatHyper::scaleAdd(std::shared_ptr<floatHyper> vec2, const double sc1,
                           const double sc2) {
-  assert(checkSame(vec2));
+  if (!checkSame(vec2)) throw(std::string("Vectors not of the same space"));
   std::shared_ptr<floatHyper> vec2H =
       std::dynamic_pointer_cast<floatHyper>(vec2);
 
@@ -46,7 +46,7 @@ void floatHyper::scaleAdd(std::shared_ptr<floatHyper> vec2, const double sc1,
   calcCheckSum();
 }
 void floatHyper::signum() {
-  assert(!spaceOnly());
+  if (spaceOnly()) throw(std::string("Vectors not allocated"));
 
   tbb::parallel_for(tbb::blocked_range<long long>(0, getHyper()->getN123()),
                     [&](const tbb::blocked_range<long long> &r) {
@@ -63,7 +63,7 @@ void floatHyper::signum() {
   calcCheckSum();
 }
 void floatHyper::scale(double sc) {
-  assert(!spaceOnly());
+  if (spaceOnly()) throw(std::string("Vectors not allocated"));
   tbb::parallel_for(tbb::blocked_range<long long>(0, getHyper()->getN123()),
                     [&](const tbb::blocked_range<long long> &r) {
                       for (long long i = r.begin(); i != r.end(); ++i)
@@ -72,7 +72,7 @@ void floatHyper::scale(double sc) {
   calcCheckSum();
 }
 void floatHyper::random() {
-  assert(!spaceOnly());
+  if (spaceOnly()) throw(std::string("Vectors not allocated"));
   tbb::parallel_for(tbb::blocked_range<long long>(0, getHyper()->getN123()),
                     [&](const tbb::blocked_range<long long> &r) {
                       for (long long i = r.begin(); i != r.end(); ++i)
@@ -97,7 +97,7 @@ double floatHyper::norm(const int n) const {
         return v;
       },
       [](double a, double b) { return a + b; });
-      if(n==2) return sqrtf(dt);
+  if (n == 2) return sqrtf(dt);
 
   return dt;
 }
@@ -110,7 +110,7 @@ void floatHyper::set(const float val) {
   calcCheckSum();
 }
 double floatHyper::dot(const std::shared_ptr<floatHyper> vec2) const {
-  assert(checkSame(vec2));
+  if (!checkSame(vec2)) throw(std::string("Vectors not of the same space"));
   std::shared_ptr<floatHyper> vec2H =
       std::dynamic_pointer_cast<floatHyper>(vec2);
 

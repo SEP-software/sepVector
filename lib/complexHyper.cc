@@ -9,7 +9,8 @@
 using namespace SEP;
 
 void complexHyper::add(const std::shared_ptr<complexHyper> vec2) {
-  assert(checkSame(vec2));
+  if (!checkSame(vec2)) throw(std::string("Vectors not of the same space"));
+
   std::shared_ptr<complexHyper> vec2H =
       std::dynamic_pointer_cast<complexHyper>(vec2);
 
@@ -23,7 +24,7 @@ void complexHyper::add(const std::shared_ptr<complexHyper> vec2) {
   calcCheckSum();
 }
 void complexHyper::mult(const std::shared_ptr<complexHyper> vec2) {
-  assert(checkSame(vec2));
+  if (!checkSame(vec2)) throw(std::string("Vectors not of the same space"));
   std::shared_ptr<complexHyper> vec2H =
       std::dynamic_pointer_cast<complexHyper>(vec2);
   for (long long i = 0; i < getHyper()->getN123(); i++)
@@ -35,28 +36,9 @@ void complexHyper::mult(const std::shared_ptr<complexHyper> vec2) {
                       });
   calcCheckSum();
 }
-/*
-void complexHyper::scaleAdd(std::shared_ptr<complexHyper> vec2,
-                            const std::complex<double> sc1,
-                            const std::complex<double> sc2) {
-  assert(checkSame(vec2));
-  std::shared_ptr<complexHyper> vec2H =
-      std::dynamic_pointer_cast<complexHyper>(vec2);
-
-  for (long long i = 0; i < getHyper()->getN123(); i++)
-    _vals[i] = _vals[i] * sc1 + sc2 * vec2H->_vals[i];
-  calcCheckSum();
-}
-
-void complexHyper::scale(std::complex<double> sc) {
-  assert(!spaceOnly());
-  for (long long i = 0; i < getHyper()->getN123(); i++) _vals[i] = _vals[i] *
-sc; calcCheckSum();
-}
-*/
 
 void complexHyper::random() {
-  assert(!spaceOnly());
+  if (spaceOnly()) throw(std::string("Vectors not allocated"));
   for (long long ii = 0; ii < getHyper()->getN123(); ii++)
     _vals[ii] = {(float)((double)rand() / (RAND_MAX)-.5),
                  (float)((double)rand() / (RAND_MAX)-.5)};

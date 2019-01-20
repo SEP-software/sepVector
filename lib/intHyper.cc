@@ -9,7 +9,8 @@
 using namespace SEP;
 
 void intHyper::add(const std::shared_ptr<intHyper> vec2) {
-  assert(checkSame(vec2));
+  if (!checkSame(vec2)) throw(std::string("Vectors not from the same space"));
+
   std::shared_ptr<intHyper> vec2H = std::dynamic_pointer_cast<intHyper>(vec2);
   tbb::parallel_for(tbb::blocked_range<long long>(0, getHyper()->getN123()),
                     [&](const tbb::blocked_range<long long> &r) {
@@ -19,7 +20,7 @@ void intHyper::add(const std::shared_ptr<intHyper> vec2) {
   calcCheckSum();
 }
 void intHyper::mult(const std::shared_ptr<intHyper> vec2) {
-  assert(checkSame(vec2));
+  if (!checkSame(vec2)) throw(std::string("Vectors not from the same space"));
   std::shared_ptr<intHyper> vec2H = std::dynamic_pointer_cast<intHyper>(vec2);
 
   tbb::parallel_for(tbb::blocked_range<long long>(0, getHyper()->getN123()),
@@ -31,7 +32,7 @@ void intHyper::mult(const std::shared_ptr<intHyper> vec2) {
 }
 void intHyper::scaleAdd(std::shared_ptr<intHyper> vec2, const double sc1,
                         const double sc2) {
-  assert(checkSame(vec2));
+  if (!checkSame(vec2)) throw(std::string("Vectors not from the same space"));
   std::shared_ptr<intHyper> vec2H = std::dynamic_pointer_cast<intHyper>(vec2);
 
   tbb::parallel_for(tbb::blocked_range<long long>(0, getHyper()->getN123()),
@@ -42,7 +43,8 @@ void intHyper::scaleAdd(std::shared_ptr<intHyper> vec2, const double sc1,
   calcCheckSum();
 }
 void intHyper::signum() {
-  assert(!spaceOnly());
+  if (spaceOnly()) throw(std::string("Vector not allocated"));
+
   tbb::parallel_for(tbb::blocked_range<long long>(0, getHyper()->getN123()),
                     [&](const tbb::blocked_range<long long> &r) {
                       for (long long i = r.begin(); i != r.end(); ++i) {
@@ -58,7 +60,7 @@ void intHyper::signum() {
   calcCheckSum();
 }
 void intHyper::scale(double sc) {
-  assert(!spaceOnly());
+  if (spaceOnly()) throw(std::string("Vectors not allocated"));
   tbb::parallel_for(tbb::blocked_range<long long>(0, getHyper()->getN123()),
                     [&](const tbb::blocked_range<long long> &r) {
                       for (long long i = r.begin(); i != r.end(); ++i)
@@ -67,7 +69,8 @@ void intHyper::scale(double sc) {
   calcCheckSum();
 }
 void intHyper::random() {
-  assert(!spaceOnly());
+  if (spaceOnly()) throw(std::string("Vector not allocated"));
+
   tbb::parallel_for(tbb::blocked_range<long long>(0, getHyper()->getN123()),
                     [&](const tbb::blocked_range<long long> &r) {
                       for (long long i = r.begin(); i != r.end(); ++i)
@@ -104,7 +107,7 @@ void intHyper::set(const int val) {
   calcCheckSum();
 }
 double intHyper::dot(const std::shared_ptr<intHyper> vec2) const {
-  assert(checkSame(vec2));
+  if (!checkSame(vec2)) throw(std::string("Vectors not from the same space"));
   std::shared_ptr<intHyper> vec2H = std::dynamic_pointer_cast<intHyper>(vec2);
 
   double dot = tbb::parallel_reduce(

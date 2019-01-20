@@ -1,5 +1,5 @@
 #pragma once
-
+#include "SEPException.h"
 #include "hypercube.h"
 
 namespace SEP {
@@ -15,10 +15,20 @@ class regSpace {
   }
   void checkWindow(const int n, const int nw, const int fw,
                    const int jw) const {
-    assert(fw >= 0);
-    assert(jw > 0);
-    assert(nw > 0);
-    assert(fw + jw * (nw - 1) < n);
+    if (fw < 0)
+      throw(SEPException(std::string("fw must be 0 or greater=") +
+                         std::to_string(fw)));
+    if (jw < 1)
+      throw(SEPException(std::string("jw must be 1 or greater=") +
+                         std::to_string(jw)));
+    if (nw < 1)
+      throw(SEPException(std::string("nw must be 1 or greater=") +
+                         std::to_string(nw)));
+    if (fw + jw * (nw - 1) < n)
+      throw(SEPException(std::string("fw+jw*(nw-1) <n ") + std::to_string(fw) +
+                         std::string("=fw jw=") + std::to_string(jw) +
+                         std::string(" nw=") + std::to_string(nw) +
+                         std::string(" n=") + std::to_string(n)));
   }
   void *getVoidPtr() { return _storage; }
   size_t getEsize() { return _esize; }

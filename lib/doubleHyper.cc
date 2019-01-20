@@ -9,7 +9,7 @@
 using namespace SEP;
 
 void doubleHyper::add(const std::shared_ptr<doubleHyper> vec2) {
-  assert(checkSame(vec2));
+  if (!checkSame(vec2)) throw(std::string("Vectors not of the same space"));
   std::shared_ptr<doubleHyper> vec2H =
       std::dynamic_pointer_cast<doubleHyper>(vec2);
   tbb::parallel_for(tbb::blocked_range<long long>(0, getHyper()->getN123()),
@@ -20,7 +20,7 @@ void doubleHyper::add(const std::shared_ptr<doubleHyper> vec2) {
   calcCheckSum();
 }
 void doubleHyper::mult(const std::shared_ptr<doubleHyper> vec2) {
-  assert(checkSame(vec2));
+  if (!checkSame(vec2)) throw(std::string("Vectors not of the same space"));
   std::shared_ptr<doubleHyper> vec2H =
       std::dynamic_pointer_cast<doubleHyper>(vec2);
 
@@ -33,7 +33,7 @@ void doubleHyper::mult(const std::shared_ptr<doubleHyper> vec2) {
 }
 void doubleHyper::scaleAdd(std::shared_ptr<doubleHyper> vec2, const double sc1,
                            const double sc2) {
-  assert(checkSame(vec2));
+  if (!checkSame(vec2)) throw(std::string("Vectors not of the same space"));
   std::shared_ptr<doubleHyper> vec2H =
       std::dynamic_pointer_cast<doubleHyper>(vec2);
   tbb::parallel_for(tbb::blocked_range<long long>(0, getHyper()->getN123()),
@@ -44,7 +44,7 @@ void doubleHyper::scaleAdd(std::shared_ptr<doubleHyper> vec2, const double sc1,
   calcCheckSum();
 }
 void doubleHyper::signum() {
-  assert(!spaceOnly());
+  if (spaceOnly()) throw(std::string("Vectors not allocated"));
   tbb::parallel_for(tbb::blocked_range<long long>(0, getHyper()->getN123()),
                     [&](const tbb::blocked_range<long long> &r) {
                       for (long long i = r.begin(); i != r.end(); ++i) {
@@ -60,7 +60,7 @@ void doubleHyper::signum() {
   calcCheckSum();
 }
 void doubleHyper::scale(double sc) {
-  assert(!spaceOnly());
+  if (spaceOnly()) throw(std::string("Vectors not allocated"));
   tbb::parallel_for(tbb::blocked_range<long long>(0, getHyper()->getN123()),
                     [&](const tbb::blocked_range<long long> &r) {
                       for (long long i = r.begin(); i != r.end(); ++i)
@@ -105,7 +105,7 @@ void doubleHyper::set(const double val) {
   calcCheckSum();
 }
 double doubleHyper::dot(const std::shared_ptr<doubleHyper> vec2) const {
-  assert(checkSame(vec2));
+  if (!checkSame(vec2)) throw(std::string("Vectors not of the same space"));
   std::shared_ptr<doubleHyper> vec2H =
       std::dynamic_pointer_cast<doubleHyper>(vec2);
 

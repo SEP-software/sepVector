@@ -22,7 +22,9 @@ void int1DReg::initNoData(std::shared_ptr<SEP::hypercube> hyp) {
 
   _vecType = "vec 1d int";
   const std::vector<SEP::axis> axes = hyp->getAxes();
-  assert(axes.size() == 1);
+  if (axes.size() != 1)
+    throw(SEPException(std::string("Axes size must be 1 is ") +
+                       std::to_string(axes.size())));
   _mat.reset(new int1D(boost::extents[axes[0].n]));
   setData(_mat->data());
 }
@@ -31,8 +33,13 @@ void int1DReg::initData(std::shared_ptr<SEP::hypercube> hyp,
   setHyper(hyp);
 
   const std::vector<SEP::axis> axes = hyp->getAxes();
-  assert(axes.size() == 1);
-  assert(axes[0].n == vals.shape()[0]);
+  if (axes.size() != 1)
+    throw(SEPException(std::string("Axes size must be 1 is ") +
+                       std::to_string(axes.size())));
+  if (axes[0].n != vals.shape()[0])
+    throw(SEPException(std::string("Axis 1 not the same (") +
+                       std::to_string(axes[0].n) + std::string(",") +
+                       std::to_string(vals.shape()[0]) + std::string(")")));
   _mat.reset(new int1D(boost::extents[axes[0].n]));
   setData(_mat->data());
   for (long long i = 0; i < axes[0].n; i++) (*_mat)[i] = vals[i];
@@ -41,8 +48,9 @@ std::shared_ptr<int1DReg> int1DReg::window(const std::vector<int> &nw,
                                            const std::vector<int> &jw,
                                            const std::vector<int> &fw) const {
   const std::vector<SEP::axis> axes = getHyper()->getAxes();
-  assert(nw.size() == axes.size() && fw.size() == axes.size() &&
-         jw.size() == axes.size());
+  if (nw.size() != axes.size()) throw(SEPException("nw must of length 1"));
+  if (fw.size() != axes.size()) throw(SEPException("fw must of length 1"));
+  if (jw.size() != axes.size()) throw(SEPException("jw must of length 1"));
   std::vector<axis> aout;
   for (int i = 0; i < axes.size(); i++) {
     checkWindow(axes[i].n, nw[i], fw[i], jw[i]);
@@ -57,16 +65,3 @@ std::shared_ptr<int1DReg> int1DReg::window(const std::vector<int> &nw,
 
   return out;
 }
-
-/*
-void float1DReg::initData(std::shared_ptr<SEP::hypercube> hyp,
-                          const float *vals) {
-  setHyper(hyp);
-
-  const std::vector<SEP::axis> axes = hyp->getAxes();
-  assert(axes.size() == 1);
-  _mat.reset(new float1D(boost::extents[axes[0].n]));
-  setData(_mat->data());
-  for (long long i = 0; i < axes[0].n; i++) (*_mat)[i] = vals[i];
-}
-*/

@@ -9,7 +9,7 @@
 using namespace SEP;
 
 void shortHyper::add(const std::shared_ptr<shortHyper> vec2) {
-  assert(checkSame(vec2));
+  if (!checkSame(vec2)) throw(std::string("Vectors not from the same space"));
   std::shared_ptr<shortHyper> vec2H =
       std::dynamic_pointer_cast<shortHyper>(vec2);
   tbb::parallel_for(tbb::blocked_range<long long>(0, getHyper()->getN123()),
@@ -20,7 +20,7 @@ void shortHyper::add(const std::shared_ptr<shortHyper> vec2) {
   calcCheckSum();
 }
 void shortHyper::mult(const std::shared_ptr<shortHyper> vec2) {
-  assert(checkSame(vec2));
+  if (!checkSame(vec2)) throw(std::string("Vectors not from the same space"));
   std::shared_ptr<shortHyper> vec2H =
       std::dynamic_pointer_cast<shortHyper>(vec2);
 
@@ -33,7 +33,7 @@ void shortHyper::mult(const std::shared_ptr<shortHyper> vec2) {
 }
 void shortHyper::scaleAdd(std::shared_ptr<shortHyper> vec2, const double sc1,
                           const double sc2) {
-  assert(checkSame(vec2));
+  if (!checkSame(vec2)) throw(std::string("Vectors not from the same space"));
   std::shared_ptr<shortHyper> vec2H =
       std::dynamic_pointer_cast<shortHyper>(vec2);
 
@@ -45,7 +45,7 @@ void shortHyper::scaleAdd(std::shared_ptr<shortHyper> vec2, const double sc1,
   calcCheckSum();
 }
 void shortHyper::signum() {
-  assert(!spaceOnly());
+  if (spaceOnly()) throw(std::string("Vectors not allocated"));
   tbb::parallel_for(tbb::blocked_range<long long>(0, getHyper()->getN123()),
                     [&](const tbb::blocked_range<long long> &r) {
                       for (long long i = r.begin(); i != r.end(); ++i) {
@@ -61,7 +61,7 @@ void shortHyper::signum() {
   calcCheckSum();
 }
 void shortHyper::scale(double sc) {
-  assert(!spaceOnly());
+  if (spaceOnly()) throw(std::string("Vectors not allocated"));
   tbb::parallel_for(tbb::blocked_range<long long>(0, getHyper()->getN123()),
                     [&](const tbb::blocked_range<long long> &r) {
                       for (long long i = r.begin(); i != r.end(); ++i)
@@ -70,7 +70,7 @@ void shortHyper::scale(double sc) {
   calcCheckSum();
 }
 void shortHyper::random() {
-  assert(!spaceOnly());
+  if (spaceOnly()) throw(std::string("Vectors not allocated"));
   tbb::parallel_for(tbb::blocked_range<long long>(0, getHyper()->getN123()),
                     [&](const tbb::blocked_range<long long> &r) {
                       for (long long i = r.begin(); i != r.end(); ++i)
@@ -107,7 +107,7 @@ void shortHyper::set(const short val) {
   calcCheckSum();
 }
 double shortHyper::dot(const std::shared_ptr<shortHyper> vec2) const {
-  assert(checkSame(vec2));
+  if (!checkSame(vec2)) throw(std::string("Vectors not from the same space"));
   std::shared_ptr<shortHyper> vec2H =
       std::dynamic_pointer_cast<shortHyper>(vec2);
 

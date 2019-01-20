@@ -1,6 +1,5 @@
 #pragma once
 #include <hypercube.h>
-#include <cassert>
 #include <cstdint>
 #include <sstream>
 #include "regSpace.h"

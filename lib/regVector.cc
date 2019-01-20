@@ -69,8 +69,9 @@ std::shared_ptr<regSpace> SEP::vecFromHyper(
         } break;
       }
 #else
-      std::cerr << "sepVector not build with complex support" << std::endl;
-      assert(1 == 2);
+      throw(SEPException(
+          std::string("sepvector not built with complex support")));
+
 #endif
       break;
     case DATA_BYTE:
@@ -102,8 +103,8 @@ std::shared_ptr<regSpace> SEP::vecFromHyper(
         } break;
       }
 #else
-      std::cerr << "sepVector not build with byte support" << std::endl;
-      assert(1 == 2);
+      throw(SEPException(std::string("sepvector not built with byte support")));
+
 #endif
       break;
     case DATA_SHORT:
@@ -143,8 +144,8 @@ std::shared_ptr<regSpace> SEP::vecFromHyper(
         } break;
       }
 #else
-      std::cerr << "sepVector not build with int support" << std::endl;
-      assert(1 == 2);
+      throw(SEPException(std::string("sepvector not built with int support")));
+
 #endif
       break;
     case DATA_DOUBLE:
@@ -176,13 +177,13 @@ std::shared_ptr<regSpace> SEP::vecFromHyper(
         } break;
       }
 #else
-      std::cerr << "sepVector not build with double support" << std::endl;
-      assert(1 == 2);
+      throw(
+          SEPException(std::string("sepvector not built with doyble support")));
+
 #endif
       break;
     default:
-      std::cerr << "Unhandled data type" << std::endl;
-      assert(1 == 2);
+      throw(SEPException(std::string("Unhandled data type")));
   }
   return nullptr;
 }
@@ -198,6 +199,7 @@ std::shared_ptr<regSpace> SEP::subCubeFromHyper(
   return vecFromHyper(hyper2, typ);
   return nullptr;
 }
+/*
 std::shared_ptr<regSpace> SEP::windowFromHyper(
     const std::shared_ptr<hypercube> hyper, const std::vector<int> &nw,
     const std::vector<int> &fw, const std::vector<int> &jw,
@@ -206,14 +208,19 @@ std::shared_ptr<regSpace> SEP::windowFromHyper(
   for (int i = 0; i < nw.size(); i++) {
     if (nw[i] > 1) nbigest = i;
   }
-  assert(hyper->getNdim() > nbigest);
-  assert(nbigest <= fw.size() && nbigest <= jw.size());
+  if (hyper->getNdim() <= nbiggest)
+    throw(SEPException(std::string("hyper ndim=") +
+                       std::to_string(hyper->getNdim()) +
+                       std::string(" nibiggest=") + std::to_string(nbiggest)));
+
+  if (nbiggest > fw.size())
+    throw(SEPException(std::string("nbiggest[") + std::to_string(nbiggest) +
+                       std::string("] > fw.size()[") +
+                       std::to_string(nbiggest) + std::to_string("]")));
 
   std::vector<axis> axes = hyper->getAxes(), axesOut;
   for (int i = 0; i < nbigest; i++) {
-    assert(fw[i] + jw[i] * (nw[i] - 1) <= axes[i].n - 1);
-    assert(fw[i] >= 0);
-    assert(jw[i] >= 1);
+    checkWindow(axes[i].n, nw[i], fw[i], jw[i]);
     axis a(nw[i], axes[i].o + axes[i].d * fw[i], jw[i] * axes[i].d,
            axes[i].label);
     axesOut.push_back(a);
@@ -221,6 +228,7 @@ std::shared_ptr<regSpace> SEP::windowFromHyper(
   std::shared_ptr<hypercube> hyper2(new hypercube(axesOut));
   return vecFromHyper(hyper2, typ);
 }
+*/
 std::shared_ptr<regSpace> SEP::cloneRegSpace(
     std::shared_ptr<regSpace> storage) {
   std::shared_ptr<float1DReg> v1 =

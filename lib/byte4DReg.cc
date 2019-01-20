@@ -25,7 +25,9 @@ void byte4DReg::initNoData(std::shared_ptr<SEP::hypercube> hyp) {
   const std::vector<SEP::axis> axes = hyp->getAxes();
   setHyper(hyp);
 
-  assert(axes.size() == 4);
+  if (axes.size() != 4)
+    throw(SEPException(std::string("Axes size must be 4 is ") +
+                       std::to_string(axes.size())));
 
   _mat.reset(
       new byte4D(boost::extents[axes[3].n][axes[2].n][axes[1].n][axes[0].n]));
@@ -36,9 +38,27 @@ void byte4DReg::initData(std::shared_ptr<SEP::hypercube> hyp,
   const std::vector<SEP::axis> axes = hyp->getAxes();
   setHyper(hyp);
 
-  assert(axes.size() == 4);
-  assert(axes[0].n == vals.shape()[3] && axes[1].n == vals.shape()[2] &&
-         axes[2].n == vals.shape()[1] && axes[3].n == vals.shape()[0]);
+  if (axes.size() != 4)
+    throw(SEPException(std::string("Axes size must be 4 is ") +
+                       std::to_string(axes.size())));
+
+  if (axes[0].n != vals.shape()[3])
+    throw(SEPException(std::string("Axis 1 not the same (") +
+                       std::to_string(axes[0].n) + std::string(",") +
+                       std::to_string(vals.shape()[3]) + std::string(")")));
+  if (axes[1].n != vals.shape()[2])
+    throw(SEPException(std::string("Axis 2 not the same (") +
+                       std::to_string(axes[1].n) + std::string(",") +
+                       std::to_string(vals.shape()[2]) + std::string(")")));
+  if (axes[2].n != vals.shape()[1])
+    throw(SEPException(std::string("Axis 3 not the same (") +
+                       std::to_string(axes[2].n) + std::string(",") +
+                       std::to_string(vals.shape()[1]) + std::string(")")));
+  if (axes[3].n != vals.shape()[0])
+    throw(SEPException(std::string("Axis 4 not the same (") +
+                       std::to_string(axes[3].n) + std::string(",") +
+                       std::to_string(vals.shape()[0]) + std::string(")")));
+
   _mat.reset(
       new byte4D(boost::extents[axes[3].n][axes[2].n][axes[1].n][axes[0].n]));
   setData(_mat->data());
@@ -56,7 +76,9 @@ std::shared_ptr<byte4DReg> byte4DReg::window(const std::vector<int> &nw,
                                              const std::vector<int> &jw,
                                              const std::vector<int> &fw) const {
   const std::vector<SEP::axis> axes = getHyper()->getAxes();
-  assert(nw.size() == 4 && fw.size() == 4 && jw.size() == 4);
+  if (nw.size() != axes.size()) throw(SEPException("nw must of length 4"));
+  if (fw.size() != axes.size()) throw(SEPException("fw must of length 4"));
+  if (jw.size() != axes.size()) throw(SEPException("jw must of length 4"));
   std::vector<axis> aout;
   for (int i = 0; i < axes.size(); i++) {
     checkWindow(axes[i].n, nw[i], fw[i], jw[i]);
