@@ -34,6 +34,43 @@ class regSpace {
   size_t getEsize() { return _esize; }
   virtual ~regSpace() = default;
 
+ protected:
+  inline void calcTraverse(const std::vector<int> &nd, const int iax1,
+                           const bool rev1, int &f1, int &j1, const int iax2,
+                           const bool rev2, int &f2, int &j2) {
+    if (iax2 > iax1) {
+      if (!rev1) {
+        f1 = 0;
+        j1 = 1;
+      } else {
+        f1 = nd[iax1] - 1;
+        j1 = -1;
+      }
+      if (!rev2) {
+        f2 = 0;
+        j2 = nd[iax1];
+      } else {
+        f2 = (nd[iax2] - 1) * nd[iax1];
+        j2 = -nd[iax1];
+      }
+    } else {
+      if (!rev2) {
+        f2 = 0;
+        j2 = 1;
+      } else {
+        f2 = nd[iax2] - 1;
+        j2 = -1;
+      }
+      if (!rev1) {
+        f1 = 0;
+        j1 = nd[iax2];
+      } else {
+        f1 = (nd[iax1] - 1) * nd[iax2];
+        j1 = -nd[iax2];
+      }
+    }
+  }
+
  private:
   std::shared_ptr<SEP::hypercube> _hyper;
   size_t _esize;

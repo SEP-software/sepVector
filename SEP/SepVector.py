@@ -19,7 +19,16 @@ class vector(pyVector.vector):
 	def getCpp(self):
 		"""Return the associated cpp object"""
 		return self.cppMode
-
+	def clip(self,bclip,eclip):
+		"""Clip dataset
+			bclip - Minimum value to clip to
+			eclip - Maximum value to clip to"""
+		self.cppMode.clip(bclip,eclip)
+	def cent(self,pct,jsamp=1):
+		"""Calculate the percentile of a dataset
+			pct - Percentile of the dataset
+			jsamp - Sub-sampling of dartaset"""
+		return self.cppMode.cent(pct,jsamp)
 	def getStorageType(self):
 		"""Return type of storage"""
 		return self.storage
@@ -142,7 +151,6 @@ class floatVector(vector):
 	def isDifferent(self,vec2):
 		"""Function to check if two vectors belong to the same vector space"""
 		return self.cppMode.isDifferent(vec2.cppMode)   
-
 class doubleVector(vector):
 	"""Generic double vector class"""
 	def __init__(self,**kw):
@@ -214,6 +222,11 @@ def getSepVector(*args,**keys):
 			ds=[] - list os sampling
 			labels=[] list of labels
 			axes=[] list of axes
+		Option 3 (get 2-D slice)
+			vector  - vector to grab from
+			iax1,iax2 - axes to grab
+			rev1,rev1 - whether or not to reverse axes
+			beg,end - beg and end position for all axes (lists)
 		storage= StorageType (dataFloat[default],dataComplex,dataDouble,dataInt,dataByte)
 	"""
 	myt="dataFloat"
@@ -223,8 +236,23 @@ def getSepVector(*args,**keys):
 		if "axes" in keys or "ns" in keys:
 			hyper=Hypercube.hypercube(**keys)
 			print("HYPER ",len(hyper.axes))
+		elif "vector" in keys:
+			if "iax1" in keys and "iax2" in keys and "rev1" in keys and "rev2  in keys \
+			 and "ipos" in keys and "beg" in keys and "end" in keys:
+				if isinstance(keys["vector"],  floatVector):
+					floatVector(fromCpp=pySepVector.float2DReg(keys["vector"].cppMode,keys["iax1"],keys["rev1"],\
+						keys["iax2"],keys["rev2"],keys["ipos",keys["beg"],keys["end"])) 
+				elif isinstance(keys["vector"],  doubleVector):
+					doubleVector(fromCpp=pySepVector.double2DReg(keys["vector"].cppMode,keys["iax1"],keys["rev1"],\
+						keys["iax2"],keys["rev2"],keys["ipos",keys["beg"],keys["end"])) 
+				elif isinstance(keys["vector"],  intVector):
+					intVector(fromCpp=pySepVector.int2DReg(keys["vector"].cppMode,keys["iax1"],keys["rev1"],\
+						keys["iax2"],keys["rev2"],keys["ipos",keys["beg"],keys["end"]))
+				elif isinstance(keys["vector"],  doubleVector):
+					byteVector(fromCpp=pySepVector.byte2DReg(keys["vector"].cppMode,keys["iax1"],keys["rev1"],\
+						keys["iax2"],keys["rev2"],keys["ipos",keys["beg"],keys["end"])) 
 		else:
-			raise Exception("Must supply Hypercube or ns/axes")
+			raise Exception("Must supply Hypercube,vector  or ns/axes")
 	else:
 		raise Exception("Only understand 0 or 1 (hypercube) non-keyword arguments")
 

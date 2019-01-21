@@ -1,5 +1,10 @@
 #pragma once
+#include <float3dReg.h>
+#include <float4dReg.h>
+#include <float5dReg.h>
+#include <float6dReg.h>
 #include <floatHyper.h>
+
 #include "boost/multi_array.hpp"
 typedef boost::multi_array<float, 2> float2D;
 namespace SEP {
@@ -38,6 +43,27 @@ class float2DReg : public floatHyper {
     std::shared_ptr<SEP::hypercube> hyp(new SEP::hypercube(a));
     initData(hyp, vals);
   }
+  float2DReg(const std::shared_ptr<float6DReg> old, const int iax1,
+             const bool rev1, const int iax2, const bool rev2,
+             const std::vector<int> &ipos, const std::vector<int> &beg,
+             const std::vector<int> &end);
+  float2DReg(const std::shared_ptr<float5DReg> old, const int iax1,
+             const bool rev1, const int iax2, const bool rev2,
+             const std::vector<int> &ipos, const std::vector<int> &beg,
+             const std::vector<int> &end);
+  float2DReg(const std::shared_ptr<float4DReg> old, const int iax1,
+             const bool rev1, const int iax2, const bool rev2,
+             const std::vector<int> &ipos, const std::vector<int> &beg,
+             const std::vector<int> &end);
+  float2DReg(const std::shared_ptr<float3DReg> old, const int iax1,
+             const bool rev1, const int iax2, const bool rev2,
+             const std::vector<int> &ipos, const std::vector<int> &beg,
+             const std::vector<int> &end);
+  float2DReg(const std::shared_ptr<float2DReg> old, const int iax1,
+             const bool rev1, const int iax2, const bool rev2,
+             const std::vector<int> &ipos, const std::vector<int> &beg,
+             const std::vector<int> &end);
+
   void allocate() {
     std::vector<int> ns = getHyper()->getNs();
     _mat.reset(new float2D(boost::extents[ns[1]][ns[0]]));
@@ -45,6 +71,7 @@ class float2DReg : public floatHyper {
     setData(_mat->data());
     ;
   }
+
   std::shared_ptr<float2DReg> window(const std::vector<int> &nw,
                                      const std::vector<int> &fw,
                                      const std::vector<int> &jw) const;

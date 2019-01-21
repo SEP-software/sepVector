@@ -19,7 +19,153 @@ std::shared_ptr<double2DReg> double2DReg::cloneSpace() const {
 
   return x;
 }
-
+double2DReg::double2DReg(const std::shared_ptr<double6DReg> old, const int iax1,
+                         const bool rev1, const int iax2, const bool rev2,
+                         const std::vector<int> &ipos,
+                         const std::vector<int> &beg,
+                         const std::vector<int> &end) {
+  std::vector<int> j(6, 1);
+  std::vector<int> f(6, 0);
+  std::vector<int> n(6, 1);
+  std::vector<int> nd = getHyper()->getNs();
+  // Figure out window
+  for (auto i = 0; i < n.size(); i++) {
+    f[i] = beg[i];
+    if (iax1 == i || iax2 == i)
+      n[i] = end[i] - beg[i];
+    else
+      f[i] = ipos[i];
+  }
+  std::shared_ptr<double6DReg> tmp = old->window(n, f, j);
+  axis a1(n[iax1]), a2(n[iax2]);
+  std::shared_ptr<hypercube> hyperOut(new hypercube(a1, a2));
+  initNoData(hyperOut);
+  int f1, j1, f2, j2;
+  calcTraverse(n, iax1, rev1, f1, j1, iax2, rev2, f2, j2);
+  int ip2 = f2, ip1 = f1, i = 0;
+  double *outv = getVals();
+  double *inv = tmp->getVals();
+  for (auto i2 = 0; i2 < n[iax2]; i2++, ip2 += j2)
+    for (auto i1 = 0; i1 < n[iax1]; i1++, i++, ip1 += j1)
+      outv[i] = inv[ip1 + ip2];
+}
+double2DReg::double2DReg(const std::shared_ptr<double5DReg> old, const int iax1,
+                         const bool rev1, const int iax2, const bool rev2,
+                         const std::vector<int> &ipos,
+                         const std::vector<int> &beg,
+                         const std::vector<int> &end) {
+  std::vector<int> j(5, 1);
+  std::vector<int> f(5, 0);
+  std::vector<int> n(5, 1);
+  std::vector<int> nd = getHyper()->getNs();
+  // Figure out window
+  for (auto i = 0; i < n.size(); i++) {
+    f[i] = beg[i];
+    if (iax1 == i || iax2 == i)
+      n[i] = end[i] - beg[i];
+    else
+      f[i] = ipos[i];
+  }
+  std::shared_ptr<double5DReg> tmp = old->window(n, f, j);
+  axis a1(n[iax1]), a2(n[iax2]);
+  std::shared_ptr<hypercube> hyperOut(new hypercube(a1, a2));
+  initNoData(hyperOut);
+  int f1, j1, f2, j2;
+  calcTraverse(n, iax1, rev1, f1, j1, iax2, rev2, f2, j2);
+  int ip2 = f2, ip1 = f1, i = 0;
+  double *outv = getVals();
+  double *inv = tmp->getVals();
+  for (auto i2 = 0; i2 < n[iax2]; i2++, ip2 += j2)
+    for (auto i1 = 0; i1 < n[iax1]; i1++, i++, ip1 += j1)
+      outv[i] = inv[ip1 + ip2];
+}
+double2DReg::double2DReg(const std::shared_ptr<double4DReg> old, const int iax1,
+                         const bool rev1, const int iax2, const bool rev2,
+                         const std::vector<int> &ipos,
+                         const std::vector<int> &beg,
+                         const std::vector<int> &end) {
+  std::vector<int> j(4, 1);
+  std::vector<int> f(4, 0);
+  std::vector<int> n(4, 1);
+  std::vector<int> nd = getHyper()->getNs();
+  // Figure out window
+  for (auto i = 0; i < n.size(); i++) {
+    f[i] = beg[i];
+    if (iax1 == i || iax2 == i)
+      n[i] = end[i] - beg[i];
+    else
+      f[i] = ipos[i];
+  }
+  std::shared_ptr<double4DReg> tmp = old->window(n, f, j);
+  axis a1(n[iax1]), a2(n[iax2]);
+  std::shared_ptr<hypercube> hyperOut(new hypercube(a1, a2));
+  initNoData(hyperOut);
+  int f1, j1, f2, j2;
+  calcTraverse(n, iax1, rev1, f1, j1, iax2, rev2, f2, j2);
+  int ip2 = f2, ip1 = f1, i = 0;
+  double *outv = getVals();
+  double *inv = tmp->getVals();
+  for (auto i2 = 0; i2 < n[iax2]; i2++, ip2 += j2)
+    for (auto i1 = 0; i1 < n[iax1]; i1++, i++, ip1 += j1)
+      outv[i] = inv[ip1 + ip2];
+}
+double2DReg::double2DReg(const std::shared_ptr<double3DReg> old, const int iax1,
+                         const bool rev1, const int iax2, const bool rev2,
+                         const std::vector<int> &ipos,
+                         const std::vector<int> &beg,
+                         const std::vector<int> &end) {
+  std::vector<int> j(3, 1);
+  std::vector<int> f(3, 0);
+  std::vector<int> n(3, 1);
+  std::vector<int> nd = getHyper()->getNs();
+  // Figure out window
+  for (auto i = 0; i < n.size(); i++) {
+    f[i] = beg[i];
+    if (iax1 == i || iax2 == i)
+      n[i] = end[i] - beg[i];
+    else
+      f[i] = ipos[i];
+  }
+  std::shared_ptr<double3DReg> tmp = old->window(n, f, j);
+  axis a1(n[iax1]), a2(n[iax2]);
+  std::shared_ptr<hypercube> hyperOut(new hypercube(a1, a2));
+  initNoData(hyperOut);
+  int f1, j1, f2, j2;
+  calcTraverse(n, iax1, rev1, f1, j1, iax2, rev2, f2, j2);
+  int ip2 = f2, ip1 = f1, i = 0;
+  double *outv = getVals();
+  double *inv = tmp->getVals();
+  for (auto i2 = 0; i2 < n[iax2]; i2++, ip2 += j2)
+    for (auto i1 = 0; i1 < n[iax1]; i1++, i++, ip1 += j1)
+      outv[i] = inv[ip1 + ip2];
+}
+double2DReg::double2DReg(const std::shared_ptr<double2DReg> old, const int iax1,
+                         const bool rev1, const int iax2, const bool rev2,
+                         const std::vector<int> &ipos,
+                         const std::vector<int> &beg,
+                         const std::vector<int> &end) {
+  std::vector<int> j(2, 1);
+  std::vector<int> f(2, 0);
+  std::vector<int> n(2, 1);
+  std::vector<int> nd = getHyper()->getNs();
+  // Figure out window
+  for (auto i = 0; i < n.size(); i++) {
+    f[i] = beg[i];
+    if (iax1 == i || iax2 == i) n[i] = end[i] - beg[i];
+  }
+  std::shared_ptr<double2DReg> tmp = old->window(n, f, j);
+  axis a1(n[iax1]), a2(n[iax2]);
+  std::shared_ptr<hypercube> hyperOut(new hypercube(a1, a2));
+  initNoData(hyperOut);
+  int f1, j1, f2, j2;
+  calcTraverse(n, iax1, rev1, f1, j1, iax2, rev2, f2, j2);
+  int ip2 = f2, ip1 = f1, i = 0;
+  double *outv = getVals();
+  double *inv = tmp->getVals();
+  for (auto i2 = 0; i2 < n[iax2]; i2++, ip2 += j2)
+    for (auto i1 = 0; i1 < n[iax1]; i1++, i++, ip1 += j1)
+      outv[i] = inv[ip1 + ip2];
+}
 void double2DReg::initNoData(std::shared_ptr<SEP::hypercube> hyp) {
   const std::vector<SEP::axis> axes = hyp->getAxes();
   setHyper(hyp);

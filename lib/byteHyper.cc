@@ -56,6 +56,46 @@ int byteHyper::absMax() const {
       });
   return val;
 }
+unsigned char byteHyper::cent(const long long iv, const int js) const {
+  int q;
+  int n = getHyper()->getN123() / js;
+  unsigned char *x = new unsigned char[n];
+  const unsigned char *in = getCVals();
+  if (js < 1)
+    throw SEPException(std::string("j must be positive ") + std::to_string(js));
+  for (auto i = 0; i < n; i++) {
+    x[i] = in[i * js];
+  }
+  register unsigned char *i, *j, ak;
+  unsigned char *low, *hi, buf, *k;
+  for (low = x, hi = x + n - 1, k = x + q; low < hi;) {
+    ak = *k;
+    i = low;
+    j = hi;
+    do {
+      while (*i < ak) i++;
+      while (*j > ak) j--;
+      if (i <= j) {
+        buf = *i;
+        *i++ = *j;
+        *j-- = buf;
+      }
+    } while (i <= j);
+    if (j < k) low = i;
+    if (k < i) hi = j;
+  }
+  unsigned char vv = (*k);
+  delete[] x;
+  return vv;
+}
+void byteHyper::clip(const unsigned char bclip, const unsigned char eclip) {
+  if (spaceOnly()) throw(std::string("Vectors not allocated"));
+  tbb::parallel_for(tbb::blocked_range<long long>(0, getHyper()->getN123()),
+                    [&](const tbb::blocked_range<long long> &r) {
+                      for (long long i = r.begin(); i != r.end(); ++i)
+                        _vals[i] = std::max(eclip, std::min(bclip, _vals[i]));
+                    });
+}
 int byteHyper::max() const {
   int val = tbb::parallel_reduce(
       tbb::blocked_range<size_t>(0, getHyper()->getN123()), -1e31,

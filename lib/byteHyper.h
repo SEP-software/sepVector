@@ -17,7 +17,14 @@ class byteHyper : public regSpace {
   virtual void setSpace() { _spaceOnly = true; }
   virtual void setNotSpace() { _spaceOnly = false; }
   inline bool spaceOnly() const { return _spaceOnly; }
-
+  unsigned char cent(const float pct, const int j) const {
+    long long iv = std::max(
+        (long long)0, std::min((long long)(getHyper()->getN123() * pct / 100.),
+                               getHyper()->getN123() - 1));
+    return cent(iv, j);
+  }
+  unsigned char cent(const long long iv, const int j) const;
+  void clip(const unsigned char bclip, const unsigned char eclip);
   void setData(unsigned char *ptr) {
     _vals = ptr;
     setNotSpace();

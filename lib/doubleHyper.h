@@ -26,6 +26,14 @@ class doubleHyper : public Vector, public regSpace {
     setNotSpace();
     setMemPtr((void *)ptr, sizeof(double));
   }
+  double cent(const float pct, const int j) const {
+    long long iv = std::max(
+        (long long)0, std::min((long long)(getHyper()->getN123() * pct / 100.),
+                               getHyper()->getN123() - 1));
+    return cent(iv, j);
+  }
+  double cent(const long long iv, const int j) const;
+  void clip(const double bclip, const double eclip);
   void calcCheckSum() override;
   void setCheckSum(const uint64_t x) { _checkSum = x; }
   bool isDifferent(std::shared_ptr<doubleHyper> vec2) {

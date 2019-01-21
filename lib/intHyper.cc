@@ -42,6 +42,46 @@ void intHyper::scaleAdd(std::shared_ptr<intHyper> vec2, const double sc1,
                     });
   calcCheckSum();
 }
+int intHyper::cent(const long long iv, const int js) const {
+  int q;
+  int n = getHyper()->getN123() / js;
+  int *x = new int[n];
+  const int *in = getCVals();
+  if (js < 1)
+    throw SEPException(std::string("j must be positive ") + std::to_string(js));
+  for (auto i = 0; i < n; i++) {
+    x[i] = in[i * js];
+  }
+  register int *i, *j, ak;
+  int *low, *hi, buf, *k;
+  for (low = x, hi = x + n - 1, k = x + q; low < hi;) {
+    ak = *k;
+    i = low;
+    j = hi;
+    do {
+      while (*i < ak) i++;
+      while (*j > ak) j--;
+      if (i <= j) {
+        buf = *i;
+        *i++ = *j;
+        *j-- = buf;
+      }
+    } while (i <= j);
+    if (j < k) low = i;
+    if (k < i) hi = j;
+  }
+  int vv = *k;
+  delete[] x;
+  return vv;
+}
+void intHyper::clip(const int bclip, const int eclip) {
+  if (spaceOnly()) throw(std::string("Vectors not allocated"));
+  tbb::parallel_for(tbb::blocked_range<long long>(0, getHyper()->getN123()),
+                    [&](const tbb::blocked_range<long long> &r) {
+                      for (long long i = r.begin(); i != r.end(); ++i)
+                        _vals[i] = std::max(eclip, std::min(bclip, _vals[i]));
+                    });
+}
 void intHyper::signum() {
   if (spaceOnly()) throw(std::string("Vector not allocated"));
 

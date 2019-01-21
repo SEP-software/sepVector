@@ -2,6 +2,7 @@
 #include <hypercube.h>
 #include <cstdint>
 #include <sstream>
+#include "SEPException.h"
 #include "Vector.h"
 #include "regSpace.h"
 
@@ -25,7 +26,14 @@ class floatHyper : public Vector, public regSpace {
   virtual void mult(std::shared_ptr<floatHyper> vec2);
 
   virtual double dot(std::shared_ptr<floatHyper> vec2) const;
-
+  float cent(const float pct, const int j) const {
+    long long iv = std::max(
+        (long long)0, std::min((long long)(getHyper()->getN123() * pct / 100.),
+                               getHyper()->getN123() - 1));
+    return cent(iv, j);
+  }
+  float cent(const long long iv, const int j) const;
+  void clip(const float bpclip, const float epclip);
   void createMask(const float zero, const float err);
   void setData(float *ptr) {
     _vals = ptr;

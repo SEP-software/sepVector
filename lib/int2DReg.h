@@ -1,6 +1,12 @@
 #pragma once
 #include <intHyper.h>
+#include "int3DReg.h"
+#include "int4DReg.h"
+#include "int5DReg.h"
+#include "int6DReg.h"
+
 #include "boost/multi_array.hpp"
+
 typedef boost::multi_array<int, 2> int2D;
 namespace SEP {
 class int2DReg : public intHyper {
@@ -37,6 +43,21 @@ class int2DReg : public intHyper {
     std::shared_ptr<SEP::hypercube> hyp(new SEP::hypercube(a));
     initData(hyp, vals);
   }
+  int2DReg(const std::shared_ptr<int2DReg> old, const int iax1, const bool rev1,
+           const int iax2, const bool rev2, const std::vector<int> &ipos,
+           const std::vector<int> &beg, std::vector<int> &end);
+  int2DReg(const std::shared_ptr<int3DReg> old, const int iax1, const bool rev1,
+           const int iax2, const bool rev2, const std::vector<int> &ipos,
+           const std::vector<int> &beg, std::vector<int> &end);
+  int2DReg(const std::shared_ptr<int4DReg> old, const int iax1, const bool rev1,
+           const int iax2, const bool rev2, const std::vector<int> &ipos,
+           const std::vector<int> &beg, std::vector<int> &end);
+  int2DReg(const std::shared_ptr<int5DReg> old, const int iax1, const bool rev1,
+           const int iax2, const bool rev2, const std::vector<int> &ipos,
+           const std::vector<int> &beg, std::vector<int> &end);
+  int2DReg(const std::shared_ptr<int6DReg> old, const int iax1, const bool rev1,
+           const int iax2, const bool rev2, const std::vector<int> &ipos,
+           const std::vector<int> &beg, std::vector<int> &end);
   void allocate() {
     std::vector<int> ns = getHyper()->getNs();
     _mat.reset(new int2D(boost::extents[ns[1]][ns[0]]));
