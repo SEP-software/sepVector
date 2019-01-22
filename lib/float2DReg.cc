@@ -190,6 +190,8 @@ float2DReg::float2DReg(const std::shared_ptr<float2DReg> old, const int iax1,
     ip1 = f1;
     for (auto i1 = 0; i1 < n[iax1]; i1++, i++, ip1 += j1) {
       outv[i] = inv[ip1 + ip2];
+      std::cerr << i1 << "," << i2 << " " << ip1 + ip2 << "->" << i
+                << std::endl;
     }
   }
 }
