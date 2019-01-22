@@ -44,9 +44,12 @@ int2DReg::int2DReg(const std::shared_ptr<int6DReg> old, const int iax1,
   int ip2 = f2, ip1 = f1, i = 0;
   int *outv = getVals();
   int *inv = tmp->getVals();
-  for (auto i2 = 0; i2 < n[iax2]; i2++, ip2 += j2)
-    for (auto i1 = 0; i1 < n[iax1]; i1++, i++, ip1 += j1)
+  for (auto i2 = 0; i2 < n[iax2]; i2++, ip2 += j2) {
+    ip1 = f1;
+    for (auto i1 = 0; i1 < n[iax1]; i1++, i++, ip1 += j1) {
       outv[i] = inv[ip1 + ip2];
+    }
+  }
 }
 int2DReg::int2DReg(const std::shared_ptr<int5DReg> old, const int iax1,
                    const bool rev1, const int iax2, const bool rev2,
@@ -73,9 +76,12 @@ int2DReg::int2DReg(const std::shared_ptr<int5DReg> old, const int iax1,
   int ip2 = f2, ip1 = f1, i = 0;
   int *outv = getVals();
   int *inv = tmp->getVals();
-  for (auto i2 = 0; i2 < n[iax2]; i2++, ip2 += j2)
-    for (auto i1 = 0; i1 < n[iax1]; i1++, i++, ip1 += j1)
+  for (auto i2 = 0; i2 < n[iax2]; i2++, ip2 += j2) {
+    ip1 = f1;
+    for (auto i1 = 0; i1 < n[iax1]; i1++, i++, ip1 += j1) {
       outv[i] = inv[ip1 + ip2];
+    }
+  }
 }
 int2DReg::int2DReg(const std::shared_ptr<int4DReg> old, const int iax1,
                    const bool rev1, const int iax2, const bool rev2,
@@ -102,9 +108,12 @@ int2DReg::int2DReg(const std::shared_ptr<int4DReg> old, const int iax1,
   int ip2 = f2, ip1 = f1, i = 0;
   int *outv = getVals();
   int *inv = tmp->getVals();
-  for (auto i2 = 0; i2 < n[iax2]; i2++, ip2 += j2)
-    for (auto i1 = 0; i1 < n[iax1]; i1++, i++, ip1 += j1)
+  for (auto i2 = 0; i2 < n[iax2]; i2++, ip2 += j2) {
+    ip1 = f1;
+    for (auto i1 = 0; i1 < n[iax1]; i1++, i++, ip1 += j1) {
       outv[i] = inv[ip1 + ip2];
+    }
+  }
 }
 int2DReg::int2DReg(const std::shared_ptr<int3DReg> old, const int iax1,
                    const bool rev1, const int iax2, const bool rev2,
@@ -131,9 +140,12 @@ int2DReg::int2DReg(const std::shared_ptr<int3DReg> old, const int iax1,
   int ip2 = f2, ip1 = f1, i = 0;
   int *outv = getVals();
   int *inv = tmp->getVals();
-  for (auto i2 = 0; i2 < n[iax2]; i2++, ip2 += j2)
-    for (auto i1 = 0; i1 < n[iax1]; i1++, i++, ip1 += j1)
+  for (auto i2 = 0; i2 < n[iax2]; i2++, ip2 += j2) {
+    ip1 = f1;
+    for (auto i1 = 0; i1 < n[iax1]; i1++, i++, ip1 += j1) {
       outv[i] = inv[ip1 + ip2];
+    }
+  }
 }
 int2DReg::int2DReg(const std::shared_ptr<int2DReg> old, const int iax1,
                    const bool rev1, const int iax2, const bool rev2,
@@ -160,9 +172,12 @@ int2DReg::int2DReg(const std::shared_ptr<int2DReg> old, const int iax1,
   int ip2 = f2, ip1 = f1, i = 0;
   int *outv = getVals();
   int *inv = tmp->getVals();
-  for (auto i2 = 0; i2 < n[iax2]; i2++, ip2 += j2)
-    for (auto i1 = 0; i1 < n[iax1]; i1++, i++, ip1 += j1)
+  for (auto i2 = 0; i2 < n[iax2]; i2++, ip2 += j2) {
+    ip1 = f1;
+    for (auto i1 = 0; i1 < n[iax1]; i1++, i++, ip1 += j1) {
       outv[i] = inv[ip1 + ip2];
+    }
+  }
 }
 void int2DReg::initNoData(std::shared_ptr<SEP::hypercube> hyp) {
   const std::vector<SEP::axis> axes = hyp->getAxes();

@@ -56,9 +56,12 @@ byte2DReg::byte2DReg(const std::shared_ptr<byte6DReg> old, const int iax1,
   int ip2 = f2, ip1 = f1, i = 0;
   unsigned char *outv = getVals();
   unsigned char *inv = tmp->getVals();
-  for (auto i2 = 0; i2 < n[iax2]; i2++, ip2 += j2)
-    for (auto i1 = 0; i1 < n[iax1]; i1++, i++, ip1 += j1)
+  for (auto i2 = 0; i2 < n[iax2]; i2++, ip2 += j2) {
+    ip1 = f1;
+    for (auto i1 = 0; i1 < n[iax1]; i1++, i++, ip1 += j1) {
       outv[i] = inv[ip1 + ip2];
+    }
+  }
 }
 byte2DReg::byte2DReg(const std::shared_ptr<byte5DReg> old, const int iax1,
                      const bool rev1, const int iax2, const bool rev2,
@@ -85,9 +88,12 @@ byte2DReg::byte2DReg(const std::shared_ptr<byte5DReg> old, const int iax1,
   int ip2 = f2, ip1 = f1, i = 0;
   unsigned char *outv = getVals();
   unsigned char *inv = tmp->getVals();
-  for (auto i2 = 0; i2 < n[iax2]; i2++, ip2 += j2)
-    for (auto i1 = 0; i1 < n[iax1]; i1++, i++, ip1 += j1)
+  for (auto i2 = 0; i2 < n[iax2]; i2++, ip2 += j2) {
+    ip1 = f1;
+    for (auto i1 = 0; i1 < n[iax1]; i1++, i++, ip1 += j1) {
       outv[i] = inv[ip1 + ip2];
+    }
+  }
 }
 byte2DReg::byte2DReg(const std::shared_ptr<byte4DReg> old, const int iax1,
                      const bool rev1, const int iax2, const bool rev2,
@@ -114,9 +120,12 @@ byte2DReg::byte2DReg(const std::shared_ptr<byte4DReg> old, const int iax1,
   int ip2 = f2, ip1 = f1, i = 0;
   unsigned char *outv = getVals();
   unsigned char *inv = tmp->getVals();
-  for (auto i2 = 0; i2 < n[iax2]; i2++, ip2 += j2)
-    for (auto i1 = 0; i1 < n[iax1]; i1++, i++, ip1 += j1)
+  for (auto i2 = 0; i2 < n[iax2]; i2++, ip2 += j2) {
+    ip1 = f1;
+    for (auto i1 = 0; i1 < n[iax1]; i1++, i++, ip1 += j1) {
       outv[i] = inv[ip1 + ip2];
+    }
+  }
 }
 byte2DReg::byte2DReg(const std::shared_ptr<byte3DReg> old, const int iax1,
                      const bool rev1, const int iax2, const bool rev2,
@@ -143,9 +152,12 @@ byte2DReg::byte2DReg(const std::shared_ptr<byte3DReg> old, const int iax1,
   int ip2 = f2, ip1 = f1, i = 0;
   unsigned char *outv = getVals();
   unsigned char *inv = tmp->getVals();
-  for (auto i2 = 0; i2 < n[iax2]; i2++, ip2 += j2)
-    for (auto i1 = 0; i1 < n[iax1]; i1++, i++, ip1 += j1)
+  for (auto i2 = 0; i2 < n[iax2]; i2++, ip2 += j2) {
+    ip1 = f1;
+    for (auto i1 = 0; i1 < n[iax1]; i1++, i++, ip1 += j1) {
       outv[i] = inv[ip1 + ip2];
+    }
+  }
 }
 byte2DReg::byte2DReg(const std::shared_ptr<byte2DReg> old, const int iax1,
                      const bool rev1, const int iax2, const bool rev2,
@@ -169,9 +181,12 @@ byte2DReg::byte2DReg(const std::shared_ptr<byte2DReg> old, const int iax1,
   int ip2 = f2, ip1 = f1, i = 0;
   unsigned char *outv = getVals();
   unsigned char *inv = tmp->getVals();
-  for (auto i2 = 0; i2 < n[iax2]; i2++, ip2 += j2)
-    for (auto i1 = 0; i1 < n[iax1]; i1++, i++, ip1 += j1)
+  for (auto i2 = 0; i2 < n[iax2]; i2++, ip2 += j2) {
+    ip1 = f1;
+    for (auto i1 = 0; i1 < n[iax1]; i1++, i++, ip1 += j1) {
       outv[i] = inv[ip1 + ip2];
+    }
+  }
 }
 void byte2DReg::initData(std::shared_ptr<SEP::hypercube> hyp,
                          const byte2D &vals) {

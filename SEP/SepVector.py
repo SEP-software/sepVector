@@ -238,9 +238,11 @@ def getSepVector(*args,**keys):
 		if "axes" in keys or "ns" in keys:
 			hyper=Hypercube.hypercube(**keys)
 		elif "vector" in keys:
+			print("IN VECTOR")
 			if "iax1" in keys and "iax2" in keys and "rev1" in keys and "rev2"  in keys and \
 			"ipos" in keys and "beg" in keys and "end" in keys:
 				if isinstance(keys["vector"],  floatVector):
+					print("BEFORE THE CREATE")
 					return floatVector(fromCpp=pySepVector.float2DReg(keys["vector"].cppMode,keys["iax1"],keys["rev1"],\
 						keys["iax2"],keys["rev2"],keys["ipos"],keys["beg"],keys["end"])) 
 
@@ -253,6 +255,10 @@ def getSepVector(*args,**keys):
 				elif isinstance(keys["vector"],  doubleVector):
 					return byteVector(fromCpp=pySepVector.byte2DReg(keys["vector"].cppMode,keys["iax1"],keys["rev1"],\
 						keys["iax2"],keys["rev2"],keys["ipos"],keys["beg"],keys["end"])) 
+			else:
+				print( "iax1" in keys ,"iax2" in keys, "rev1" in keys, "rev2"  in keys,\
+			"ipos" in keys , "beg" in keys, "end" in keys)
+				raise Exception("Must supply iax1,iax2,rev1,rev2,ipos,beg,end")
 		else:
 			raise Exception("Must supply Hypercube,vector  or ns/axes")
 	else:

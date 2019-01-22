@@ -48,6 +48,7 @@ void floatHyper::scaleAdd(std::shared_ptr<floatHyper> vec2, const double sc1,
 float floatHyper::cent(const long long iv, const int js) const {
   long long n = getHyper()->getN123() / js;
   float *x = new float[n];
+  // float *x = (float *)malloc(sizeof(float) * n);
   const float *in = getCVals();
   if (js < 1)
     throw SEPException(std::string("j must be positive ") + std::to_string(js));
@@ -57,6 +58,9 @@ float floatHyper::cent(const long long iv, const int js) const {
   double w = (double)(iv) / (double)n;
   long long q =
       std::max((long long)0, std::min((long long)(n - 1), (long long)(w * n)));
+  // std::cerr << "looking for " << q << " " << n << " " <<
+  // getHyper()->getN123()
+  //        << std::endl;
 
   register float *i, *j, ak;
   float *low, *hi, buf, *k;
@@ -78,6 +82,7 @@ float floatHyper::cent(const long long iv, const int js) const {
   }
   float m = *k;
   delete[] x;
+  // free(x);
   return m;
 }
 void floatHyper::clip(const float bclip, const float eclip) {
