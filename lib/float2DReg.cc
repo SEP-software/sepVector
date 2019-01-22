@@ -194,27 +194,20 @@ float2DReg::float2DReg(const std::shared_ptr<float2DReg> old, const int iax1,
   calcTraverse(n, iax1, rev1, f1, j1, iax2, rev2, f2, j2);
   std::cerr << "where id ie 41 " << std::endl;
 
-  /*
-    int ip2 = f2, ip1 = f1, i = 0;
+  int ip2 = f2, ip1 = f1, i = 0;
 
-    float *outv = getVals();
-    float *inv = tmp->getVals();
+  float *outv = getVals();
+  float *inv = tmp->getVals();
 
-    for (auto i2 = 0; i2 < n[iax2]; i2++, ip2 += j2) {
-      ip1 = f1;
-      for (auto i1 = 0; i1 < n[iax1]; i1++, i++, ip1 += j1) {
-        outv[i] = inv[ip1 + ip2];
-        std::cerr << "WINDOW " << i1 << "," << i2 << " " << ip1 + ip2 << "  # "
-                  << i << std::endl;
-      }
-    }
-    */
-  set(1.);
-  for (int i2 = 0; i2 < 10; i2++) {
-    for (int i1 = 0; i1 < 10; i1++) {
-      // std::cerr << i1 << "," << i2 << " " << (*_mat)[i2][i1] << std::endl;
+  for (auto i2 = 0; i2 < n[iax2]; i2++, ip2 += j2) {
+    ip1 = f1;
+    for (auto i1 = 0; i1 < n[iax1]; i1++, i++, ip1 += j1) {
+      outv[i] = inv[ip1 + ip2];
+      std::cerr << "WINDOW " << i1 << "," << i2 << " " << ip1 + ip2 << "  # "
+                << i << std::endl;
     }
   }
+
   std::cerr << "where id ie 51 " << std::endl;
 }
 
