@@ -173,26 +173,13 @@ float2DReg::float2DReg(const std::shared_ptr<float2DReg> old, const int iax1,
       f[i] = ipos[i];
   }
 
-  /*
-  f[0] = 0;
-  f[1] = 0;
-  n[0] = 10;
-  n[1] = 10;
-  */
-  std::cerr << f[0] << "," << f[1] << "<-F" << std::endl;
-  std::cerr << j[0] << "," << j[1] << "<-J" << std::endl;
-  std::cerr << n[0] << "," << n[1] << "<-N" << std::endl;
-
-  std::cerr << "where id ie 21 " << std::endl;
   std::shared_ptr<float2DReg> tmp = old->window(n, f, j);
   axis a1(n[iax1]), a2(n[iax2]);
   std::shared_ptr<hypercube> hyperOut(new hypercube(a1, a2));
   initNoData(hyperOut);
   int f1, j1, f2, j2;
-  std::cerr << "where id ie 31 " << std::endl;
 
   calcTraverse(n, iax1, rev1, f1, j1, iax2, rev2, f2, j2);
-  std::cerr << "where id ie 41 " << std::endl;
 
   int ip2 = f2, ip1 = f1, i = 0;
 
@@ -203,12 +190,8 @@ float2DReg::float2DReg(const std::shared_ptr<float2DReg> old, const int iax1,
     ip1 = f1;
     for (auto i1 = 0; i1 < n[iax1]; i1++, i++, ip1 += j1) {
       outv[i] = inv[ip1 + ip2];
-      std::cerr << "WINDOW " << i1 << "," << i2 << " " << ip1 + ip2 << "  # "
-                << i << std::endl;
     }
   }
-
-  std::cerr << "where id ie 51 " << std::endl;
 }
 
 void float2DReg::initNoData(std::shared_ptr<SEP::hypercube> hyp) {
@@ -217,7 +200,6 @@ void float2DReg::initNoData(std::shared_ptr<SEP::hypercube> hyp) {
 
   if (axes.size() != 2)
     throw SEPException(std::string("Expecting 2-D hyperube"));
-  std::cerr << "ALOCATED " << axes[1].n << "," << axes[0].n << std::endl;
   _mat.reset(new float2D(boost::extents[axes[1].n][axes[0].n]));
   setData(_mat->data());
 }
