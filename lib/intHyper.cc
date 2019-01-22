@@ -43,9 +43,11 @@ void intHyper::scaleAdd(std::shared_ptr<intHyper> vec2, const double sc1,
   calcCheckSum();
 }
 int intHyper::cent(const long long iv, const int js) const {
-  int q;
-  int n = getHyper()->getN123() / js;
+  long long n = getHyper()->getN123() / js;
   int *x = new int[n];
+  double w = (double)(iv) / (double)n;
+  long long q =
+      std::max((long long)0, std::min((long long)(n - 1), (long long)(w * n)));
   const int *in = getCVals();
   if (js < 1)
     throw SEPException(std::string("j must be positive ") + std::to_string(js));

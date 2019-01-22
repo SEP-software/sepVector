@@ -162,10 +162,13 @@ float2DReg::float2DReg(const std::shared_ptr<float2DReg> old, const int iax1,
 
   for (auto i = 0; i < n.size(); i++) {
     f[i] = beg[i];
-    if (iax1 == i || iax2 == i) n[i] = end[i] - beg[i];
-    //  else f[i]=ipos[i];
+    if (iax1 == i || iax2 == i) {
+      n[i] = end[i] - beg[i];
+      std::cerr << i << "BEG END " << beg[i] << " " << end[i] << std::endl;
+    } else
+      f[i] = ipos[i];
   }
-  std::cerr << "1N 2slice 1 " << std::endl;
+  std::cerr << "1N 2slice 1 " << iax1 << "=iax1 iax2=" << iax2 << std::endl;
 
   std::shared_ptr<float2DReg> tmp = old->window(n, f, j);
   axis a1(n[iax1]), a2(n[iax2]);

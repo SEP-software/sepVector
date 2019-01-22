@@ -46,15 +46,19 @@ void floatHyper::scaleAdd(std::shared_ptr<floatHyper> vec2, const double sc1,
   calcCheckSum();
 }
 float floatHyper::cent(const long long iv, const int js) const {
-  int q;
-  int n = getHyper()->getN123() / js;
+  long long n = getHyper()->getN123() / js;
   float *x = new float[n];
   const float *in = getCVals();
+  std::cerr << n << " =n j=" << js << std::endl;
   if (js < 1)
     throw SEPException(std::string("j must be positive ") + std::to_string(js));
   for (auto i = 0; i < n; i++) {
     x[i] = in[i * js];
   }
+  double w = (double)(iv) / (double)n;
+  long long q =
+      std::max((long long)0, std::min((long long)(n - 1), (long long)(w * n)));
+
   register float *i, *j, ak;
   float *low, *hi, buf, *k;
   for (low = x, hi = x + n - 1, k = x + q; low < hi;) {

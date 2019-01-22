@@ -57,8 +57,7 @@ int byteHyper::absMax() const {
   return val;
 }
 unsigned char byteHyper::cent(const long long iv, const int js) const {
-  int q;
-  int n = getHyper()->getN123() / js;
+  long long n = getHyper()->getN123() / js;
   unsigned char *x = new unsigned char[n];
   const unsigned char *in = getCVals();
   if (js < 1)
@@ -66,6 +65,9 @@ unsigned char byteHyper::cent(const long long iv, const int js) const {
   for (auto i = 0; i < n; i++) {
     x[i] = in[i * js];
   }
+  double w = (double)(iv) / (double)n;
+  long long q =
+      std::max((long long)0, std::min((long long)(n - 1), (long long)(w * n)));
   register unsigned char *i, *j, ak;
   unsigned char *low, *hi, buf, *k;
   for (low = x, hi = x + n - 1, k = x + q; low < hi;) {

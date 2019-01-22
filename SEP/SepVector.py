@@ -239,17 +239,18 @@ def getSepVector(*args,**keys):
 			if "iax1" in keys and "iax2" in keys and "rev1" in keys and "rev2"  in keys and \
 			"ipos" in keys and "beg" in keys and "end" in keys:
 				if isinstance(keys["vector"],  floatVector):
-					print(keys["vector"].cppMode)
-					floatVector(fromCpp=pySepVector.float2DReg(keys["vector"].cppMode,keys["iax1"],keys["rev1"],\
+					print(keys["vector"].cppMode,"IN RETURN")
+					return floatVector(fromCpp=pySepVector.float2DReg(keys["vector"].cppMode,keys["iax1"],keys["rev1"],\
 						keys["iax2"],keys["rev2"],keys["ipos"],keys["beg"],keys["end"])) 
+
 				elif isinstance(keys["vector"],  doubleVector):
-					doubleVector(fromCpp=pySepVector.double2DReg(keys["vector"].cppMode,keys["iax1"],keys["rev1"],\
+					return doubleVector(fromCpp=pySepVector.double2DReg(keys["vector"].cppMode,keys["iax1"],keys["rev1"],\
 						keys["iax2"],keys["rev2"],keys["ipos"],keys["beg"],keys["end"])) 
 				elif isinstance(keys["vector"],  intVector):
-					intVector(fromCpp=pySepVector.int2DReg(keys["vector"].cppMode,keys["iax1"],keys["rev1"],\
+					return intVector(fromCpp=pySepVector.int2DReg(keys["vector"].cppMode,keys["iax1"],keys["rev1"],\
 						keys["iax2"],keys["rev2"],keys["ipos"],keys["beg"],keys["end"]))
 				elif isinstance(keys["vector"],  doubleVector):
-					byteVector(fromCpp=pySepVector.byte2DReg(keys["vector"].cppMode,keys["iax1"],keys["rev1"],\
+					return byteVector(fromCpp=pySepVector.byte2DReg(keys["vector"].cppMode,keys["iax1"],keys["rev1"],\
 						keys["iax2"],keys["rev2"],keys["ipos"],keys["beg"],keys["end"])) 
 		else:
 			raise Exception("Must supply Hypercube,vector  or ns/axes")

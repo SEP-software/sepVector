@@ -60,8 +60,7 @@ void doubleHyper::signum() {
   calcCheckSum();
 }
 double doubleHyper::cent(const long long iv, const int js) const {
-  int q;
-  int n = getHyper()->getN123() / js;
+  long long n = getHyper()->getN123() / js;
   double *x = new double[n];
   const double *in = getCVals();
   if (js < 1)
@@ -69,6 +68,9 @@ double doubleHyper::cent(const long long iv, const int js) const {
   for (auto i = 0; i < n; i++) {
     x[i] = in[i * js];
   }
+  double w = (double)(iv) / (double)n;
+  long long q =
+      std::max((long long)0, std::min((long long)(n - 1), (long long)(w * n)));
   register double *i, *j, ak;
   double *low, *hi, buf, *k;
   for (low = x, hi = x + n - 1, k = x + q; low < hi;) {
