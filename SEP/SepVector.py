@@ -235,11 +235,11 @@ def getSepVector(*args,**keys):
 	elif len(args)==0:
 		if "axes" in keys or "ns" in keys:
 			hyper=Hypercube.hypercube(**keys)
-			print("HYPER ",len(hyper.axes))
 		elif "vector" in keys:
 			if "iax1" in keys and "iax2" in keys and "rev1" in keys and "rev2"  in keys and \
 			"ipos" in keys and "beg" in keys and "end" in keys:
 				if isinstance(keys["vector"],  floatVector):
+					print(keys["vector"].cppMode)
 					floatVector(fromCpp=pySepVector.float2DReg(keys["vector"].cppMode,keys["iax1"],keys["rev1"],\
 						keys["iax2"],keys["rev2"],keys["ipos"],keys["beg"],keys["end"])) 
 				elif isinstance(keys["vector"],  doubleVector):

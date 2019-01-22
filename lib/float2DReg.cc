@@ -25,10 +25,11 @@ float2DReg::float2DReg(const std::shared_ptr<float6DReg> old, const int iax1,
                        const std::vector<int> &ipos,
                        const std::vector<int> &beg,
                        const std::vector<int> &end) {
+  std::cerr << "IN 2slice 1 " << std::endl;
   std::vector<int> j(6, 1);
   std::vector<int> f(6, 0);
   std::vector<int> n(6, 1);
-  std::vector<int> nd = getHyper()->getNs();
+  std::vector<int> nd = old->getHyper()->getNs();
   // Figure out window
   for (auto i = 0; i < n.size(); i++) {
     f[i] = beg[i];
@@ -37,6 +38,8 @@ float2DReg::float2DReg(const std::shared_ptr<float6DReg> old, const int iax1,
     else
       f[i] = ipos[i];
   }
+  std::cerr << "IN3 slice 1 " << std::endl;
+
   std::shared_ptr<float6DReg> tmp = old->window(n, f, j);
   axis a1(n[iax1]), a2(n[iax2]);
   std::shared_ptr<hypercube> hyperOut(new hypercube(a1, a2));
@@ -46,9 +49,12 @@ float2DReg::float2DReg(const std::shared_ptr<float6DReg> old, const int iax1,
   int ip2 = f2, ip1 = f1, i = 0;
   float *outv = getVals();
   float *inv = tmp->getVals();
+  std::cerr << "IN 4slice 1 " << std::endl;
+
   for (auto i2 = 0; i2 < n[iax2]; i2++, ip2 += j2)
     for (auto i1 = 0; i1 < n[iax1]; i1++, i++, ip1 += j1)
       outv[i] = inv[ip1 + ip2];
+  std::cerr << "IN 5slice 1 " << std::endl;
 }
 float2DReg::float2DReg(const std::shared_ptr<float5DReg> old, const int iax1,
                        const bool rev1, const int iax2, const bool rev2,
@@ -58,7 +64,7 @@ float2DReg::float2DReg(const std::shared_ptr<float5DReg> old, const int iax1,
   std::vector<int> j(5, 1);
   std::vector<int> f(5, 0);
   std::vector<int> n(5, 1);
-  std::vector<int> nd = getHyper()->getNs();
+  std::vector<int> nd = old->getHyper()->getNs();
   // Figure out window
   for (auto i = 0; i < n.size(); i++) {
     f[i] = beg[i];
@@ -88,7 +94,7 @@ float2DReg::float2DReg(const std::shared_ptr<float4DReg> old, const int iax1,
   std::vector<int> j(4, 1);
   std::vector<int> f(4, 0);
   std::vector<int> n(4, 1);
-  std::vector<int> nd = getHyper()->getNs();
+  std::vector<int> nd = old->getHyper()->getNs();
   // Figure out window
   for (auto i = 0; i < n.size(); i++) {
     f[i] = beg[i];
@@ -118,7 +124,7 @@ float2DReg::float2DReg(const std::shared_ptr<float3DReg> old, const int iax1,
   std::vector<int> j(3, 1);
   std::vector<int> f(3, 0);
   std::vector<int> n(3, 1);
-  std::vector<int> nd = getHyper()->getNs();
+  std::vector<int> nd = old->getHyper()->getNs();
   // Figure out window
   for (auto i = 0; i < n.size(); i++) {
     f[i] = beg[i];
@@ -145,28 +151,41 @@ float2DReg::float2DReg(const std::shared_ptr<float2DReg> old, const int iax1,
                        const std::vector<int> &ipos,
                        const std::vector<int> &beg,
                        const std::vector<int> &end) {
+  std::cerr << "IN 2slice 1 " << std::endl;
+
   std::vector<int> j(2, 1);
   std::vector<int> f(2, 0);
   std::vector<int> n(2, 1);
-  std::vector<int> nd = getHyper()->getNs();
+  std::vector<int> nd = old->getHyper()->getNs();
   // Figure out window
+  std::cerr << "0N 2slice 1 " << std::endl;
+
   for (auto i = 0; i < n.size(); i++) {
     f[i] = beg[i];
     if (iax1 == i || iax2 == i) n[i] = end[i] - beg[i];
     //  else f[i]=ipos[i];
   }
+  std::cerr << "1N 2slice 1 " << std::endl;
+
   std::shared_ptr<float2DReg> tmp = old->window(n, f, j);
   axis a1(n[iax1]), a2(n[iax2]);
   std::shared_ptr<hypercube> hyperOut(new hypercube(a1, a2));
   initNoData(hyperOut);
   int f1, j1, f2, j2;
+  std::cerr << "2N 2slice 1 " << std::endl;
+
   calcTraverse(n, iax1, rev1, f1, j1, iax2, rev2, f2, j2);
+  std::cerr << "3N 2slice 1 " << std::endl;
+
   int ip2 = f2, ip1 = f1, i = 0;
   float *outv = getVals();
   float *inv = tmp->getVals();
+  std::cerr << "4N 2slice 1 " << std::endl;
+
   for (auto i2 = 0; i2 < n[iax2]; i2++, ip2 += j2)
     for (auto i1 = 0; i1 < n[iax1]; i1++, i++, ip1 += j1)
       outv[i] = inv[ip1 + ip2];
+  std::cerr << "6N 2slice 1 " << std::endl;
 }
 
 void float2DReg::initNoData(std::shared_ptr<SEP::hypercube> hyp) {
@@ -204,8 +223,8 @@ void float2DReg::initData(std::shared_ptr<SEP::hypercube> hyp,
   }
 }
 std::shared_ptr<float2DReg> float2DReg::window(
-    const std::vector<int> &nw, const std::vector<int> &jw,
-    const std::vector<int> &fw) const {
+    const std::vector<int> &nw, const std::vector<int> &fw,
+    const std::vector<int> &jw) const {
   const std::vector<SEP::axis> axes = getHyper()->getAxes();
   if (nw.size() != axes.size())
     throw SEPException(std::string("Expecting 2-D, got nw.size()=") +
@@ -216,6 +235,8 @@ std::shared_ptr<float2DReg> float2DReg::window(
   if (jw.size() != axes.size()) throw(SEPException("jw must of length 2"));
   std::vector<axis> aout;
   for (int i = 0; i < axes.size(); i++) {
+    std::cerr << "WINDOW CHECK " << i << " " << nw[i] << " " << fw[i] << " "
+              << jw[i] << std::endl;
     checkWindow(axes[i].n, nw[i], fw[i], jw[i]);
     aout.push_back(
         axis(nw[i], axes[i].o + axes[i].d * fw[i], axes[i].d * jw[i]));

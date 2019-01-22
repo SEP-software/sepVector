@@ -83,8 +83,8 @@ void complex6DReg::initData(std::shared_ptr<SEP::hypercube> hyp,
   }
 }
 std::shared_ptr<complex6DReg> complex6DReg::window(
-    const std::vector<int> &nw, const std::vector<int> &jw,
-    const std::vector<int> &fw) const {
+    const std::vector<int> &nw, const std::vector<int> &fw,
+    const std::vector<int> &jw) const {
   const std::vector<SEP::axis> axes = getHyper()->getAxes();
   if (nw.size() != axes.size()) throw(SEPException("nw must of length 6"));
   if (fw.size() != axes.size()) throw(SEPException("fw must of length 6"));

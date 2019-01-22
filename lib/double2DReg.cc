@@ -27,7 +27,7 @@ double2DReg::double2DReg(const std::shared_ptr<double6DReg> old, const int iax1,
   std::vector<int> j(6, 1);
   std::vector<int> f(6, 0);
   std::vector<int> n(6, 1);
-  std::vector<int> nd = getHyper()->getNs();
+  std::vector<int> nd = old->getHyper()->getNs();
   // Figure out window
   for (auto i = 0; i < n.size(); i++) {
     f[i] = beg[i];
@@ -57,7 +57,7 @@ double2DReg::double2DReg(const std::shared_ptr<double5DReg> old, const int iax1,
   std::vector<int> j(5, 1);
   std::vector<int> f(5, 0);
   std::vector<int> n(5, 1);
-  std::vector<int> nd = getHyper()->getNs();
+  std::vector<int> nd = old->getHyper()->getNs();
   // Figure out window
   for (auto i = 0; i < n.size(); i++) {
     f[i] = beg[i];
@@ -87,7 +87,7 @@ double2DReg::double2DReg(const std::shared_ptr<double4DReg> old, const int iax1,
   std::vector<int> j(4, 1);
   std::vector<int> f(4, 0);
   std::vector<int> n(4, 1);
-  std::vector<int> nd = getHyper()->getNs();
+  std::vector<int> nd = old->getHyper()->getNs();
   // Figure out window
   for (auto i = 0; i < n.size(); i++) {
     f[i] = beg[i];
@@ -117,7 +117,7 @@ double2DReg::double2DReg(const std::shared_ptr<double3DReg> old, const int iax1,
   std::vector<int> j(3, 1);
   std::vector<int> f(3, 0);
   std::vector<int> n(3, 1);
-  std::vector<int> nd = getHyper()->getNs();
+  std::vector<int> nd = old->getHyper()->getNs();
   // Figure out window
   for (auto i = 0; i < n.size(); i++) {
     f[i] = beg[i];
@@ -147,7 +147,7 @@ double2DReg::double2DReg(const std::shared_ptr<double2DReg> old, const int iax1,
   std::vector<int> j(2, 1);
   std::vector<int> f(2, 0);
   std::vector<int> n(2, 1);
-  std::vector<int> nd = getHyper()->getNs();
+  std::vector<int> nd = old->getHyper()->getNs();
   // Figure out window
   for (auto i = 0; i < n.size(); i++) {
     f[i] = beg[i];
@@ -188,8 +188,8 @@ void double2DReg::initData(std::shared_ptr<SEP::hypercube> hyp,
   }
 }
 std::shared_ptr<double2DReg> double2DReg::window(
-    const std::vector<int> &nw, const std::vector<int> &jw,
-    const std::vector<int> &fw) const {
+    const std::vector<int> &nw, const std::vector<int> &fw,
+    const std::vector<int> &jw) const {
   const std::vector<SEP::axis> axes = getHyper()->getAxes();
   if (nw.size() != axes.size()) throw(SEPException("nw must of length 2"));
   if (fw.size() != axes.size()) throw(SEPException("fw must of length 2"));

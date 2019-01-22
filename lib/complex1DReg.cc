@@ -45,8 +45,8 @@ void complex1DReg::initData(std::shared_ptr<SEP::hypercube> hyp,
   for (long long i = 0; i < axes[0].n; i++) (*_mat)[i] = vals[i];
 }
 std::shared_ptr<complex1DReg> complex1DReg::window(
-    const std::vector<int> &nw, const std::vector<int> &jw,
-    const std::vector<int> &fw) const {
+    const std::vector<int> &nw, const std::vector<int> &fw,
+    const std::vector<int> &jw) const {
   const std::vector<SEP::axis> axes = getHyper()->getAxes();
   if (nw.size() != axes.size()) throw(SEPException("nw must of length 1"));
   if (fw.size() != axes.size()) throw(SEPException("fw must of length 1"));
