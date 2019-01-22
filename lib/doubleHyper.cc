@@ -98,7 +98,7 @@ void doubleHyper::clip(const double bclip, const double eclip) {
   tbb::parallel_for(tbb::blocked_range<long long>(0, getHyper()->getN123()),
                     [&](const tbb::blocked_range<long long> &r) {
                       for (long long i = r.begin(); i != r.end(); ++i)
-                        _vals[i] = std::max(eclip, std::min(bclip, _vals[i]));
+                        _vals[i] = std::min(eclip, std::max(bclip, _vals[i]));
                     });
 }
 void doubleHyper::scale(double sc) {

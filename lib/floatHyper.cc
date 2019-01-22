@@ -49,7 +49,6 @@ float floatHyper::cent(const long long iv, const int js) const {
   long long n = getHyper()->getN123() / js;
   float *x = new float[n];
   const float *in = getCVals();
-  std::cerr << n << " =n j=" << js << std::endl;
   if (js < 1)
     throw SEPException(std::string("j must be positive ") + std::to_string(js));
   for (auto i = 0; i < n; i++) {
@@ -86,7 +85,7 @@ void floatHyper::clip(const float bclip, const float eclip) {
   tbb::parallel_for(tbb::blocked_range<long long>(0, getHyper()->getN123()),
                     [&](const tbb::blocked_range<long long> &r) {
                       for (long long i = r.begin(); i != r.end(); ++i)
-                        _vals[i] = std::max(eclip, std::min(bclip, _vals[i]));
+                        _vals[i] = std::min(eclip, std::max(bclip, _vals[i]));
                     });
   calcCheckSum();
 }

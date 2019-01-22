@@ -23,7 +23,9 @@ class vector(pyVector.vector):
 		"""Clip dataset
 			bclip - Minimum value to clip to
 			eclip - Maximum value to clip to"""
+		print("CLIP ",bclip,eclip)
 		self.cppMode.clip(bclip,eclip)
+		print("XX",self.getNdArray().min(),self.getNdArray().max())
 	def cent(self,pct,jsamp=1):
 		"""Calculate the percentile of a dataset
 			pct - Percentile of the dataset
@@ -239,7 +241,6 @@ def getSepVector(*args,**keys):
 			if "iax1" in keys and "iax2" in keys and "rev1" in keys and "rev2"  in keys and \
 			"ipos" in keys and "beg" in keys and "end" in keys:
 				if isinstance(keys["vector"],  floatVector):
-					print(keys["vector"].cppMode,"IN RETURN")
 					return floatVector(fromCpp=pySepVector.float2DReg(keys["vector"].cppMode,keys["iax1"],keys["rev1"],\
 						keys["iax2"],keys["rev2"],keys["ipos"],keys["beg"],keys["end"])) 
 

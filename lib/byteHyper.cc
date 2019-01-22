@@ -95,7 +95,7 @@ void byteHyper::clip(const unsigned char bclip, const unsigned char eclip) {
   tbb::parallel_for(tbb::blocked_range<long long>(0, getHyper()->getN123()),
                     [&](const tbb::blocked_range<long long> &r) {
                       for (long long i = r.begin(); i != r.end(); ++i)
-                        _vals[i] = std::max(eclip, std::min(bclip, _vals[i]));
+                        _vals[i] = std::min(eclip, std::max(bclip, _vals[i]));
                     });
 }
 int byteHyper::max() const {
