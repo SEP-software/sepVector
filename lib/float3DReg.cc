@@ -115,7 +115,8 @@ std::shared_ptr<float3DReg> float3DReg::window(
       for (int i0 = 0; i0 < nw[0]; i0++) {
         (*out->_mat)[i2][i1][i0] =
             (*_mat)[fw[2] + i2 * jw[2]][fw[1] + i1 * jw[1]][fw[0] + i0 * jw[0]];
-        std::cerr << "CHECK OUT" << (*out->_mat)[i2][i1][i0] << std::endl;
+        if (i2 == 0 && i1 == 0 && i0 == 0)
+          std::cerr << "CHECK OUT" << (*out->_mat)[i2][i1][i0] << std::endl;
       }
     }
   }
