@@ -106,6 +106,8 @@ std::shared_ptr<float3DReg> float3DReg::window(
     aout.push_back(
         axis(nw[i], axes[i].o + axes[i].d * fw[i], axes[i].d * jw[i]));
   }
+  std::cerr << nw[0] << "," << nw[1] << "," << nw[2] << " fw=" << fw[2]
+            << std::endl;
   std::shared_ptr<hypercube> hypOut(new hypercube(aout));
   std::shared_ptr<float3DReg> out(new float3DReg(hypOut));
   for (int i2 = 0; i2 < nw[2]; i2++) {
