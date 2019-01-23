@@ -3,6 +3,12 @@
 #include <cstdint>
 #include <iostream>
 #include "boost/multi_array.hpp"
+#include "int2DReg.h"
+#include "int3DReg.h"
+#include "int4DReg.h"
+#include "int5DReg.h"
+#include "int6DReg.h"
+
 typedef boost::multi_array<int, 1> int1D;
 namespace SEP {
 class int1DReg : public intHyper {
@@ -32,6 +38,24 @@ class int1DReg : public intHyper {
     std::shared_ptr<SEP::hypercube> hyp(new SEP::hypercube(as));
     initData(hyp, vals);
   }
+  int1DReg(const std::shared_ptr<int6DReg> old, const int iax1, const bool rev1,
+           const std::vector<int> &ipos, const std::vector<int> &beg,
+           const std::vector<int> &end);
+  int1DReg(const std::shared_ptr<int5DReg> old, const int iax1, const bool rev1,
+           const std::vector<int> &ipos, const std::vector<int> &beg,
+           const std::vector<int> &end);
+  int1DReg(const std::shared_ptr<int4DReg> old, const int iax1, const bool rev1,
+           const std::vector<int> &ipos, const std::vector<int> &beg,
+           const std::vector<int> &end);
+  int1DReg(const std::shared_ptr<int3DReg> old, const int iax1, const bool rev1,
+           const std::vector<int> &ipos, const std::vector<int> &beg,
+           const std::vector<int> &end);
+  int1DReg(const std::shared_ptr<int2DReg> old, const int iax1, const bool rev1,
+           const std::vector<int> &ipos, const std::vector<int> &beg,
+           const std::vector<int> &end);
+  int1DReg(const std::shared_ptr<int1DReg> old, const int iax1, const bool rev1,
+           const std::vector<int> &ipos, const std::vector<int> &beg,
+           const std::vector<int> &end);
   void allocate() {
     std::vector<int> ns = getHyper()->getNs();
     _mat.reset(new int1D(boost::extents[ns[0]]));

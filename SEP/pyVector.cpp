@@ -132,7 +132,30 @@ PYBIND11_MODULE(pySepVector, clsVector) {
       .def(py::init<const int>(), "Initialize giving size")
       .def(py::init<const axis &>(), "Initialize from an axis")
       .def(py::init<std::shared_ptr<hypercube>>(), "Initialize with hypercube")
-
+      .def(py::init<const std::shared_ptr<float6DReg>, const int, const bool,
+                    const std::vector<int> &, const std::vector<int> &,
+                    std::vector<int> &>(),
+           "Create a 1-D slice from 6-D hypercube")
+      .def(py::init<const std::shared_ptr<float5DReg>, const int, const bool,
+                    const std::vector<int> &, const std::vector<int> &,
+                    std::vector<int> &>(),
+           "Create a 1-D slice from 5-D hypercube")
+      .def(py::init<const std::shared_ptr<float4DReg>, const int, const bool,
+                    const std::vector<int> &, const std::vector<int> &,
+                    std::vector<int> &>(),
+           "Create a 1-D slice from 4-D hypercube")
+      .def(py::init<const std::shared_ptr<float3DReg>, const int, const bool,
+                    const std::vector<int> &, const std::vector<int> &,
+                    std::vector<int> &>(),
+           "Create a 1-D slice from 3-D hypercube")
+      .def(py::init<const std::shared_ptr<float2DReg>, const int, const bool,
+                    const std::vector<int> &, const std::vector<int> &,
+                    std::vector<int> &>(),
+           "Create a 1-D slice from 2-D hypercube")
+      .def(py::init<const std::shared_ptr<float1DReg>, const int, const bool,
+                    const std::vector<int> &, const std::vector<int> &,
+                    std::vector<int> &>(),
+           "Create a 1-D slice from 1-D hypercube")
       .def("clone",
            (std::shared_ptr<float1DReg>(float1DReg::*)() const) &
                float1DReg::clone,
@@ -442,7 +465,30 @@ PYBIND11_MODULE(pySepVector, clsVector) {
       .def(py::init<const int>(), "Initialize giving size")
       .def(py::init<const axis &>(), "Initialize from an axis")
       .def(py::init<std::shared_ptr<hypercube>>(), "Initialize with hypercube")
-
+      .def(py::init<const std::shared_ptr<double6DReg>, const int, const bool,
+                    const std::vector<int> &, const std::vector<int> &,
+                    std::vector<int> &>(),
+           "Create a 1-D slice from 6-D hypercube")
+      .def(py::init<const std::shared_ptr<double5DReg>, const int, const bool,
+                    const std::vector<int> &, const std::vector<int> &,
+                    std::vector<int> &>(),
+           "Create a 1-D slice from 5-D hypercube")
+      .def(py::init<const std::shared_ptr<double4DReg>, const int, const bool,
+                    const std::vector<int> &, const std::vector<int> &,
+                    std::vector<int> &>(),
+           "Create a 1-D slice from 4-D hypercube")
+      .def(py::init<const std::shared_ptr<double3DReg>, const int, const bool,
+                    const std::vector<int> &, const std::vector<int> &,
+                    std::vector<int> &>(),
+           "Create a 1-D slice from 3-D hypercube")
+      .def(py::init<const std::shared_ptr<double2DReg>, const int, const bool,
+                    const std::vector<int> &, const std::vector<int> &,
+                    std::vector<int> &>(),
+           "Create a 1-D slice from 2-D hypercube")
+      .def(py::init<const std::shared_ptr<double1DReg>, const int, const bool,
+                    const std::vector<int> &, const std::vector<int> &,
+                    std::vector<int> &>(),
+           "Create a 1-D slice from 1-D hypercube")
       .def("clone",
            (std::shared_ptr<double1DReg>(double1DReg::*)() const) &
                double1DReg::clone,
@@ -810,7 +856,30 @@ PYBIND11_MODULE(pySepVector, clsVector) {
       .def(py::init<const int>(), "Initialize giving size")
       .def(py::init<const axis &>(), "Initialize from an axis")
       .def(py::init<std::shared_ptr<hypercube>>(), "Initialize with hypercube")
-
+      .def(py::init<const std::shared_ptr<int6DReg>, const int, const bool,
+                    const std::vector<int> &, const std::vector<int> &,
+                    std::vector<int> &>(),
+           "Create a 1-D slice from 6-D hypercube")
+      .def(py::init<const std::shared_ptr<int5DReg>, const int, const bool,
+                    const std::vector<int> &, const std::vector<int> &,
+                    std::vector<int> &>(),
+           "Create a 1-D slice from 5-D hypercube")
+      .def(py::init<const std::shared_ptr<int4DReg>, const int, const bool,
+                    const std::vector<int> &, const std::vector<int> &,
+                    std::vector<int> &>(),
+           "Create a 1-D slice from 4-D hypercube")
+      .def(py::init<const std::shared_ptr<int3DReg>, const int, const bool,
+                    const std::vector<int> &, const std::vector<int> &,
+                    std::vector<int> &>(),
+           "Create a 1-D slice from 3-D hypercube")
+      .def(py::init<const std::shared_ptr<int2DReg>, const int, const bool,
+                    const std::vector<int> &, const std::vector<int> &,
+                    std::vector<int> &>(),
+           "Create a 1-D slice from 2-D hypercube")
+      .def(py::init<const std::shared_ptr<int1DReg>, const int, const bool,
+                    const std::vector<int> &, const std::vector<int> &,
+                    std::vector<int> &>(),
+           "Create a 1-D slice from 1-D hypercube")
       .def("clone",
            (std::shared_ptr<int1DReg>(int1DReg::*)() const) & int1DReg::clone,
            "Make a copy of the vector")
@@ -1075,7 +1144,30 @@ PYBIND11_MODULE(pySepVector, clsVector) {
       .def(py::init<const int>(), "Initialize giving size")
       .def(py::init<const axis &>(), "Initialize from an axis")
       .def(py::init<std::shared_ptr<hypercube>>(), "Initialize with hypercube")
-
+      .def(py::init<const std::shared_ptr<byte6DReg>, const int, const bool,
+                    const std::vector<int> &, const std::vector<int> &,
+                    std::vector<int> &>(),
+           "Create a 1-D slice from 6-D hypercube")
+      .def(py::init<const std::shared_ptr<byte5DReg>, const int, const bool,
+                    const std::vector<int> &, const std::vector<int> &,
+                    std::vector<int> &>(),
+           "Create a 1-D slice from 5-D hypercube")
+      .def(py::init<const std::shared_ptr<byte4DReg>, const int, const bool,
+                    const std::vector<int> &, const std::vector<int> &,
+                    std::vector<int> &>(),
+           "Create a 1-D slice from 4-D hypercube")
+      .def(py::init<const std::shared_ptr<byte3DReg>, const int, const bool,
+                    const std::vector<int> &, const std::vector<int> &,
+                    std::vector<int> &>(),
+           "Create a 1-D slice from 3-D hypercube")
+      .def(py::init<const std::shared_ptr<byte2DReg>, const int, const bool,
+                    const std::vector<int> &, const std::vector<int> &,
+                    std::vector<int> &>(),
+           "Create a 1-D slice from 2-D hypercube")
+      .def(py::init<const std::shared_ptr<byte1DReg>, const int, const bool,
+                    const std::vector<int> &, const std::vector<int> &,
+                    std::vector<int> &>(),
+           "Create a 1-D slice from 1-D hypercube")
       .def(
           "clone",
           (std::shared_ptr<byte1DReg>(byte1DReg::*)() const) & byte1DReg::clone,

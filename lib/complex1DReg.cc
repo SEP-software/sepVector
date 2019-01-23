@@ -10,6 +10,208 @@ std::shared_ptr<complex1DReg> complex1DReg::clone() const {
     return x;
   }
 }
+complex1DReg::complex1DReg(const std::shared_ptr<complex6DReg> old,
+                           const int iax1, const bool rev,
+                           const std::vector<int> &ipos,
+                           const std::vector<int> &beg,
+                           const std::vector<int> &end) {
+  std::vector<int> j(6, 1);
+  std::vector<int> f(6, 0);
+  std::vector<int> n(6, 1);
+  std::vector<int> nd = old->getHyper()->getNs();
+  // Figure out window
+  for (auto i = 0; i < n.size(); i++) {
+    f[i] = beg[i];
+    if (iax1 == i)
+      n[i] = end[i] - beg[i];
+    else
+      f[i] = ipos[i];
+  }
+
+  std::shared_ptr<complex6DReg> tmp = old->window(n, f, j);
+  axis a1(n[iax1]);
+  std::shared_ptr<hypercube> hyperOut(new hypercube(a1));
+  initNoData(hyperOut);
+  int f1 = 0, j1 = 1;
+  if (rev) {
+    f1 = n[iax1] - 1;
+    j1 = -1;
+  }
+  std::complex<float> *outv = getVals();
+  std::complex<float> *inv = tmp->getVals();
+
+  int ip1 = f1, i = 0;
+  for (auto i1 = 0; i1 < n[iax1]; i1++, i++, ip1 += j1) outv[i] = inv[ip1];
+}
+complex1DReg::complex1DReg(const std::shared_ptr<complex5DReg> old,
+                           const int iax1, const bool rev,
+                           const std::vector<int> &ipos,
+                           const std::vector<int> &beg,
+                           const std::vector<int> &end) {
+  std::vector<int> j(5, 1);
+  std::vector<int> f(5, 0);
+  std::vector<int> n(5, 1);
+  std::vector<int> nd = old->getHyper()->getNs();
+  // Figure out window
+  for (auto i = 0; i < n.size(); i++) {
+    f[i] = beg[i];
+    if (iax1 == i)
+      n[i] = end[i] - beg[i];
+    else
+      f[i] = ipos[i];
+  }
+
+  std::shared_ptr<complex5DReg> tmp = old->window(n, f, j);
+  axis a1(n[iax1]);
+  std::shared_ptr<hypercube> hyperOut(new hypercube(a1));
+  initNoData(hyperOut);
+  int f1 = 0, j1 = 1;
+  if (rev) {
+    f1 = n[iax1] - 1;
+    j1 = -1;
+  }
+  std::complex<float> *outv = getVals();
+  std::complex<float> *inv = tmp->getVals();
+
+  int ip1 = f1, i = 0;
+  for (auto i1 = 0; i1 < n[iax1]; i1++, i++, ip1 += j1) outv[i] = inv[ip1];
+}
+
+complex1DReg::complex1DReg(const std::shared_ptr<complex4DReg> old,
+                           const int iax1, const bool rev,
+                           const std::vector<int> &ipos,
+                           const std::vector<int> &beg,
+                           const std::vector<int> &end) {
+  std::vector<int> j(4, 1);
+  std::vector<int> f(4, 0);
+  std::vector<int> n(4, 1);
+  std::vector<int> nd = old->getHyper()->getNs();
+  // Figure out window
+  for (auto i = 0; i < n.size(); i++) {
+    f[i] = beg[i];
+    if (iax1 == i)
+      n[i] = end[i] - beg[i];
+    else
+      f[i] = ipos[i];
+  }
+
+  std::shared_ptr<complex4DReg> tmp = old->window(n, f, j);
+  axis a1(n[iax1]);
+  std::shared_ptr<hypercube> hyperOut(new hypercube(a1));
+  initNoData(hyperOut);
+  int f1 = 0, j1 = 1;
+  if (rev) {
+    f1 = n[iax1] - 1;
+    j1 = -1;
+  }
+  std::complex<float> *outv = getVals();
+  std::complex<float> *inv = tmp->getVals();
+
+  int ip1 = f1, i = 0;
+  for (auto i1 = 0; i1 < n[iax1]; i1++, i++, ip1 += j1) outv[i] = inv[ip1];
+}
+
+complex1DReg::complex1DReg(const std::shared_ptr<complex3DReg> old,
+                           const int iax1, const bool rev,
+                           const std::vector<int> &ipos,
+                           const std::vector<int> &beg,
+                           const std::vector<int> &end) {
+  std::vector<int> j(3, 1);
+  std::vector<int> f(3, 0);
+  std::vector<int> n(3, 1);
+  std::vector<int> nd = old->getHyper()->getNs();
+  // Figure out window
+  for (auto i = 0; i < n.size(); i++) {
+    f[i] = beg[i];
+    if (iax1 == i)
+      n[i] = end[i] - beg[i];
+    else
+      f[i] = ipos[i];
+  }
+
+  std::shared_ptr<complex3DReg> tmp = old->window(n, f, j);
+  axis a1(n[iax1]);
+  std::shared_ptr<hypercube> hyperOut(new hypercube(a1));
+  initNoData(hyperOut);
+  int f1 = 0, j1 = 1;
+  if (rev) {
+    f1 = n[iax1] - 1;
+    j1 = -1;
+  }
+  std::complex<float> *outv = getVals();
+  std::complex<float> *inv = tmp->getVals();
+
+  int ip1 = f1, i = 0;
+  for (auto i1 = 0; i1 < n[iax1]; i1++, i++, ip1 += j1) outv[i] = inv[ip1];
+}
+
+complex1DReg::complex1DReg(const std::shared_ptr<complex2DReg> old,
+                           const int iax1, const bool rev,
+                           const std::vector<int> &ipos,
+                           const std::vector<int> &beg,
+                           const std::vector<int> &end) {
+  std::vector<int> j(2, 1);
+  std::vector<int> f(2, 0);
+  std::vector<int> n(2, 1);
+  std::vector<int> nd = old->getHyper()->getNs();
+  // Figure out window
+  for (auto i = 0; i < n.size(); i++) {
+    f[i] = beg[i];
+    if (iax1 == i)
+      n[i] = end[i] - beg[i];
+    else
+      f[i] = ipos[i];
+  }
+
+  std::shared_ptr<complex2DReg> tmp = old->window(n, f, j);
+  axis a1(n[iax1]);
+  std::shared_ptr<hypercube> hyperOut(new hypercube(a1));
+  initNoData(hyperOut);
+  int f1 = 0, j1 = 1;
+  if (rev) {
+    f1 = n[iax1] - 1;
+    j1 = -1;
+  }
+  std::complex<float> *outv = getVals();
+  std::complex<float> *inv = tmp->getVals();
+
+  int ip1 = f1, i = 0;
+  for (auto i1 = 0; i1 < n[iax1]; i1++, i++, ip1 += j1) outv[i] = inv[ip1];
+}
+
+complex1DReg::complex1DReg(const std::shared_ptr<complex1DReg> old,
+                           const int iax1, const bool rev,
+                           const std::vector<int> &ipos,
+                           const std::vector<int> &beg,
+                           const std::vector<int> &end) {
+  std::vector<int> j(1, 1);
+  std::vector<int> f(1, 0);
+  std::vector<int> n(1, 1);
+  std::vector<int> nd = old->getHyper()->getNs();
+  // Figure out window
+  for (auto i = 0; i < n.size(); i++) {
+    f[i] = beg[i];
+    if (iax1 == i)
+      n[i] = end[i] - beg[i];
+    else
+      f[i] = ipos[i];
+  }
+
+  std::shared_ptr<complex1DReg> tmp = old->window(n, f, j);
+  axis a1(n[iax1]);
+  std::shared_ptr<hypercube> hyperOut(new hypercube(a1));
+  initNoData(hyperOut);
+  int f1 = 0, j1 = 1;
+  if (rev) {
+    f1 = n[iax1] - 1;
+    j1 = -1;
+  }
+  std::complex<float> *outv = getVals();
+  std::complex<float> *inv = tmp->getVals();
+
+  int ip1 = f1, i = 0;
+  for (auto i1 = 0; i1 < n[iax1]; i1++, i++, ip1 += j1) outv[i] = inv[ip1];
+}
 std::shared_ptr<complex1DReg> complex1DReg::cloneSpace() const {
   std::shared_ptr<complex1DReg> x(new complex1DReg(getHyper()));
   x->_mat = 0;
