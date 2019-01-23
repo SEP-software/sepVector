@@ -1,8 +1,8 @@
 #pragma once
-#include <float3dReg.h>
-#include <float4dReg.h>
-#include <float5dReg.h>
-#include <float6dReg.h>
+#include <float3DReg.h>
+#include <float4DReg.h>
+#include <float5DReg.h>
+#include <float6DReg.h>
 #include <floatHyper.h>
 
 #include "boost/multi_array.hpp"
