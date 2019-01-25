@@ -378,13 +378,13 @@ def getIntVector(hyper):
 	elif len(hyper.axes) ==6:
 		return pySepVector.int6DReg(h)
 
-class rectFilter1D:
+class rectFilter1D(floatVector):
 	def __init__(self,n,f):
 		"""Initialize a rectFilter1D 
 		 	n - size of box (list 1-D)
 			f - location of the 1 (list 1-D) (set to -1)"""
 		self.cppMode=pySepVector.rectFilter1D(n,f)
-class rectFilter2D:
+class rectFilter2D(floatVector):
 	def __init__(self,n,f):
 		"""Initialize a rectFilter2D 
 		 	n - size of box (list 2-D)
