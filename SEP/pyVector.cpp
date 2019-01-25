@@ -9,7 +9,6 @@
 #include "byte4DReg.h"
 #include "byte5DReg.h"
 #include "byte6DReg.h"
-#include "rectFilter.h"
 #include "complex1DReg.h"
 #include "complex2DReg.h"
 #include "complex3DReg.h"
@@ -34,6 +33,7 @@
 #include "int4DReg.h"
 #include "int5DReg.h"
 #include "int6DReg.h"
+#include "rectFilter.h"
 #include "regSpace.h"
 #include "sepVectorConfig.h"
 #include "short1DReg.h"
@@ -1663,14 +1663,25 @@ PYBIND11_MODULE(pySepVector, clsVector) {
              sizeof(std::complex<float>) * m.getHyper()->getAxis(1).n,
              sizeof(std::complex<float>)});
       });
- py::class_<rectFilter1D, float1DReg, std::shared_ptr<rectFilter1D>>(
+  py::class_<rectFilter1D, float1DReg, std::shared_ptr<rectFilter1D>>(
       clsVector, "rectFilter1D")
       .def(py::init<const std::vector<int> &, const std::vector<int> &>(),
-           "Initialize rectFilter1D");
+           "Initialize rectFilter1D")
+
+      .def_buffer([](float1DReg &m) -> py::buffer_info {
+        return py::buffer_info(m.getVals(), sizeof(float),
+                               py::format_descriptor<float>::format(), 1,
+                               {m.getHyper()->getAxis(1).n}, {sizeof(float)});
+      });
  py::class_<rectFilter2D, float2DReg, std::shared_ptr<rectFilter2D>>(
       clsVector, "rectFilter2D")
       .def(py::init<const std::vector<int> &, const std::vector<int> &>(),
-           "Initialize rectFilter2D");
+           "Initialize rectFilter2D")
+         .def_buffer([](float2DReg &m) -> py::buffer_info {
+    return py::buffer_info(
+        m.getVals(), sizeof(float), py::format_descriptor<float>::format(), 2,
+        {m.getHyper()->getAxis(2).n, m.getHyper()->getAxis(1).n},
+        {sizeof(float) * m.getHyper()->getAxis(1).n, sizeof(float)});
 #endif
 }
 }  // namespace SEP
