@@ -364,6 +364,7 @@ def getDoubleVector(hyper):
 		return pySepVector.double6DReg(h)
 
 def getIntVector(hyper):
+	h=hyper.getCpp()
 	if len(hyper.axes) ==1:
 		return pySepVector.int1DReg(h)
 	elif len(hyper.axes) ==2:
