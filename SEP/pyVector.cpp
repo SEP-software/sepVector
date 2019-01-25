@@ -1663,6 +1663,7 @@ PYBIND11_MODULE(pySepVector, clsVector) {
              sizeof(std::complex<float>) * m.getHyper()->getAxis(1).n,
              sizeof(std::complex<float>)});
       });
+#endif
   py::class_<rectFilter1D, float1DReg, std::shared_ptr<rectFilter1D>>(
       clsVector, "rectFilter1D")
       .def(py::init<const std::vector<int> &, const std::vector<int> &>(),
@@ -1682,6 +1683,6 @@ PYBIND11_MODULE(pySepVector, clsVector) {
         m.getVals(), sizeof(float), py::format_descriptor<float>::format(), 2,
         {m.getHyper()->getAxis(2).n, m.getHyper()->getAxis(1).n},
         {sizeof(float) * m.getHyper()->getAxis(1).n, sizeof(float)});
-#endif
+
 }
 }  // namespace SEP
