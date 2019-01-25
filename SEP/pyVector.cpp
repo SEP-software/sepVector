@@ -1684,5 +1684,5 @@ PYBIND11_MODULE(pySepVector, clsVector) {
         {m.getHyper()->getAxis(2).n, m.getHyper()->getAxis(1).n},
         {sizeof(float) * m.getHyper()->getAxis(1).n, sizeof(float)});
 
-}
+
 }  // namespace SEP
