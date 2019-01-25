@@ -9,6 +9,7 @@
 #include "byte4DReg.h"
 #include "byte5DReg.h"
 #include "byte6DReg.h"
+#include "rectFilter.h"
 #include "complex1DReg.h"
 #include "complex2DReg.h"
 #include "complex3DReg.h"
@@ -1662,6 +1663,14 @@ PYBIND11_MODULE(pySepVector, clsVector) {
              sizeof(std::complex<float>) * m.getHyper()->getAxis(1).n,
              sizeof(std::complex<float>)});
       });
+ py::class_<rectFilter1D, float1DReg, std::shared_ptr<rectFilter1D>>(
+      clsVector, "rectFilter1D")
+      .def(py::init<const std::vector<int> &, const std::vector<int> &>(),
+           "Initialize rectFilter1D");
+ py::class_<rectFilter2D, float2DReg, std::shared_ptr<rectFilter2D>>(
+      clsVector, "rectFilter2D")
+      .def(py::init<const std::vector<int> &, const std::vector<int> &>(),
+           "Initialize rectFilter2D");
 #endif
 }
 }  // namespace SEP

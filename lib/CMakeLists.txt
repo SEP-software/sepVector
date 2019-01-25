@@ -5,7 +5,7 @@ FIND_PACKAGE( Boost 1.40 COMPONENTS program_options unit_test_framework REQUIRED
 INCLUDE_DIRECTORIES( ${Boost_INCLUDE_DIR} )
 include_directories(${TBB_INCLUDE_DIRS})
 
-set(SOURCES Vector.cc float1DReg.cc	float2DReg.cc	float3DReg.cc floatHyper.cc float4DReg.cc regVector.cc regSpace.cc
+set(SOURCES Vector.cc float1DReg.cc	float2DReg.cc	float3DReg.cc floatHyper.cc float4DReg.cc regVector.cc regSpace.cc rectFilter.cc
 float5DReg.cc float6DReg.cc)
 
 if (BUILD_INT)
@@ -28,7 +28,7 @@ if(BUILD_SHORT)
   set(SOURCES ${SOURCES} short1DReg.cc shortHyper.cc)
 endif(BUILD_SHORT)
 
-set(INCLUDES  Vector.h	superVec.h regSpace.h
+set(INCLUDES  Vector.h	superVec.h regSpace.h rectFilter.h
 float1DReg.h	float2DReg.h	float3DReg.h	 floatHyper.h float4DReg.h  float5DReg.h float6DReg.h
 intHyper.h int1DReg.h int2DReg.h int3DReg.h int4DReg.h int5DReg.h int6DReg.h
 byteHyper.h byte1DReg.h byte2DReg.h byte3DReg.h byte4DReg.h byte5DReg.h byte6DReg.h
