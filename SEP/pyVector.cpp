@@ -387,18 +387,19 @@ PYBIND11_MODULE(pySepVector, clsVector) {
                  m.getHyper()->getAxis(2).n,
              sizeof(float) * m.getHyper()->getAxis(1).n, sizeof(float)});
       });
-
-  py::class_<rectFilter2D, float2DReg, std::shared_ptr<rectFilter2D>>(
-      clsVector, "rectFilter2D")
-      .def(py::init<const std::vector<int> &, const std::vector<int> &>(),
-           "Initialize rectFilter2D")
-      .def_buffer([](float2DReg &m) -> py::buffer_info {
-        return py::buffer_info(
-            m.getVals(), sizeof(float), py::format_descriptor<float>::format(),
-            2, {m.getHyper()->getAxis(2).n, m.getHyper()->getAxis(1).n},
-            {sizeof(float) * m.getHyper()->getAxis(1).n, sizeof(float)});
-      });
-
+  /*
+    py::class_<rectFilter2D, float2DReg, std::shared_ptr<rectFilter2D>>(
+        clsVector, "rectFilter2D")
+        .def(py::init<const std::vector<int> &, const std::vector<int> &>(),
+             "Initialize rectFilter2D")
+        .def_buffer([](float2DReg &m) -> py::buffer_info {
+          return py::buffer_info(
+              m.getVals(), sizeof(float),
+    py::format_descriptor<float>::format(), 2, {m.getHyper()->getAxis(2).n,
+    m.getHyper()->getAxis(1).n}, {sizeof(float) * m.getHyper()->getAxis(1).n,
+    sizeof(float)});
+        });
+  */
   py::class_<rectFilter1D, float1DReg, std::shared_ptr<rectFilter1D>>(
       clsVector, "rectFilter1D")
       .def(py::init<const std::vector<int> &, const std::vector<int> &>(),
