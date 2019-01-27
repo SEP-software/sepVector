@@ -397,7 +397,7 @@ PYBIND11_MODULE(pySepVector, clsVector) {
       clsVector, "rectFilter1D", py::buffer_protocol())
       .def(py::init<const std::vector<int> &, const std::vector<int> &>(),
            "Initialize rectFilter1D")
-      .def_buffer([](rectFilter1D &m) -> py::buffer_info {
+      .def_buffer([](rectFilter1D &mdsjkkdsl) -> py::buffer_info {
         return py::buffer_info(m.getVals(), sizeof(float),
                                py::format_descriptor<float>::format(), 1,
                                {m.getHyper()->getAxis(1).n}, {sizeof(float)});
