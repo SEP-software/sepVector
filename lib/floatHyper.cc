@@ -270,14 +270,15 @@ void floatHyper::calcCheckSum() {
 
 bool floatHyper::checkSame(const std::shared_ptr<floatHyper> vec2) const {
   if (!vec2) {
-    std::cerr << "Not allocated vec2" << std::endl;
-    return false;
+    raise SEPException("Vec2 is not allocated") return false;
   }
-  //  if (getHyper() == vec2->getHyper()) return true;
-  return true;
-  std::cerr << getHyper()->getAxis(1).n << " " << vec2->getHyper()->getAxis(1).n
-            << std::endl;
-  std::cerr << "Not from the same Hypercube" << std::endl;
+  bool b;
+  try {
+    b = getHyper().checkSame(vec2->getHyper());
+  } catch (SEPException &e) {
+    throw SEPException(e.what);
+  }
 
-  return false;
+  return b;
+  return true;
 }
