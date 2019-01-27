@@ -389,12 +389,12 @@ PYBIND11_MODULE(pySepVector, clsVector) {
       });
 
   py::class_<rectFilter2D, float2DReg, std::shared_ptr<rectFilter2D>>(
-      clsVector, "rectFilter2D")
+      clsVector, "rectFilter2D", py::buffer_protocol())
       .def(py::init<const std::vector<int> &, const std::vector<int> &>(),
            "Initialize rectFilter2D");
 
-  py::class_<rectFilter1D, std::shared_ptr<rectFilter1D>>(clsVector,
-                                                          "rectFilter1D")
+  py::class_<rectFilter1D, std::shared_ptr<rectFilter1D>>(
+      clsVector, "rectFilter1D", py::buffer_protocol())
       .def(py::init<const std::vector<int> &, const std::vector<int> &>(),
            "Initialize rectFilter1D")
 

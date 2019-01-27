@@ -44,8 +44,10 @@ class vector(pyVector.vector):
 
 	def getNdArray(self):
 		"""Return a numpy version of the array (same memory"""
-		print("IN HERE ")
-		return numpy.array(self.cppMode,copy=False)
+		print("IN HERE new")
+		m= numpy.array(self.cppMode,copy=False)
+		print(m,'DFDSDFFD')
+		return m
 	def window(self,**kw):
 		"""Window a vector return another vector (of the same dimension
 		    specify min1..min6, max1...max6, f1...f6, j1...j6, n1...n6, or
