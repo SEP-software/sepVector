@@ -275,9 +275,9 @@ bool floatHyper::checkSame(const std::shared_ptr<floatHyper> vec2) const {
   }
   bool b;
   try {
-    b = getHyper().checkSame(vec2->getHyper());
+    b = getHyper()->checkSame(vec2->getHyper());
   } catch (SEPException &e) {
-    throw SEPException(e.what);
+    throw SEPException(e.getMessage());
   }
 
   return b;
