@@ -270,7 +270,8 @@ void floatHyper::calcCheckSum() {
 
 bool floatHyper::checkSame(const std::shared_ptr<floatHyper> vec2) const {
   if (!vec2) {
-    raise SEPException("Vec2 is not allocated") return false;
+    throw SEPException("Vec2 is not allocated");
+    return false;
   }
   bool b;
   try {
