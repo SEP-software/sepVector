@@ -109,7 +109,6 @@ class vector(pyVector.vector):
 
 	def checkSame(self,vec2):
 		"""Function to check if two vectors belong to the same vector space"""
-		print("IN CHECK SAME")
 		return self.getCpp().checkSame(vec2.getCpp())
 
 class floatVector(vector):
