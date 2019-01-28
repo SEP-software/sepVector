@@ -6,13 +6,10 @@ rectFilter1D::rectFilter1D(const std::vector<int>& box,
   setBasics(box, f0);
   axis a(box[0]);
   std::shared_ptr<hypercube> hyper(new hypercube(a));
-  std::cerr << "DIE 3 " << hyper->getAxes().size() << std::endl;
 
   initNoData(hyper);
-  std::cerr << "DIE 4 " << std::endl;
 
   zero();
-  std::cerr << "DIE 5 " << std::endl;
 }
 std::shared_ptr<rectFilter1D> rectFilter1D::clone() {
   std::shared_ptr<rectFilter1D> f(new rectFilter1D(_n, _f));
