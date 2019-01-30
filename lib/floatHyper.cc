@@ -34,9 +34,7 @@ void floatHyper::mult(const std::shared_ptr<floatHyper> vec2) {
 }
 void floatHyper::scaleAdd(std::shared_ptr<floatHyper> vec2, const double sc1,
                           const double sc2) {
-  std::cerr << "IN SCALE ADD " << std::endl;
   if (!checkSame(vec2)) throw(std::string("Vectors not of the same space"));
-  std::cerr << "IN2 SCALE ADD " << std::endl;
 
   std::shared_ptr<floatHyper> vec2H =
       std::dynamic_pointer_cast<floatHyper>(vec2);

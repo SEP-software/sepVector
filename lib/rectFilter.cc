@@ -2,8 +2,8 @@
 using namespace SEP;
 
 rectFilter1D::rectFilter1D(const std::vector<int>& box,
-                           const std::vector<int>& f0) {
-  setBasics(box, f0);
+                           const std::vector<int>& f0, bool pef) {
+  setBasics(box, f0, pef);
   axis a(box[0]);
   std::shared_ptr<hypercube> hyper(new hypercube(a));
 
@@ -47,8 +47,8 @@ void rectFilter2D::initializePEF() {
 }
 
 rectFilter2D::rectFilter2D(const std::vector<int>& box,
-                           const std::vector<int>& f0) {
-  setBasics(box, f0);
+                           const std::vector<int>& f0, bool pef) {
+  setBasics(box, f0, pef);
   std::shared_ptr<hypercube> hyper(new hypercube(box[0], box[1]));
 
   initNoData(hyper);
@@ -73,8 +73,8 @@ std::shared_ptr<rectFilter2D> rectFilter2D::cloneSpace() {
 }
 
 rectFilter3D::rectFilter3D(const std::vector<int>& box,
-                           const std::vector<int>& f0) {
-  setBasics(box, f0);
+                           const std::vector<int>& f0, bool pef) {
+  setBasics(box, f0, pef);
   std::shared_ptr<hypercube> hyper(new hypercube(box[0], box[1], box[2]));
   initNoData(hyper);
 }
@@ -126,8 +126,8 @@ void rectFilter4D::initializePEF() {
 }
 
 rectFilter4D::rectFilter4D(const std::vector<int>& box,
-                           const std::vector<int>& f0) {
-  setBasics(box, f0);
+                           const std::vector<int>& f0, bool pef) {
+  setBasics(box, f0, pef);
 
   std::shared_ptr<hypercube> hyper(
       new hypercube(box[0], box[1], box[2], box[3]));
