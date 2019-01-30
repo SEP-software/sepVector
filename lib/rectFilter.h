@@ -39,7 +39,7 @@ class rectFilter1D : public rectFilter, public SEP::float1DReg {
 class rectFilter2D : public rectFilter, public SEP::float2DReg {
  public:
   rectFilter2D(const std::vector<int> &box, const std::vector<int> &beg,
-               bool pef = False);
+               bool pef = false);
   std::shared_ptr<rectFilter2D> clone();
   std::shared_ptr<rectFilter2D> cloneSpace();
   virtual void zeroNeg() override;
