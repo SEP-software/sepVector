@@ -29,7 +29,7 @@ class rectFilter {
 class rectFilter1D : public rectFilter, public SEP::float1DReg {
  public:
   rectFilter1D(const std::vector<int> &box, const std::vector<int> &beg,
-               bool pef = False);
+               bool pef = false);
   std::shared_ptr<rectFilter1D> clone();
   std::shared_ptr<rectFilter1D> cloneSpace();
   virtual void zeroNeg() override;
@@ -49,7 +49,7 @@ class rectFilter2D : public rectFilter, public SEP::float2DReg {
 class rectFilter3D : public rectFilter, public SEP::float3DReg {
  public:
   rectFilter3D(const std::vector<int> &box, const std::vector<int> &beg,
-               bool pef = False);
+               bool pef = false);
   std::shared_ptr<rectFilter3D> clone();
   std::shared_ptr<rectFilter3D> cloneSpace();
   virtual void zeroNeg() override;
@@ -59,7 +59,7 @@ class rectFilter3D : public rectFilter, public SEP::float3DReg {
 class rectFilter4D : public rectFilter, public SEP::float4DReg {
  public:
   rectFilter4D(const std::vector<int> &box, const std::vector<int> &f,
-               bool pef = False);
+               bool pef = false);
   std::shared_ptr<rectFilter4D> clone();
   std::shared_ptr<rectFilter4D> cloneSpace();
   virtual void zeroNeg() override;
