@@ -58,8 +58,11 @@ rectFilter2D::rectFilter2D(const std::vector<int>& box,
 std::shared_ptr<rectFilter2D> rectFilter2D::clone() const {
   std::shared_ptr<rectFilter2D> f(new rectFilter2D(_n, _f));
 
+  std:: << cerr << "in clone " << getHyper()->getN123() << std::endl;
+
   for (auto i2 = 0; i2 < getHyper()->getAxis(2).n; i2++) {
     for (auto i1 = 0; i1 < getHyper()->getAxis(1).n; i1++) {
+      std::cerr << "i1,i2 " << i1 << "," << i2 << std::endl;
       (*f->_mat)[i2][i1] = (*_mat)[i2][i1];
     }
   }
