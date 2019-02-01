@@ -167,6 +167,7 @@ double floatHyper::norm(const int n) const {
   return dt;
 }
 void floatHyper::set(const float val) {
+  std::cerr << "IN SET" << std::endl;
   tbb::parallel_for(tbb::blocked_range<long long>(0, getHyper()->getN123()),
                     [&](const tbb::blocked_range<long long> &r) {
                       for (long long i = r.begin(); i != r.end(); ++i)
