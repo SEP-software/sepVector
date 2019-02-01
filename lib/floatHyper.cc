@@ -294,10 +294,8 @@ bool floatHyper::checkSame(const std::shared_ptr<floatHyper> vec2) const {
     b = getHyper()->checkSame(vec2->getHyper());
 
   } catch (SEPException &e) {
-    std::cerr << "BEFORE 1" << std::endl;
     throw SEPException(e.getMessage());
   }
-  std::cerr << "BEFORE2" << std::endl;
 
   return true;
 }
