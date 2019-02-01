@@ -42,6 +42,8 @@ class vector(pyVector.vector):
 
     def set(self, val):
         """Function to a vector to a value"""
+        print(self.cppMode)
+        return
         self.cppMode.set(val)
 
     def getHyper(self):
