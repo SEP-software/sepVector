@@ -446,19 +446,21 @@ def getIntVector(hyper):
 
 class rectFilter1D(floatVector):
 
-    def __init__(self, n, f):
+    def __init__(self, n, f, pef=False):
         """Initialize a rectFilter1D
                 n - size of box(list 1 - D)
-                f - location of the 1 (list 1 - D) (set to - 1)"""
+                f - location of the 1 (list 1 - D) (set to - 1)
+                pef - Whether or not this is a PEF"""
         self.cppMode = pySepVector.rectFilter1D(n, f)
 
 
 class rectFilter2D(floatVector):
 
-    def __init__(self, n, f):
+    def __init__(self, n, f, pef=False):
         """Initialize a rectFilter2D
                 n - size of box(list 2 - D)
-                f - location of the 1 (list 2 - D) (set to - 1)"""
+                f - location of the 1 (list 2 - D) (set to - 1)
+                pef- Whether or not the filter is a PEF"""
         self.cppMode = pySepVector.rectFilter2D(n, f)
 
 
