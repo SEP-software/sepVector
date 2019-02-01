@@ -34,6 +34,10 @@ class rectFilter1D : public rectFilter, public SEP::float1DReg {
                bool pef = false);
   std::shared_ptr<rectFilter1D> clone();
   std::shared_ptr<rectFilter1D> cloneSpace();
+  void cleanFilter() {
+    zeroNonCoefs();
+    (*_mat)[_f[0]] = 1;
+  }
   virtual void zeroNonCoefs() override;
   virtual void initializePEF() override;
 };
@@ -46,6 +50,10 @@ class rectFilter2D : public rectFilter, public SEP::float2DReg {
   std::shared_ptr<rectFilter2D> cloneSpace();
   virtual void zeroNonCoefs() override;
   virtual void initializePEF() override;
+  void cleanFilter() {
+    zeroNonCoefs();
+    (*_mat)[_f[1]][_f[0]] = 1;
+  }
 };
 
 class rectFilter3D : public rectFilter, public SEP::float3DReg {
@@ -56,6 +64,10 @@ class rectFilter3D : public rectFilter, public SEP::float3DReg {
   std::shared_ptr<rectFilter3D> cloneSpace();
   virtual void zeroNonCoefs() override;
   virtual void initializePEF() override;
+  void cleanFilter() {
+    zeroNonCoefs();
+    (*_mat)[_f[2]][_f[1]][_f[0]] = 1;
+  }
 };
 
 class rectFilter4D : public rectFilter, public SEP::float4DReg {
@@ -66,6 +78,10 @@ class rectFilter4D : public rectFilter, public SEP::float4DReg {
   std::shared_ptr<rectFilter4D> cloneSpace();
   virtual void zeroNonCoefs() override;
   virtual void initializePEF() override;
+  void cleanFilter() {
+    zeroNonCoefs();
+    (*_mat)[_f[3]][_f[2]][_f[1]][_f[0]] = 1;
+  }
 };
 
 }  // namespace SEP
