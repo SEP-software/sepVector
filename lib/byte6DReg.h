@@ -1,4 +1,5 @@
-#pragma once
+#ifndef byte6d_reg_h
+#define byte6d_reg_h 1
 #include "boost/multi_array.hpp"
 
 #include <byteHyper.h>
@@ -88,3 +89,4 @@ class byte6DReg : public byteHyper {
   void initData(std::shared_ptr<SEP::hypercube> hyp, const byte6D &vals);
 };
 }  // namespace SEP
+#endif

@@ -1,4 +1,5 @@
-#pragma once
+#ifndef int2d_reg_h
+#define int2d_reg_h 1
 #include <intHyper.h>
 #include "int3DReg.h"
 #include "int4DReg.h"
@@ -78,3 +79,4 @@ class int2DReg : public intHyper {
   void initData(std::shared_ptr<SEP::hypercube> hyp, const int2D &vals);
 };
 }  // namespace SEP
+#endif

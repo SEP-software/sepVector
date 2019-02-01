@@ -1,4 +1,5 @@
-#pragma once
+#ifndef super_vector_h
+#define super_vector_h 1
 #include <Vector.h>
 #include "SEPException.h"
 namespace SEP {
@@ -87,3 +88,4 @@ class superVec : public SEP::Vector {
   std::shared_ptr<V2> _v2;
 };
 }  // namespace SEP
+#endif

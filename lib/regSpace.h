@@ -1,4 +1,5 @@
-#pragma once
+#ifndef reg_space_h
+#define reg_space_h 1
 #include "SEPException.h"
 #include "hypercube.h"
 
@@ -77,3 +78,4 @@ class regSpace {
   void *_storage;
 };
 }  // namespace SEP
+#endif

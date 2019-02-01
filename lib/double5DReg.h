@@ -1,4 +1,5 @@
-#pragma once
+#ifndef double5d_reg_h
+#define double5d_reg_h 1
 #include "boost/multi_array.hpp"
 
 #include <doubleHyper.h>
@@ -83,3 +84,4 @@ class double5DReg : public doubleHyper {
   void initData(std::shared_ptr<SEP::hypercube> hyp, const double5D &vals);
 };
 }  // namespace SEP
+#endif

@@ -1,4 +1,5 @@
-#pragma once
+#ifndef float1d_reg_h
+#define float1d_reg_h 1
 #include <floatHyper.h>
 #include <cstdint>
 #include <iostream>
@@ -87,3 +88,4 @@ class float1DReg : public floatHyper {
 };
 
 }  // namespace SEP
+#endif

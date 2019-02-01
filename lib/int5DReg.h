@@ -1,4 +1,5 @@
-#pragma once
+#ifndef int5d_reg_h
+#define int5d_reg_h 1
 #include "boost/multi_array.hpp"
 
 #include <intHyper.h>
@@ -83,3 +84,4 @@ class int5DReg : public intHyper {
   void initData(std::shared_ptr<SEP::hypercube> hyp, const int5D &vals);
 };
 }  // namespace SEP
+#endif

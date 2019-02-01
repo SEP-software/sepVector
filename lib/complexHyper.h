@@ -1,4 +1,5 @@
-#pragma once
+#ifndef complex_hyper_h
+#define complex_hyper_h 1
 #include <hypercube.h>
 #include <complex>
 #include <cstdint>
@@ -60,3 +61,4 @@ class complexHyper : public regSpace {
 };
 
 }  // namespace SEP
+#endif

@@ -1,4 +1,5 @@
-#pragma once
+#ifndef short_hyper_h
+#define short_hyper_h 1
 #include <hypercube.h>
 #include <cstdint>
 #include <sstream>
@@ -57,3 +58,4 @@ class shortHyper : public regSpace {
 };
 
 }  // namespace SEP
+#endif

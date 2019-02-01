@@ -1,3 +1,5 @@
+#ifndef reg_vector_h
+#define reg_vector_h 1
 #include <ioTypes.h>
 #include "short1DReg.h"
 
@@ -44,3 +46,4 @@ std::shared_ptr<regSpace> windowFromHyper(
     const std::vector<int> &fw, const std::vector<int> &jw, const dataType typ);
 std::shared_ptr<regSpace> cloneRegSpace(std::shared_ptr<regSpace> storage);
 }  // namespace SEP
+#endif

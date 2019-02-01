@@ -1,4 +1,5 @@
-#pragma once
+#ifndef double2d_reg_h
+#define double2d_reg_h 1
 #include <doubleHyper.h>
 #include "double3DReg.h"
 #include "double4DReg.h"
@@ -83,3 +84,4 @@ class double2DReg : public doubleHyper {
   void initData(std::shared_ptr<SEP::hypercube> hyp, const double2D &vals);
 };
 }  // namespace SEP
+#endif

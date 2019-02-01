@@ -1,4 +1,5 @@
-#pragma once
+#ifndef complex1d_reg_h
+#define complex1d_reg_h 1
 #include <complexHyper.h>
 #include <cstdint>
 #include <iostream>
@@ -88,3 +89,4 @@ class complex1DReg : public complexHyper {
 };
 
 }  // namespace SEP
+#endif

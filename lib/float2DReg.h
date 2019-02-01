@@ -1,4 +1,5 @@
-#pragma once
+#ifndef float2d_reg_h
+#define float2d_reg_h 1
 #include <float3DReg.h>
 #include <float4DReg.h>
 #include <float5DReg.h>
@@ -85,3 +86,4 @@ class float2DReg : public floatHyper {
   void initData(std::shared_ptr<SEP::hypercube> hyp, const float2D &vals);
 };
 }  // namespace SEP
+#endif

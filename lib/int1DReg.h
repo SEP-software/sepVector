@@ -1,4 +1,5 @@
-#pragma once
+#ifndef int1d_reg_h
+#define int1d_reg_h 1
 #include <intHyper.h>
 #include <cstdint>
 #include <iostream>
@@ -87,3 +88,4 @@ class int1DReg : public intHyper {
 };
 
 }  // namespace SEP
+#endif

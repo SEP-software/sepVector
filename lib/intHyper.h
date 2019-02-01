@@ -1,4 +1,5 @@
-#pragma once
+#ifndef int_hyper_h
+#define int_hyper_h 1
 #include <hypercube.h>
 #include <cstdint>
 #include <sstream>
@@ -66,3 +67,4 @@ class intHyper : public regSpace {
 };
 
 }  // namespace SEP
+#endif

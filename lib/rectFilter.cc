@@ -9,7 +9,7 @@ rectFilter1D::rectFilter1D(const std::vector<int>& box,
 
   initNoData(hyper);
 
-  zero();
+  zeroNonCoefs();
 }
 std::shared_ptr<rectFilter1D> rectFilter1D::clone() {
   std::shared_ptr<rectFilter1D> f(new rectFilter1D(_n, _f));
@@ -24,17 +24,17 @@ std::shared_ptr<rectFilter1D> rectFilter1D::cloneSpace() {
   return f;
 }
 
-void rectFilter1D::zeroNeg() {
+void rectFilter1D::zeroNonCoefs() {
   for (auto i1 = 0; i1 < _f[0]; i1++) {
     (*_mat)[i1] = 0;
   }
 }
 void rectFilter1D::initializePEF() {
-  zero();
+  zeroNonCoefs();
   (*_mat)[_f[0]] = 1;
 }
 
-void rectFilter2D::zeroNeg() {
+void rectFilter2D::zeroNonCoefs() {
   for (auto i2 = 0; i2 <= _f[1]; i2++) {
     for (auto i1 = 0; i1 <= _f[0]; i1++) {
       (*_mat)[i2][i1] = 0;
@@ -95,7 +95,7 @@ std::shared_ptr<rectFilter3D> rectFilter3D::cloneSpace() {
   f->setSpace();
   return f;
 }
-void rectFilter3D::zeroNeg() {
+void rectFilter3D::zeroNonCoefs() {
   for (auto i3 = 0; i3 <= _f[2]; i3++) {
     for (auto i2 = 0; i2 <= _f[1]; i2++) {
       for (auto i1 = 0; i1 <= _f[0]; i1++) {
@@ -109,7 +109,7 @@ void rectFilter3D::initializePEF() {
   (*_mat)[_f[2]][_f[1]][_f[0]] = 1;
 }
 
-void rectFilter4D::zeroNeg() {
+void rectFilter4D::zeroNonCoefs() {
   for (auto i4 = 0; i4 <= _f[3]; i4++) {
     for (auto i3 = 0; i3 <= _f[2]; i3++) {
       for (auto i2 = 0; i2 <= _f[1]; i2++) {

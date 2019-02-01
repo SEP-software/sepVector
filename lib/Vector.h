@@ -1,4 +1,5 @@
-#pragma once
+#ifndef vector_h
+#define vector_h 1
 #include <cstdint>
 #include <memory>
 #include <sstream>
@@ -61,3 +62,4 @@ class Vector {
 };
 
 }  // namespace SEP
+#endif

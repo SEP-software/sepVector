@@ -1,4 +1,5 @@
-#pragma once
+#ifndef double_hyper_h
+#define double_hyper_h 1
 #include <hypercube.h>
 #include <cstdint>
 #include <sstream>
@@ -65,3 +66,4 @@ class doubleHyper : public Vector, public regSpace {
 };
 
 }  // namespace SEP
+#endif

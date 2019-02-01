@@ -1,4 +1,5 @@
-#pragma once
+#ifndef byte3d_reg_h
+#define byte3d_reg_h 1
 #include <byteHyper.h>
 #include "boost/multi_array.hpp"
 typedef boost::multi_array<unsigned char, 3> byte3D;
@@ -69,3 +70,4 @@ class byte3DReg : public byteHyper {
   void initData(std::shared_ptr<SEP::hypercube> hyp, const byte3D &vals);
 };
 }  // namespace SEP
+#endif

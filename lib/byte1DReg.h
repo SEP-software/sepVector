@@ -1,4 +1,5 @@
-#pragma once
+#ifndef byte1d_reg_h
+#define byte1d_reg_h 1
 #include <byteHyper.h>
 #include <cstdint>
 #include <iostream>
@@ -87,3 +88,4 @@ class byte1DReg : public byteHyper {
 };
 
 }  // namespace SEP
+#endif

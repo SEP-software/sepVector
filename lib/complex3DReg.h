@@ -1,4 +1,5 @@
-#pragma once
+#ifndef complex3d_reg_h
+#define complex3d_reg_h 1
 #include <complexHyper.h>
 #include "boost/multi_array.hpp"
 typedef boost::multi_array<std::complex<float>, 3> complex3D;
@@ -69,3 +70,4 @@ class complex3DReg : public complexHyper {
   void initData(std::shared_ptr<SEP::hypercube> hyp, const complex3D &vals);
 };
 }  // namespace SEP
+#endif

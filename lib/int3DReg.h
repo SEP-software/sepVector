@@ -1,4 +1,5 @@
-#pragma once
+#ifndef int3d_reg_h
+#define int3d_reg_h 1
 #include <intHyper.h>
 #include "boost/multi_array.hpp"
 typedef boost::multi_array<int, 3> int3D;
@@ -69,3 +70,4 @@ class int3DReg : public intHyper {
   void initData(std::shared_ptr<SEP::hypercube> hyp, const int3D &vals);
 };
 }  // namespace SEP
+#endif

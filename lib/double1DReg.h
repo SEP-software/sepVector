@@ -1,4 +1,5 @@
-#pragma once
+#ifndef double1d_reg_h
+#define double1d_reg_h 1
 #include <doubleHyper.h>
 #include <cstdint>
 #include <iostream>
@@ -88,3 +89,4 @@ class double1DReg : public doubleHyper {
 };
 
 }  // namespace SEP
+#endif

@@ -1,4 +1,5 @@
-#pragma once
+#ifndef float_hyper_h
+#define float_hyper_h 1
 #include <hypercube.h>
 #include <cstdint>
 #include <sstream>
@@ -72,3 +73,4 @@ class floatHyper : public Vector, public regSpace {
 };
 
 }  // namespace SEP
+#endif

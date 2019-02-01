@@ -1,4 +1,5 @@
-#pragma once
+#ifndef short1d_reg_h
+#define short1d_reg_h 1
 #include <shortHyper.h>
 #include <cstdint>
 #include <iostream>
@@ -51,3 +52,4 @@ class short1DReg : public shortHyper {
 };
 
 }  // namespace SEP
+#endif
