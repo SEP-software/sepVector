@@ -451,7 +451,7 @@ class rectFilter1D(floatVector):
                 n - size of box(list 1 - D)
                 f - location of the 1 (list 1 - D) (set to - 1)
                 pef - Whether or not this is a PEF"""
-        self.cppMode = pySepVector.rectFilter1D(n, f)
+        self.cppMode = pySepVector.rectFilter1D(n, f, pef)
 
 
 class rectFilter2D(floatVector):
@@ -461,7 +461,7 @@ class rectFilter2D(floatVector):
                 n - size of box(list 2 - D)
                 f - location of the 1 (list 2 - D) (set to - 1)
                 pef- Whether or not the filter is a PEF"""
-        self.cppMode = pySepVector.rectFilter2D(n, f)
+        self.cppMode = pySepVector.rectFilter2D(n, f, pef)
 
 
 def readColTextFile(file):
