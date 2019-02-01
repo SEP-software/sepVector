@@ -151,12 +151,16 @@ class floatVector(vector):
         """Function to clone (deep copy) a vector"""
         return floatVector(fromCpp=self.cppMode.clone())
 
+    def clipVector(self, low, high):
+        """Clip vector element by element vec=min(high,max(low,vec))"""
+        self.cppMode.clipVector(low.cppMode, high.cppMode)
+
     def cloneSpace(self):
         """Funtion tor return the space of a vector"""
         return floatVector(fromCpp=self.cppMode.cloneSpace())
 
     def scaleAdd(self, vec2, sc1=1., sc2=1.):
-        """self=self*sc1+sc2*vec2"""
+        """self = self * sc1 + sc2 * vec2"""
         self.cppMode.scaleAdd(vec2.cppMode, sc1, sc2)
 
     def copy(self, vec2):
@@ -168,7 +172,7 @@ class floatVector(vector):
         return self.cppMode.dot(vec2.cppMode)
 
     def multiply(self, vec2):
-        """self=vec2*self"""
+        """self = vec2 * self"""
         self.cppMode.multiply(vec2.cppMode)
 
     def norm(self, nrm=2):
@@ -189,7 +193,7 @@ class doubleVector(vector):
         self.storage = "dataDouble"
 
     def norm(self, N=2):
-        """Function to compute vector N-norm"""
+        """Function to compute vector N - norm"""
         self.cppMode.norm(N)
 
     def scale(self, sc):
@@ -199,6 +203,10 @@ class doubleVector(vector):
     def rand(self):
         """Function to fill with random numbers"""
         self.cppMode.rand()
+
+    def clipVector(self, low, high):
+        """Clip vector element by element vec=min(high,max(low,vec))"""
+        self.cppMode.clipVector(low.cppMode, high.cppMode)
 
     def clone(self):
         """Function to clone (deep copy) a vector"""
@@ -213,7 +221,7 @@ class doubleVector(vector):
         return doubleVector(fromCpp=self.cppMode.cloneSpace())
 
     def scaleAdd(self, vec2, sc1=1., sc2=1.):
-        """self=self*sc1+sc2*vec2"""
+        """self = self * sc1 + sc2 * vec2"""
         self.cppMode.scaleAdd(vec2.cppMode, sc1, sc2)
 
     def dot(self, vec2):
@@ -221,7 +229,7 @@ class doubleVector(vector):
         return self.cppMode.dot(vec2.cppMode)
 
     def multiply(self, vec2):
-        """self=vec2*self"""
+        """self = vec2 * self"""
         self.cppMode.multiply(vec2.cppMode)
 
     def norm(self, nrm=2):
@@ -265,17 +273,22 @@ def getSepVector(*args, **keys):
             Option 1 (supply hypercube):
                     hyper, kw args
             Option 2 (build hypercube):
-                    ns=[] -list of sizes
-                    os=[] - list of origins
-                    ds=[] - list os sampling
-                    labels=[] list of labels
-                    axes=[] list of axes
-            Option 3 (get 2-D slice)
-                    vector  - vector to grab from
-                    iax1,iax2 - axes to grab
-                    rev1,rev1 - whether or not to reverse axes
-                    beg,end - beg and end position for all axes (lists)
-            storage= StorageType (dataFloat[default],dataComplex,dataDouble,dataInt,dataByte)
+                    ns = [] - list of sizes
+                    os = [] - list of origins
+                    ds = [] - list os sampling
+                    labels = [] list of labels
+                    axes = [] list of axes
+            Option 3 (get 2 - D slice)
+                    vector - vector to grab from
+                    iax1, iax2 - axes to grab
+                    rev1, rev1 - whether or not to reverse axes
+                    beg, end - beg and end position for all axes(lists)
+            storage = StorageType(
+    dataFloat[default],
+    dataComplex,
+    dataDouble,
+    dataInt,
+     dataByte)
     """
     myt = "dataFloat"
     if len(args) == 1:
@@ -435,8 +448,8 @@ class rectFilter1D(floatVector):
 
     def __init__(self, n, f):
         """Initialize a rectFilter1D
-                n - size of box (list 1-D)
-                f - location of the 1 (list 1-D) (set to -1)"""
+                n - size of box(list 1 - D)
+                f - location of the 1 (list 1 - D) (set to - 1)"""
         self.cppMode = pySepVector.rectFilter1D(n, f)
 
 
@@ -444,8 +457,8 @@ class rectFilter2D(floatVector):
 
     def __init__(self, n, f):
         """Initialize a rectFilter2D
-                n - size of box (list 2-D)
-                f - location of the 1 (list 2-D) (set to -1)"""
+                n - size of box(list 2 - D)
+                f - location of the 1 (list 2 - D) (set to - 1)"""
         self.cppMode = pySepVector.rectFilter2D(n, f)
 
 

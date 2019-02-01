@@ -34,6 +34,8 @@ class floatHyper : public Vector, public regSpace {
   }
   float cent(const long long iv, const int j) const;
   void clip(const float bpclip, const float epclip);
+  void clipVector(const std::shared_ptr<floatHyper> beg,
+                  const std::shared_ptr<floatHyper> end);
   void createMask(const float zero, const float err);
   void setData(float *ptr) {
     _vals = ptr;

@@ -32,6 +32,21 @@ void floatHyper::mult(const std::shared_ptr<floatHyper> vec2) {
                     });
   calcCheckSum();
 }
+void floatHyper::clipVector(const std::shared_ptr<floatHyper> beg,
+                            const std::shared_ptr<floatHyper> end) {
+  if (!checkSame(beg)) throw(std::string("Vectors not of the same space"));
+  if (!checkSame(end)) throw(std::string("Vectors not of the same space"));
+
+  std::shared_ptr<floatHyper> begH = std::dynamic_pointer_cast<floatHyper>(beg);
+  std::shared_ptr<floatHyper> endH = std::dynamic_pointer_cast<floatHyper>(end);
+  tbb::parallel_for(tbb::blocked_range<long long>(0, getHyper()->getN123()),
+                    [&](const tbb::blocked_range<long long> &r) {
+                      for (long long i = r.begin(); i != r.end(); ++i)
+                        _vals[i] = std::min(endH->_vals[i],
+                                            std::max(begH->_vals[i], _vals[i]));
+                    });
+  calcCheckSum();
+}
 void floatHyper::scaleAdd(std::shared_ptr<floatHyper> vec2, const double sc1,
                           const double sc2) {
   if (!checkSame(vec2)) throw(std::string("Vectors not of the same space"));

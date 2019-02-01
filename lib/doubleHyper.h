@@ -18,6 +18,9 @@ class doubleHyper : public Vector, public regSpace {
                         const double sc2);
   virtual void random() override;
   virtual void signum();
+  virtual void clipVector(const std::shared_ptr<doubleHyper> low,
+                          const std::shared_ptr<doubleHyper> hgih);
+
   virtual void mult(std::shared_ptr<doubleHyper> vec2);
   virtual double dot(std::shared_ptr<doubleHyper> vec2) const;
   void createMask(const float zero, const float err);

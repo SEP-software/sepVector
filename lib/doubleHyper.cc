@@ -43,6 +43,24 @@ void doubleHyper::scaleAdd(std::shared_ptr<doubleHyper> vec2, const double sc1,
                     });
   calcCheckSum();
 }
+void doubleHyper::clipVector(const std::shared_ptr<doubleHyper> beg,
+                             const std::shared_ptr<doubleHyper> end) {
+  if (!checkSame(beg)) throw(std::string("Vectors not of the same space"));
+  if (!checkSame(end)) throw(std::string("Vectors not of the same space"));
+
+  std::shared_ptr<doubleHyper> begH =
+      std::dynamic_pointer_cast<doubleHyper>(beg);
+  std::shared_ptr<doubleHyper> endH =
+      std::dynamic_pointer_cast<doubleHyper>(end);
+  tbb::parallel_for(tbb::blocked_range<long long>(0, getHyper()->getN123()),
+                    [&](const tbb::blocked_range<long long> &r) {
+                      for (long long i = r.begin(); i != r.end(); ++i)
+                        _vals[i] = std::min(endH->_vals[i],
+                                            std::max(begH->_vals[i], _vals[i]));
+                    });
+  calcCheckSum();
+}
+
 void doubleHyper::signum() {
   if (spaceOnly()) throw(std::string("Vectors not allocated"));
   tbb::parallel_for(tbb::blocked_range<long long>(0, getHyper()->getN123()),

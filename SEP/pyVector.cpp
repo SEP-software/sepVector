@@ -87,7 +87,11 @@ PYBIND11_MODULE(pySepVector, clsVector) {
           "Add two vectors")
       .def("scale", (void (floatHyper::*)(const double)) & floatHyper::scale,
            "Scale a vector")
-
+      .def("clipVector",
+           (void (floatHyper::*)(const std::shared_ptr<floatHyper>,
+                                 const std::shared_ptr<floatHyper>)) &
+               floatHyper::clipVector,
+           "vec=min(max(low,vec),high)")
       .def("scaleAdd",
            (void (floatHyper::*)(std::shared_ptr<floatHyper>, const double,
                                  const double)) &
@@ -434,6 +438,11 @@ PYBIND11_MODULE(pySepVector, clsVector) {
            (double (doubleHyper::*)(const float pct, const int jsamp) const) &
                doubleHyper::cent,
            "Calculate  the percentile of a dataset")
+      .def("clipVector",
+           (void (doubleHyper::*)(const std::shared_ptr<doubleHyper>,
+                                  const std::shared_ptr<doubleHyper>)) &
+               doubleHyper::clipVector,
+           "vec=min(max(low,vec),high)")
       .def("isDifferent",
            (bool (doubleHyper::*)(std::shared_ptr<doubleHyper>)) &
                doubleHyper::isDifferent,
