@@ -456,12 +456,31 @@ class rectFilter1D(floatVector):
 
 class rectFilter2D(floatVector):
 
-    def __init__(self, n, f, pef=False):
+    def __init__(self, *arg, **kw):
         """Initialize a rectFilter2D
+            Option 1:
                 n - size of box(list 2 - D)
                 f - location of the 1 (list 2 - D) (set to - 1)
-                pef- Whether or not the filter is a PEF"""
-        self.cppMode = pySepVector.rectFilter2D(n, f, pef)
+                pef- Whether or not the filter is a PEF
+            Option 2:
+                clone=True/False True-with memory, False without"""
+        if len(arg) == 3:
+            self.cppMode = pySepVector.rectFilter2D(arg[0], arg[1], arg[2])
+        elif len(arg) == 2:
+            self.cppMode = pySepVector.rectFilter2D(arg[0], arg[1], False)
+        elif "clone" in kw:
+            if kw["clone"]:
+                self.cppMode = pySepVector.clone()
+            else:
+                self.cppMode = pySepVector.cloneSpace()
+
+    def clone(self):
+        """Function to clone (deep copy) a vector"""
+        return rectFilter2D(clone=True)
+
+    def cloneSpace(self):
+        """Funtion tor return the space of a vector"""
+        return rectFilter2D(clone=True)
 
 
 def readColTextFile(file):
