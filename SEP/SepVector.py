@@ -469,20 +469,23 @@ class rectFilter2D(floatVector):
         elif len(arg) == 2:
             self.cppMode = pySepVector.rectFilter2D(arg[0], arg[1], False)
         elif "clone" in kw:
-            if kw["clone"]:
-                self.cppMode = pySepVector.rectFilter2D.clone()
+            if "space" in kw:
+                if kw["space"]:
+                    self.cppMode = kw["clone"].cloneSpace()
+                else:
+                    self.cppMode = kw["clone"].clone()
             else:
-                self.cppMode = pySepVector.rectFilter2D.clone()
+                self.cppMode = kw["clone"].clone()
         else:
             raiseException("Unknown way to create rectFilter2D")
 
     def clone(self):
         """Function to clone (deep copy) a vector"""
-        return rectFilter2D(clone=True)
+        return rectFilter2D(clone=self.cppMode)
 
     def cloneSpace(self):
         """Funtion tor return the space of a vector"""
-        return rectFilter2D(clone=True)
+        return rectFilter2D(clone=self.cppMode, space=False)
 
 
 def readColTextFile(file):
