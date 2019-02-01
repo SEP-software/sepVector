@@ -470,9 +470,11 @@ class rectFilter2D(floatVector):
             self.cppMode = pySepVector.rectFilter2D(arg[0], arg[1], False)
         elif "clone" in kw:
             if kw["clone"]:
-                self.cppMode = pySepVector.clone()
+                self.cppMode = pySepVector.rectFilter2D.clone()
             else:
-                self.cppMode = pySepVector.cloneSpace()
+                self.cppMode = pySepVector.rectFilter2D.clone()
+        else:
+            raiseException("Unknown way to create rectFilter2D")
 
     def clone(self):
         """Function to clone (deep copy) a vector"""
