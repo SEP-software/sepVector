@@ -407,10 +407,10 @@ PYBIND11_MODULE(pySepVector, clsVector) {
                 m.getHyper()->getAxis(1).n,
             },
             {sizeof(float) * m.getHyper()->getAxis(1).n, sizeof(float)});
-      })
+      });
 
-          py::class_<rectFilter1D, floa1DReg, std::shared_ptr<rectFilter1D>>(
-              clsVector, "rectFilter1D", py::buffer_protocol())
+  py::class_<rectFilter1D, floa1DReg, std::shared_ptr<rectFilter1D>>(
+      clsVector, "rectFilter1D", py::buffer_protocol())
       .def(py::init<const std::vector<int> &, const std::vector<int> &,
                     const bool>(),
            "Initialize rectFilter1D")
