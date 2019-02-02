@@ -12,14 +12,14 @@ rectFilter1D::rectFilter1D(const std::vector<int>& box,
   zeroNonCoefs();
 }
 std::shared_ptr<rectFilter1D> rectFilter1D::clone() const {
-  std::shared_ptr<rectFilter1D> f(new rectFilter1D(_n, _f));
+  std::shared_ptr<rectFilter1D> f(new rectFilter1D(_n, _f, _pef));
   for (auto i1 = 0; i1 < getHyper()->getAxis(1).n; i1++) {
     (*f->_mat)[i1] = (*_mat)[i1];
   }
   return f;
 }
 std::shared_ptr<rectFilter1D> rectFilter1D::cloneSpace() const {
-  std::shared_ptr<rectFilter1D> f(new rectFilter1D(_n, _f));
+  std::shared_ptr<rectFilter1D> f(new rectFilter1D(_n, _f, _pef));
   f->setSpace();
   return f;
 }
@@ -56,7 +56,7 @@ rectFilter2D::rectFilter2D(const std::vector<int>& box,
   zero();
 }
 std::shared_ptr<rectFilter2D> rectFilter2D::clone() const {
-  std::shared_ptr<rectFilter2D> f(new rectFilter2D(_n, _f));
+  std::shared_ptr<rectFilter2D> f(new rectFilter2D(_n, _f, _pef));
 
   for (auto i2 = 0; i2 < getHyper()->getAxis(2).n; i2++) {
     for (auto i1 = 0; i1 < getHyper()->getAxis(1).n; i1++) {
@@ -67,7 +67,7 @@ std::shared_ptr<rectFilter2D> rectFilter2D::clone() const {
   return f;
 }
 std::shared_ptr<rectFilter2D> rectFilter2D::cloneSpace() const {
-  std::shared_ptr<rectFilter2D> f(new rectFilter2D(_n, _f));
+  std::shared_ptr<rectFilter2D> f(new rectFilter2D(_n, _f, _pef));
   f->setSpace();
   return f;
 }
