@@ -147,7 +147,6 @@ float2DReg::float2DReg(const std::shared_ptr<float3DReg> old, const int iax1,
   int ip2 = f2, ip1 = f1, i = 0;
   float *outv = getVals();
   float *inv = tmp->getVals();
-  std::cerr << "In float3dreg " << std::endl;
   for (auto i2 = 0; i2 < n[iax2]; i2++, ip2 += j2) {
     ip1 = f1;
     for (auto i1 = 0; i1 < n[iax1]; i1++, i++, ip1 += j1) {
