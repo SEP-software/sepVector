@@ -396,27 +396,19 @@ PYBIND11_MODULE(pySepVector, clsVector) {
       clsVector, "rectFilter2D")
       .def(py::init<const std::vector<int> &, const std::vector<int> &,
                     const bool>(),
-           "Initialize rectFilter2D")
-      .def("clone",
-           (std::shared_ptr<rectFilter2D>(rectFilter2D::*)() const) &
-               rectFilter2D::clone,
-           "Make a copy of the vector")
-      .def("cloneSpace",
-           (std::shared_ptr<rectFilter2D>(rectFilter2D::*)() const) &
-               rectFilter2D::cloneSpace,
-           "Make a copy of the vector's space")
-      /*
-      .def_buffer([](rectFilter2D &m) -> py::buffer_info {
-        return py::buffer_info(
-            m.getVals(), sizeof(float), py::format_descriptor<float>::format(),
-            2,
-            {
-                m.getHyper()->getAxis(2).n,
-                m.getHyper()->getAxis(1).n,
-            },
-            {sizeof(float) * m.getHyper()->getAxis(1).n, sizeof(float)});
-      })*/
-      ;
+           "Initialize rectFilter2D");
+
+  /*
+  .def_buffer([](rectFilter2D &m) -> py::buffer_info {
+    return py::buffer_info(
+        m.getVals(), sizeof(float), py::format_descriptor<float>::format(),
+        2,
+        {
+            m.getHyper()->getAxis(2).n,
+            m.getHyper()->getAxis(1).n,
+        },
+        {sizeof(float) * m.getHyper()->getAxis(1).n, sizeof(float)});
+  })*/
 
   py::class_<rectFilter1D, floa1DReg, std::shared_ptr<rectFilter1D>>(
       clsVector, "rectFilter1D", py::buffer_protocol())
