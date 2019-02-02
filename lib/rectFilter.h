@@ -104,6 +104,15 @@ class rectFilter4D : public SEP::float4DReg {
     (*_mat)[_f[3]][_f[2]][_f[1]][_f[0]] = 1;
   }
   bool isPef() { return _pef; }
+  void setBasics(const std::vector<int> &box, const std::vector<int> &f,
+                 const bool pef) {
+    _n = box;
+    _f = f;
+    for (auto i = 0; i < box.size(); i++) {
+      _e.push_back(_n[i] - _f[i] - 1);
+    }
+    _pef = pef;
+  }
 
  public:
   std::vector<int> _n, _f, _e;
