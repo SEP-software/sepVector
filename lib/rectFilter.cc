@@ -63,7 +63,7 @@ std::shared_ptr<rectFilter2D> rectFilter2D::clone() const {
       (*f->_mat)[i2][i1] = (*_mat)[i2][i1];
     }
   }
-
+  std::cerr << getHyper()->getN123() << std::endl;
   return f;
 }
 std::shared_ptr<rectFilter2D> rectFilter2D::cloneSpace() const {
