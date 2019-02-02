@@ -56,7 +56,7 @@ class floatHyper : public Vector, public regSpace {
   void set(const float val);
   void zero() {
     std::cerr << "in this zero " << std::endl;
-    set(0.);
+    this->set(0.);
   }
 
   float *getVals() { return _vals; }

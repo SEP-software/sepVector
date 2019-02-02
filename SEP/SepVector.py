@@ -37,8 +37,8 @@ class vector(pyVector.vector):
 
     def zero(self):
         """Function to zero out a vector"""
-        print("IN ZERO")
-        self.cppMode.zero()
+        print("IN 2ZERO")
+        self.cppMode.set(0.)
 
     def set(self, val):
         """Function to a vector to a value"""
