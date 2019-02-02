@@ -393,7 +393,7 @@ PYBIND11_MODULE(pySepVector, clsVector) {
       });
 
   py::class_<rectFilter2D, float2DReg, std::shared_ptr<rectFilter2D>>(
-      clsVector, "rectFilter2D", py::buffer_protocol())
+      clsVector, "rectFilter2D")
       .def(py::init<const std::vector<int> &, const std::vector<int> &,
                     const bool>(),
            "Initialize rectFilter2D")
@@ -405,6 +405,7 @@ PYBIND11_MODULE(pySepVector, clsVector) {
            (std::shared_ptr<rectFilter2D>(rectFilter2D::*)() const) &
                rectFilter2D::cloneSpace,
            "Make a copy of the vector's space")
+      /*
       .def_buffer([](rectFilter2D &m) -> py::buffer_info {
         return py::buffer_info(
             m.getVals(), sizeof(float), py::format_descriptor<float>::format(),
@@ -414,9 +415,10 @@ PYBIND11_MODULE(pySepVector, clsVector) {
                 m.getHyper()->getAxis(1).n,
             },
             {sizeof(float) * m.getHyper()->getAxis(1).n, sizeof(float)});
-      });
+      })*/
+      ;
 
-  py::class_<rectFilter1D, std::shared_ptr<rectFilter1D>>(
+  py::class_<rectFilter1D, floa1DReg, std::shared_ptr<rectFilter1D>>(
       clsVector, "rectFilter1D", py::buffer_protocol())
       .def(py::init<const std::vector<int> &, const std::vector<int> &,
                     const bool>(),
