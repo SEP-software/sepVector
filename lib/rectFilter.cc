@@ -42,7 +42,7 @@ void rectFilter2D::zeroNonCoefs() {
   }
 }
 void rectFilter2D::initializePEF() {
-  zero();
+  zeroNonCoefs();
   (*_mat)[_f[1]][_f[0]] = 1;
 }
 
