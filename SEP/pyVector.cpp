@@ -423,13 +423,13 @@ PYBIND11_MODULE(pySepVector, clsVector) {
                     const bool>(),
            "Initialize rectFilter1D")
       .def("clone",
-           (std::shared_ptr<rectFilter2D>(rectFilter2D::*)() const) &
-               rectFilter2D::clone,
+           (std::shared_ptr<rectFilter1D>(rectFilter1D::*)() const) &
+               rectFilter1D::clone,
            "Make a copy of the vector")
 
       .def("cloneSpace",
-           (std::shared_ptr<rectFilter2D>(rectFilter2D::*)() const) &
-               rectFilter2D::cloneSpace,
+           (std::shared_ptr<rectFilter1D>(rectFilter1D::*)() const) &
+               rectFilter1D::cloneSpace,
            "Make a copy of the vector space")
       .def_buffer([](rectFilter1D &m) -> py::buffer_info {
         return py::buffer_info(m.getVals(), sizeof(float),
