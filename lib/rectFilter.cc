@@ -37,7 +37,7 @@ void rectFilter1D::initializePEF() {
 void rectFilter2D::zeroNonCoefs() {
   for (auto i2 = 0; i2 <= _f[1]; i2++) {
     int end = _n[0];
-    if (f[1] == i2) end = _f[0] + 1;
+    if (_f[1] == i2) end = _f[0] + 1;
     for (auto i1 = 0; i1 <= end; i1++) {
       (*_mat)[i2][i1] = 0;
     }
@@ -96,7 +96,7 @@ void rectFilter3D::zeroNonCoefs() {
   for (auto i3 = 0; i3 <= _f[2]; i3++) {
     for (auto i2 = 0; i2 <= _f[1]; i2++) {
       int end = _n[0];
-      if (f[1] == i2) end = _f[0] + 1;
+      if (_f[1] == i2) end = _f[0] + 1;
       for (auto i1 = 0; i1 <= end; i1++) {
         (*_mat)[i3][i2][i1] = 0;
       }
@@ -109,7 +109,7 @@ void rectFilter4D::zeroNonCoefs() {
     for (auto i3 = 0; i3 <= _f[2]; i3++) {
       for (auto i2 = 0; i2 <= _f[1]; i2++) {
         int end = _n[0];
-        if (f[1] == i2) end = _f[0] + 1;
+        if (_f[1] == i2) end = _f[0] + 1;
         for (auto i1 = 0; i1 <= end; i1++) {
           (*_mat)[i4][i3][i2][i1] = 0;
         }
