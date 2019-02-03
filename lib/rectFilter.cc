@@ -36,16 +36,12 @@ void rectFilter1D::initializePEF() {
 
 void rectFilter2D::zeroNonCoefs() {
   for (auto i2 = 0; i2 <= _f[1]; i2++) {
-    for (auto i1 = 0; i1 <= _f[0]; i1++) {
+    int end = _n[0];
+    if (f[1] == i2) end = _f[0] + 1;
+    for (auto i1 = 0; i1 <= end; i1++) {
       (*_mat)[i2][i1] = 0;
     }
   }
-}
-void rectFilter2D::initializePEF() {
-  zeroNonCoefs();
-  (*_mat)[_f[1]][_f[0]] = 1;
-  std::cerr << "SETT ING VALUE " << _f[0] << " " << _f[1]
-            << (*_mat)[_f[1]][_f[0]] << std::endl;
 }
 
 rectFilter2D::rectFilter2D(const std::vector<int>& box,
@@ -99,31 +95,27 @@ std::shared_ptr<rectFilter3D> rectFilter3D::cloneSpace() const {
 void rectFilter3D::zeroNonCoefs() {
   for (auto i3 = 0; i3 <= _f[2]; i3++) {
     for (auto i2 = 0; i2 <= _f[1]; i2++) {
-      for (auto i1 = 0; i1 <= _f[0]; i1++) {
+      int end = _n[0];
+      if (f[1] == i2) end = _f[0] + 1;
+      for (auto i1 = 0; i1 <= end; i1++) {
         (*_mat)[i3][i2][i1] = 0;
       }
     }
   }
-}
-void rectFilter3D::initializePEF() {
-  zero();
-  (*_mat)[_f[2]][_f[1]][_f[0]] = 1;
 }
 
 void rectFilter4D::zeroNonCoefs() {
   for (auto i4 = 0; i4 <= _f[3]; i4++) {
     for (auto i3 = 0; i3 <= _f[2]; i3++) {
       for (auto i2 = 0; i2 <= _f[1]; i2++) {
-        for (auto i1 = 0; i1 <= _f[0]; i1++) {
+        int end = _n[0];
+        if (f[1] == i2) end = _f[0] + 1;
+        for (auto i1 = 0; i1 <= end; i1++) {
           (*_mat)[i4][i3][i2][i1] = 0;
         }
       }
     }
   }
-}
-void rectFilter4D::initializePEF() {
-  zero();
-  (*_mat)[_f[3]][_f[2]][_f[1]][_f[0]] = 1;
 }
 
 rectFilter4D::rectFilter4D(const std::vector<int>& box,
