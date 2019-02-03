@@ -29,10 +29,6 @@ void rectFilter1D::zeroNonCoefs() {
     (*_mat)[i1] = 0;
   }
 }
-void rectFilter1D::initializePEF() {
-  zeroNonCoefs();
-  (*_mat)[_f[0]] = 1;
-}
 
 void rectFilter2D::zeroNonCoefs() {
   for (auto i2 = 0; i2 <= _f[1]; i2++) {
