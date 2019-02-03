@@ -18,7 +18,6 @@ class rectFilter1D : public SEP::float1DReg {
     (*_mat)[_f[0]] = 1;
   }
   void zeroNonCoefs();
-  void initializePEF();
   bool isPef() { return _pef; }
   void setBasics(const std::vector<int> &box, const std::vector<int> &f,
                  const bool pef) {
@@ -42,7 +41,6 @@ class rectFilter2D : public SEP::float2DReg {
   std::shared_ptr<rectFilter2D> clone() const;
   std::shared_ptr<rectFilter2D> cloneSpace() const;
   void zeroNonCoefs();
-  void initializePEF();
   void cleanFilter() {
     zeroNonCoefs();
     (*_mat)[_f[1]][_f[0]] = 1;
@@ -70,7 +68,6 @@ class rectFilter3D : public SEP::float3DReg {
   std::shared_ptr<rectFilter3D> clone() const;
   std::shared_ptr<rectFilter3D> cloneSpace() const;
   void zeroNonCoefs();
-  void initializePEF();
   void cleanFilter() {
     zeroNonCoefs();
     (*_mat)[_f[2]][_f[1]][_f[0]] = 1;
@@ -98,7 +95,6 @@ class rectFilter4D : public SEP::float4DReg {
   std::shared_ptr<rectFilter4D> clone() const;
   std::shared_ptr<rectFilter4D> cloneSpace() const;
   void zeroNonCoefs();
-  void initializePEF();
   void cleanFilter() {
     zeroNonCoefs();
     (*_mat)[_f[3]][_f[2]][_f[1]][_f[0]] = 1;
