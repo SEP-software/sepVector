@@ -397,7 +397,15 @@ PYBIND11_MODULE(pySepVector, clsVector) {
       .def(py::init<const std::vector<int> &, const std::vector<int> &,
                     const bool>(),
            "Initialize rectFilter2D")
+      .def("clone",
+           (std::shared_ptr<rectFilter2D>(rectFilter2D::*)() const) &
+               rectFilter2D::clone,
+           "Make a copy of the vector")
 
+      .def("cloneSpace",
+           (std::shared_ptr<rectFilter2D>(rectFilter2D::*)() const) &
+               rectFilter2D::cloneSpace,
+           "Make a copy of the vector space")
       .def_buffer([](rectFilter2D &m) -> py::buffer_info {
         return py::buffer_info(
             m.getVals(), sizeof(float), py::format_descriptor<float>::format(),
@@ -414,6 +422,15 @@ PYBIND11_MODULE(pySepVector, clsVector) {
       .def(py::init<const std::vector<int> &, const std::vector<int> &,
                     const bool>(),
            "Initialize rectFilter1D")
+      .def("clone",
+           (std::shared_ptr<rectFilter2D>(rectFilter2D::*)() const) &
+               rectFilter2D::clone,
+           "Make a copy of the vector")
+
+      .def("cloneSpace",
+           (std::shared_ptr<rectFilter2D>(rectFilter2D::*)() const) &
+               rectFilter2D::cloneSpace,
+           "Make a copy of the vector space")
       .def_buffer([](rectFilter1D &m) -> py::buffer_info {
         return py::buffer_info(m.getVals(), sizeof(float),
                                py::format_descriptor<float>::format(), 1,
