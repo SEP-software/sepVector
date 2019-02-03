@@ -44,6 +44,8 @@ void rectFilter2D::zeroNonCoefs() {
 void rectFilter2D::initializePEF() {
   zeroNonCoefs();
   (*_mat)[_f[1]][_f[0]] = 1;
+  std::cerr << "SETT ING VALUE " << _f[0] << " " << _f[1]
+            << (*_mat)[_f[1]][_f[0]] << std::endl;
 }
 
 rectFilter2D::rectFilter2D(const std::vector<int>& box,
