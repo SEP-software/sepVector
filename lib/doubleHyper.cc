@@ -286,6 +286,6 @@ bool doubleHyper::checkSame(const std::shared_ptr<doubleHyper> vec2) const {
     throw SEPException(e.getMessage());
   }
 
-  return b;
+  //return b;
   return true;
 }
