@@ -7,7 +7,50 @@
 #include <iostream>
 #include <random>
 using namespace SEP;
+class minMax {
+ public:
+  minMax() {
+    _min = 1e31;
+    _max = -1e31;
+  }
 
+  float _min, _max;
+};
+
+minMax floatHyper::minMax() const {
+  minMax val = tbb::parallel_reduce(
+      tbb::blocked_range<size_t>(0, getHyper()->getN123()), minMax(),
+      [&](const tbb::blocked_range<size_t> &r, minMax v) {
+        for (size_t i = r.begin(); i != r.end(); ++i) {
+          v._min = std::min(v._min, _vals[i]);
+          v._max = std::max(v._max, _vals[i]);
+        }
+        return v;
+      },
+      [](minMax a, minMax b) {
+        _minMax x;
+        x._min = std::min(a._min, b._min);
+        x._max = std::max(a._max, b._max);
+        return x;
+      });
+  return val;
+}
+
+double floatHyper::min() const {
+  float val = tbb::parallel_reduce(
+      tbb::blocked_range<size_t>(0, getHyper()->getN123()), 1e31,
+      [&](const tbb::blocked_range<size_t> &r, float v) {
+        for (size_t i = r.begin(); i != r.end(); ++i) {
+          v = std::min(v, _vals[i]);
+        }
+        return v;
+      },
+      [](float a, float b) {
+        if (a > b) return b;
+        return a;
+      });
+  return (double)val;
+}
 void floatHyper::add(const std::shared_ptr<floatHyper> vec2) {
   if (!checkSame(vec2)) throw(std::string("Vectors not of the same space"));
   std::shared_ptr<floatHyper> vec2H =
@@ -274,6 +317,7 @@ double floatHyper::min() const {
       });
   return (double)val;
 }
+
 void floatHyper::calcCheckSum() {
   uint32_t sum1 = 0, sum2 = 0;
   uint32_t *data = (uint32_t *)_vals;
