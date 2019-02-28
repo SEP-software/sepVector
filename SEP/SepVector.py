@@ -173,7 +173,7 @@ class floatVector(vector):
 
     def multiply(self, vec2):
         """self = vec2 * self"""
-        self.cppMode.multiply(vec2.cppMode)
+        self.cppMode.mult(vec2.cppMode)
 
     def norm(self, nrm=2):
         """Return the norm of a vector"""
@@ -230,7 +230,7 @@ class doubleVector(vector):
 
     def multiply(self, vec2):
         """self = vec2 * self"""
-        self.cppMode.multiply(vec2.cppMode)
+        self.cppMode.mult(vec2.cppMode)
 
     def norm(self, nrm=2):
         """Return the norm of a vector"""
