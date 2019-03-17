@@ -37,7 +37,7 @@ class doubleHyper : public Vector, public regSpace {
     return cent(iv, j);
   }
   double cent(const long long iv, const int j) const;
-  void clip(const double bclip, const double eclip);
+  void clip(const double bclip, const double eclip, bool outer = true);
   void calcCheckSum() override;
   void setCheckSum(const uint64_t x) { _checkSum = x; }
   bool isDifferent(std::shared_ptr<doubleHyper> vec2) {

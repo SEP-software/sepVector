@@ -101,12 +101,19 @@ float floatHyper::cent(const long long iv, const int js) const {
   // free(x);
   return m;
 }
-void floatHyper::clip(const float bclip, const float eclip) {
+void floatHyper::clip(const float bclip, const float eclip, bool outer) {
   if (spaceOnly()) throw(std::string("Vectors not allocated"));
   tbb::parallel_for(tbb::blocked_range<long long>(0, getHyper()->getN123()),
                     [&](const tbb::blocked_range<long long> &r) {
-                      for (long long i = r.begin(); i != r.end(); ++i)
-                        _vals[i] = std::min(eclip, std::max(bclip, _vals[i]));
+                      if (outer) {
+                        for (long long i = r.begin(); i != r.end(); ++i)
+                          _vals[i] = std::min(eclip, std::max(bclip, _vals[i]));
+                      } else {
+                        for (long long i = r.begin(); i != r.end(); ++i) {
+                          if (_vals[i] < eclip && _vals[i] > bclip)
+                            _vals[i] = 0;
+                        }
+                      }
                     });
   calcCheckSum();
 }
@@ -149,7 +156,7 @@ void floatHyper::random() {
 double floatHyper::norm(const int n) const {
   double dt = tbb::parallel_reduce(
       tbb::blocked_range<size_t>(0, getHyper()->getN123()), 0.,
-      [&](const tbb::blocked_range<size_t> &r, float v) {
+      [&](const tbb::blocked_range<size_t> &r, double v) {
         if (n == 1) {
           for (size_t i = r.begin(); i != r.end(); ++i) {
             v += (double)fabsf(_vals[i]);
@@ -182,7 +189,7 @@ double floatHyper::dot(const std::shared_ptr<floatHyper> vec2) const {
 
   double dot = tbb::parallel_reduce(
       tbb::blocked_range<size_t>(0, getHyper()->getN123()), 0.,
-      [&](const tbb::blocked_range<size_t> &r, float v) {
+      [&](const tbb::blocked_range<size_t> &r, double v) {
         for (size_t i = r.begin(); i != r.end(); ++i) {
           v += (double)_vals[i] * (double)vec2H->_vals[i];
         }

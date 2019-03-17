@@ -111,12 +111,19 @@ double doubleHyper::cent(const long long iv, const int js) const {
   delete[] x;
   return vv;
 }
-void doubleHyper::clip(const double bclip, const double eclip) {
+void doubleHyper::clip(const double bclip, const double eclip, bool outer) {
   if (spaceOnly()) throw(std::string("Vectors not allocated"));
   tbb::parallel_for(tbb::blocked_range<long long>(0, getHyper()->getN123()),
                     [&](const tbb::blocked_range<long long> &r) {
-                      for (long long i = r.begin(); i != r.end(); ++i)
-                        _vals[i] = std::min(eclip, std::max(bclip, _vals[i]));
+                      if (outer) {
+                        for (long long i = r.begin(); i != r.end(); ++i)
+                          _vals[i] = std::min(eclip, std::max(bclip, _vals[i]));
+                      } else {
+                        for (long long i = r.begin(); i != r.end(); ++i) {
+                          if (_vals[i] < eclip && _vals[i] > bclip)
+                            _vals[i] = 0;
+                        }
+                      }
                     });
 }
 void doubleHyper::scale(double sc) {
@@ -286,6 +293,6 @@ bool doubleHyper::checkSame(const std::shared_ptr<doubleHyper> vec2) const {
     throw SEPException(e.getMessage());
   }
 
-  //return b;
+  // return b;
   return true;
 }
