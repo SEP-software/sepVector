@@ -58,7 +58,6 @@ if(NOT TARGET hypercube)
                           external/hypercube
                   WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
   add_subdirectory(external/hypercube)
-  include_directories(${CMAKE_CURRENT_SOURCE_DIR}/external/hypercube/lib)
 endif(NOT TARGET hypercube)
 
 add_subdirectory(external/pySolver/GenericSolver)

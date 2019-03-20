@@ -13,7 +13,6 @@ set(SOURCES
     floatHyper.cc
     float4DReg.cc
     regVector.cc
-    regSpace.cc
     rectFilter.cc
     float5DReg.cc
     float6DReg.cc)
@@ -123,7 +122,5 @@ target_include_directories(
          $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>)
 
 target_link_libraries(sepVector hypercube ${TBB_LIBRARIES})
-if(NOT SUPPORT_LIBRARIES_BUILD)
   install(FILES ${INCLUDES} DESTINATION include)
   install(TARGETS sepVector DESTINATION lib EXPORT sepVectorTargets)
-endif(NOT SUPPORT_LIBRARIES_BUILD)
