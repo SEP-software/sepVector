@@ -1,5 +1,6 @@
 cmake_minimum_required(VERSION 3.5 FATAL_ERROR)
 
+
 if(NOT SUBPACKAGE)
   option(BUILD_PYTHON "Build python interfaces" ON)
   option(INSTALL_CMAKE_ENV "Install cmake build environment" ON)
@@ -29,6 +30,15 @@ if(BUILD_SHORT)
   set(USE_SHORT true)
 endif(BUILD_SHORT)
 set(SUBPACKAGE true)
+
+
+if(POLICY CMP0028)
+   cmake_policy(SET CMP0028 NEW)
+endif()
+
+if(POLICY CMP0042)
+   cmake_policy(SET CMP0042 NEW)
+endif()
 
 project(sepVector LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 11)
@@ -87,6 +97,11 @@ add_subdirectory(lib)
 if(BUILD_PYTHON)
   add_subdirectory(SEP)
 endif(BUILD_PYTHON)
+include(CMakePackageConfigHelpers)
+configure_package_config_file(sepVectorConfig.cmake.in
+                              "${CMAKE_CURRENT_BINARY_DIR}/sepVectorConfig.cmake"
+                              INSTALL_DESTINATION
+                              cmake/SEP/IO)
 
 install(EXPORT sepVectorTargets
         FILE sepVectorTargets.cmake
