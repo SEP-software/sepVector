@@ -68,7 +68,7 @@ unsigned char byteHyper::cent(const long long iv, const int js) const {
   double w = (double)(iv) / (double)n;
   long long q =
       std::max((long long)0, std::min((long long)(n - 1), (long long)(w * n)));
-  register unsigned char *i, *j, ak;
+  unsigned char *i, *j, ak;
   unsigned char *low, *hi, buf, *k;
   for (low = x, hi = x + n - 1, k = x + q; low < hi;) {
     ak = *k;
