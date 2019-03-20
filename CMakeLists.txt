@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.5 FATAL_ERROR)
 
 if(NOT SUBPACKAGE)
   option(BUILD_PYTHON "Build python interfaces" ON)
-option(INSTALL_CMAKE_ENV "Install cmake build environment" ON)
+  option(INSTALL_CMAKE_ENV "Install cmake build environment" ON)
 endif(NOT SUBPACKAGE)
 option(BUILD_DOUBLE "Build double support" ON)
 option(BUILD_INT "Build int support" ON)
@@ -11,25 +11,22 @@ option(BUILD_BYTE "Build byte support" ON)
 option(BUILD_SHORT "Build short support" ON)
 
 if(BUILD_DOUBLE)
-    set(USE_DOUBLE true)
+  set(USE_DOUBLE true)
 endif(BUILD_DOUBLE)
 
-
 if(BUILD_COMPLEX)
-    set(USE_COMPLEX true)
+  set(USE_COMPLEX true)
 endif(BUILD_COMPLEX)
 
-
 if(BUILD_INT)
-    set(USE_INT true)
+  set(USE_INT true)
 endif(BUILD_INT)
 
-
 if(BUILD_BYTE)
-    set(USE_BYTE true)
+  set(USE_BYTE true)
 endif(BUILD_BYTE)
 if(BUILD_SHORT)
-    set(USE_SHORT true)
+  set(USE_SHORT true)
 endif(BUILD_SHORT)
 set(SUBPACKAGE true)
 
@@ -56,7 +53,6 @@ set(sepVector_DIRNAME_include "include")
 
 include(${CMAKE_ROOT}/Modules/ExternalProject.cmake)
 
-
 if(NOT TARGET hypercube)
   execute_process(COMMAND git submodule update --init --recursive --
                           external/hypercube
@@ -65,43 +61,38 @@ if(NOT TARGET hypercube)
   include_directories(${CMAKE_CURRENT_SOURCE_DIR}/external/hypercube/lib)
 endif(NOT TARGET hypercube)
 
-
 add_subdirectory(external/pySolver/GenericSolver)
 
+# configure_file("${PROJECT_SOURCE_DIR}/sepVectorConfig.h.in"
+# "${PROJECT_BINARY_DIR}/sepVectorConfig.h")
 
-configure_file("${PROJECT_SOURCE_DIR}/sepVectorConfig.h.in"
-               "${PROJECT_BINARY_DIR}/sepVectorConfig.h")
+# include_directories("${PROJECT_BINARY_DIR}")
 
-include_directories("${PROJECT_BINARY_DIR}")
+# set(sepVector_DIRNAME_lib "lib") set(sepVector_DIRNAME_include "include")
+# set(sepVector_DIRNAME_cmake "lib/cmake") include(CMakePackageConfigHelpers)
 
-set(sepVector_DIRNAME_lib "lib")
-set(sepVector_DIRNAME_include "include")
-set(sepVector_DIRNAME_cmake "lib/cmake")
-include(CMakePackageConfigHelpers)
+# if(NOT SUPPORT_LIBRARIES_BUILD) configure_package_config_file(
+# "${CMAKE_CURRENT_SOURCE_DIR}/sepVectorConfig.cmake.in"
+# "${CMAKE_CURRENT_BINARY_DIR}/sepVectorConfig.cmake" INSTALL_DESTINATION
+# ${sepVector_DIRNAME_cmake} PATH_VARS sepVector_DIRNAME_include
+# sepVector_DIRNAME_lib)
 
-if(NOT SUPPORT_LIBRARIES_BUILD)
-configure_package_config_file(
-  "${CMAKE_CURRENT_SOURCE_DIR}/sepVectorConfig.cmake.in"
-  "${CMAKE_CURRENT_BINARY_DIR}/sepVectorConfig.cmake"
-  INSTALL_DESTINATION
-  ${sepVector_DIRNAME_cmake}
-  PATH_VARS
-  sepVector_DIRNAME_include
-  sepVector_DIRNAME_lib)
+# install(FILES ${CMAKE_CURRENT_BINARY_DIR}/sepVectorConfig.cmake DESTINATION
+# lib/cmake)
 
-install(FILES ${CMAKE_CURRENT_BINARY_DIR}/sepVectorConfig.cmake
-        DESTINATION lib/cmake)
-
-if(NOT INSTALL_CMAKE_ENV)
-install(EXPORT sepVectorExports DESTINATION lib/cmake)
-endif(NOT INSTALL_CMAKE_ENV)
-add_subdirectory(env-modules)
-endif(NOT SUPPORT_LIBRARIES_BUILD)
+# if(NOT INSTALL_CMAKE_ENV) install(EXPORT sepVectorExports DESTINATION
+# lib/cmake) endif(NOT INSTALL_CMAKE_ENV) add_subdirectory(env-modules)
+# endif(NOT SUPPORT_LIBRARIES_BUILD)
 
 add_subdirectory(lib)
 if(BUILD_PYTHON)
   add_subdirectory(SEP)
 endif(BUILD_PYTHON)
+
+install(EXPORT sepVectorTargets
+        FILE SEPlibTargets.cmake
+        NAMESPACE SEP::IO
+        DESTINATION cmake/sep/io)
 
 include(InstallRequiredSystemLibraries)
 set(CPACK_RESOURCE_FILE_LICENSE "${PROJECT_SOURCE_DIR}/LICENSE")

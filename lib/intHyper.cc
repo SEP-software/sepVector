@@ -54,7 +54,7 @@ int intHyper::cent(const long long iv, const int js) const {
   for (auto i = 0; i < n; i++) {
     x[i] = in[i * js];
   }
-  register int *i, *j, ak;
+  int *i, *j, ak;
   int *low, *hi, buf, *k;
   for (low = x, hi = x + n - 1, k = x + q; low < hi;) {
     ak = *k;

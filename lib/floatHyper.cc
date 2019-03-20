@@ -78,7 +78,7 @@ float floatHyper::cent(const long long iv, const int js) const {
   // getHyper()->getN123()
   //        << std::endl;
 
-  register float *i, *j, ak;
+  float *i, *j, ak;
   float *low, *hi, buf, *k;
   for (low = x, hi = x + n - 1, k = x + q; low < hi;) {
     ak = *k;
