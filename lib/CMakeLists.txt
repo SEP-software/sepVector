@@ -119,7 +119,7 @@ add_library(sepVector ${SOURCES} ${INCLUDES})
 target_include_directories(
   sepVector
   PUBLIC $<INSTALL_INTERFACE:include>
-         $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}../>
+         $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/../>
          $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>)
 
 target_link_libraries(sepVector hypercube ${TBB_LIBRARIES})

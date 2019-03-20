@@ -63,8 +63,8 @@ endif(NOT TARGET hypercube)
 
 add_subdirectory(external/pySolver/GenericSolver)
 
-# configure_file("${PROJECT_SOURCE_DIR}/sepVectorConfig.h.in"
-# "${PROJECT_BINARY_DIR}/sepVectorConfig.h")
+ configure_file("${PROJECT_SOURCE_DIR}/sepVectorConfig.h.in"
+"${PROJECT_BINARY_DIR}/sepVectorConfig.h")
 
 # include_directories("${PROJECT_BINARY_DIR}")
 
@@ -90,7 +90,7 @@ if(BUILD_PYTHON)
 endif(BUILD_PYTHON)
 
 install(EXPORT sepVectorTargets
-        FILE SEPlibTargets.cmake
+        FILE sepVectorTargets.cmake
         NAMESPACE SEP::IO
         DESTINATION cmake/sep/io)
 
