@@ -6,9 +6,22 @@
 
 typedef boost::multi_array<unsigned char, 4> byte4D;
 namespace SEP {
+/*!
+A regular sampled 4-D function with unsigned char storage
+*/
 class byte4DReg : public byteHyper {
  public:
+  /*!
+   Create a 4-D unsigned char vector from a hypercube
+   \param Hypercube describing RSF
+   */
   byte4DReg(std::shared_ptr<SEP::hypercube> hyper) { initNoData(hyper); }
+  /*!
+  Create a 4-D unsigned char vector from just lengths
+       \param n1,n2,n3,n4 Dimensions of the hypercube
+
+  */
+
   byte4DReg(const int n1, const int n2, const int n3, const int n4) {
     std::vector<SEP::axis> a;
     a.push_back(SEP::axis(n1));
@@ -18,6 +31,12 @@ class byte4DReg : public byteHyper {
     std::shared_ptr<SEP::hypercube> hyp(new SEP::hypercube(a));
     initNoData(hyp);
   }
+  /*!
+     Create a 5-D unsigned char vector from axes
+          \param a1,a2,a3,a4 Axes if the hypercube
+
+     */
+
   byte4DReg(const SEP::axis &a1, const SEP::axis &a2, const SEP::axis &a3,
             const SEP::axis &a4) {
     std::vector<SEP::axis> a;
@@ -28,9 +47,22 @@ class byte4DReg : public byteHyper {
     std::shared_ptr<SEP::hypercube> hyp(new SEP::hypercube(a));
     initNoData(hyp);
   }
+  /*!
+ Create a 4-D unsigned char vector from a hypercube
+        \param Hypercube describing RSF
+        \param vals Vaules for the vector
+
+ */
   byte4DReg(std::shared_ptr<SEP::hypercube> hyper, const byte4D &vals) {
     initData(hyper, vals);
   }
+  /*!
+    Create a 4-D unsigned char vector from just lengths
+         \param n1,n2,n3,n4 Dimensions of the hypercube
+         \param vals Vaules for the vector
+
+    */
+
   byte4DReg(const int n1, const int n2, const int n3, const int n4,
             byte4D &vals) {
     std::vector<SEP::axis> a;
@@ -41,6 +73,11 @@ class byte4DReg : public byteHyper {
     std::shared_ptr<SEP::hypercube> hyp(new SEP::hypercube(a));
     initData(hyp, vals);
   }
+  /*!
+   Create a 6-D unsigned char vector from axes
+        \param a1,a2,a3,a4 Axes if the hypercube
+        \param vals Vaules for the vector
+   */
   byte4DReg(const SEP::axis &a1, const SEP::axis &a2, const SEP::axis &a3,
             const SEP::axis &a4, byte4D &vals) {
     std::vector<SEP::axis> a;
@@ -51,6 +88,7 @@ class byte4DReg : public byteHyper {
     std::shared_ptr<SEP::hypercube> hyp(new SEP::hypercube(a));
     initData(hyp, vals);
   }
+
   void allocate() {
     std::vector<int> ns = getHyper()->getNs();
     _mat.reset(new byte4D(boost::extents[ns[3]][ns[2]][ns[1]][ns[0]]));

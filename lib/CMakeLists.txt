@@ -71,7 +71,6 @@ endif(BUILD_SHORT)
 
 set(INCLUDES
     Vector.h
-    superVec.h
     regSpace.h
     rectFilter.h
     float1DReg.h

@@ -5,19 +5,38 @@
 #include <sstream>
 #include "regSpace.h"
 namespace SEP {
-
+/*!
+  A regular sampled function that stores unsigned char values. Storage is
+  actually done in inherited classes (1-D,2-D,3-D)
+*/
 class byteHyper : public regSpace {
  public:
+  /*!
+Initializer for byteHyper class. Only used by inherited class
+*/
   byteHyper() { ; }
+  /*!
+Initializer for byteHyper class. Inititalize form a hypercube
+  \param hyper Hypercube describing the RSF
+*/
 
-  byteHyper(std::shared_ptr<SEP::hypercube> h) { setHyper(h->clone()); }
-
+  byteHyper(std::shared_ptr<SEP::hypercube> hyper) { setHyper(h->clone()); }
+  /*!
+     Return whether or not this just containing space information
+  */
   bool getSpaceOnly() const { return _spaceOnly; }
-
+  //! Fill vector with random number
   virtual void random();
+  /*!  Set that this is only vector space with no storage
+   */
   virtual void setSpace() { _spaceOnly = true; }
+  /*!  Set that this has storage along with the vector sapce
+   */
   virtual void setNotSpace() { _spaceOnly = false; }
-  inline bool spaceOnly() const { return _spaceOnly; }
+  /*!
+   Return whether or not this just containing space information
+*/
+  inline bool getSpaceOnly() const { return _spaceOnly; }
   unsigned char cent(const float pct, const int j) const {
     long long iv = std::max(
         (long long)0, std::min((long long)(getHyper()->getN123() * pct / 100.),
@@ -26,39 +45,93 @@ class byteHyper : public regSpace {
   }
   unsigned char cent(const long long iv, const int j) const;
   void clip(const unsigned char bclip, const unsigned char eclip);
+  /*!
+   Set a pointer to the storage for the dataset.
+   Storage is handled by child classes.
+
+   \param ptr  Pointer to allocated memory
+*/
   void setData(unsigned char *ptr) {
     _vals = ptr;
     setNotSpace();
     setMemPtr((void *)ptr, sizeof(unsigned char));
   }
+  //! Calculate checksum for data
+
   void calcCheckSum();
+  /*!  Store checksum va;iue
+
+\param val Value of checksum to store
+*/
   void setCheckSum(const uint64_t x) { _checkSum = x; }
+  /*!
+   Whether or not the current vector exists in a different space
+
+   \param vec2 Vector space to compare to
+*/
   bool isDifferent(std::shared_ptr<byteHyper> vec2) {
     calcCheckSum();
     if (vec2->getCheckSum() != getCheckSum()) return true;
     return false;
   }
+  /*!
+     Return the norm of the dataset.
+       1 - sum(|a[]|)
+       2 - 1/2(a[]*a[])
 
+     \param nrm Norm to calculate
+  */
   long long norm(const int n) const;
-  void zero() { set(0); }
-  void set(const unsigned char val);
+  /*!
+Set the valule of vector to 0
 
+*/
+  void zero() { set(0); }
+  /*!
+   Set the valule of vector to a given value
+
+   \param val Value to set vector to
+ */
+  void set(const unsigned char val);
+  /*!
+      Return the pointer to the memory for the vector
+  */
   unsigned char *getVals() { return _vals; }
+  /*!
+  Return the pointer to the memory for the vector with const tag
+*/
   const unsigned char *getCVals() const { return _vals; }
+  //! Return the absolute maximum value of vector
+
   virtual int absMax() const;
+  //! Return the  minimum value of vector
+
   int min() const;
+  //! Return the  maximum value of vector
+
   int max() const;
+  /*!  Return  information about vector (debugging)
+
+\param lev  Level of debugging information to provide
+\param str  Stream to add debugging info to
+*/
   virtual void infoStream(const int lev, std::stringstream &x);
+  /*!  Check to see if current vector belongs to the same space as vec2
+
+   \param vec2 Vector to check the space with
+   */
 
   virtual bool checkSame(const std::shared_ptr<SEP::byteHyper> vec2) const;
+  ///! Return checksum value
+
   uint64_t getCheckSum() { return _checkSum; }
 
-  bool _spaceOnly;
-  std::string _vecType;
+  bool _spaceOnly;       ///< Whether or not vector is only vector space
+  std::string _vecType;  ///< Name for vector type
 
  private:
-  unsigned char *_vals;
-  uint64_t _checkSum;
+  unsigned char *_vals;  ///< Storage for vector
+  uint64_t _checkSum;    ///< Checksum value
 };
 
 }  // namespace SEP

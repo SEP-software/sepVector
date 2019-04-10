@@ -6,9 +6,23 @@
 
 typedef boost::multi_array<unsigned char, 6> byte6D;
 namespace SEP {
+/*!
+A regular sampled 6-D function with unsigned char storage
+*/
 class byte6DReg : public byteHyper {
  public:
+  /*!
+     Create a 6-D unsigned char vector from a hypercube
+          \param Hypercube describing RSF
+
+     */
   byte6DReg(std::shared_ptr<SEP::hypercube> hyper) { initNoData(hyper); }
+  /*!
+   Create a 6-D unsigned char vector from just lengths
+        \param n1,n2,n3,n4,n5,n6 Dimensions of the hypercube
+
+   */
+
   byte6DReg(const int n1, const int n2, const int n3, const int n4,
             const int n5, const int n6) {
     std::vector<SEP::axis> a;
@@ -22,6 +36,11 @@ class byte6DReg : public byteHyper {
     std::shared_ptr<SEP::hypercube> hyp(new SEP::hypercube(a));
     initNoData(hyp);
   }
+  /*!
+ Create a 6-D unsigned char vector from axes
+      \param a1,a2,a3,a4,a5,a6 Axes if the hypercube
+
+ */
   byte6DReg(const SEP::axis &a1, const SEP::axis &a2, const SEP::axis &a3,
             const SEP::axis &a4, const SEP::axis &a5, const SEP::axis &a6) {
     std::vector<SEP::axis> a;
@@ -35,9 +54,21 @@ class byte6DReg : public byteHyper {
     std::shared_ptr<SEP::hypercube> hyp(new SEP::hypercube(a));
     initNoData(hyp);
   }
+  /*!
+   Create a 6-D unsigned char vector from a hypercube
+        \param Hypercube describing RSF
+        \param vals Values to fill vector with
+
+   */
   byte6DReg(std::shared_ptr<SEP::hypercube> hyper, const byte6D &vals) {
     initData(hyper, vals);
   }
+  /*!
+ Create a 6-D unsigned char vector from just lengths
+      \param n1,n2,n3,n4,n5,n6 Dimensions of the hypercube
+      \param vals Values to fill vector with
+
+ */
   byte6DReg(const int n1, const int n2, const int n3, const int n4,
             const int n5, const int n6, byte6D &vals) {
     std::vector<SEP::axis> a;
@@ -51,6 +82,11 @@ class byte6DReg : public byteHyper {
     std::shared_ptr<SEP::hypercube> hyp(new SEP::hypercube(a));
     initData(hyp, vals);
   }
+  /*!
+   Create a 6-D unsigned char vector from axes
+        \param a1,a2,a3,a4,a5,a6 Axes if the hypercube
+        \param vals Values to fill vector with
+   */
   byte6DReg(const SEP::axis &a1, const SEP::axis &a2, const SEP::axis &a3,
             const SEP::axis &a4, const SEP::axis &a5, const SEP::axis &a6,
             byte6D &vals) {
@@ -65,6 +101,9 @@ class byte6DReg : public byteHyper {
     std::shared_ptr<SEP::hypercube> hyp(new SEP::hypercube(a));
     initData(hyp, vals);
   }
+  /*!
+     Allocate data for vector
+     */
   void allocate() {
     std::vector<int> ns = getHyper()->getNs();
     _mat.reset(

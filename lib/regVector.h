@@ -34,16 +34,39 @@
 #include "int5DReg.h"
 #include "int6DReg.h"
 namespace SEP {
+/*!
+   Return a vector of specifc type based on dataType and hypercube describing
+   the sapce
 
+   \param hyper Hypercube describing the space
+   \param typ  Datatype (float,complex,int,..)
+   \param g1   Maximum dimensions based on last axis greater 1 length
+  */
 std::shared_ptr<regSpace> vecFromHyper(const std::shared_ptr<hypercube> hyper,
                                        const dataType typ,
                                        const bool g1 = true);
+/*!
+   Return a vector that is potentially smaller than the hypercube
+    \param hyper Hypercube describing larger vector space
+    \param typ Datatype (float, complex, int, ...)
+    \param ndim Number of dimensions for vector
+    */
 std::shared_ptr<regSpace> subCubeFromHyper(
     const std::shared_ptr<hypercube> hyper, const dataType typ,
     const int &ndim);
+/*!
+   Return a subset of the larger vector
+    \param hyper Hypercube describing larger vector space
+    \param nw,fw,jw Windowing parameters
+    \param typ Datatype (float, complex, int, ...)
+    */
 std::shared_ptr<regSpace> windowFromHyper(
     const std::shared_ptr<hypercube> hyper, const std::vector<int> &nw,
     const std::vector<int> &fw, const std::vector<int> &jw, const dataType typ);
+/*!
+   Clone a regular space return child class
+    \param storage Space to clone
+    */
 std::shared_ptr<regSpace> cloneRegSpace(std::shared_ptr<regSpace> storage);
 }  // namespace SEP
 #endif

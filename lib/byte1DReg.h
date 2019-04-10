@@ -12,28 +12,64 @@
 
 typedef boost::multi_array<unsigned char, 1> byte1D;
 namespace SEP {
+/*!
+A regular sampled 1-D function with unsigned char storage
+*/
 class byte1DReg : public byteHyper {
  public:
-  byte1DReg() { ; }
+  /*!
+   Create a 1-D unsigned char vector from a hypercube
+        \param Hypercube describing RSF
+
+   */
   byte1DReg(std::shared_ptr<SEP::hypercube> hyper) { initNoData(hyper); }
+  /*!
+ Create a 1-D unsigned char vector from just lengths
+      \param n  Dimensions of the hypercube
+
+ */
+
   byte1DReg(const int n) {
     std::vector<SEP::axis> a(1, SEP::axis(n));
     std::shared_ptr<SEP::hypercube> hyp(new SEP::hypercube(a));
     initNoData(hyp);
   }
+  /*!
+   Create a 1-D unsigned char vector from axes
+        \param a1 Axes of the hypercube
+
+   */
   byte1DReg(const SEP::axis &a) {
     std::vector<SEP::axis> as(1, a);
     std::shared_ptr<SEP::hypercube> hyp(new SEP::hypercube(as));
     initNoData(hyp);
   }
+  /*!
+   Create a 1-D unsigned char vector from just lengths
+        \param n  Dimensions of the hypercube
+       \param vals Values to fill vector with
+
+   */
   byte1DReg(std::shared_ptr<SEP::hypercube> hyper, const byte1D &vals) {
     initData(hyper, vals);
   }
+  /*!
+Create a 1-D unsigned char vector from just lengths
+    \param n  Dimensions of the hypercube
+   \param vals Values to fill vector with
+
+*/
   byte1DReg(const int n, byte1D &vals) {
     std::vector<SEP::axis> a(1, SEP::axis(n));
     std::shared_ptr<SEP::hypercube> hyp(new SEP::hypercube(a));
     initData(hyp, vals);
   }
+  /*!
+  Create a 1-D unsigned char vector from axes
+       \param a1 Axes of the hypercube
+      \param vals Values to fill vector with
+
+  */
   byte1DReg(const SEP::axis &a, const byte1D &vals) {
     std::vector<SEP::axis> as(1, a);
     std::shared_ptr<SEP::hypercube> hyp(new SEP::hypercube(as));

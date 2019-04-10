@@ -4,6 +4,9 @@ cmake_minimum_required(VERSION 3.5 FATAL_ERROR)
 if(NOT SUBPACKAGE)
   option(BUILD_PYTHON "Build python interfaces" ON)
   option(INSTALL_CMAKE_ENV "Install cmake build environment" ON)
+  option(BUILD_DOC "Build documentation" ON)
+else(NOT SUBPACKAGE)
+option(BUILD_DOC "Build documentation" OFF)
 endif(NOT SUBPACKAGE)
 option(BUILD_DOUBLE "Build double support" ON)
 option(BUILD_INT "Build int support" ON)
@@ -75,23 +78,27 @@ add_subdirectory(external/pySolver/GenericSolver)
  configure_file("${PROJECT_SOURCE_DIR}/sepVectorConfig.h.in"
 "${PROJECT_BINARY_DIR}/sepVectorConfig.h")
 
-# include_directories("${PROJECT_BINARY_DIR}")
+# check if Doxygen is installed
+find_package(Doxygen)
+if (DOXYGEN_FOUND)
+    # set input and output files
+    set(DOXYGEN_IN ${CMAKE_CURRENT_SOURCE_DIR}/docs/Doxyfile.in)
+    set(DOXYGEN_OUT ${CMAKE_CURRENT_BINARY_DIR}/docs/Doxyfile)
 
-# set(sepVector_DIRNAME_lib "lib") set(sepVector_DIRNAME_include "include")
-# set(sepVector_DIRNAME_cmake "lib/cmake") include(CMakePackageConfigHelpers)
+    # request to configure the file
+    configure_file(${DOXYGEN_IN} ${DOXYGEN_OUT} @ONLY)
+    message("Doxygen build started")
 
-# if(NOT SUPPORT_LIBRARIES_BUILD) configure_package_config_file(
-# "${CMAKE_CURRENT_SOURCE_DIR}/sepVectorConfig.cmake.in"
-# "${CMAKE_CURRENT_BINARY_DIR}/sepVectorConfig.cmake" INSTALL_DESTINATION
-# ${sepVector_DIRNAME_cmake} PATH_VARS sepVector_DIRNAME_include
-# sepVector_DIRNAME_lib)
+    # note the option ALL which allows to build the docs together with the application
+    add_custom_target( doc_doxygen ALL
+        COMMAND ${DOXYGEN_EXECUTABLE} ${DOXYGEN_OUT}
+        WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+        COMMENT "Generating API documentation with Doxygen"
+        VERBATIM )
+else (DOXYGEN_FOUND)
+  message("Doxygen need to be installed to generate the doxygen documentation")
+endif (DOXYGEN_FOUND)
 
-# install(FILES ${CMAKE_CURRENT_BINARY_DIR}/sepVectorConfig.cmake DESTINATION
-# lib/cmake)
-
-# if(NOT INSTALL_CMAKE_ENV) install(EXPORT sepVectorExports DESTINATION
-# lib/cmake) endif(NOT INSTALL_CMAKE_ENV) add_subdirectory(env-modules)
-# endif(NOT SUPPORT_LIBRARIES_BUILD)
 
 add_subdirectory(lib)
 if(BUILD_PYTHON)
