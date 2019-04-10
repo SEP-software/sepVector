@@ -9,7 +9,7 @@
 using namespace SEP;
 
 void byteHyper::random() {
-  if (spaceOnly()) throw(std::string("Vectors not allocated"));
+  if (getSpaceOnly()) throw(std::string("Vectors not allocated"));
 
   tbb::parallel_for(tbb::blocked_range<long long>(0, getHyper()->getN123()),
                     [&](const tbb::blocked_range<long long> &r) {
@@ -30,7 +30,7 @@ void byteHyper::set(const unsigned char val) {
 
 void byteHyper::infoStream(const int lev, std::stringstream &x) {
   getHyper()->infoStream(x);
-  if (spaceOnly())
+  if (getSpaceOnly())
     x << "Only space\n";
   else {
     x << "Allocated\n";
@@ -91,7 +91,7 @@ unsigned char byteHyper::cent(const long long iv, const int js) const {
   return vv;
 }
 void byteHyper::clip(const unsigned char bclip, const unsigned char eclip) {
-  if (spaceOnly()) throw(std::string("Vectors not allocated"));
+  if (getSpaceOnly()) throw(std::string("Vectors not allocated"));
   tbb::parallel_for(tbb::blocked_range<long long>(0, getHyper()->getN123()),
                     [&](const tbb::blocked_range<long long> &r) {
                       for (long long i = r.begin(); i != r.end(); ++i)

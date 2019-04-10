@@ -38,7 +38,7 @@ void complexHyper::mult(const std::shared_ptr<complexHyper> vec2) {
 }
 
 void complexHyper::random() {
-  if (spaceOnly()) throw(std::string("Vectors not allocated"));
+  if (getSpaceOnly()) throw(std::string("Vectors not allocated"));
   for (long long ii = 0; ii < getHyper()->getN123(); ii++)
     _vals[ii] = {(float)((double)rand() / (RAND_MAX)-.5),
                  (float)((double)rand() / (RAND_MAX)-.5)};
@@ -52,7 +52,7 @@ void complexHyper::set(const std::complex<float> val) {
 
 void complexHyper::infoStream(const int lev, std::stringstream &x) {
   getHyper()->infoStream(x);
-  if (spaceOnly())
+  if (getSpaceOnly())
     x << "Only space\n";
   else {
     x << "Allocated\n";
