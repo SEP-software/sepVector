@@ -102,7 +102,7 @@ class Vector {
 
   \param val Value of checksum to store
   */
-  void setCheckSum(const uint64_t val) { _checkSum = x; }
+  void setCheckSum(const uint64_t val) { _checkSum = val; }
   ///! Return checksum value
   uint64_t getCheckSum() { return _checkSum; }
   ///! Return whether this vector only represents space

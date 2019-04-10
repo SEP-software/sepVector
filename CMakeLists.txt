@@ -14,6 +14,9 @@ option(BUILD_COMPLEX "Build complex support" ON)
 option(BUILD_BYTE "Build byte support" ON)
 option(BUILD_SHORT "Build short support" ON)
 
+
+set(BUILD_DOC OFF)
+
 if(BUILD_DOUBLE)
   set(USE_DOUBLE true)
 endif(BUILD_DOUBLE)

@@ -77,7 +77,7 @@ int intHyper::cent(const long long iv, const int js) const {
   return vv;
 }
 void intHyper::clip(const int bclip, const int eclip) {
-  if (spaceOnly()) throw(std::string("Vectors not allocated"));
+  if (getSpaceOnly()) throw(std::string("Vectors not allocated"));
   tbb::parallel_for(tbb::blocked_range<long long>(0, getHyper()->getN123()),
                     [&](const tbb::blocked_range<long long> &r) {
                       for (long long i = r.begin(); i != r.end(); ++i)
@@ -85,7 +85,7 @@ void intHyper::clip(const int bclip, const int eclip) {
                     });
 }
 void intHyper::signum() {
-  if (spaceOnly()) throw(std::string("Vector not allocated"));
+  if (getSpaceOnly()) throw(std::string("Vector not allocated"));
 
   tbb::parallel_for(tbb::blocked_range<long long>(0, getHyper()->getN123()),
                     [&](const tbb::blocked_range<long long> &r) {
@@ -102,7 +102,7 @@ void intHyper::signum() {
   calcCheckSum();
 }
 void intHyper::scale(double sc) {
-  if (spaceOnly()) throw(std::string("Vectors not allocated"));
+  if (getSpaceOnly()) throw(std::string("Vectors not allocated"));
   tbb::parallel_for(tbb::blocked_range<long long>(0, getHyper()->getN123()),
                     [&](const tbb::blocked_range<long long> &r) {
                       for (long long i = r.begin(); i != r.end(); ++i)
@@ -111,7 +111,7 @@ void intHyper::scale(double sc) {
   calcCheckSum();
 }
 void intHyper::random() {
-  if (spaceOnly()) throw(std::string("Vector not allocated"));
+  if (getSpaceOnly()) throw(std::string("Vector not allocated"));
 
   tbb::parallel_for(tbb::blocked_range<long long>(0, getHyper()->getN123()),
                     [&](const tbb::blocked_range<long long> &r) {
@@ -180,7 +180,7 @@ void intHyper::createMask(const int zero, const int err) {
 
 void intHyper::infoStream(const int lev, std::stringstream &x) {
   getHyper()->infoStream(x);
-  if (spaceOnly())
+  if (getSpaceOnly())
     x << "Only space\n";
   else {
     x << "Allocated\n";

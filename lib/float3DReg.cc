@@ -1,4 +1,5 @@
 #include <float3DReg.h>
+#include <iostream>
 using namespace SEP;
 
 std::shared_ptr<float3DReg> float3DReg::clone() const {

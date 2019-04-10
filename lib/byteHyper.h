@@ -20,7 +20,7 @@ Initializer for byteHyper class. Inititalize form a hypercube
   \param hyper Hypercube describing the RSF
 */
 
-  byteHyper(std::shared_ptr<SEP::hypercube> hyper) { setHyper(h->clone()); }
+  byteHyper(std::shared_ptr<SEP::hypercube> hyper) { setHyper(hyper->clone()); }
   /*!
      Return whether or not this just containing space information
   */
