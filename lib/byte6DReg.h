@@ -112,18 +112,35 @@ class byte6DReg : public byteHyper {
     setData(_mat->data());
     ;
   }
+  /*!
+  Make a copy of the vector
+  */
   std::shared_ptr<byte6DReg> clone() const;
+  /*!
+  Make a copy of the vector space
+  */
   std::shared_ptr<byte6DReg> cloneSpace() const;
+  /*!
+   Deallocate storage for vector, turn into vector space
+    */
   virtual void cleanMemory() {
     _mat = 0;
     setSpace();
   }
-  std::shared_ptr<byte6D> _mat;
+  std::shared_ptr<byte6D> _mat;  ///< Storage for vector
+                                 /*!
+                                   Return a subset of the vector
+                                   \param nw,fw,jw Windowing parameters
+                                   */
   std::shared_ptr<byte6DReg> window(const std::vector<int> &nw,
                                     const std::vector<int> &fw,
                                     const std::vector<int> &jw) const;
 
  private:
+  /*!
+    Initialize vector without providing data (zero)
+    \param hyp Hypercube describing dataset
+  */
   void initNoData(std::shared_ptr<SEP::hypercube> hyp);
   void initData(std::shared_ptr<SEP::hypercube> hyp, const byte6D &vals);
 };

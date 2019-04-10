@@ -15,7 +15,6 @@ option(BUILD_BYTE "Build byte support" ON)
 option(BUILD_SHORT "Build short support" ON)
 
 
-set(BUILD_DOC OFF)
 
 if(BUILD_DOUBLE)
   set(USE_DOUBLE true)
@@ -81,6 +80,7 @@ add_subdirectory(external/pySolver/GenericSolver)
  configure_file("${PROJECT_SOURCE_DIR}/sepVectorConfig.h.in"
 "${PROJECT_BINARY_DIR}/sepVectorConfig.h")
 
+if(BUILD_DOC)
 # check if Doxygen is installed
 find_package(Doxygen)
 if (DOXYGEN_FOUND)
@@ -101,6 +101,7 @@ if (DOXYGEN_FOUND)
 else (DOXYGEN_FOUND)
   message("Doxygen need to be installed to generate the doxygen documentation")
 endif (DOXYGEN_FOUND)
+endif(BUILD_DOC)
 
 
 add_subdirectory(lib)

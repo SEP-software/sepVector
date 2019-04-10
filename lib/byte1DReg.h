@@ -75,24 +75,81 @@ Create a 1-D unsigned char vector from just lengths
     std::shared_ptr<SEP::hypercube> hyp(new SEP::hypercube(as));
     initData(hyp, vals);
   }
+  /*!
+     Create 1-D byte vector from a subset of byte RSF
+
+     \param old RSF to subsample
+     \param iax1 Fast axis of the output
+     \param rev1 Whether or not to reverse the axis
+     \param ipos Location if the subset to grab
+     \param beg,end Begining and end of the subset to grab along
+     */
   byte1DReg(const std::shared_ptr<byte6DReg> old, const int iax1,
             const bool rev1, const std::vector<int> &ipos,
             const std::vector<int> &beg, const std::vector<int> &end);
+  /*!
+    Create 1-D byte vector from a subset of byte RSF
+
+    \param old RSF to subsample
+    \param iax1 Fast axis of the output
+    \param rev1 Whether or not to reverse the axis
+    \param ipos Location if the subset to grab
+    \param beg,end Begining and end of the subset to grab along
+    */
   byte1DReg(const std::shared_ptr<byte5DReg> old, const int iax1,
             const bool rev1, const std::vector<int> &ipos,
             const std::vector<int> &beg, const std::vector<int> &end);
+  /*!
+   Create 1-D byte vector from a subset of byte RSF
+
+   \param old RSF to subsample
+   \param iax1 Fast axis of the output
+   \param rev1 Whether or not to reverse the axis
+   \param ipos Location if the subset to grab
+   \param beg,end Begining and end of the subset to grab along
+   */
   byte1DReg(const std::shared_ptr<byte4DReg> old, const int iax1,
             const bool rev1, const std::vector<int> &ipos,
             const std::vector<int> &beg, const std::vector<int> &end);
+  /*!
+   Create 1-D byte vector from a subset of byte RSF
+
+   \param old RSF to subsample
+   \param iax1 Fast axis of the output
+   \param rev1 Whether or not to reverse the axis
+   \param ipos Location if the subset to grab
+   \param beg,end Begining and end of the subset to grab along
+   */
   byte1DReg(const std::shared_ptr<byte3DReg> old, const int iax1,
             const bool rev1, const std::vector<int> &ipos,
             const std::vector<int> &beg, const std::vector<int> &end);
+  /*!
+   Create 1-D byte vector from a subset of byte RSF
+
+   \param old RSF to subsample
+   \param iax1 Fast axis of the output
+   \param rev1 Whether or not to reverse the axis
+   \param ipos Location if the subset to grab
+   \param beg,end Begining and end of the subset to grab along
+   */
   byte1DReg(const std::shared_ptr<byte2DReg> old, const int iax1,
             const bool rev1, const std::vector<int> &ipos,
             const std::vector<int> &beg, const std::vector<int> &end);
+  /*!
+   Create 1-D byte vector from a subset of byte RSF
+
+   \param old RSF to subsample
+   \param iax1 Fast axis of the output
+   \param rev1 Whether or not to reverse the axis
+   \param ipos Location if the subset to grab
+   \param beg,end Begining and end of the subset to grab along
+   */
   byte1DReg(const std::shared_ptr<byte1DReg> old, const int iax1,
             const bool rev1, const std::vector<int> &ipos,
             const std::vector<int> &beg, const std::vector<int> &end);
+  /*!
+    Allocate data for vector
+    */
   void allocate() {
     std::vector<int> ns = getHyper()->getNs();
     _mat.reset(new byte1D(boost::extents[ns[0]]));
@@ -100,10 +157,23 @@ Create a 1-D unsigned char vector from just lengths
     setData(_mat->data());
     ;
   }
+  /*!
+  Make a copy of the vector
+  */
   std::shared_ptr<byte1DReg> clone() const;
+  /*!
+  Make a copy of the vector space
+  */
   std::shared_ptr<byte1DReg> cloneSpace() const;
+  /*!
+ Deallocate storage for vector, turn into vector space
+  */
   virtual void cleanMemory() { setSpace(); }
-  std::shared_ptr<byte1D> _mat;
+  std::shared_ptr<byte1D> _mat;  ///< Storage for vector
+  /*!
+     Return a subset of the vector
+     \param nw,fw,jw Windowing parameters
+     */
   std::shared_ptr<byte1DReg> window(const std::vector<int> &nw,
                                     const std::vector<int> &fw,
                                     const std::vector<int> &jw) const;

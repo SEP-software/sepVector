@@ -88,7 +88,9 @@ class byte4DReg : public byteHyper {
     std::shared_ptr<SEP::hypercube> hyp(new SEP::hypercube(a));
     initData(hyp, vals);
   }
-
+  /*!
+      Allocate data for vector
+      */
   void allocate() {
     std::vector<int> ns = getHyper()->getNs();
     _mat.reset(new byte4D(boost::extents[ns[3]][ns[2]][ns[1]][ns[0]]));
@@ -96,16 +98,29 @@ class byte4DReg : public byteHyper {
     setData(_mat->data());
     ;
   }
+  /*!
+    Return a subset of the vector
+    \param nw,fw,jw Windowing parameters
+    */
   std::shared_ptr<byte4DReg> window(const std::vector<int> &nw,
                                     const std::vector<int> &fw,
                                     const std::vector<int> &jw) const;
+  /*!
+  Make a copy of the vector
+  */
   std::shared_ptr<byte4DReg> clone() const;
+  /*!
+  Make a copy of the vector space
+  */
   std::shared_ptr<byte4DReg> cloneSpace() const;
+  /*!
+   Deallocate storage for vector, turn into vector space
+    */
   virtual void cleanMemory() {
     _mat = 0;
     setSpace();
   }
-  std::shared_ptr<byte4D> _mat;
+  std::shared_ptr<byte4D> _mat;  ///< Storage for vector
 
  private:
   void initNoData(std::shared_ptr<SEP::hypercube> hyp);
