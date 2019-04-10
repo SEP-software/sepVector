@@ -24,7 +24,6 @@ Initializer for byteHyper class. Inititalize form a hypercube
   /*!
      Return whether or not this just containing space information
   */
-  bool getSpaceOnly() const { return _spaceOnly; }
   //! Fill vector with random number
   virtual void random();
   /*!  Set that this is only vector space with no storage
