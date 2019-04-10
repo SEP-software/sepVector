@@ -17,10 +17,6 @@ class complexHyper : public regSpace {
 Initializer for complexHyper class. Only used by inherited class
 */
   complexHyper() { ; }
-  /*!
-     Return whether or not this just containing space information
-  */
-  bool getSpaceOnly() const { return _spaceOnly; }
   //! Add vector to another vector  self+=vec
   /*!
     \param vec Vector to add to the current vector

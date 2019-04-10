@@ -64,10 +64,6 @@ Initializer for intHyper class. Only used by inherited class
    */
   virtual void setNotSpace() { _spaceOnly = false; }
   /*!
-   Return whether or not this just containing space information
-*/
-  inline bool getSpaceOnly() const { return _spaceOnly; }
-  /*!
    Create a mask from a vector. Useful for filling in missing data.
 
    if  abs(a[]-zero) < err:
