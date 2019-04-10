@@ -45,7 +45,7 @@ void shortHyper::scaleAdd(std::shared_ptr<shortHyper> vec2, const double sc1,
   calcCheckSum();
 }
 void shortHyper::signum() {
-  if (spaceOnly()) throw(std::string("Vectors not allocated"));
+  if (getSpaceOnly()) throw(std::string("Vectors not allocated"));
   tbb::parallel_for(tbb::blocked_range<long long>(0, getHyper()->getN123()),
                     [&](const tbb::blocked_range<long long> &r) {
                       for (long long i = r.begin(); i != r.end(); ++i) {
@@ -61,7 +61,7 @@ void shortHyper::signum() {
   calcCheckSum();
 }
 void shortHyper::scale(double sc) {
-  if (spaceOnly()) throw(std::string("Vectors not allocated"));
+  if (getSpaceOnly()) throw(std::string("Vectors not allocated"));
   tbb::parallel_for(tbb::blocked_range<long long>(0, getHyper()->getN123()),
                     [&](const tbb::blocked_range<long long> &r) {
                       for (long long i = r.begin(); i != r.end(); ++i)
@@ -70,7 +70,7 @@ void shortHyper::scale(double sc) {
   calcCheckSum();
 }
 void shortHyper::random() {
-  if (spaceOnly()) throw(std::string("Vectors not allocated"));
+  if (getSpaceOnly()) throw(std::string("Vectors not allocated"));
   tbb::parallel_for(tbb::blocked_range<long long>(0, getHyper()->getN123()),
                     [&](const tbb::blocked_range<long long> &r) {
                       for (long long i = r.begin(); i != r.end(); ++i)
@@ -139,7 +139,7 @@ void shortHyper::createMask(const int zero, const int err) {
 
 void shortHyper::infoStream(const int lev, std::stringstream &x) {
   getHyper()->infoStream(x);
-  if (spaceOnly())
+  if (getSpaceOnly())
     x << "Only space\n";
   else {
     x << "Allocated\n";
