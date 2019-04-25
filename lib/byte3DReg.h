@@ -11,7 +11,7 @@ class byte3DReg : public byteHyper {
  public:
   /*!
      Create a 3-D unsigned char vector from a hypercube
-          \param Hypercube describing RSF
+          \param hyper Hypercube describing RSF
 
      */
   byte3DReg(std::shared_ptr<SEP::hypercube> hyper) { initNoData(hyper); }
@@ -44,7 +44,7 @@ class byte3DReg : public byteHyper {
   }
   /*!
    Create a 3-D unsigned char vector from a hypercube
-        \param Hypercube describing RSF
+        \param hyper Hypercube describing RSF
         \param vals Vaule to file vector with
    */
   byte3DReg(std::shared_ptr<SEP::hypercube> hyper, const byte3D &vals) {
@@ -114,11 +114,28 @@ Create a 3-D unsigned char vector from just lengths
   std::shared_ptr<byte3D> _mat;  ///< Storage for vector
 
  protected:
-  void initNoData(std::shared_ptr<SEP::hypercube> hyp);
-  void initData(std::shared_ptr<SEP::hypercube> hyp,
-                std::shared_ptr<byte3D> vals);
+  /*!
+   Initialize without data
+   \param hyper Hypercube describing space
+*/
 
-  void initData(std::shared_ptr<SEP::hypercube> hyp, const byte3D &vals);
+  void initNoData(std::shared_ptr<SEP::hypercube> hyper);
+  /*!
+    Initialize with data
+    \param hyper Hypercube describing space
+    \param vals Data to copy in
+ */
+
+  void initData(std::shared_ptr<SEP::hypercube> hyper, const byte3D &vals);
+
+  /*!
+  Initialize with data
+  \param hyper Hypercube describing space
+  \param vals Data to copy in
+*/
+
+  void initData(std::shared_ptr<SEP::hypercube> hyper,
+                std::shared_ptr<byte3D> vals);
 };
 }  // namespace SEP
 #endif

@@ -13,7 +13,7 @@ class byte6DReg : public byteHyper {
  public:
   /*!
      Create a 6-D unsigned char vector from a hypercube
-          \param Hypercube describing RSF
+          \param hyper Hypercube describing RSF
 
      */
   byte6DReg(std::shared_ptr<SEP::hypercube> hyper) { initNoData(hyper); }
@@ -56,7 +56,7 @@ class byte6DReg : public byteHyper {
   }
   /*!
    Create a 6-D unsigned char vector from a hypercube
-        \param Hypercube describing RSF
+        \param hyper Hypercube describing RSF
         \param vals Values to fill vector with
 
    */
@@ -142,6 +142,12 @@ class byte6DReg : public byteHyper {
     \param hyp Hypercube describing dataset
   */
   void initNoData(std::shared_ptr<SEP::hypercube> hyp);
+  /*!
+Initialize with data
+\param hyper Hypercube describing space
+\param vals Data to copy in
+*/
+
   void initData(std::shared_ptr<SEP::hypercube> hyp, const byte6D &vals);
 };
 }  // namespace SEP

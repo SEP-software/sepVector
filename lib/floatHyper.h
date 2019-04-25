@@ -2,6 +2,7 @@
 #define float_hyper_h 1
 #include <hypercube.h>
 #include <cstdint>
+#include <iostream>
 #include <sstream>
 #include "SEPException.h"
 #include "Vector.h"
@@ -29,14 +30,14 @@ class floatHyper : public Vector, public regSpace {
   virtual void add(std::shared_ptr<floatHyper> vec);
   //! Scale vector self*=scale
   /*!
-    \param scale What to scale vector by
+    \param val What to scale vector by
   */
 
   virtual void scale(const double val) override;
   //! Add to vector scaling each self=self*sc1+vec*sc2
   /*!
     \param sc1 What to scale current vector by
-    \param vec Other vector to scale add to current vector
+    \param vec2 Other vector to scale add to current vector
     \param sc2 What to scale the second vector by
   */
 
@@ -93,7 +94,7 @@ class floatHyper : public Vector, public regSpace {
 
       \param  bclip Minimum value
       \param  eclip Maximum value
-      \param  Whether to clip values larger or smaller than clip values
+      \param  outer Whether to clip values larger or smaller than clip values
 
 */
   void clip(const float bclip, const float eclip, bool outer = true);
@@ -104,9 +105,10 @@ class floatHyper : public Vector, public regSpace {
     \param  bclip Minimum value
     \param  eclip Maximum value
 
+
 */
-  void clipVector(const std::shared_ptr<floatHyper> beg,
-                  const std::shared_ptr<floatHyper> end);
+  void clipVector(const std::shared_ptr<floatHyper> bclip,
+                  const std::shared_ptr<floatHyper> eclip);
   /*!
      Create a mask from a vector. Useful for filling in missing data.
 
@@ -137,7 +139,7 @@ class floatHyper : public Vector, public regSpace {
 
 \param val Value of checksum to store
 */
-  void setCheckSum(const uint64_t x) { _checkSum = x; }
+  void setCheckSum(const uint64_t val) { _checkSum = val; }
   /*!
      Whether or not the current vector exists in a different space
 
@@ -145,6 +147,9 @@ class floatHyper : public Vector, public regSpace {
   */
   bool isDifferent(std::shared_ptr<floatHyper> vec2) {
     calcCheckSum();
+    vec2->calcCheckSum();
+    std::cerr << "COMARWE " << vec2->getCheckSum() << " " << getCheckSum()
+              << std::endl;
     if (vec2->getCheckSum() != getCheckSum()) return true;
     return false;
   }
@@ -181,7 +186,7 @@ Set the valule of vector to 0
 
      \param sc Value to use in softclip
 */
-  virtual void softClip(const float val) override;
+  virtual void softClip(const float sc) override;
   //! Return the absolute maximum value of vector
 
   virtual double absMax() const override;
@@ -196,11 +201,10 @@ Set the valule of vector to 0
  \param lev  Level of debugging information to provide
  \param str  Stream to add debugging info to
  */
-  virtual void infoStream(const int lev, std::stringstream &x) override;
+  virtual void infoStream(const int lev, std::stringstream &str) override;
   /*!  Check to see if current vector belongs to the same space as vec2
 
    \param vec2 Vector to check the space with
-   \param checkAlloc Also check that the vector is allocated
    */
   virtual bool checkSame(const std::shared_ptr<SEP::floatHyper> vec2) const;
   ///! Return checksum value

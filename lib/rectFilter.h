@@ -49,6 +49,14 @@ filter
      Return whether or not the filter is a PEF
      */
   bool isPef() { return _pef; }
+  /*!
+    Set filter basics
+
+    \param box - Description of box containing filter
+    \param f   - Location of 0 lag coefficient
+    \param pef - Whether or not a boolean
+  */
+
   void setBasics(const std::vector<int> &box, const std::vector<int> &f,
                  const bool pef) {
     _n = box;
@@ -63,7 +71,7 @@ filter
   std::vector<int> _n;  ///< Rectangular filter size
   std::vector<int> _f;  ///< Offset location of 1 from top-left
   std::vector<int> _e;  ///< Offset location of 1 from bottom-right
-  bool _pef;            /// Whether or not a boolean
+  bool _pef;            ///< Whether or not a boolean
 };
 /*!
   A rectangular 2-D filter
@@ -129,7 +137,7 @@ filter
   std::vector<int> _n;  ///< Rectangular filter size
   std::vector<int> _f;  ///< Offset location of 1 from top-left
   std::vector<int> _e;  ///< Offset location of 1 from bottom-right
-  bool _pef;            /// Whether or not a boolean
+  bool _pef;            ///< Whether or not a boolean
 };
 /*!
   A rectangular 3-D filter
@@ -193,7 +201,7 @@ filter
   std::vector<int> _n;  ///< Rectangular filter size
   std::vector<int> _f;  ///< Offset location of 1 from top-left
   std::vector<int> _e;  ///< Offset location of 1 from bottom-right
-  bool _pef;            /// Whether or not a boolean
+  bool _pef;            ///< Whether or not a boolean
 };
 /*!
   A rectangular 4-D filter
@@ -211,7 +219,7 @@ Create a rectangular filter from a box
   \param beg Location of the fixed (1) coefficient [only valid pef]
   \param pef Whether or not this a Prediction Error Filter
 */
-  rectFilter4D(const std::vector<int> &box, const std::vector<int> &f,
+  rectFilter4D(const std::vector<int> &box, const std::vector<int> &beg,
                bool pef = false);
   /*!
 Clone the filter
@@ -257,7 +265,7 @@ filter
   std::vector<int> _n;  ///< Rectangular filter size
   std::vector<int> _f;  ///< Offset location of 1 from top-left
   std::vector<int> _e;  ///< Offset location of 1 from bottom-right
-  bool _pef;            /// Whether or not a boolean
+  bool _pef;            ///< Whether or not a boolean
 };
 
 }  // namespace SEP

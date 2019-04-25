@@ -70,8 +70,8 @@ class regSpace {
       Return how to loop through a dataset to return a slice with arbitray
      orientations
 
-      \param Size of the dataset
-      \param iax Fast axis of output traverse
+      \param  nd of the dataset
+      \param iax1 Fast axis of output traverse
       \param rev1 Whether or not reverse fast axis
       \param f1  First element to grab along fast axis
       \param j1  Skip every j1 elements along fast axis

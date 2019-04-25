@@ -63,7 +63,7 @@ void float3DReg::initData(std::shared_ptr<SEP::hypercube> hyp,
   }
 }
 void float3DReg::initData(std::shared_ptr<SEP::hypercube> hyp,
-                          std::shared_ptr<float3D> vals) {
+                          const std::shared_ptr<float3D> vals) {
   const std::vector<SEP::axis> axes = hyp->getAxes();
   setHyper(hyp);
 

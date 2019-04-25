@@ -58,7 +58,7 @@ Initializer for complexHyper class. Only used by inherited class
 
 \param val Value of checksum to store
 */
-  void setCheckSum(const uint64_t x) { _checkSum = x; }
+  void setCheckSum(const uint64_t val) { _checkSum = val; }
   /*!
    Whether or not the current vector exists in a different space
 
@@ -96,7 +96,7 @@ Set the valule of vector to 0
  \param lev  Level of debugging information to provide
  \param str  Stream to add debugging info to
  */
-  virtual void infoStream(const int lev, std::stringstream &x);
+  virtual void infoStream(const int lev, std::stringstream &str);
   /*!  Check to see if current vector belongs to the same space as vec2
 
  \param vec2 Vector to check the space with

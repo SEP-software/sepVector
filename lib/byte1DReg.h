@@ -19,7 +19,7 @@ class byte1DReg : public byteHyper {
  public:
   /*!
    Create a 1-D unsigned char vector from a hypercube
-        \param Hypercube describing RSF
+        \param hyper describing RSF
 
    */
   byte1DReg(std::shared_ptr<SEP::hypercube> hyper) { initNoData(hyper); }
@@ -39,14 +39,14 @@ class byte1DReg : public byteHyper {
         \param a1 Axes of the hypercube
 
    */
-  byte1DReg(const SEP::axis &a) {
-    std::vector<SEP::axis> as(1, a);
+  byte1DReg(const SEP::axis &a1) {
+    std::vector<SEP::axis> as(1, a1);
     std::shared_ptr<SEP::hypercube> hyp(new SEP::hypercube(as));
     initNoData(hyp);
   }
   /*!
    Create a 1-D unsigned char vector from just lengths
-        \param n  Dimensions of the hypercube
+        \param hyper  Hypercube describing RSF
        \param vals Values to fill vector with
 
    */
@@ -66,12 +66,12 @@ Create a 1-D unsigned char vector from just lengths
   }
   /*!
   Create a 1-D unsigned char vector from axes
-       \param a1 Axes of the hypercube
+       \param ax Axes of the hypercube
       \param vals Values to fill vector with
 
   */
-  byte1DReg(const SEP::axis &a, const byte1D &vals) {
-    std::vector<SEP::axis> as(1, a);
+  byte1DReg(const SEP::axis &ax, const byte1D &vals) {
+    std::vector<SEP::axis> as(1, ax);
     std::shared_ptr<SEP::hypercube> hyp(new SEP::hypercube(as));
     initData(hyp, vals);
   }
@@ -162,7 +162,7 @@ Create a 1-D unsigned char vector from just lengths
   */
   std::shared_ptr<byte1DReg> clone() const;
   /*!
-  Make a copy of the vector space
+  Make a copy of the vector
   */
   std::shared_ptr<byte1DReg> cloneSpace() const;
   /*!
@@ -177,6 +177,10 @@ Create a 1-D unsigned char vector from just lengths
   std::shared_ptr<byte1DReg> window(const std::vector<int> &nw,
                                     const std::vector<int> &fw,
                                     const std::vector<int> &jw) const;
+  /*!
+    Return a subset of the vector
+    \param nw,fw,jw Windowing parameters
+    */
   std::shared_ptr<byte1DReg> window(const int nw, const int fw, const int jw) {
     std::vector<int> nws;
     nws.push_back(nw);
@@ -188,9 +192,17 @@ Create a 1-D unsigned char vector from just lengths
   }
 
  protected:
-  void initNoData(std::shared_ptr<SEP::hypercube> hyp);
-  //  void initData(std::shared_ptr<SEP::hypercube> hyp, const float *vals);
-  void initData(std::shared_ptr<SEP::hypercube> hyp, const byte1D &vals);
+  /*!
+     Initialize without data
+     \param hyper Hypercube describing space
+  */
+  void initNoData(std::shared_ptr<SEP::hypercube> hyper);
+  /*!
+      Initialize with data
+      \param hyper Hypercube describing space
+      \param vals Data to copy in
+   */
+  void initData(std::shared_ptr<SEP::hypercube> hyper, const byte1D &vals);
 };
 
 }  // namespace SEP

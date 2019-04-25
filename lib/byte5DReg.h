@@ -13,12 +13,12 @@ class byte5DReg : public byteHyper {
  public:
   /*!
    Create a 5-D unsigned char vector from a hypercube
-        \param Hypercube describing RSF
+        \param hyper Hypercube describing RSF
 
    */
   byte5DReg(std::shared_ptr<SEP::hypercube> hyper) { initNoData(hyper); }
   /*!
- Create a 6-D unsigned char vector from just lengths
+ Create a 5-D unsigned char vector from just lengths
       \param n1,n2,n3,n4,n5 Dimensions of the hypercube
 
  */
@@ -54,7 +54,7 @@ class byte5DReg : public byteHyper {
   }
   /*!
  Create a 5-D unsigned char vector from a hypercube
-      \param Hypercube describing RSF
+      \param hyper Hypercube describing RSF
       \param vals Values to fill vector with
 
  */
@@ -131,7 +131,16 @@ Create a 5-D unsigned char vector from just lengths
   std::shared_ptr<byte5D> _mat;  ///< Storage for vector
 
  private:
+  /*!
+ Initialize without data
+ \param hyper Hypercube describing space
+*/
   void initNoData(std::shared_ptr<SEP::hypercube> hyp);
+  /*!
+  Initialize with data
+  \param hyper Hypercube describing space
+  \param vals Data to copy in
+*/
   void initData(std::shared_ptr<SEP::hypercube> hyp, const byte5D &vals);
 };
 }  // namespace SEP

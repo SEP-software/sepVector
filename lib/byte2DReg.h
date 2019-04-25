@@ -16,7 +16,7 @@ class byte2DReg : public byteHyper {
  public:
   /*!
      Create a 2-D unsigned char vector from a hypercube
-          \param Hypercube describing RSF
+          \param hyper Hypercube describing RSF
 
      */
   byte2DReg(std::shared_ptr<SEP::hypercube> hyper) { initNoData(hyper); }
@@ -47,7 +47,7 @@ class byte2DReg : public byteHyper {
   }
   /*!
    Create a 2-D unsigned char vector from a hypercube
-        \param Hypercube describing RSF
+        \param  hyper Hypercube describing RSF
         \param vals Data to fill vector with
 
    */
@@ -165,6 +165,10 @@ Create a 2-D unsigned char vector from just lengths
     setData(_mat->data());
     ;
   }
+  /*!
+    Create a window of the current vector
+    \param nw,fw,jw Window parameters
+    */
 
   std::shared_ptr<byte2DReg> window(const std::vector<int> &nw,
                                     const std::vector<int> &fw,
@@ -184,7 +188,16 @@ Create a 2-D unsigned char vector from just lengths
   std::shared_ptr<byte2D> _mat;  ///< Storage for vector
 
  private:
+  /*!
+   Initialize without data
+   \param hyper Hypercube describing space
+*/
   void initNoData(std::shared_ptr<SEP::hypercube> hyp);
+  /*!
+    Initialize with data
+    \param hyper Hypercube describing space
+    \param vals Data to copy in
+ */
   void initData(std::shared_ptr<SEP::hypercube> hyp, const byte2D &vals);
 };
 }  // namespace SEP

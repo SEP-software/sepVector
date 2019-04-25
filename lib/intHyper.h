@@ -26,13 +26,13 @@ Initializer for intHyper class. Only used by inherited class
   virtual void add(std::shared_ptr<intHyper> vec);
   //! Scale vector self*=scale
   /*!
-    \param scale What to scale vector by
+    \param val What to scale vector by
   */
   virtual void scale(const double val);
   //! Add to vector scaling each self=self*sc1+vec*sc2
   /*!
     \param sc1 What to scale current vector by
-    \param vec Other vector to scale add to current vector
+    \param vec2 Other vector to scale add to current vector
     \param sc2 What to scale the second vector by
   */
   virtual void scaleAdd(std::shared_ptr<intHyper> vec2, const double sc1,
@@ -86,13 +86,37 @@ Initializer for intHyper class. Only used by inherited class
     setNotSpace();
     setMemPtr((void *)ptr, sizeof(int));
   }
+  /*!  Return the pct value of the dataset
+
+    \param pct Percentage value to return
+    \param j   Approximate the answer by ony taking every jth value
+
+   */
   int cent(const float pct, const int j) const {
     long long iv = std::max(
         (long long)0, std::min((long long)(getHyper()->getN123() * pct / 100.),
                                getHyper()->getN123() - 1));
     return cent(iv, j);
   }
+  /*!  Return the iv value of the dataset if sorted low to high
+
+  \param iv  Value of sorted data to return
+  \param j   Approximate the answer by ony taking every jth value
+
+ */
   int cent(const long long iv, const int j) const;
+  /*!
+    Clip a dataset
+        a[]=std::min(eclip,max(bclip,a[]))
+
+        or
+
+        a[]=std::max(eclip,min(bclip,a[]))
+
+    \param  bclip Minimum value
+    \param  eclip Maximum value
+
+*/
   void clip(const int bclip, const int eclip);
   //! Calculate checksum for data
 
@@ -101,7 +125,7 @@ Initializer for intHyper class. Only used by inherited class
 
 \param val Value of checksum to store
 */
-  void setCheckSum(const uint64_t x) { _checkSum = x; }
+  void setCheckSum(const uint64_t val) { _checkSum = val; }
   /*!
    Whether or not the current vector exists in a different space
 
@@ -119,7 +143,7 @@ Initializer for intHyper class. Only used by inherited class
 
      \param nrm Norm to calculate
   */
-  long long norm(const int n) const;
+  long long norm(const int nrm) const;
   /*!
    Set the valule of vector to a given value
 
@@ -144,7 +168,7 @@ Set the valule of vector to 0
 
    \param sc Value to use in softclip
 */
-  virtual void softClip(const float val);
+  virtual void softClip(const float sc);
   //! Return the absolute maximum value of vector
 
   virtual int absMax() const;
@@ -159,7 +183,7 @@ Set the valule of vector to 0
 \param lev  Level of debugging information to provide
 \param str  Stream to add debugging info to
 */
-  virtual void infoStream(const int lev, std::stringstream &x);
+  virtual void infoStream(const int lev, std::stringstream &str);
   /*!  Check to see if current vector belongs to the same space as vec2
 
  \param vec2 Vector to check the space with

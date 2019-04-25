@@ -13,7 +13,7 @@ class byte4DReg : public byteHyper {
  public:
   /*!
    Create a 4-D unsigned char vector from a hypercube
-   \param Hypercube describing RSF
+   \param hyper  Hypercube describing RSF
    */
   byte4DReg(std::shared_ptr<SEP::hypercube> hyper) { initNoData(hyper); }
   /*!
@@ -32,7 +32,7 @@ class byte4DReg : public byteHyper {
     initNoData(hyp);
   }
   /*!
-     Create a 5-D unsigned char vector from axes
+     Create a 4-D unsigned char vector from axes
           \param a1,a2,a3,a4 Axes if the hypercube
 
      */
@@ -49,7 +49,7 @@ class byte4DReg : public byteHyper {
   }
   /*!
  Create a 4-D unsigned char vector from a hypercube
-        \param Hypercube describing RSF
+        \param hyper Hypercube describing RSF
         \param vals Vaules for the vector
 
  */
@@ -74,7 +74,7 @@ class byte4DReg : public byteHyper {
     initData(hyp, vals);
   }
   /*!
-   Create a 6-D unsigned char vector from axes
+   Create a -D unsigned char vector from axes
         \param a1,a2,a3,a4 Axes if the hypercube
         \param vals Vaules for the vector
    */
@@ -98,6 +98,7 @@ class byte4DReg : public byteHyper {
     setData(_mat->data());
     ;
   }
+
   /*!
     Return a subset of the vector
     \param nw,fw,jw Windowing parameters
@@ -123,7 +124,16 @@ class byte4DReg : public byteHyper {
   std::shared_ptr<byte4D> _mat;  ///< Storage for vector
 
  private:
+  /*!
+   Initialize without data
+   \param hyper Hypercube describing space
+*/
   void initNoData(std::shared_ptr<SEP::hypercube> hyp);
+  /*!
+    Initialize with data
+    \param hyper Hypercube describing space
+    \param vals Data to copy in
+ */
   void initData(std::shared_ptr<SEP::hypercube> hyp, const byte4D &vals);
 };
 }  // namespace SEP
