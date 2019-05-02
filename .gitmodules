@@ -1,6 +1,3 @@
 [submodule "external/hypercube"]
 	path = external/hypercube
 	url = http://cees-gitlab.Stanford.EDU/bob/hypercube.git
-[submodule "external/pySolver"]
-	path = external/pySolver
-	url = http://cees-gitlab.Stanford.EDU/ettore88/python-solver.git
