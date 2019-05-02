@@ -75,7 +75,7 @@ if(NOT TARGET hypercube)
   add_subdirectory(external/hypercube)
 endif(NOT TARGET hypercube)
 
-add_subdirectory(external/pySolver/GenericSolver)
+add_subdirectory(external/python-solver/GenericSolver)
 
  configure_file("${PROJECT_SOURCE_DIR}/sepVectorConfig.h.in"
 "${PROJECT_BINARY_DIR}/sepVectorConfig.h")
