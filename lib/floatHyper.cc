@@ -283,14 +283,30 @@ double floatHyper::min() const {
 }
 
 void floatHyper::calcCheckSum() {
-  uint32_t sum1 = 0, sum2 = 0;
-  uint32_t *data = (uint32_t *)_vals;
+  long long nsect= ceilf((double)getHyper()->getN123()/(double)100000);
+  std::vector<float>sz(nsect,100000);
+  std::vector<uint32_t> sum1(nsect),sum2(nsect);
+  sz[nsect-1]=getHyper()->getN123()-(nsect-1)*100000;
   uint32_t mx = 4294967295;
-  for (long long i = 0; i < getHyper()->getN123(); i++) {
-    sum1 = (sum1 + data[i]) % mx;
-    sum2 = (sum2 + sum1) % mx;
+  
+  tbb::parallel_for(tbb::blocked_range<long long>(0, nsect),
+                    [&](const tbb::blocked_range<long long> &r) {
+                      for (long long i = r.begin(); i != r.end(); ++i){
+                      sum1[i]=0; sum2[i]=0;
+                      uint32_t *data = (uint32_t *)(&_vals[r.begin()*100000]);
+                      for(long long j=0; j < sz[i] ; j++){
+                       sum1[i] = (sum1[i] + data[j]) % mx;
+                       sum2[i] = (sum2[i] + sum1[i]) % mx;
+                      }
+                     }
+                    });
+
+  uint32_t sum1t=0,sum2t=0;
+  for (long long i = 0; i < nsect; i++){
+    sum1t = (sum1t + sum1[i]) % mx;
+    sum2t = (sum2t + sum2[i]) % mx;
   }
-  setCheckSum(sum2 * 2 ^ 32 + sum1);
+  setCheckSum(sum2t * 2 ^ 32 + sum1t);
 }
 
 bool floatHyper::checkSame(const std::shared_ptr<floatHyper> vec2) const {
