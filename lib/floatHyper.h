@@ -148,8 +148,6 @@ class floatHyper : public Vector, public regSpace {
   bool isDifferent(std::shared_ptr<floatHyper> vec2) {
     calcCheckSum();
     vec2->calcCheckSum();
-    std::cerr << "COMARWE " << vec2->getCheckSum() << " " << getCheckSum()
-              << std::endl;
     if (vec2->getCheckSum() != getCheckSum()) return true;
     return false;
   }
