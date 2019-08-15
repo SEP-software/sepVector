@@ -106,7 +106,7 @@ endif(BUILD_DOC)
 
 add_subdirectory(lib)
 if(BUILD_PYTHON)
-  add_subdirectory(SEP)
+  add_subdirectory(python)
 endif(BUILD_PYTHON)
 include(CMakePackageConfigHelpers)
 configure_package_config_file(sepVectorConfig.cmake.in
