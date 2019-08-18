@@ -7,6 +7,7 @@ find_package(NumPy REQUIRED)
 include_directories("${CMAKE_CURRENT_SOURCE_DIR}/../lib")
 
 find_package(Boost 1.40 REQUIRED)
+INCLUDE_DIRECTORIES( ${Boost_INCLUDE_DIR})
 
 pybind11_add_module(pySepVector MODULE pyVector.cpp)
 
