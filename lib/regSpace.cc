@@ -17,7 +17,8 @@ void regSpace::checkWindow(const int n, const int nw, const int fw,
                        std::string(" n=") + std::to_string(n)));
 }
 
-std::vector<float> regSpace::axisToKey(const int iaxis) const {
+std::vector<float> regSpace::axisToKey(const int ix) const {
+	int iaxis=ix-1;
   long long naft = 1, nbef = 1, naxis;
   std::vector<int> axes = getHyper()->getAxes();
   for (auto iax = 0; iax < axes.size(); iax++) {
