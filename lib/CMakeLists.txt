@@ -13,6 +13,7 @@ set(SOURCES
     floatHyper.cc
     float4DReg.cc
     regVector.cc
+    regSpace.cc
     rectFilter.cc
     float5DReg.cc
     float6DReg.cc)

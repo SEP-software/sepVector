@@ -47,7 +47,7 @@ class regSpace {
 
     \param iax Axis to convert to a key
     */
-  std::vector<float> axisToKey(const int iaxis);
+  std::vector<float> axisToKey(const int iaxis) const;
 
   ///*  Return pointer to storage
   void *getVoidPtr() { return _storage; }
