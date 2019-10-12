@@ -3,17 +3,14 @@
 using namespace SEP;
 std::shared_ptr<regSpace> SEP::vecFromHyper(
     const std::shared_ptr<hypercube> hyper, const dataType typ, const bool g1) {
-	std::cerr<<"in vec from hyper"<<std::endl;
   std::vector<axis> axesIn = hyper->getAxes(), axesOut;
   int ndim = hyper->getNdim();
   if (g1) ndim = hyper->getNdimG1();
   for (int i = 0; i < ndim; i++) {
     axesOut.push_back(axesIn[i]);
   }
-	std::cerr<<ndim<<"=ndim i1 vec from hyper "<<SEP::getTypeString(typ)<<std::endl;
   std::shared_ptr<hypercube> hyper2(new hypercube(axesOut));
   switch (typ) {
-	std::cerr<<"i2 vec from hyper"<<std::endl;
     case DATA_FLOAT:
       switch (ndim) {
         case 1: {
@@ -25,7 +22,6 @@ std::shared_ptr<regSpace> SEP::vecFromHyper(
           return a;
         } break;
         case 3: {
-	std::cerr<<"i5 vec from hyper"<<std::endl;
           std::shared_ptr<float3DReg> a(new float3DReg(hyper2));
           return a;
         } break;
