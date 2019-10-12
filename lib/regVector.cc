@@ -10,7 +10,7 @@ std::shared_ptr<regSpace> SEP::vecFromHyper(
   for (int i = 0; i < ndim; i++) {
     axesOut.push_back(axesIn[i]);
   }
-	std::cerr<<"i1 vec from hyper"<<std::endl;
+	std::cerr<<"i1 vec from hyper "<<SEP::getTypeString(type)<<std::endl;
   std::shared_ptr<hypercube> hyper2(new hypercube(axesOut));
   switch (typ) {
 	std::cerr<<"i2 vec from hyper"<<std::endl;
