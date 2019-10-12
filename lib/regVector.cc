@@ -9,6 +9,8 @@ std::shared_ptr<regSpace> SEP::vecFromHyper(
   for (int i = 0; i < ndim; i++) {
     axesOut.push_back(axesIn[i]);
   }
+  std::cerr << ndim << "=ndim i1 vec from hyper " << SEP::getTypeString(typ)
+            << std::endl;
   std::shared_ptr<hypercube> hyper2(new hypercube(axesOut));
   switch (typ) {
     case DATA_FLOAT:
