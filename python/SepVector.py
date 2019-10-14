@@ -62,9 +62,11 @@ class vector(pyVector.vector):
             nset = False
             fset = False
             jset = False
+            print("IN LOOP", i)
             if "n%d" % i in kw:
                 nset = True
                 n = int(kw["n%d" % i])
+                print("IN HERE")
             if "f%d" % i in kw:
                 jset = True
                 j = int(kw["j%d" % i])
