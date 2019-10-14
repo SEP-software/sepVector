@@ -46,5 +46,6 @@ std::vector<float> regSpace::axisToKey(const int ix) const {
       }
     }
   }
+  std::cerr<<naxis<<"=naxis nbef="<<nbef<<" naft="<<naft<<" "<<key.size()<<std::endl;
   return key;
 }
