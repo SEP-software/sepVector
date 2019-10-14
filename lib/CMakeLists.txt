@@ -122,5 +122,13 @@ target_include_directories(
          $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>)
 
 target_link_libraries(sepVector hypercube ${TBB_LIBRARIES})
-  install(FILES ${INCLUDES} DESTINATION include)
-  install(TARGETS sepVector DESTINATION lib EXPORT sepVectorTargets)
+install(FILES ${INCLUDES} DESTINATION include)
+install(TARGETS sepVector DESTINATION lib EXPORT sepVectorTargets)
+
+if(BUILD_TEST)
+
+  add_executable(testRegSpace testRegSpace.cc)
+  target_link_libraries(testRegSpace sepVector gtest gtest_main gtest)
+  add_test(NAME testRegSpace COMMAND testVel3d)
+
+endif(BUILD_TEST)
