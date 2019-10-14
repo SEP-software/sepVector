@@ -22,6 +22,7 @@ void regSpace::checkWindow(const int n, const int nw, const int fw,
 }
 
 std::vector<float> regSpace::axisToKey(const int ix) const {
+	std::cerr<<"IN axisToKey"<<std::endl;
   int iaxis = ix - 1;
   long long naft = 1, nbef = 1, naxis;
   std::vector<axis> axes = getHyper()->getAxes();
