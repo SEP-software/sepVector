@@ -2,7 +2,9 @@ project(sepVector-python)
 cmake_minimum_required(VERSION 2.8)
 set(CMAKE_INCLUDE_CURRENT_DIR TRUE)
 find_package(PythonInterp 3 REQUIRED)
-find_package(NumPy REQUIRED)
+find_package (Python3 COMPONENTS Interpreter Development Numpy)
+
+#find_package(NumPy REQUIRED)
 
 include_directories("${CMAKE_CURRENT_SOURCE_DIR}/../lib")
 
