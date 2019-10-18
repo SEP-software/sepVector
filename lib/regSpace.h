@@ -42,7 +42,7 @@ class regSpace {
    */
 
   void checkWindow(const int n, const int nw, const int fw, const int jw) const;
-  /*
+  /*!
     Given hypercube translate an axis to a key
 
     \param iax Axis to convert to a key
