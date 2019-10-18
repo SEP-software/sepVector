@@ -33,7 +33,6 @@ endif(BUILD_BYTE)
 if(BUILD_SHORT)
   set(USE_SHORT true)
 endif(BUILD_SHORT)
-set(SUBPACKAGE true)
 
 if(POLICY CMP0028)
   cmake_policy(SET CMP0028 NEW)
@@ -66,16 +65,11 @@ set(sepVector_DIRNAME_include "include")
 
 include(${CMAKE_ROOT}/Modules/ExternalProject.cmake)
 
-if(NOT TARGET hypercube)
-  if(NOT SUBPACKAGE)
-    execute_process(COMMAND git submodule update --init --recursive --
-                            external/hypercube
-                    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
-  endif(NOT SUBPACKAGE)
-  add_subdirectory(external/hypercube)
-endif(NOT TARGET hypercube)
-
-add_subdirectory(external/python-solver/GenericSolver)
+if(NOT SUBPACKAGE)
+  execute_process(COMMAND git submodule update --init --recursive --
+                          external/hypercube
+                  WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
+endif()
 
 configure_file("${PROJECT_SOURCE_DIR}/sepVectorConfig.h.in"
                "${PROJECT_BINARY_DIR}/sepVectorConfig.h")
@@ -103,7 +97,10 @@ if(BUILD_DOC)
       "Doxygen need to be installed to generate the doxygen documentation")
   endif(DOXYGEN_FOUND)
 endif(BUILD_DOC)
+set(SUBPACKAGE true)
+add_subdirectory(external/hypercube)
 
+add_subdirectory(external/python-solver/GenericSolver)
 add_subdirectory(lib)
 if(BUILD_PYTHON)
   add_subdirectory(python)
