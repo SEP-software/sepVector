@@ -262,6 +262,14 @@ class complexVector(vector):
         super().__init__()
         self.storage = "dataComplex"
 
+    def cloneSpace(self):
+        """Funtion tor return the space of a vector"""
+        return complexVector(fromCpp=self.cppMode.cloneSpace())
+
+    def zero(self):
+        """Function to zero out a vector"""
+        self.cppMode.set(0.)
+
 
 class byteVector(vector):
     """Generic byte vector class"""
