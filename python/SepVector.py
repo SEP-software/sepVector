@@ -270,6 +270,10 @@ class complexVector(vector):
         """Function to zero out a vector"""
         self.cppMode.set(0.)
 
+    def clone(self):
+        """clone a vector"""
+        return complexVector(fromCpp=self.cppMode.clone())
+
 
 class byteVector(vector):
     """Generic byte vector class"""
@@ -312,7 +316,6 @@ def getSepVector(*args, **keys):
             if "iax1" in keys and "iax2" in keys and "rev1" in keys and "rev2"  in keys and \
                     "ipos" in keys and "beg" in keys and "end" in keys:
                 if isinstance(keys["vector"], floatVector):
-                    print("AAA", keys["vector"], keys["vector"].getCpp())
                     return floatVector(fromCpp=pySepVector.float2DReg(keys["vector"].getCpp(), keys["iax1"], keys["rev1"],
                                                                       keys["iax2"], keys["rev2"], keys["ipos"], keys["beg"], keys["end"]))
 
