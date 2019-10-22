@@ -36,6 +36,8 @@ float2DReg::float2DReg(const std::shared_ptr<float6DReg> old, const int iax1,
       n[i] = end[i] - beg[i];
     else
       f[i] = ipos[i];
+    std::cerr << "what is going on "
+              << " " << f[i] << " " << j[i] << " " << n[i] << std::endl;
   }
 
   std::shared_ptr<float6DReg> tmp = old->window(n, f, j);
