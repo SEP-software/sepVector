@@ -312,7 +312,7 @@ def getSepVector(*args, **keys):
             if "iax1" in keys and "iax2" in keys and "rev1" in keys and "rev2"  in keys and \
                     "ipos" in keys and "beg" in keys and "end" in keys:
                 if isinstance(keys["vector"], floatVector):
-                    return floatVector(fromCpp=pySepVector.float2DReg(keys["vector"].cppMode, keys["iax1"], keys["rev1"],
+                    return floatVector(fromCpp=pySepVector.float2DReg(keys["vector"].getCpp(), keys["iax1"], keys["rev1"],
                                                                       keys["iax2"], keys["rev2"], keys["ipos"], keys["beg"], keys["end"]))
 
                 elif isinstance(keys["vector"], doubleVector):
