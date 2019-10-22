@@ -313,6 +313,7 @@ def getSepVector(*args, **keys):
         if "axes" in keys or "ns" in keys:
             hyper = Hypercube.hypercube(**keys)
         elif "vector" in keys:
+            print("BEG", keys["beg"], keys["end"])
             if "iax1" in keys and "iax2" in keys and "rev1" in keys and "rev2"  in keys and \
                     "ipos" in keys and "beg" in keys and "end" in keys:
                 if isinstance(keys["vector"], floatVector):
