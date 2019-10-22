@@ -283,9 +283,10 @@ class byteVector(vector):
         super().__init__()
         self.storage = "dataByte"
 
-    def getSepVector(*args, **keys):
-        """ Get a sepVector object
-                Option 1 (supply hypercube):
+
+def getSepVector(*args, **keys):
+    """ Get a sepVector object
+            Option 1 (supply hypercube):
                     hyper, kw args
             Option 2 (build hypercube):
                     ns = [] - list of sizes
@@ -299,169 +300,175 @@ class byteVector(vector):
                     rev1, rev1 - whether or not to reverse axes
                     beg, end - beg and end position for all axes(lists)
             storage = StorageType(
-        dataFloat[default],
-        dataComplex,
-        dataDouble,
-        dataInt,
-        dataByte)
-        """
-        myt = "dataFloat"
-        if len(args) == 1:
-            hyper = args[0]
-        elif len(args) == 0:
-            if "axes" in keys or "ns" in keys:
-                hyper = Hypercube.hypercube(**keys)
-            elif "vector" in keys:
-                print("BEG", keys["beg"], keys["end"], keys["vector"].getCpp())
-                if "iax1" in keys and "iax2" in keys and "rev1" in keys and "rev2"  in keys and \
-                        "ipos" in keys and "beg" in keys and "end" in keys:
-                    if isinstance(keys["vector"], floatVector):
-                        return floatVector(fromCpp=pySepVector.float2DReg(keys["vector"].getCpp(), keys["iax1"], keys["rev1"],
-                                                                          keys["iax2"], keys["rev2"], keys["ipos"], keys["beg"], keys["end"]))
-
-                    elif isinstance(keys["vector"], doubleVector):
-                        return doubleVector(fromCpp=pySepVector.double2DReg(keys["vector"].cppMode, keys["iax1"], keys["rev1"],
-                                                                            keys["iax2"], keys["rev2"], keys["ipos"], keys["beg"], keys["end"]))
-                    elif isinstance(keys["vector"], intVector):
-                        return intVector(fromCpp=pySepVector.int2DReg(keys["vector"].cppMode, keys["iax1"], keys["rev1"],
+    dataFloat[default],
+    dataComplex,
+    dataDouble,
+    dataInt,
+     dataByte)
+    """
+    myt = "dataFloat"
+    if len(args) == 1:
+        hyper = args[0]
+    elif len(args) == 0:
+        if "axes" in keys or "ns" in keys:
+            hyper = Hypercube.hypercube(**keys)
+        elif "vector" in keys:
+            print("BEG", keys["beg"], keys["end"], keys["vector"].getCpp())
+            if "iax1" in keys and "iax2" in keys and "rev1" in keys and "rev2"  in keys and \
+                    "ipos" in keys and "beg" in keys and "end" in keys:
+                if isinstance(keys["vector"], floatVector):
+                    return floatVector(fromCpp=pySepVector.float2DReg(keys["vector"].getCpp(), keys["iax1"], keys["rev1"],
                                                                       keys["iax2"], keys["rev2"], keys["ipos"], keys["beg"], keys["end"]))
-                    elif isinstance(keys["vector"], doubleVector):
-                        return byteVector(fromCpp=pySepVector.byte2DReg(keys["vector"].cppMode, keys["iax1"], keys["rev1"],
+
+                elif isinstance(keys["vector"], doubleVector):
+                    return doubleVector(fromCpp=pySepVector.double2DReg(keys["vector"].cppMode, keys["iax1"], keys["rev1"],
                                                                         keys["iax2"], keys["rev2"], keys["ipos"], keys["beg"], keys["end"]))
-                else:
-                    print("iax1" in keys, "iax2" in keys, "rev1" in keys, "rev2" in keys,
-                          "ipos" in keys, "beg" in keys, "end" in keys)
-                    raise Exception(
-                        "Must supply iax1,iax2,rev1,rev2,ipos,beg,end")
+                elif isinstance(keys["vector"], intVector):
+                    return intVector(fromCpp=pySepVector.int2DReg(keys["vector"].cppMode, keys["iax1"], keys["rev1"],
+                                                                  keys["iax2"], keys["rev2"], keys["ipos"], keys["beg"], keys["end"]))
+                elif isinstance(keys["vector"], doubleVector):
+                    return byteVector(fromCpp=pySepVector.byte2DReg(keys["vector"].cppMode, keys["iax1"], keys["rev1"],
+                                                                    keys["iax2"], keys["rev2"], keys["ipos"], keys["beg"], keys["end"]))
             else:
-                raise Exception("Must supply Hypercube,vector  or ns/axes")
+                print("iax1" in keys, "iax2" in keys, "rev1" in keys, "rev2" in keys,
+                      "ipos" in keys, "beg" in keys, "end" in keys)
+                raise Exception("Must supply iax1,iax2,rev1,rev2,ipos,beg,end")
         else:
-            raise Exception(
-                "Only understand 0 or 1 (hypercube) non-keyword arguments")
+            raise Exception("Must supply Hypercube,vector  or ns/axes")
+    else:
+        raise Exception(
+            "Only understand 0 or 1 (hypercube) non-keyword arguments")
 
-        if "storage" in keys:
-            myt = keys["storage"]
-        if myt == "dataFloat":
-            x = getFloatVector(hyper)
-            return floatVector(fromCpp=x)
-        elif myt == "dataComplex":
-            x = getComplexVector(hyper)
-            return complexVector(fromCpp=x)
-        elif myt == "dataDouble":
-            x = getDoubleVector(hyper)
-            return doubleVector(fromCpp=x)
-        elif myt == "dataInt":
-            x = getIntVector(hyper)
-            return intVector(fromCpp=x)
-        elif myt == "dataByte":
-            x = getByteVector(hyper)
-            return byteVector(fromCpp=x)
-        else:
-            raise Exception("Unknown type %s" % myt)
+    if "storage" in keys:
+        myt = keys["storage"]
+    if myt == "dataFloat":
+        x = getFloatVector(hyper)
+        return floatVector(fromCpp=x)
+    elif myt == "dataComplex":
+        x = getComplexVector(hyper)
+        return complexVector(fromCpp=x)
+    elif myt == "dataDouble":
+        x = getDoubleVector(hyper)
+        return doubleVector(fromCpp=x)
+    elif myt == "dataInt":
+        x = getIntVector(hyper)
+        return intVector(fromCpp=x)
+    elif myt == "dataByte":
+        x = getByteVector(hyper)
+        return byteVector(fromCpp=x)
+    else:
+        raise Exception("Unknown type %s" % myt)
 
-    def getCppSepVector(hyper, **keys):
-        h = hyper.getCpp()
-        myt = "dataFloat"
-        if "storage" in keys:
-            myt = keys["storage"]
-        if myt == "datFloat":
-            x = getFloatVector(hyper)
-        elif myt == "dataComplex":
-            x = getComplexVector(hyper)
-        elif myt == "dataDouble":
-            x = getDoubleVector(hyper)
-        elif myt == "dataInt":
-            x = getIntVector(hyper)
-        elif myt == "dataByte":
-            x = getByteVector(hyper)
-        else:
-            raise Exception("Unknown type" % myt)
 
-    def getFloatVector(hyper):
-        h = hyper.getCpp()
-        if len(hyper.axes) == 1:
-            return pySepVector.float1DReg(h)
-        elif len(hyper.axes) == 2:
-            return pySepVector.float2DReg(h)
-        elif len(hyper.axes) == 3:
-            return pySepVector.float3DReg(h)
-        elif len(hyper.axes) == 4:
-            return pySepVector.float4DReg(h)
-        elif len(hyper.axes) == 5:
-            return pySepVector.float5DReg(h)
-        elif len(hyper.axes) == 6:
-            return pySepVector.float6DReg(h)
+def getCppSepVector(hyper, **keys):
+    h = hyper.getCpp()
+    myt = "dataFloat"
+    if "storage" in keys:
+        myt = keys["storage"]
+    if myt == "datFloat":
+        x = getFloatVector(hyper)
+    elif myt == "dataComplex":
+        x = getComplexVector(hyper)
+    elif myt == "dataDouble":
+        x = getDoubleVector(hyper)
+    elif myt == "dataInt":
+        x = getIntVector(hyper)
+    elif myt == "dataByte":
+        x = getByteVector(hyper)
+    else:
+        raise Exception("Unknown type" % myt)
 
-    def getComplexVector(hyper):
-        h = hyper.getCpp()
 
-        if len(hyper.axes) == 1:
-            return pySepVector.complex1DReg(h)
-        elif len(hyper.axes) == 2:
-            return pySepVector.complex2DReg(h)
-        elif len(hyper.axes) == 3:
-            return pySepVector.complex3DReg(h)
-        elif len(hyper.axes) == 4:
-            return pySepVector.complex4DReg(h)
-        elif len(hyper.axes) == 5:
-            return pySepVector.complex5DReg(h)
-        elif len(hyper.axes) == 6:
-            return pySepVector.complex6DReg(h)
+def getFloatVector(hyper):
+    h = hyper.getCpp()
+    if len(hyper.axes) == 1:
+        return pySepVector.float1DReg(h)
+    elif len(hyper.axes) == 2:
+        return pySepVector.float2DReg(h)
+    elif len(hyper.axes) == 3:
+        return pySepVector.float3DReg(h)
+    elif len(hyper.axes) == 4:
+        return pySepVector.float4DReg(h)
+    elif len(hyper.axes) == 5:
+        return pySepVector.float5DReg(h)
+    elif len(hyper.axes) == 6:
+        return pySepVector.float6DReg(h)
 
-    def getByteVector(hyper):
-        h = hyper.getCpp()
 
-        if len(hyper.axes) == 1:
-            return pySepVector.byte1DReg(h)
-        elif len(hyper.axes) == 2:
-            return pySepVector.byte2DReg(h)
-        elif len(hyper.axes) == 3:
-            return pySepVector.byte3DReg(h)
-        elif len(hyper.axes) == 4:
-            return pySepVector.byte4DReg(h)
-        elif len(hyper.axes) == 5:
-            return pySepVector.byte5DReg(h)
-        elif len(hyper.axes) == 6:
-            return pySepVector.byte6DReg(h)
+def getComplexVector(hyper):
+    h = hyper.getCpp()
 
-    def getDoubleVector(hyper):
-        h = hyper.getCpp()
-        if len(hyper.axes) == 1:
-            return pySepVector.double1DReg(h)
-        elif len(hyper.axes) == 2:
-            return pySepVector.double2DReg(h)
-        elif len(hyper.axes) == 3:
-            return pySepVector.double3DReg(h)
-        elif len(hyper.axes) == 4:
-            return pySepVector.double4DReg(h)
-        elif len(hyper.axes) == 5:
-            return pySepVector.double5DReg(h)
-        elif len(hyper.axes) == 6:
-            return pySepVector.double6DReg(h)
+    if len(hyper.axes) == 1:
+        return pySepVector.complex1DReg(h)
+    elif len(hyper.axes) == 2:
+        return pySepVector.complex2DReg(h)
+    elif len(hyper.axes) == 3:
+        return pySepVector.complex3DReg(h)
+    elif len(hyper.axes) == 4:
+        return pySepVector.complex4DReg(h)
+    elif len(hyper.axes) == 5:
+        return pySepVector.complex5DReg(h)
+    elif len(hyper.axes) == 6:
+        return pySepVector.complex6DReg(h)
 
-    def getIntVector(hyper):
-        h = hyper.getCpp()
-        if len(hyper.axes) == 1:
-            return pySepVector.int1DReg(h)
-        elif len(hyper.axes) == 2:
-            return pySepVector.int2DReg(h)
-        elif len(hyper.axes) == 3:
-            return pySepVector.int3DReg(h)
-        elif len(hyper.axes) == 4:
-            return pySepVector.int4DReg(h)
-        elif len(hyper.axes) == 5:
-            return pySepVector.int5DReg(h)
-        elif len(hyper.axes) == 6:
-            return pySepVector.int6DReg(h)
 
-    class rectFilter1D(floatVector):
+def getByteVector(hyper):
+    h = hyper.getCpp()
 
-        def __init__(self, n, f, pef=False):
-            """Initialize a rectFilter1D
-                    n - size of box(list 1 - D)
-                    f - location of the 1 (list 1 - D) (set to - 1)
-                    pef - Whether or not this is a PEF"""
-            self.cppMode = pySepVector.rectFilter1D(n, f, pef)
+    if len(hyper.axes) == 1:
+        return pySepVector.byte1DReg(h)
+    elif len(hyper.axes) == 2:
+        return pySepVector.byte2DReg(h)
+    elif len(hyper.axes) == 3:
+        return pySepVector.byte3DReg(h)
+    elif len(hyper.axes) == 4:
+        return pySepVector.byte4DReg(h)
+    elif len(hyper.axes) == 5:
+        return pySepVector.byte5DReg(h)
+    elif len(hyper.axes) == 6:
+        return pySepVector.byte6DReg(h)
+
+
+def getDoubleVector(hyper):
+    h = hyper.getCpp()
+    if len(hyper.axes) == 1:
+        return pySepVector.double1DReg(h)
+    elif len(hyper.axes) == 2:
+        return pySepVector.double2DReg(h)
+    elif len(hyper.axes) == 3:
+        return pySepVector.double3DReg(h)
+    elif len(hyper.axes) == 4:
+        return pySepVector.double4DReg(h)
+    elif len(hyper.axes) == 5:
+        return pySepVector.double5DReg(h)
+    elif len(hyper.axes) == 6:
+        return pySepVector.double6DReg(h)
+
+
+def getIntVector(hyper):
+    h = hyper.getCpp()
+    if len(hyper.axes) == 1:
+        return pySepVector.int1DReg(h)
+    elif len(hyper.axes) == 2:
+        return pySepVector.int2DReg(h)
+    elif len(hyper.axes) == 3:
+        return pySepVector.int3DReg(h)
+    elif len(hyper.axes) == 4:
+        return pySepVector.int4DReg(h)
+    elif len(hyper.axes) == 5:
+        return pySepVector.int5DReg(h)
+    elif len(hyper.axes) == 6:
+        return pySepVector.int6DReg(h)
+
+
+class rectFilter1D(floatVector):
+
+    def __init__(self, n, f, pef=False):
+        """Initialize a rectFilter1D
+                n - size of box(list 1 - D)
+                f - location of the 1 (list 1 - D) (set to - 1)
+                pef - Whether or not this is a PEF"""
+        self.cppMode = pySepVector.rectFilter1D(n, f, pef)
 
 
 class rectFilter2D(floatVector):
