@@ -25,6 +25,7 @@ float2DReg::float2DReg(const std::shared_ptr<float6DReg> old, const int iax1,
                        const std::vector<int> &ipos,
                        const std::vector<int> &beg,
                        const std::vector<int> &end) {
+  std::cerr << "in this " << std::endl;
   std::vector<int> j(6, 1);
   std::vector<int> f(6, 0);
   std::vector<int> n(6, 1);
@@ -62,6 +63,8 @@ float2DReg::float2DReg(const std::shared_ptr<float5DReg> old, const int iax1,
                        const std::vector<int> &ipos,
                        const std::vector<int> &beg,
                        const std::vector<int> &end) {
+  std::cerr << "in5this " << std::endl;
+
   std::vector<int> j(5, 1);
   std::vector<int> f(5, 0);
   std::vector<int> n(5, 1);
@@ -95,6 +98,8 @@ float2DReg::float2DReg(const std::shared_ptr<float4DReg> old, const int iax1,
                        const std::vector<int> &ipos,
                        const std::vector<int> &beg,
                        const std::vector<int> &end) {
+  std::cerr << "in 4this " << std::endl;
+
   std::vector<int> j(4, 1);
   std::vector<int> f(4, 0);
   std::vector<int> n(4, 1);
@@ -128,6 +133,8 @@ float2DReg::float2DReg(const std::shared_ptr<float3DReg> old, const int iax1,
                        const std::vector<int> &ipos,
                        const std::vector<int> &beg,
                        const std::vector<int> &end) {
+  std::cerr << "in 3this " << std::endl;
+
   std::vector<int> j(3, 1);
   std::vector<int> f(3, 0);
   std::vector<int> n(3, 1);
@@ -164,6 +171,8 @@ float2DReg::float2DReg(const std::shared_ptr<float2DReg> old, const int iax1,
                        const std::vector<int> &beg,
                        const std::vector<int> &end) {
   std::vector<int> j(2, 1);
+  std::cerr << "in 2this " << std::endl;
+
   std::vector<int> f(2, 0);
   std::vector<int> n(2, 1);
   std::vector<int> nd = old->getHyper()->getNs();
