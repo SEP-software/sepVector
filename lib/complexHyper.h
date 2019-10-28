@@ -25,6 +25,15 @@ Initializer for complexHyper class. Only used by inherited class
   //! Fill vector with random number
   virtual void random();
   /*!
+    Return the norm of the dataset.
+      1 - sum(fabs|a[]|)
+      2 - 1/2(a[]*a[])
+
+    \param nrm Norm to calculate
+ */
+  double norm(const int nrm) const;
+
+  /*!
    Multiply vector by another vector
 
    self*=vec2
@@ -41,6 +50,13 @@ Initializer for complexHyper class. Only used by inherited class
     setNotSpace();
     setMemPtr((void *)ptr, sizeof(std::complex<float>));
   }
+
+  //! Scale vector self*=scale
+  /*!
+    \param val What to scale vector by
+  */
+  virtual void scale(const double val) override;
+
   /*!  Set that this is only vector space with no storage
    */
   virtual void setSpace() { _spaceOnly = true; }

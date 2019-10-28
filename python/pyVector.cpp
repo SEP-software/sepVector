@@ -1481,12 +1481,16 @@ PYBIND11_MODULE(pySepVector, clsVector) {
 
       .def_property("_vals", &complexHyper::getVals, &complexHyper::setData,
                     py::return_value_policy::reference)
-
+      .def("scale",
+           (void (complexHyper::*)(const double)) & complexHyper::scale,
+           "Scale a vector")
       .def("calcCheckSum",
            (unsigned char (complexHyper::*)() const) &
                complexHyper::calcCheckSum,
            "Calculate checksum of a vector")
-
+      .def("norm",
+           (double (complexHyper::*)(const int n) const) & complexHyper::norm,
+           "Calculate n-norm of a vector")
       .def("zero", (void (complexHyper::*)()) & complexHyper::zero,
            "Fill a vector with zero")
       .def("set",

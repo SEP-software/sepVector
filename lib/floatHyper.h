@@ -28,12 +28,13 @@ class floatHyper : public Vector, public regSpace {
     \param vec Vector to add to the current vector
   */
   virtual void add(std::shared_ptr<floatHyper> vec);
+
   //! Scale vector self*=scale
   /*!
     \param val What to scale vector by
   */
-
   virtual void scale(const double val) override;
+
   //! Add to vector scaling each self=self*sc1+vec*sc2
   /*!
     \param sc1 What to scale current vector by
@@ -153,7 +154,7 @@ class floatHyper : public Vector, public regSpace {
   }
   /*!
      Return the norm of the dataset.
-       1 - sum(|a[]|)
+       1 - sum(fabs|a[]|)
        2 - 1/2(a[]*a[])
 
      \param nrm Norm to calculate

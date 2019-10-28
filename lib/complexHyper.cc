@@ -10,8 +10,7 @@ using namespace SEP;
 
 void complexHyper::add(const std::shared_ptr<complexHyper> vec2) {
   if (!checkSame(vec2)) throw(std::string("Vectors not of the same space"));
-
-  std::shared_ptr<complexHyper> vec2H =
+  n std::shared_ptr<complexHyper> vec2H =
       std::dynamic_pointer_cast<complexHyper>(vec2);
 
   for (long long i = 0; i < getHyper()->getN123(); i++)
@@ -37,12 +36,45 @@ void complexHyper::mult(const std::shared_ptr<complexHyper> vec2) {
   calcCheckSum();
 }
 
+void complexHyper::scale(const float scale) {
+  for (long long i = 0; i < getHyper()->getN123(); i++)
+
+    tbb::parallel_for(tbb::blocked_range<long long>(0, getHyper()->getN123()),
+                      [&](const tbb::blocked_range<long long> &r) {
+      for (long long i = r.begin(); i != r.end(); ++i)
+        _vals[i] = { _vals[i].real() * scale, _vals[i].imag() * scale;
+                          }
+});
+calcCheckSum();
+}
+
 void complexHyper::random() {
   if (getSpaceOnly()) throw(std::string("Vectors not allocated"));
   for (long long ii = 0; ii < getHyper()->getN123(); ii++)
     _vals[ii] = {(float)((double)rand() / (RAND_MAX)-.5),
                  (float)((double)rand() / (RAND_MAX)-.5)};
   calcCheckSum();
+}
+
+double complexHyper::norm(const int n) const {
+  double dt = tbb::parallel_reduce(
+      tbb::blocked_range<size_t>(0, getHyper()->getN123()), 0.,
+      [&](const tbb::blocked_range<size_t> &r, double v) {
+        if (n == 1) {
+          for (size_t i = r.begin(); i != r.end(); ++i) {
+            v += sqrt((double)_vals[i].norm);
+          }
+        } else {
+          for (size_t i = r.begin(); i != r.end(); ++i) {
+            v += (double)_vals[i].norm;
+          }
+        }
+        return v;
+      },
+      [](double a, double b) { return a + b; });
+  if (n == 2) return sqrtf(dt);
+
+  return dt;
 }
 
 void complexHyper::set(const std::complex<float> val) {
@@ -58,7 +90,8 @@ void complexHyper::infoStream(const int lev, std::stringstream &x) {
     x << "Allocated\n";
     long long npts = std::min((const long long)lev, getHyper()->getN123());
     //  for (long long i = 0; i < npts; i++)
-    //  x << std::to_string(i) << std::string(" ") << std::to_string(_vals[i])
+    //  x << std::to_string(i) << std::string(" ") <<
+    //  std::to_string(_vals[i])
     //  << std::endl;
   }
 }
