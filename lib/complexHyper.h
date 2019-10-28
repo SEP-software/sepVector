@@ -55,7 +55,7 @@ Initializer for complexHyper class. Only used by inherited class
   /*!
     \param val What to scale vector by
   */
-  virtual void scale(const double val) override;
+  virtual void scale(const double val);
 
   /*!  Set that this is only vector space with no storage
    */
