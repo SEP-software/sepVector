@@ -10,7 +10,7 @@ using namespace SEP;
 
 void complexHyper::add(const std::shared_ptr<complexHyper> vec2) {
   if (!checkSame(vec2)) throw(std::string("Vectors not of the same space"));
-  n std::shared_ptr<complexHyper> vec2H =
+  std::shared_ptr<complexHyper> vec2H =
       std::dynamic_pointer_cast<complexHyper>(vec2);
 
   for (long long i = 0; i < getHyper()->getN123(); i++)
