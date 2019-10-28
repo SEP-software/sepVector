@@ -1479,11 +1479,24 @@ PYBIND11_MODULE(pySepVector, clsVector) {
                complexHyper::isDifferent,
            "Check to  see if two vectors are different")
 
+      .def("mult",
+           (void (complexHyper::*)(std::shared_ptr<complexHyper>)) &
+               complexHyper::mult,
+           "vec=vec*vec2")
+      .def("dot",
+           (double (complexHyper::*)(std::shared_ptr<complexHyper>) const) &
+               complexHyper::dot,
+           "Calculate dot product")
       .def_property("_vals", &complexHyper::getVals, &complexHyper::setData,
                     py::return_value_policy::reference)
       .def("scale",
            (void (complexHyper::*)(const double)) & complexHyper::scale,
            "Scale a vector")
+      .def("scaleAdd",
+           (void (complexHyper::*)(std::shared_ptr<complexHyper>, const double,
+                                   const double)) &
+               complexHyper::scaleAdd,
+           "vec=vec*sc1+vec2*sc2")
       .def("calcCheckSum",
            (unsigned char (complexHyper::*)() const) &
                complexHyper::calcCheckSum,
@@ -1499,7 +1512,16 @@ PYBIND11_MODULE(pySepVector, clsVector) {
            "Fill a vector with a value")
       .def("rand", (void (complexHyper::*)()) & complexHyper::random,
            "Fill a vector with random number")
-
+      .def("clipVector",
+           (void (complexHyper::*)(const std::shared_ptr<floatHyper>,
+                                   const std::shared_ptr<floatHyper>)) &
+               complexHyper::clipVector,
+           "vec=min(max(low,vec),high)")
+      .def("clipVector",
+           (void (complexHyper::*)(const std::shared_ptr<complexHyper>,
+                                   const std::shared_ptr<complexHyper>)) &
+               complexHyper::clipVector,
+           "vec=min(max(low,vec),high)")
       .def("checkSame",
            (bool (complexHyper::*)(const std::shared_ptr<complexHyper>) const) &
                complexHyper::checkSame,

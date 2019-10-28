@@ -266,13 +266,45 @@ class complexVector(vector):
         """Funtion tor return the space of a vector"""
         return complexVector(fromCpp=self.cppMode.cloneSpace())
 
+    def norm(self, N=2):
+        """Function to compute vector N-norm"""
+        self.cppMode.norm(N)
+
     def zero(self):
         """Function to zero out a vector"""
         self.cppMode.set(0.)
 
+    def multiply(self, vec2):
+        """self = vec2 * self"""
+        self.cppMode.mult(vec2.cppMode)
+
+    def copy(self, vec2):
+        """Copy vec2 into self"""
+        self.scaleAdd(vec2, 0., 1.)
+
     def clone(self):
         """clone a vector"""
         return complexVector(fromCpp=self.cppMode.clone())
+
+    def isDifferent(self, vec2):
+        """Function to check if two vectors belong to the same vector space"""
+        return self.cppMode.isDifferent(vec2.cppMode)
+
+    def clipVector(self, low, high):
+        """Clip vector element by element vec=min(high,max(low,vec))"""
+        self.cppMode.clipVector(low.cppMode, high.cppMode)
+
+    def dot(self, vec2):
+        """Compute dot product of two vectors"""
+        return self.cppMode.dot(vec2.cppMode)
+
+    def scale(self, sc):
+        """Function to scale a vector"""
+        self.cppMode.scale(sc)
+
+    def scaleAdd(self, vec2, sc1=1., sc2=1.):
+        """self = self * sc1 + sc2 * vec2"""
+        self.cppMode.scaleAdd(vec2.cppMode, sc1, sc2)
 
 
 class byteVector(vector):
@@ -313,8 +345,7 @@ def getSepVector(*args, **keys):
         if "axes" in keys or "ns" in keys:
             hyper = Hypercube.hypercube(**keys)
         elif "vector" in keys:
-            if "iax1" in keys and "iax2" in keys and "rev1" in keys and "rev2"  in keys and \
-                    "ipos" in keys and "beg" in keys and "end" in keys:
+            if "iax1" in keys and "iax2" in keys and "rev1" in keys and "rev2" in keys and "ipos" in keys and "beg" in keys and "end" in keys:
                 if isinstance(keys["vector"], floatVector):
                     return floatVector(fromCpp=pySepVector.float2DReg(keys["vector"].getCpp(), keys["iax1"], keys["rev1"],
                                                                       keys["iax2"], keys["rev2"], keys["ipos"], keys["beg"], keys["end"]))

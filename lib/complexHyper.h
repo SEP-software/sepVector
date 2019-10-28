@@ -4,6 +4,7 @@
 #include <complex>
 #include <cstdint>
 #include <sstream>
+#include "floatHyper.h"
 #include "regSpace.h"
 
 namespace SEP {
@@ -33,12 +34,40 @@ Initializer for complexHyper class. Only used by inherited class
  */
   double norm(const int nrm) const;
 
+  //! Add to vector scaling each self=self*sc1+vec*sc2
   /*!
-   Multiply vector by another vector
+    \param sc1 What to scale current vector by
+    \param vec2 Other vector to scale add to current vector
+    \param sc2 What to scale the second vector by
+  */
 
-   self*=vec2
+  virtual void scaleAdd(std::shared_ptr<complexHyper> vec2, const double sc1,
+                        const double sc2);
+
+  /*!
+    Clip a dataset value by value
+        a[]=std::min(eclip[],max(bclip[],a[]))
+
+    \param  bclip Minimum absolute
+    \param  eclip Maximum absolute
+
+
 */
-  virtual void mult(std::shared_ptr<complexHyper> vec2);
+  void clipVector(const std::shared_ptr<floatHyper> bclip,
+                  const std::shared_ptr<floatHyper> eclip);
+
+  /*!
+    Clip a dataset value by value
+        a[]=std::min(eclip[],max(bclip[],a[]))
+
+    \param  bclip Minimum absolute
+    \param  eclip Maximum absolute
+
+
+*/
+  void clipVector(const std::shared_ptr<complexHyper> bclip,
+                  const std::shared_ptr<complexHyper> eclip);
+
   /*!
    Set a pointer to the storage for the dataset.
    Storage is handled by child classes.
@@ -50,13 +79,23 @@ Initializer for complexHyper class. Only used by inherited class
     setNotSpace();
     setMemPtr((void *)ptr, sizeof(std::complex<float>));
   }
+  /*!  Return the dot product of current vec and another vec
+   return SUM(this[]*vec2[])
+   \param vec2 Vector to calculate the dot prodcut with
+   */
+  virtual double dot(std::shared_ptr<complexHyper> vec2) const;
 
   //! Scale vector self*=scale
   /*!
     \param val What to scale vector by
   */
   virtual void scale(const double val);
+  /*!
+     Multiply vector by another vector
 
+     self*=vec2
+  */
+  virtual void mult(std::shared_ptr<complexHyper> vec2);
   /*!  Set that this is only vector space with no storage
    */
   virtual void setSpace() { _spaceOnly = true; }
@@ -103,6 +142,7 @@ Set the valule of vector to 0
       Return the pointer to the memory for the vector
   */
   std::complex<float> *getVals() { return _vals; }
+
   /*!
   Return the pointer to the memory for the vector with const tag
 */

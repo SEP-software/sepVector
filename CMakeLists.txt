@@ -1,5 +1,6 @@
 cmake_minimum_required(VERSION 3.5 FATAL_ERROR)
 
+set(BUILD_DOC OFF)
 if(NOT SUBPACKAGE)
   option(BUILD_TEST "Build tests" OFF)
   option(BUILD_PYTHON "Build python interfaces" ON)
@@ -9,6 +10,7 @@ if(NOT SUBPACKAGE)
 else(NOT SUBPACKAGE)
 
 endif(NOT SUBPACKAGE)
+
 option(BUILD_DOUBLE "Build double support" ON)
 option(BUILD_INT "Build int support" ON)
 option(BUILD_COMPLEX "Build complex support" ON)
@@ -96,6 +98,7 @@ if(BUILD_DOC)
     message(
       "Doxygen need to be installed to generate the doxygen documentation")
   endif(DOXYGEN_FOUND)
+else(BUILD_DOC)
 endif(BUILD_DOC)
 set(SUBPACKAGE true)
 if(NOT TARGET hypercube)
