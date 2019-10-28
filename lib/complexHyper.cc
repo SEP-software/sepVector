@@ -36,16 +36,16 @@ void complexHyper::mult(const std::shared_ptr<complexHyper> vec2) {
   calcCheckSum();
 }
 
-void complexHyper::scale(const float scale) {
+void complexHyper::scale(const double sc) {
   for (long long i = 0; i < getHyper()->getN123(); i++)
 
     tbb::parallel_for(tbb::blocked_range<long long>(0, getHyper()->getN123()),
                       [&](const tbb::blocked_range<long long> &r) {
-      for (long long i = r.begin(); i != r.end(); ++i)
-        _vals[i] = { _vals[i].real() * scale, _vals[i].imag() * scale;
-                          }
-});
-calcCheckSum();
+                        for (long long i = r.begin(); i != r.end(); ++i)
+                          _vals[i] = {_vals[i].real() * (float)sc,
+                                      _vals[i].imag() * (float)sc};
+                      });
+  calcCheckSum();
 }
 
 void complexHyper::random() {
@@ -62,11 +62,11 @@ double complexHyper::norm(const int n) const {
       [&](const tbb::blocked_range<size_t> &r, double v) {
         if (n == 1) {
           for (size_t i = r.begin(); i != r.end(); ++i) {
-            v += sqrt((double)_vals[i].norm);
+            v += (double)sqrt(std::norm(_vals[i]));
           }
         } else {
           for (size_t i = r.begin(); i != r.end(); ++i) {
-            v += (double)_vals[i].norm;
+            v += (double)std::norm(_vals[i]);
           }
         }
         return v;
