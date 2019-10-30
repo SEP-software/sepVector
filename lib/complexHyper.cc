@@ -122,14 +122,12 @@ void complexHyper::clipVector(const std::shared_ptr<complexHyper> beg,
 }
 
 void complexHyper::scale(const double sc) {
-  for (long long i = 0; i < getHyper()->getN123(); i++)
-
-    tbb::parallel_for(tbb::blocked_range<long long>(0, getHyper()->getN123()),
-                      [&](const tbb::blocked_range<long long> &r) {
-                        for (long long i = r.begin(); i != r.end(); ++i)
-                          _vals[i] = {_vals[i].real() * (float)sc,
-                                      _vals[i].imag() * (float)sc};
-                      });
+  tbb::parallel_for(
+      tbb::blocked_range<long long>(0, getHyper()->getN123()),
+      [&](const tbb::blocked_range<long long> &r) {
+        for (long long i = r.begin(); i != r.end(); ++i)
+          _vals[i] = {_vals[i].real() * (float)sc, _vals[i].imag() * (float)sc};
+      });
   calcCheckSum();
 }
 
