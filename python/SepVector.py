@@ -268,7 +268,7 @@ class complexVector(vector):
 
     def norm(self, N=2):
         """Function to compute vector N-norm"""
-        self.cppMode.norm(N)
+        return self.cppMode.norm(N)
 
     def zero(self):
         """Function to zero out a vector"""
