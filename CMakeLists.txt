@@ -17,6 +17,10 @@ option(BUILD_COMPLEX "Build complex support" ON)
 option(BUILD_BYTE "Build byte support" ON)
 option(BUILD_SHORT "Build short support" ON)
 
+if(BUILD_TEST)
+	enable_testing()
+endif(BUILD_TEST)
+
 if(BUILD_DOUBLE)
   set(USE_DOUBLE true)
 endif(BUILD_DOUBLE)

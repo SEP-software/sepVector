@@ -126,9 +126,8 @@ install(FILES ${INCLUDES} DESTINATION include)
 install(TARGETS sepVector DESTINATION lib EXPORT sepVectorTargets)
 
 if(BUILD_TEST)
-
   add_executable(testRegSpace testRegSpace.cc)
   target_link_libraries(testRegSpace sepVector  gtest gtest_main gtest )
-  add_test(NAME testRegSpace COMMAND testVel3d)
+  add_test(NAME testRegSpace COMMAND testRegSpace)
 
 endif(BUILD_TEST)
