@@ -3,9 +3,10 @@ import pySepVector
 import Hypercube
 import numpy
 import pyVector
+from sys import version_info
 
 
-class vector(pyVector.vector):
+class vector(pyVector.vectorIC):
     """Generic sepVector class"""
 
     def __init__(self):
@@ -14,6 +15,7 @@ class vector(pyVector.vector):
             self.cppMode = self.kw["fromCpp"]
         elif "fromHyper" in self.kw:
             self.cppMode = getCppSepVector(self.kw["fromHyper"], self.kw)
+        super().__init__(self.getNdArray())
 
     def getCpp(self):
         """Return the associated cpp object"""
@@ -43,6 +45,23 @@ class vector(pyVector.vector):
         """Function to a vector to a value"""
         self.cppMode.set(val)
 
+        def isDifferent(self, vec2):
+            """Function to check if two vectors are identical using built-in hash function"""
+            # Checking whether the input is a vector or not
+            if(version_info[0] == 2):
+                # First make both array buffers read-only
+                self.arr.flags.writeable = False
+                vec2.arr.flags.writeable = False
+                chcksum1 = hash(self.arr.data)
+                chcksum2 = hash(vec2.arr.data)
+                # Remake array buffers writable
+                self.arr.flags.writeable = True
+                vec2.arr.flags.writeable = True
+                isDiff = (chcksum1 != chcksum2)
+            else:
+                isDiff = (not np.array_equal(self.arr, vec2.arr))
+            return isDiff
+
     def getHyper(self):
         """Return the hypercube associated with the vector"""
         return Hypercube.hypercube(hypercube=self.cppMode.getHyper())
@@ -51,13 +70,16 @@ class vector(pyVector.vector):
         """Return a numpy version of the array (same memory"""
         return numpy.array(self.cppMode, copy=False)
 
-    def window(self, **kw):
+    def windowInternal(self, **kw):
         """Window a vector return another vector (of the same dimension
             specify min1..min6, max1...max6, f1...f6, j1...j6, n1...n6, or
             any of these by lists.
             Can not specify n and min or max """
         axes = self.getHyper().axes
         ndim = len(axes)
+        nw = []
+        fw = []
+        jw = []
         for i in range(1, ndim + 1):
             nset = False
             fset = False
@@ -66,11 +88,11 @@ class vector(pyVector.vector):
                 nset = True
                 n = int(kw["n%d" % i])
             if "f%d" % i in kw:
-                jset = True
-                j = int(kw["j%d" % i])
-            if "j%d" % i in kw:
                 fset = True
                 f = int(kw["f%d" % i])
+            if "j%d" % i in kw:
+                jset = True
+                j = int(kw["j%d" % i])
             biSet = False
             eiSet = False
             if "min%d" % i in kw:
@@ -112,6 +134,9 @@ class vector(pyVector.vector):
                                         (i, kw["max%d" % i]))
                     else:
                         n = (ei - f - 1) / j + 1
+                else:
+                    n = (axes[i - 1].n - f - 1) / j + 1
+
                 if not biSet and not eiSet and not jset and not fset:
                     n = axes[i - 1].n
                     j = 1
@@ -125,6 +150,10 @@ class vector(pyVector.vector):
                     f = fi
             if axes[i - 1].n < (1 + f + j * (n - 1)):
                 raise Exception("Invalid window parameter")
+            nw.append(int(n))
+            fw.append(int(f))
+            jw.append(int(j))
+        return self.cppMode.window(nw, fw, jw)
 
     def checkSame(self, vec2):
         """Function to check if two vectors belong to the same vector space"""
@@ -183,9 +212,12 @@ class floatVector(vector):
         """Return the norm of a vector"""
         return self.cppMode.norm(nrm)
 
-    def isDifferent(self, vec2):
-        """Function to check if two vectors belong to the same vector space"""
-        return self.cppMode.isDifferent(vec2.cppMode)
+    def window(self, **kw):
+        """Window a vector return another vector (of the same dimension
+            specify min1..min6, max1...max6, f1...f6, j1...j6, n1...n6, or
+            any of these by lists.
+            Can not specify n and min or max """
+        return floatVector(fromCpp=self.windowInternal(**kw))
 
 
 class doubleVector(vector):
@@ -240,9 +272,12 @@ class doubleVector(vector):
         """Return the norm of a vector"""
         return self.cppMode.norm(nrm)
 
-    def isDifferent(self, vec2):
-        """Function to check if two vectors belong to the same vector space"""
-        return self.cppMode.isDifferent(vec2.cppMode)
+    def window(self, **kw):
+        """Window a vector return another vector (of the same dimension
+            specify min1..min6, max1...max6, f1...f6, j1...j6, n1...n6, or
+            any of these by lists.
+            Can not specify n and min or max """
+        return doubleVector(fromCpp=self.windowInternal(kw))
 
 
 class intVector(vector):
@@ -278,6 +313,10 @@ class complexVector(vector):
         """self = vec2 * self"""
         self.cppMode.mult(vec2.cppMode)
 
+    def rand(self):
+        """Fill with random numbers"""
+        self.cppMode.rand()
+
     def copy(self, vec2):
         """Copy vec2 into self"""
         self.scaleAdd(vec2, 0., 1.)
@@ -285,10 +324,6 @@ class complexVector(vector):
     def clone(self):
         """clone a vector"""
         return complexVector(fromCpp=self.cppMode.clone())
-
-    def isDifferent(self, vec2):
-        """Function to check if two vectors belong to the same vector space"""
-        return self.cppMode.isDifferent(vec2.cppMode)
 
     def clipVector(self, low, high):
         """Clip vector element by element vec=min(high,max(low,vec))"""
@@ -305,6 +340,13 @@ class complexVector(vector):
     def scaleAdd(self, vec2, sc1=1., sc2=1.):
         """self = self * sc1 + sc2 * vec2"""
         self.cppMode.scaleAdd(vec2.cppMode, sc1, sc2)
+
+    def window(self, **kw):
+        """Window a vector return another vector (of the same dimension
+            specify min1..min6, max1...max6, f1...f6, j1...j6, n1...n6, or
+            any of these by lists.
+            Can not specify n and min or max """
+        return complexVector(fromCpp=self.windowInternal(kw))
 
 
 class byteVector(vector):

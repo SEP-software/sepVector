@@ -20,6 +20,11 @@ target_include_directories(
          ${PYTHON_INCLUDE_PATH}
          $<INSTALL_INTERFACE:include>
          $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}../src>)
+if(BUILD_TEST)
+	add_test(NAME sepVector 
+		COMMAND ${PYTHON_EXECUTABLE} -m test_SepVector 
+  WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
+endif(BUILD_TEST)
 
 target_link_libraries(pySepVector PRIVATE sepVector)
 install(TARGETS pySepVector DESTINATION lib/python EXPORT sepVectorTargets)
