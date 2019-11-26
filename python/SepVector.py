@@ -398,7 +398,7 @@ def getSepVector(*args, **keys):
                 elif isinstance(keys["vector"], intVector):
                     return intVector(fromCpp=pySepVector.int2DReg(keys["vector"].cppMode, keys["iax1"], keys["rev1"],
                                                                   keys["iax2"], keys["rev2"], keys["ipos"], keys["beg"], keys["end"]))
-                elif isinstance(keys["vector"], doubleVector):
+                elif isinstance(keys["vector"], byteVector):
                     return byteVector(fromCpp=pySepVector.byte2DReg(keys["vector"].cppMode, keys["iax1"], keys["rev1"],
                                                                     keys["iax2"], keys["rev2"], keys["ipos"], keys["beg"], keys["end"]))
             else:
