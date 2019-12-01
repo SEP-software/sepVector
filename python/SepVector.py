@@ -389,7 +389,7 @@ class byteVector(vector):
            @return Histogram """
         print("IN 21")
         histo = getSepVector(ns=[nelem], storage="dataInt")
-        self.cppMode.calcHisto(histo.getCpp(), fmn, mx)
+        self.cppMode.calcHisto(histo.getCpp(), mn, mx)
         return histo
 
 
