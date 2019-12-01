@@ -183,7 +183,6 @@ class floatVector(vector):
            nelem - Return number of elements in histogram
 
            @return Histogram """
-        print("IN on1")
         histo = getSepVector(ns=[nelem], storage="dataInt")
         self.cppMode.calcHisto(histo.getCpp(), mn, mx)
         return histo
@@ -387,7 +386,6 @@ class byteVector(vector):
            nelem - Return number of elements in histogram
 
            @return Histogram """
-        print("IN 21")
         histo = getSepVector(ns=[nelem], storage="dataInt")
         self.cppMode.calcHisto(histo.getCpp(), mn, mx)
         return histo
@@ -415,7 +413,6 @@ def getSepVector(*args, **keys):
     dataInt,
      dataByte)
     """
-    print("UES", keys)
     myt = "dataFloat"
     if len(args) == 1:
         hyper = args[0]
@@ -445,7 +442,6 @@ def getSepVector(*args, **keys):
         raise Exception(
             "Only understand 0 or 1 (hypercube) non-keyword arguments")
 
-    print("in here 1", keys)
     if "storage" in keys:
         myt = keys["storage"]
     if myt == "dataFloat":
@@ -458,7 +454,6 @@ def getSepVector(*args, **keys):
         x = getDoubleVector(hyper)
         return doubleVector(fromCpp=x)
     elif myt == "dataInt":
-        print("IN EFRSE 1")
         x = getIntVector(hyper)
         return intVector(fromCpp=x)
     elif myt == "dataByte":
@@ -466,7 +461,6 @@ def getSepVector(*args, **keys):
         return byteVector(fromCpp=x)
     else:
         raise Exception("Unknown type %s" % myt)
-    print("in 2here 1")
 
 
 def getCppSepVector(hyper, **keys):
