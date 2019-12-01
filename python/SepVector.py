@@ -176,7 +176,7 @@ class floatVector(vector):
         """Function to scale a vector"""
         self.cppMode.scale(sc)
 
-    def calcHisto(nelem, mn, mx):
+    def calcHisto(self, nelem, mn, mx):
         """Calculate histogram
            mn - Minimum for cell
            mx - Maximum for cell
@@ -255,7 +255,7 @@ class doubleVector(vector):
         """Clip vector element by element vec=min(high,max(low,vec))"""
         self.cppMode.clipVector(low.cppMode, high.cppMode)
 
-    def calcHisto(nelem, mn, mx):
+    def calcHisto(self, nelem, mn, mx):
         """Calculate histogram
            mn - Minimum for cell
            mx - Maximum for cell
@@ -379,7 +379,7 @@ class byteVector(vector):
         super().__init__()
         self.storage = "dataByte"
 
-    def calcHisto(nelem, mn, mx):
+    def calcHisto(self, nelem, mn, mx):
         """Calculate histogram
            mn - Minimum for cell
            mx - Maximum for cell
