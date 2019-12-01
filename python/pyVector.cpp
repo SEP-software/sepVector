@@ -92,6 +92,10 @@ PYBIND11_MODULE(pySepVector, clsVector) {
                                  const std::shared_ptr<floatHyper>)) &
                floatHyper::clipVector,
            "vec=min(max(low,vec),high)")
+      .def("calcHisto",
+           (void (floatHyper::*)(std::shared_ptr<int1DReg>, float, float)) &
+               floatHyper::calcHisto,
+           "Calculate histogram")
       .def("scaleAdd",
            (void (floatHyper::*)(std::shared_ptr<floatHyper>, const double,
                                  const double)) &
@@ -458,6 +462,10 @@ PYBIND11_MODULE(pySepVector, clsVector) {
            (double (doubleHyper::*)(const float pct, const int jsamp) const) &
                doubleHyper::cent,
            "Calculate  the percentile of a dataset")
+      .def("calcHisto",
+           (void (doubleHyper::*)(std::shared_ptr<int1DReg>, float, float)) &
+               doubleHyper::calcHisto,
+           "Calculate histogram")
       .def("clipVector",
            (void (doubleHyper::*)(const std::shared_ptr<doubleHyper>,
                                   const std::shared_ptr<doubleHyper>)) &
@@ -1164,7 +1172,10 @@ PYBIND11_MODULE(pySepVector, clsVector) {
            "Set the data pointer")
       .def("getVals", (unsigned char *(byteHyper::*)()) & byteHyper::getVals,
            "Get the data pointer")
-
+      .def("calcHisto",
+           (void (byteHyper::*)(std::shared_ptr<int1DReg>, float, float)) &
+               byteHyper::calcHisto,
+           "Calculate histogram")
       .def("isDifferent",
            (bool (byteHyper::*)(std::shared_ptr<byteHyper>)) &
                byteHyper::isDifferent,

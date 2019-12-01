@@ -56,6 +56,33 @@ int byteHyper::absMax() const {
       });
   return val;
 }
+void byteHyper::calcHisto(std::shared_ptr<int1DReg> &histo, float mn,
+                          float mx) {
+  long long nelem = histo->getHyper()->getN123();
+  float delta = (mx - mn) / (nelem - 1);
+  float idelta = 1. / delta;
+  std::vector<int> h = tbb::parallel_reduce(
+      tbb::blocked_range<size_t>(0, getHyper()->getN123()),
+      std::vector<int>(nelem, 0),
+      [&](const tbb::blocked_range<size_t> &r, std::vector<int> tmp) {
+        for (size_t i = r.begin(); i != r.end(); ++i) {
+          int ielem = std::max(
+              (long long)0,
+              std::min(nelem - 1, (long long)((_vals[i] - mn) * idelta)));
+          tmp[ielem] += 1;
+        }
+        return tmp;
+      },
+      [&](std::vector<int> tmp1, std::vector<int> tmp2) {
+        std::vector<int> tmp = tmp1;
+        for (int i = 0; i < nelem; i++) tmp[i] += tmp2[i];
+        return tmp;
+      });
+  for (long long i = 0; i < nelem; i++) {
+    histo->getVals()[i] = h[i];
+  }
+}
+
 unsigned char byteHyper::cent(const long long iv, const int js) const {
   long long n = getHyper()->getN123() / js;
   unsigned char *x = new unsigned char[n];

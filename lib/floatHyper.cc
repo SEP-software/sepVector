@@ -6,6 +6,7 @@
 #include <tbb/tbb.h>
 #include <iostream>
 #include <random>
+#include "int1DReg.h"
 using namespace SEP;
 
 void floatHyper::add(const std::shared_ptr<floatHyper> vec2) {
@@ -61,6 +62,7 @@ void floatHyper::scaleAdd(std::shared_ptr<floatHyper> vec2, const double sc1,
                     });
   calcCheckSum();
 }
+
 float floatHyper::cent(const long long iv, const int js) const {
   long long n = getHyper()->getN123() / js;
   float *x = new float[n];
@@ -182,6 +184,33 @@ void floatHyper::set(const float val) {
 
   calcCheckSum();
 }
+void floatHyper::calcHisto(std::shared_ptr<int1DReg> &histo, float mn,
+                           float mx) {
+  long long nelem = histo->getHyper()->getN123();
+  float delta = (mx - mn) / (nelem - 1);
+  float idelta = 1. / delta;
+  std::vector<int> h = tbb::parallel_reduce(
+      tbb::blocked_range<size_t>(0, getHyper()->getN123()),
+      std::vector<int>(nelem, 0),
+      [&](const tbb::blocked_range<size_t> &r, std::vector<int> tmp) {
+        for (size_t i = r.begin(); i != r.end(); ++i) {
+          int ielem = std::max(
+              (long long)0,
+              std::min(nelem - 1, (long long)((_vals[i] - mn) * idelta)));
+          tmp[ielem] += 1;
+        }
+        return tmp;
+      },
+      [&](std::vector<int> tmp1, std::vector<int> tmp2) {
+        std::vector<int> tmp = tmp1;
+        for (int i = 0; i < nelem; i++) tmp[i] += tmp2[i];
+        return tmp;
+      });
+  for (long long i = 0; i < nelem; i++) {
+    histo->getVals()[i] = h[i];
+  }
+}
+
 double floatHyper::dot(const std::shared_ptr<floatHyper> vec2) const {
   if (!checkSame(vec2)) throw(std::string("Vectors not of the same space"));
   std::shared_ptr<floatHyper> vec2H =
@@ -283,26 +312,28 @@ double floatHyper::min() const {
 }
 
 void floatHyper::calcCheckSum() {
-  long long nsect= ceilf((double)getHyper()->getN123()/(double)100000);
-  std::vector<float>sz(nsect,100000);
-  std::vector<uint32_t> sum1(nsect),sum2(nsect);
-  sz[nsect-1]=getHyper()->getN123()-(nsect-1)*100000;
+  long long nsect = ceilf((double)getHyper()->getN123() / (double)100000);
+  std::vector<float> sz(nsect, 100000);
+  std::vector<uint32_t> sum1(nsect), sum2(nsect);
+  sz[nsect - 1] = getHyper()->getN123() - (nsect - 1) * 100000;
   uint32_t mx = 4294967295;
-  
+
   tbb::parallel_for(tbb::blocked_range<long long>(0, nsect),
                     [&](const tbb::blocked_range<long long> &r) {
-                      for (long long i = r.begin(); i != r.end(); ++i){
-                      sum1[i]=0; sum2[i]=0;
-                      uint32_t *data = (uint32_t *)(&_vals[r.begin()*100000]);
-                      for(long long j=0; j < sz[i] ; j++){
-                       sum1[i] = (sum1[i] + data[j]) % mx;
-                       sum2[i] = (sum2[i] + sum1[i]) % mx;
+                      for (long long i = r.begin(); i != r.end(); ++i) {
+                        sum1[i] = 0;
+                        sum2[i] = 0;
+                        uint32_t *data =
+                            (uint32_t *)(&_vals[r.begin() * 100000]);
+                        for (long long j = 0; j < sz[i]; j++) {
+                          sum1[i] = (sum1[i] + data[j]) % mx;
+                          sum2[i] = (sum2[i] + sum1[i]) % mx;
+                        }
                       }
-                     }
                     });
 
-  uint32_t sum1t=0,sum2t=0;
-  for (long long i = 0; i < nsect; i++){
+  uint32_t sum1t = 0, sum2t = 0;
+  for (long long i = 0; i < nsect; i++) {
     sum1t = (sum1t + sum1[i]) % mx;
     sum2t = (sum2t + sum2[i]) % mx;
   }

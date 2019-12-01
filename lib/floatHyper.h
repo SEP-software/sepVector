@@ -6,6 +6,7 @@
 #include <sstream>
 #include "SEPException.h"
 #include "Vector.h"
+#include "int1DReg.h"
 #include "regSpace.h"
 
 namespace SEP {
@@ -44,6 +45,13 @@ class floatHyper : public Vector, public regSpace {
 
   virtual void scaleAdd(std::shared_ptr<floatHyper> vec2, const double sc1,
                         const double sc2);
+
+  /*
+    \param mn  Minimum value for histogram
+    \param mx  Maximum value for histogram
+    \param histo Number of elements in the histogram
+   */
+  virtual void calcHisto(std::shared_ptr<int1DReg> &histo, float mn, float mx);
   //! Fill vector with random number
 
   virtual void random() override;

@@ -3,6 +3,7 @@
 #include <hypercube.h>
 #include <cstdint>
 #include <sstream>
+#include "int1DReg.h"
 #include "regSpace.h"
 namespace SEP {
 /*!
@@ -26,6 +27,13 @@ Initializer for byteHyper class. Inititalize form a hypercube
   */
   //! Fill vector with random number
   virtual void random();
+
+  /*
+    \param mn  Minimum value for histogram
+    \param mx  Maximum value for histogram
+    \param histo Number of elements in the histogram
+   */
+  virtual void calcHisto(std::shared_ptr<int1DReg> &histo, float mn, float mx);
   /*!  Set that this is only vector space with no storage
    */
   virtual void setSpace() { _spaceOnly = true; }

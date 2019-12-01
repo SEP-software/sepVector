@@ -4,8 +4,8 @@
 #include <cstdint>
 #include <sstream>
 #include "Vector.h"
+#include "int1DReg.h"
 #include "regSpace.h"
-
 namespace SEP {
 /*!
   A regular sampled function that stores double values. Storage is actually done
@@ -51,6 +51,12 @@ class doubleHyper : public Vector, public regSpace {
        a[]/|a[]|
 */
   virtual void signum();
+  /*
+  \param mn  Minimum value for histogram
+  \param mx  Maximum value for histogram
+  \param histo Number of elements in the histogram
+ */
+  virtual void calcHisto(std::shared_ptr<int1DReg> &histo, float mn, float mx);
   /*!
   Clip a dataset value by value
       a[]=std::min(eclip[],max(bclip[],a[]))
