@@ -185,7 +185,7 @@ class floatVector(vector):
            @return Histogram """
         print("IN on1")
         histo = getSepVector(ns=[nelem], storage="dataInt")
-        self.cppMode.calcHisto(nelem, mn, mx)
+        self.cppMode.calcHisto(histo, mn, mx)
         return histo
 
     def rand(self):
@@ -264,7 +264,7 @@ class doubleVector(vector):
 
            @return Histogram """
         histo = getSepVector(ns=[nelem], storage="dataInt")
-        self.cppMode.calcHisto(nelem, mn, mx)
+        self.cppMode.calcHisto(histo, mn, mx)
         return histo
 
     def clone(self):
@@ -389,7 +389,7 @@ class byteVector(vector):
            @return Histogram """
         print("IN 21")
         histo = getSepVector(ns=[nelem], storage="dataInt")
-        self.cppMode.calcHisto(nelem, mn, mx)
+        self.cppMode.calcHisto(histo, mn, mx)
         return histo
 
 
