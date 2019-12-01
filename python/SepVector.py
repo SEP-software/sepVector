@@ -176,6 +176,17 @@ class floatVector(vector):
         """Function to scale a vector"""
         self.cppMode.scale(sc)
 
+    def calcHisto(nelem, mn, mx):
+        """Calculate histogram
+           mn - Minimum for cell
+           mx - Maximum for cell
+           nelem - Return number of elements in histogram
+
+           @return Histogram """
+        histo = getSepVector(ns=[nelem], storage=dataInt)
+        self.cppMode.calcHisto(nelem, mn, mx)
+        return histo
+
     def rand(self):
         """Function to fill with random numbers"""
         self.cppMode.rand()
@@ -243,6 +254,17 @@ class doubleVector(vector):
     def clipVector(self, low, high):
         """Clip vector element by element vec=min(high,max(low,vec))"""
         self.cppMode.clipVector(low.cppMode, high.cppMode)
+
+    def calcHisto(nelem, mn, mx):
+        """Calculate histogram
+           mn - Minimum for cell
+           mx - Maximum for cell
+           nelem - Return number of elements in histogram
+
+           @return Histogram """
+        histo = getSepVector(ns=[nelem], storage=dataInt)
+        self.cppMode.calcHisto(nelem, mn, mx)
+        return histo
 
     def clone(self):
         """Function to clone (deep copy) a vector"""
@@ -356,6 +378,17 @@ class byteVector(vector):
         self.kw = kw
         super().__init__()
         self.storage = "dataByte"
+
+    def calcHisto(nelem, mn, mx):
+        """Calculate histogram
+           mn - Minimum for cell
+           mx - Maximum for cell
+           nelem - Return number of elements in histogram
+
+           @return Histogram """
+        histo = getSepVector(ns=[nelem], storage=dataInt)
+        self.cppMode.calcHisto(nelem, mn, mx)
+        return histo
 
 
 def getSepVector(*args, **keys):
