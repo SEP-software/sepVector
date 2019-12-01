@@ -183,6 +183,7 @@ class floatVector(vector):
            nelem - Return number of elements in histogram
 
            @return Histogram """
+        print("IN on1")
         histo = getSepVector(ns=[nelem], storage=dataInt)
         self.cppMode.calcHisto(nelem, mn, mx)
         return histo
@@ -386,7 +387,7 @@ class byteVector(vector):
            nelem - Return number of elements in histogram
 
            @return Histogram """
-        print("IN 1")
+        print("IN 21")
         histo = getSepVector(ns=[nelem], storage=dataInt)
         self.cppMode.calcHisto(nelem, mn, mx)
         return histo
