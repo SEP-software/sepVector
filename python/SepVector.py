@@ -386,6 +386,7 @@ class byteVector(vector):
            nelem - Return number of elements in histogram
 
            @return Histogram """
+        print("IN 1")
         histo = getSepVector(ns=[nelem], storage=dataInt)
         self.cppMode.calcHisto(nelem, mn, mx)
         return histo
@@ -413,6 +414,7 @@ def getSepVector(*args, **keys):
     dataInt,
      dataByte)
     """
+    print("UES", keys)
     myt = "dataFloat"
     if len(args) == 1:
         hyper = args[0]
