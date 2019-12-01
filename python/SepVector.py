@@ -442,7 +442,7 @@ def getSepVector(*args, **keys):
         raise Exception(
             "Only understand 0 or 1 (hypercube) non-keyword arguments")
 
-    print("in here 1")
+    print("in here 1", keys)
     if "storage" in keys:
         myt = keys["storage"]
     if myt == "dataFloat":
@@ -455,6 +455,7 @@ def getSepVector(*args, **keys):
         x = getDoubleVector(hyper)
         return doubleVector(fromCpp=x)
     elif myt == "dataInt":
+        print("IN EFRSE 1")
         x = getIntVector(hyper)
         return intVector(fromCpp=x)
     elif myt == "dataByte":
