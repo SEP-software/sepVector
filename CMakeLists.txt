@@ -11,6 +11,9 @@ else(NOT SUBPACKAGE)
 
 endif(NOT SUBPACKAGE)
 
+
+set(CMAKE_POSITION_INDEPENDENT_CODE ON)
+
 option(BUILD_DOUBLE "Build double support" ON)
 option(BUILD_INT "Build int support" ON)
 option(BUILD_COMPLEX "Build complex support" ON)
