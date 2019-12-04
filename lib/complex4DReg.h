@@ -1,8 +1,8 @@
 #ifndef complex4d_reg_h
 #define complex4d_reg_h 1
+#include <complexHyper.h>
 #include "boost/multi_array.hpp"
 
-#include <complexHyper.h>
 
 typedef boost::multi_array<std::complex<float>, 4> complex4D;
 namespace SEP {

@@ -1,8 +1,8 @@
 #ifndef float5d_reg_h
 #define float5d_reg_h 1
+#include <floatHyper.h>
 #include "boost/multi_array.hpp"
 
-#include <floatHyper.h>
 
 typedef boost::multi_array<float, 5> float5D;
 namespace SEP {

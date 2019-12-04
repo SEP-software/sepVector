@@ -1,8 +1,8 @@
 #ifndef double4d_reg_h
 #define double4d_reg_h 1
+#include <doubleHyper.h>
 #include "boost/multi_array.hpp"
 
-#include <doubleHyper.h>
 
 typedef boost::multi_array<double, 4> double4D;
 namespace SEP {

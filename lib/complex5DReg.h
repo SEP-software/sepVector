@@ -1,8 +1,8 @@
 #ifndef complex5d_reg_h
 #define complex5d_reg_h 1
+#include <complexHyper.h>
 #include "boost/multi_array.hpp"
 
-#include <complexHyper.h>
 
 typedef boost::multi_array<std::complex<float>, 5> complex5D;
 namespace SEP {

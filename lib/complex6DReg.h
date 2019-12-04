@@ -1,8 +1,8 @@
 #ifndef complex6d_reg_h
 #define complex6d_reg_h 1
+#include <complexHyper.h>
 #include "boost/multi_array.hpp"
 
-#include <complexHyper.h>
 
 typedef boost::multi_array<std::complex<float>, 6> complex6D;
 namespace SEP {

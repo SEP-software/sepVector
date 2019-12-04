@@ -1,8 +1,8 @@
 #ifndef byte5d_reg_h
 #define byte5d_reg_h 1
+#include <byteHyper.h>
 #include "boost/multi_array.hpp"
 
-#include <byteHyper.h>
 
 typedef boost::multi_array<unsigned char, 5> byte5D;
 namespace SEP {
