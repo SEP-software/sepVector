@@ -1,8 +1,7 @@
 project(sepVector-python)
 cmake_minimum_required(VERSION 2.8)
 set(CMAKE_INCLUDE_CURRENT_DIR TRUE)
-find_package(PythonInterp 3 REQUIRED)
-find_package (Python3 COMPONENTS Interpreter  )
+find_package(pybind11)
 
 #find_package(NumPy REQUIRED)
 
