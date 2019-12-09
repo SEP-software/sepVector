@@ -40,7 +40,6 @@
 namespace py = pybind11;
 namespace SEP {
 using namespace SEP;
-py::module::import("pyHypercube");
 
 PYBIND11_MODULE(pySepVector, clsVector) {
   py::class_<Vector, std::shared_ptr<Vector>>(clsVector, "Vector")
