@@ -597,7 +597,7 @@ class rectFilter2D(floatVector):
             else:
                 self.cppMode = kw["clone"].clone()
         else:
-            raiseException("Unknown way to create rectFilter2D")
+            raise Exception("Unknown way to create rectFilter2D")
 
     def clone(self):
         """Function to clone (deep copy) a vector"""
