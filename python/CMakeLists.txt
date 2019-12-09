@@ -1,7 +1,6 @@
 project(sepVector-python)
 cmake_minimum_required(VERSION 2.8)
 set(CMAKE_INCLUDE_CURRENT_DIR TRUE)
-find_package(pybind11)
 
 #find_package(NumPy REQUIRED)
 
