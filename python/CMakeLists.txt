@@ -26,6 +26,6 @@ if(BUILD_TEST)
   WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
 endif(BUILD_TEST)
 
-target_link_libraries(pySepVector PRIVATE sepVector)
+target_link_libraries(pySepVector PRIVATE sepVector hypercube)
 install(TARGETS pySepVector DESTINATION lib/python EXPORT sepVectorTargets)
 install(FILES SepVector.py DESTINATION lib/python)
