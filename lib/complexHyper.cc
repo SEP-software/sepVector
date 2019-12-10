@@ -55,7 +55,7 @@ void complexHyper::mult(const std::shared_ptr<complexHyper> vec2) {
                     });
   calcCheckSum();
 }
-double complexHyper::dot(const std::shared_ptr<complexHyper> vec2) const {
+std::complex<double> complexHyper::dot(const std::shared_ptr<complexHyper> vec2) const {
   if (!checkSame(vec2)) throw(std::string("Vectors not of the same space"));
   std::shared_ptr<complexHyper> vec2H =
       std::dynamic_pointer_cast<complexHyper>(vec2);
@@ -73,6 +73,8 @@ double complexHyper::dot(const std::shared_ptr<complexHyper> vec2) const {
 
   return dot;
 }
+  
+
 
 void complexHyper::clipVector(const std::shared_ptr<floatHyper> begV,
                               const std::shared_ptr<floatHyper> endV) {

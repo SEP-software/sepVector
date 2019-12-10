@@ -83,7 +83,7 @@ Initializer for complexHyper class. Only used by inherited class
    return SUM(this[]*vec2[])
    \param vec2 Vector to calculate the dot prodcut with
    */
-  virtual double dot(std::shared_ptr<complexHyper> vec2) const;
+  virtual std::complex<double> dot(std::shared_ptr<complexHyper> vec2) const;
 
   //! Scale vector self*=scale
   /*!
