@@ -76,6 +76,9 @@ include(${CMAKE_ROOT}/Modules/ExternalProject.cmake)
 
 if(NOT SUBPACKAGE)
   execute_process(COMMAND git submodule update --init --recursive --
+                          external/python-solver
+                  WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
+  execute_process(COMMAND git submodule update --init --recursive --
                           external/hypercube
                   WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
 endif()
