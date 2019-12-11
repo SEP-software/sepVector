@@ -8,6 +8,7 @@
 #include <random>
 using namespace SEP;
 
+
 void complexHyper::add(const std::shared_ptr<complexHyper> vec2) {
   if (!checkSame(vec2)) throw(std::string("Vectors not of the same space"));
   std::shared_ptr<complexHyper> vec2H =
