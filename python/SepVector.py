@@ -40,27 +40,13 @@ class vector(pyVector.vectorIC):
     def zero(self):
         """Function to zero out a vector"""
         self.cppMode.set(0.)
+        return self
 
     def set(self, val):
         """Function to a vector to a value"""
         self.cppMode.set(val)
+        return self
 
-        def isDifferent(self, vec2):
-            """Function to check if two vectors are identical using built-in hash function"""
-            # Checking whether the input is a vector or not
-            if(version_info[0] == 2):
-                # First make both array buffers read-only
-                self.arr.flags.writeable = False
-                vec2.arr.flags.writeable = False
-                chcksum1 = hash(self.arr.data)
-                chcksum2 = hash(vec2.arr.data)
-                # Remake array buffers writable
-                self.arr.flags.writeable = True
-                vec2.arr.flags.writeable = True
-                isDiff = (chcksum1 != chcksum2)
-            else:
-                isDiff = (not np.array_equal(self.arr, vec2.arr))
-            return isDiff
 
     def getHyper(self):
         """Return the hypercube associated with the vector"""
@@ -171,10 +157,11 @@ class floatVector(vector):
     def norm(self, N=2):
         """Function to compute vector N-norm"""
         self.cppMode.norm(N)
-
+        return self
     def scale(self, sc):
         """Function to scale a vector"""
         self.cppMode.scale(sc)
+        return self
 
     def calcHisto(self, nelem, mn, mx):
         """Calculate histogram
@@ -190,6 +177,7 @@ class floatVector(vector):
     def rand(self):
         """Function to fill with random numbers"""
         self.cppMode.rand()
+        return self
 
     def clone(self):
         """Function to clone (deep copy) a vector"""
@@ -198,6 +186,7 @@ class floatVector(vector):
     def clipVector(self, low, high):
         """Clip vector element by element vec=min(high,max(low,vec))"""
         self.cppMode.clipVector(low.cppMode, high.cppMode)
+        return self
 
     def cloneSpace(self):
         """Funtion tor return the space of a vector"""
@@ -206,10 +195,12 @@ class floatVector(vector):
     def scaleAdd(self, vec2, sc1=1., sc2=1.):
         """self = self * sc1 + sc2 * vec2"""
         self.cppMode.scaleAdd(vec2.cppMode, sc1, sc2)
+        return self
 
     def copy(self, vec2):
         """Copy vec2 into self"""
         self.scaleAdd(vec2, 0., 1.)
+        return self
 
     def dot(self, vec2):
         """Compute dot product of two vectors"""
@@ -218,6 +209,7 @@ class floatVector(vector):
     def multiply(self, vec2):
         """self = vec2 * self"""
         self.cppMode.mult(vec2.cppMode)
+        return self
 
     def norm(self, nrm=2):
         """Return the norm of a vector"""
@@ -242,18 +234,22 @@ class doubleVector(vector):
     def norm(self, N=2):
         """Function to compute vector N - norm"""
         self.cppMode.norm(N)
+        return self
 
     def scale(self, sc):
         """Function to scale a vector"""
         self.cppMode.scale(sc)
+        return self
 
     def rand(self):
         """Function to fill with random numbers"""
         self.cppMode.rand()
+        return self
 
     def clipVector(self, low, high):
         """Clip vector element by element vec=min(high,max(low,vec))"""
         self.cppMode.clipVector(low.cppMode, high.cppMode)
+        return self
 
     def calcHisto(self, nelem, mn, mx):
         """Calculate histogram
@@ -273,6 +269,7 @@ class doubleVector(vector):
     def copy(self, vec2):
         """Copy vec2 into self"""
         self.scaleAdd(vec2, 0., 1.)
+        return self
 
     def cloneSpace(self):
         """Funtion tor return the space of a vector"""
@@ -281,6 +278,7 @@ class doubleVector(vector):
     def scaleAdd(self, vec2, sc1=1., sc2=1.):
         """self = self * sc1 + sc2 * vec2"""
         self.cppMode.scaleAdd(vec2.cppMode, sc1, sc2)
+        return self
 
     def dot(self, vec2):
         """Compute dot product of two vectors"""
@@ -289,6 +287,7 @@ class doubleVector(vector):
     def multiply(self, vec2):
         """self = vec2 * self"""
         self.cppMode.mult(vec2.cppMode)
+        return self
 
     def norm(self, nrm=2):
         """Return the norm of a vector"""
@@ -330,18 +329,22 @@ class complexVector(vector):
     def zero(self):
         """Function to zero out a vector"""
         self.cppMode.set(0.)
+        return self
 
     def multiply(self, vec2):
         """self = vec2 * self"""
         self.cppMode.mult(vec2.cppMode)
+        return self
 
     def rand(self):
         """Fill with random numbers"""
         self.cppMode.rand()
+        return self
 
     def copy(self, vec2):
         """Copy vec2 into self"""
         self.scaleAdd(vec2, 0., 1.)
+        return self
 
     def clone(self):
         """clone a vector"""
@@ -350,6 +353,7 @@ class complexVector(vector):
     def clipVector(self, low, high):
         """Clip vector element by element vec=min(high,max(low,vec))"""
         self.cppMode.clipVector(low.cppMode, high.cppMode)
+        return self
 
     def dot(self, vec2):
         """Compute dot product of two vectors"""
@@ -358,10 +362,12 @@ class complexVector(vector):
     def scale(self, sc):
         """Function to scale a vector"""
         self.cppMode.scale(sc)
+        return self
 
     def scaleAdd(self, vec2, sc1=1., sc2=1.):
         """self = self * sc1 + sc2 * vec2"""
         self.cppMode.scaleAdd(vec2.cppMode, sc1, sc2)
+        return self
 
     def window(self, **kw):
         """Window a vector return another vector (of the same dimension
