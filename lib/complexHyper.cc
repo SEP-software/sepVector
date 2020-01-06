@@ -71,8 +71,7 @@ std::complex<double> complexHyper::dot(const std::shared_ptr<complexHyper> vec2)
                (double)_vals[i].imag() * (double)vec2H->_vals[i].real()
                );
         }
-        std::complex<double> x=v;
-        return x;
+        return v;
       },
       [](std::complex<double> a, std::complex<double> b) { return a + b; });
 
