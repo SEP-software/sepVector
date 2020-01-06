@@ -61,18 +61,22 @@ std::complex<double> complexHyper::dot(const std::shared_ptr<complexHyper> vec2)
   std::shared_ptr<complexHyper> vec2H =
       std::dynamic_pointer_cast<complexHyper>(vec2);
 
-  double dot = tbb::parallel_reduce(
-      tbb::blocked_range<size_t>(0, getHyper()->getN123()), 0.,
-      [&](const tbb::blocked_range<size_t> &r, double v) {
+  std::complex<double> dt = tbb::parallel_reduce(
+      tbb::blocked_range<size_t>(0, getHyper()->getN123()), std::complex<double>(0.,0.),
+      [&](const tbb::blocked_range<size_t> &r, std::complex<double> v) {
         for (size_t i = r.begin(); i != r.end(); ++i) {
-          v += (double)_vals[i].real() * (double)vec2H->_vals[i].real() +
-               (double)_vals[i].imag() * (double)vec2H->_vals[i].imag();
+           v+=std::complex<double>( (double)_vals[i].real() * (double)vec2H->_vals[i].real() +
+               (double)_vals[i].imag() * (double)vec2H->_vals[i].imag(),
+               (double)_vals[i].real() * (double)vec2H->_vals[i].imag() -
+               (double)_vals[i].imag() * (double)vec2H->_vals[i].real()
+               );
         }
-        return v;
+        std::complex<double> x=v;
+        return x;
       },
-      [](double a, double b) { return a + b; });
+      [](std::complex<double> a, std::complex<double> b) { return a + b; });
 
-  return dot;
+  return dt;
 }
   
 
