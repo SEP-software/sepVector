@@ -6,6 +6,13 @@ import pyVector
 from sys import version_info
 
 
+dtypeToSepVecType={
+ "float32":"dataFloat",
+ "int32":"dataInt",
+ "float64":"dataDouble",
+ "uint8":"dataByte",
+ "complex64":"dataComplex"}
+
 class vector(pyVector.vectorIC):
     """Generic sepVector class"""
 
@@ -46,7 +53,6 @@ class vector(pyVector.vectorIC):
         """Function to a vector to a value"""
         self.cppMode.set(val)
         return self
-
 
     def getHyper(self):
         """Return the hypercube associated with the vector"""
@@ -412,16 +418,33 @@ def getSepVector(*args, **keys):
                     iax1, iax2 - axes to grab
                     rev1, rev1 - whether or not to reverse axes
                     beg, end - beg and end position for all axes(lists)
-            storage = StorageType(
-    dataFloat[default],
-    dataComplex,
-    dataDouble,
-    dataInt,
-     dataByte)
+            storage = StorageType(dataFloat[default], dataComplex,
+                        dataDouble,dataInt,dataByte)
+            
+            Option 4 (numpy)
+                Provide hyper, ns, os, or ds,label,s axes
+
+            
     """
     myt = "dataFloat"
+    haveHyper=False
+    haveNumpy=False
+    array=None
     if len(args) == 1:
-        hyper = args[0]
+        if isinstance(args[0],Hypercube.hypercube):
+            haveHyper=True
+            hyper = args[0]
+        elif isinstance(args[0],numpy.ndarray):
+            haveNumpy=True
+            array=args[0]
+            if "hyper" in keys:
+                hyper=keys["hyper"]
+            elif "axes" in keys or "ns" in keys:
+                hyper = Hypercube.hypercube(**keys)
+            else:
+                hyper =Hypercube.hypercube(ns=list(array.shape))
+        else:
+            raise Exception("First argument must by a hypercube or numpy array")
     elif len(args) == 0:
         if "axes" in keys or "ns" in keys:
             hyper = Hypercube.hypercube(**keys)
@@ -430,7 +453,6 @@ def getSepVector(*args, **keys):
                 if isinstance(keys["vector"], floatVector):
                     return floatVector(fromCpp=pySepVector.float2DReg(keys["vector"].getCpp(), keys["iax1"], keys["rev1"],
                                                                       keys["iax2"], keys["rev2"], keys["ipos"], keys["beg"], keys["end"]))
-
                 elif isinstance(keys["vector"], doubleVector):
                     return doubleVector(fromCpp=pySepVector.double2DReg(keys["vector"].cppMode, keys["iax1"], keys["rev1"],
                                                                         keys["iax2"], keys["rev2"], keys["ipos"], keys["beg"], keys["end"]))
@@ -448,26 +470,36 @@ def getSepVector(*args, **keys):
         raise Exception(
             "Only understand 0 or 1 (hypercube) non-keyword arguments")
 
-    if "storage" in keys:
-        myt = keys["storage"]
+
+
+    if haveNumpy:
+        if not str(array.dtype) in dtypeToSepVecType:
+            raise Exception("Numpy array not supported",str(array.dtype))
+        myt=dtypeToSepVecType[str(array.dtype)]
+    else:
+        myt="dataFloat"
+        if "storage" in keys:
+            myt = keys["storage"]
+    
     if myt == "dataFloat":
         x = getFloatVector(hyper)
-        return floatVector(fromCpp=x.clone())
+        y= floatVector(fromCpp=x.clone())
     elif myt == "dataComplex":
         x = getComplexVector(hyper)
-        return complexVector(fromCpp=x)
+        y=complexVector(fromCpp=x)
     elif myt == "dataDouble":
         x = getDoubleVector(hyper)
-        return doubleVector(fromCpp=x)
+        y= doubleVector(fromCpp=x)
     elif myt == "dataInt":
         x = getIntVector(hyper)
-        return intVector(fromCpp=x)
+        y= intVector(fromCpp=x)
     elif myt == "dataByte":
         x = getByteVector(hyper)
-        return byteVector(fromCpp=x)
+        y= byteVector(fromCpp=x)
     else:
         raise Exception("Unknown type %s" % myt)
-
+    if array:
+        numpy.copyto(y.getNdArray(),array)
 
 def getCppSepVector(hyper, **keys):
     h = hyper.getCpp()
