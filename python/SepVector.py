@@ -498,7 +498,7 @@ def getSepVector(*args, **keys):
         y= byteVector(fromCpp=x)
     else:
         raise Exception("Unknown type %s" % myt)
-    if array:
+    if haveNumpy:
         numpy.copyto(y.getNdArray(),array)
 
 def getCppSepVector(hyper, **keys):
