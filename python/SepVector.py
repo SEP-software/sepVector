@@ -442,7 +442,11 @@ def getSepVector(*args, **keys):
             elif "axes" in keys or "ns" in keys:
                 hyper = Hypercube.hypercube(**keys)
             else:
-                hyper =Hypercube.hypercube(ns=list(array.shape))
+                nt=list(array.shape)
+                ns=[]
+                for i in range(len(nt)):
+                    ns.push_back(nt[len(nt)-1-i])
+                hyper =Hypercube.hypercube(ns=ns)
         else:
             raise Exception("First argument must by a hypercube or numpy array")
     elif len(args) == 0:
