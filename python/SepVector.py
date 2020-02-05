@@ -445,7 +445,7 @@ def getSepVector(*args, **keys):
                 nt=list(array.shape)
                 ns=[]
                 for i in range(len(nt)):
-                    ns.push_back(nt[len(nt)-1-i])
+                    ns.append(nt[len(nt)-1-i])
                 hyper =Hypercube.hypercube(ns=ns)
         else:
             raise Exception("First argument must by a hypercube or numpy array")
@@ -504,6 +504,7 @@ def getSepVector(*args, **keys):
         raise Exception("Unknown type %s" % myt)
     if haveNumpy:
         numpy.copyto(y.getNdArray(),array)
+    return y
 
 def getCppSepVector(hyper, **keys):
     h = hyper.getCpp()

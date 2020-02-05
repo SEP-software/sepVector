@@ -24,12 +24,11 @@ class TestSepVector(unittest.TestCase):
 
     def testCreateFromNumpy(self):
         x=np.zeros((3,))
-        print(x.shape)
         x[0]=4
         x[1]=2
         x[2]=1
         y=SepVector.getSepVector(x)
-        m=x.getNdArray()
+        m=y.getNdArray()
         self.assertEqual(m[0], 4)
         self.assertEqual(m[1], 2)
         self.assertEqual(m[2], 1)

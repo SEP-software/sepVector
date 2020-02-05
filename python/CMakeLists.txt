@@ -9,7 +9,11 @@ include_directories("${CMAKE_CURRENT_SOURCE_DIR}/../lib")
 find_package(Boost 1.40 REQUIRED)
 INCLUDE_DIRECTORIES( ${Boost_INCLUDE_DIR})
 
-pybind11_add_module(pySepVector MODULE pyVector.cpp)
+pybind11_add_module(pySepVector MODULE pyVector.cpp 
+
+
+
+)
 
 target_include_directories(
   pySepVector
@@ -20,7 +24,10 @@ target_include_directories(
          $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}../src>)
 if(BUILD_TEST)
 	add_test(NAME sepVector 
-		COMMAND ${PYTHON_EXECUTABLE} -m test_SepVector 
+    COMMAND ${CMAKE_COMMAND} -E env
+    PYTHONPATH=${CMAKE_CURRENT_BINARY_DIR}/../external/hypercube/python:${CMAKE_CURRENT_SOURCE_DIR}/../external/hypercube/python:${CMAKE_CURRENT_BINARY_DIR}:${CMAKE_CURRENT_SOURCE_DIR}/../external/python-solver/GenericSolver/python
+    LD_LIBRARY_PATH=${CMAKE_CURRENT_BINARY_DIR}/../external/hypercube/python:${CMAKE_CURRENT_SOURCE_DIR}/../external/hypercube/python:${CMAKE_CURRENT_BINARY_DIR}
+    ${PYTHON_EXECUTABLE} -m test_SepVector 
   WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
 endif(BUILD_TEST)
 
