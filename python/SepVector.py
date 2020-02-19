@@ -304,7 +304,7 @@ class doubleVector(vector):
             specify min1..min6, max1...max6, f1...f6, j1...j6, n1...n6, or
             any of these by lists.
             Can not specify n and min or max """
-        return doubleVector(fromCpp=self.windowInternal(kw))
+        return doubleVector(fromCpp=self.windowInternal(**kw))
 
 
 class intVector(vector):
@@ -380,7 +380,7 @@ class complexVector(vector):
             specify min1..min6, max1...max6, f1...f6, j1...j6, n1...n6, or
             any of these by lists.
             Can not specify n and min or max """
-        return complexVector(fromCpp=self.windowInternal(kw))
+        return complexVector(fromCpp=self.windowInternal(**kw))
 
 
 class byteVector(vector):
