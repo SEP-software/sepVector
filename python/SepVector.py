@@ -487,7 +487,7 @@ def getSepVector(*args, **keys):
     
     if myt == "dataFloat":
         x = getFloatVector(hyper)
-        y= floatVector(fromCpp=x.clone())
+        y= floatVector(fromCpp=x)
     elif myt == "dataComplex":
         x = getComplexVector(hyper)
         y=complexVector(fromCpp=x)
