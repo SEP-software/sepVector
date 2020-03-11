@@ -792,8 +792,7 @@ PYBIND11_MODULE(pySepVector, clsVector) {
                  m.getHyper()->getAxis(2).n,
              sizeof(double) * m.getHyper()->getAxis(1).n, sizeof(double)});
       });
-#endif
-#ifdef USE_SHORT
+
   py::class_<shortHyper, regSpace, std::shared_ptr<shortHyper>>(
       clsVector,
       "shortHyper")  //
@@ -866,8 +865,7 @@ PYBIND11_MODULE(pySepVector, clsVector) {
                                py::format_descriptor<int>::format(), 1,
                                {m.getHyper()->getAxis(1).n}, {sizeof(short)});
       });
-#endif
-#ifdef USE_INT
+
   py::class_<intHyper, regSpace, std::shared_ptr<intHyper>>(clsVector,
                                                             "intHyper")  //
       .def(py::init<>(), "Initlialize a new int Hyper (don't use this")
@@ -1164,8 +1162,7 @@ PYBIND11_MODULE(pySepVector, clsVector) {
                  m.getHyper()->getAxis(2).n,
              sizeof(int) * m.getHyper()->getAxis(1).n, sizeof(int)});
       });
-#endif
-#ifdef USE_BYTE
+
   py::class_<byteHyper, regSpace, std::shared_ptr<byteHyper>>(clsVector,
                                                               "byteHyper")  //
       .def(py::init<>(), "Initlialize a new byte Hyper (don't use this")
@@ -1471,9 +1468,7 @@ PYBIND11_MODULE(pySepVector, clsVector) {
              sizeof(unsigned char) * m.getHyper()->getAxis(1).n,
              sizeof(unsigned char)});
       });
-#endif
 
-#ifdef USE_COMPLEX
   py::class_<complexHyper, regSpace, std::shared_ptr<complexHyper>>(
       clsVector,
       "complexHyper")  //
@@ -2046,6 +2041,5 @@ py::class_<complexDoubleHyper, regSpace, std::shared_ptr<complexDoubleHyper>>(
              sizeof(std::complex<double>) * m.getHyper()->getAxis(1).n,
              sizeof(std::complex<double>)});
       });
-#endif
 }  // namespace SEP
 }  // namespace SEP
