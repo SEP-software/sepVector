@@ -18,7 +18,6 @@ set(SOURCES
     float5DReg.cc
     float6DReg.cc)
 
-if(BUILD_INT)
   set(SOURCES
       ${SOURCES}
       intHyper.cc
@@ -28,9 +27,7 @@ if(BUILD_INT)
       int4DReg.cc
       int5DReg.cc
       int6DReg.cc)
-endif(BUILD_INT)
 
-if(BUILD_BYTE)
   set(SOURCES
       ${SOURCES}
       byteHyper.cc
@@ -40,9 +37,7 @@ if(BUILD_BYTE)
       byte4DReg.cc
       byte5DReg.cc
       byte6DReg.cc)
-endif(BUILD_BYTE)
 
-if(BUILD_COMPLEX)
   set(SOURCES
       ${SOURCES}
       complexHyper.cc
@@ -52,9 +47,7 @@ if(BUILD_COMPLEX)
       complex4DReg.cc
       complex5DReg.cc
       complex6DReg.cc)
-endif(BUILD_COMPLEX)
 
-if(BUILD_DOUBLE)
   set(SOURCES
       ${SOURCES}
       doubleHyper.cc
@@ -64,11 +57,19 @@ if(BUILD_DOUBLE)
       double4DReg.cc
       double5DReg.cc
       double6DReg.cc)
-endif(BUILD_DOUBLE)
 
-if(BUILD_SHORT)
+  set(SOURCES
+      ${SOURCES}
+      complexDoubleHyper.cc
+      complexDouble1DReg.cc
+      complexDouble2DReg.cc
+      complexDouble3DReg.cc
+      complexDouble4DReg.cc
+      complexDouble5DReg.cc
+      complexDouble6DReg.cc)
+
+
   set(SOURCES ${SOURCES} short1DReg.cc shortHyper.cc)
-endif(BUILD_SHORT)
 
 set(INCLUDES
     Vector.h

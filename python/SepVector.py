@@ -11,7 +11,10 @@ dtypeToSepVecType={
  "int32":"dataInt",
  "float64":"dataDouble",
  "uint8":"dataByte",
- "complex64":"dataComplex"}
+ "complex64":"dataComplex"
+  "complex128":"dataComplexDouble"
+
+ }
 
 class vector(pyVector.vectorIC):
     """Generic sepVector class"""
@@ -382,6 +385,72 @@ class complexVector(vector):
             Can not specify n and min or max """
         return complexVector(fromCpp=self.windowInternal(**kw))
 
+class complexDoubleVector(vector):
+    """Generic complex vector class"""
+
+    def __init__(self, **kw):
+        self.kw = kw
+        super().__init__()
+        self.storage = "dataComplexDouble"
+
+    def cloneSpace(self):
+        """Funtion tor return the space of a vector"""
+        return complexDoubleVector(fromCpp=self.cppMode.cloneSpace())
+
+    def norm(self, N=2):
+        """Function to compute vector N-norm"""
+        return self.cppMode.norm(N)
+
+    def zero(self):
+        """Function to zero out a vector"""
+        self.cppMode.set(0.)
+        return self
+
+    def multiply(self, vec2):
+        """self = vec2 * self"""
+        self.cppMode.mult(vec2.cppMode)
+        return self
+
+    def rand(self):
+        """Fill with random numbers"""
+        self.cppMode.rand()
+        return self
+
+    def copy(self, vec2):
+        """Copy vec2 into self"""
+        self.scaleAdd(vec2, 0., 1.)
+        return self
+
+    def clone(self):
+        """clone a vector"""
+        return complexDoubleVector(fromCpp=self.cppMode.clone())
+
+    def clipVector(self, low, high):
+        """Clip vector element by element vec=min(high,max(low,vec))"""
+        self.cppMode.clipVector(low.cppMode, high.cppMode)
+        return self
+
+    def dot(self, vec2):
+        """Compute dot product of two vectors"""
+        return self.cppMode.dot(vec2.cppMode)
+
+    def scale(self, sc):
+        """Function to scale a vector"""
+        self.cppMode.scale(sc)
+        return self
+
+    def scaleAdd(self, vec2, sc1=1., sc2=1.):
+        """self = self * sc1 + sc2 * vec2"""
+        self.cppMode.scaleAdd(vec2.cppMode, sc1, sc2)
+        return self
+
+    def window(self, **kw):
+        """Window a vector return another vector (of the same dimension
+            specify min1..min6, max1...max6, f1...f6, j1...j6, n1...n6, or
+            any of these by lists.
+            Can not specify n and min or max """
+        return complexDoubleVector(fromCpp=self.windowInternal(**kw))
+
 
 class byteVector(vector):
     """Generic byte vector class"""
@@ -418,7 +487,7 @@ def getSepVector(*args, **keys):
                     iax1, iax2 - axes to grab
                     rev1, rev1 - whether or not to reverse axes
                     beg, end - beg and end position for all axes(lists)
-            storage = StorageType(dataFloat[default], dataComplex,
+            storage = StorageType(dataFloat[default], dataComplex,dataComplexDouble,
                         dataDouble,dataInt,dataByte)
             
             Option 4 (numpy)
@@ -488,6 +557,9 @@ def getSepVector(*args, **keys):
     if myt == "dataFloat":
         x = getFloatVector(hyper)
         y= floatVector(fromCpp=x)
+    elif myt == "dataComplexDouble":
+        x = getComplexDoubleVector(hyper)
+        y=complexDoubleVector(fromCpp=x)
     elif myt == "dataComplex":
         x = getComplexVector(hyper)
         y=complexVector(fromCpp=x)
@@ -515,6 +587,8 @@ def getCppSepVector(hyper, **keys):
         x = getFloatVector(hyper)
     elif myt == "dataComplex":
         x = getComplexVector(hyper)
+    elif myt == "dataComplexDouble":
+        x = getComplexDoubleVector(hyper)
     elif myt == "dataDouble":
         x = getDoubleVector(hyper)
     elif myt == "dataInt":
@@ -556,6 +630,22 @@ def getComplexVector(hyper):
         return pySepVector.complex5DReg(h)
     elif len(hyper.axes) == 6:
         return pySepVector.complex6DReg(h)
+def getComplexDoubleVector(hyper):
+    h = hyper.getCpp()
+
+    if len(hyper.axes) == 1:
+        return pySepVector.complexDouble1DReg(h)
+    elif len(hyper.axes) == 2:
+        return pySepVector.complexDouble2DReg(h)
+    elif len(hyper.axes) == 3:
+        return pySepVector.complexDouble3DReg(h)
+    elif len(hyper.axes) == 4:
+        return pySepVector.complexDouble4DReg(h)
+    elif len(hyper.axes) == 5:
+        return pySepVector.complexDouble5DReg(h)
+    elif len(hyper.axes) == 6:
+        return pySepVector.complexDouble6DReg(h)
+
 
 
 def getByteVector(hyper):
