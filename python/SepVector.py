@@ -11,8 +11,8 @@ dtypeToSepVecType={
  "int32":"dataInt",
  "float64":"dataDouble",
  "uint8":"dataByte",
- "complex64":"dataComplex"
-  "complex128":"dataComplexDouble"
+ "complex64":"dataComplex",
+ "complex128":"dataComplexDouble"
 
  }
 
@@ -489,11 +489,11 @@ def getSepVector(*args, **keys):
                     beg, end - beg and end position for all axes(lists)
             storage = StorageType(dataFloat[default], dataComplex,dataComplexDouble,
                         dataDouble,dataInt,dataByte)
-            
+
             Option 4 (numpy)
                 Provide hyper, ns, os, or ds,label,s axes
 
-            
+
     """
     myt = "dataFloat"
     haveHyper=False
@@ -553,7 +553,7 @@ def getSepVector(*args, **keys):
         myt="dataFloat"
         if "storage" in keys:
             myt = keys["storage"]
-    
+
     if myt == "dataFloat":
         x = getFloatVector(hyper)
         y= floatVector(fromCpp=x)
