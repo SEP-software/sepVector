@@ -172,6 +172,10 @@ class floatVector(vector):
         self.cppMode.scale(sc)
         return self
 
+    def __repr__(self):
+        """Override print method"""
+        return "floatVector\n%s"%str(self._hyper)
+
     def calcHisto(self, nelem, mn, mx):
         """Calculate histogram
            mn - Minimum for cell
@@ -249,7 +253,11 @@ class doubleVector(vector):
         """Function to scale a vector"""
         self.cppMode.scale(sc)
         return self
-
+    
+    def __repr__(self):
+        """Override print method"""
+        return "doubleVector\n%s"%str(self._hyper)
+    
     def rand(self):
         """Function to fill with random numbers"""
         self.cppMode.rand()
@@ -318,6 +326,10 @@ class intVector(vector):
         super().__init__()
         self.storage = "dataInt"
 
+    def __repr__(self):
+        """Override print method"""
+        return "intVector\n%s"%str(self._hyper)
+
 
 class complexVector(vector):
     """Generic complex vector class"""
@@ -354,6 +366,9 @@ class complexVector(vector):
         """Copy vec2 into self"""
         self.scaleAdd(vec2, 0., 1.)
         return self
+    def __repr__(self):
+        """Override print method"""
+        return "complexVector\n%s"%str(self._hyper)
 
     def clone(self):
         """clone a vector"""
@@ -400,7 +415,9 @@ class complexDoubleVector(vector):
     def norm(self, N=2):
         """Function to compute vector N-norm"""
         return self.cppMode.norm(N)
-
+    def __repr__(self):
+        """Override print method"""
+        return "complexDoubleVector\n%s"%str(self._hyper)
     def zero(self):
         """Function to zero out a vector"""
         self.cppMode.set(0.)
@@ -470,7 +487,9 @@ class byteVector(vector):
         histo = getSepVector(ns=[nelem], storage="dataInt")
         self.cppMode.calcHisto(histo.getCpp(), mn, mx)
         return histo
-
+    def __repr__(self):
+        """Override print method"""
+        return "byteVector\n%s"%str(self._hyper)
 
 def getSepVector(*args, **keys):
     """ Get a sepVector object
