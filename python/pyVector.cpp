@@ -1,8 +1,3 @@
-#include <pybind11/chrono.h>
-#include <pybind11/complex.h>
-#include <pybind11/functional.h>
-#include <pybind11/pybind11.h>
-#include <pybind11/stl.h>
 #include "byte1DReg.h"
 #include "byte2DReg.h"
 #include "byte3DReg.h"
@@ -43,6 +38,11 @@
 #include "regSpace.h"
 #include "sepVectorConfig.h"
 #include "short1DReg.h"
+#include <pybind11/chrono.h>
+#include <pybind11/complex.h>
+#include <pybind11/functional.h>
+#include <pybind11/pybind11.h>
+#include <pybind11/stl.h>
 namespace py = pybind11;
 namespace SEP {
 using namespace SEP;
@@ -58,6 +58,11 @@ PYBIND11_MODULE(pySepVector, clsVector) {
            "Get the hypercube")
       .def_property("_hyper", &regSpace::getHyper, &regSpace::setHyper,
                     py::return_value_policy::reference)
+
+      .def("setHyper",
+           (void (regSpace::*)(std::shared_ptr<hypercube>)) &
+               regSpace::setHyper,
+           "Get the hypercube")
       .def("getVoidPtr", (void *(regSpace::*)()) & regSpace::getVoidPtr,
            "Get a void ptr")
       .def("getEsize", (int (regSpace::*)()) & regSpace::getEsize,
@@ -65,7 +70,7 @@ PYBIND11_MODULE(pySepVector, clsVector) {
 
   py::class_<floatHyper, Vector, regSpace, std::shared_ptr<floatHyper>>(
       clsVector,
-      "floatHyper")  //
+      "floatHyper") //
       .def(py::init<>(), "Initlialize a new Float Hyper (don't use this")
       .def("getSpaceOnly", (bool (floatHyper::*)()) & floatHyper::getSpaceOnly,
            "Check to see if this only a description of the vector space")
@@ -87,10 +92,10 @@ PYBIND11_MODULE(pySepVector, clsVector) {
            (void (floatHyper::*)(const float, const float)) &
                floatHyper::createMask,
            "Create a mask weight")
-      .def(
-          "add",
-          (void (floatHyper::*)(std::shared_ptr<floatHyper>)) & floatHyper::add,
-          "Add two vectors")
+      .def("add",
+           (void (floatHyper::*)(std::shared_ptr<floatHyper>)) &
+               floatHyper::add,
+           "Add two vectors")
       .def("scale", (void (floatHyper::*)(const double)) & floatHyper::scale,
            "Scale a vector")
       .def("clipVector",
@@ -449,7 +454,7 @@ PYBIND11_MODULE(pySepVector, clsVector) {
 
   py::class_<doubleHyper, regSpace, std::shared_ptr<doubleHyper>>(
       clsVector,
-      "doubleHyper")  //
+      "doubleHyper") //
       .def(py::init<>(), "Initlialize a new double Hyper (don't use this")
       .def("getSpaceOnly",
            (bool (doubleHyper::*)()) & doubleHyper::getSpaceOnly,
@@ -793,9 +798,8 @@ PYBIND11_MODULE(pySepVector, clsVector) {
              sizeof(double) * m.getHyper()->getAxis(1).n, sizeof(double)});
       });
 
-  py::class_<shortHyper, regSpace, std::shared_ptr<shortHyper>>(
-      clsVector,
-      "shortHyper")  //
+  py::class_<shortHyper, regSpace, std::shared_ptr<shortHyper>>(clsVector,
+                                                                "shortHyper") //
       .def(py::init<>(), "Initlialize a new int Hyper (don't use this")
       .def("getSpaceOnly", (bool (shortHyper::*)()) & shortHyper::getSpaceOnly,
            "Check to see if this only a description of the vector space")
@@ -813,10 +817,10 @@ PYBIND11_MODULE(pySepVector, clsVector) {
       .def_property("_vals", &shortHyper::getVals, &shortHyper::setData,
                     py::return_value_policy::reference)
 
-      .def(
-          "add",
-          (void (shortHyper::*)(std::shared_ptr<shortHyper>)) & shortHyper::add,
-          "Add two vectors")
+      .def("add",
+           (void (shortHyper::*)(std::shared_ptr<shortHyper>)) &
+               shortHyper::add,
+           "Add two vectors")
       .def("scale", (void (shortHyper::*)(const int)) & shortHyper::scale,
            "Scale a vector")
       .def("scaleAdd",
@@ -867,7 +871,7 @@ PYBIND11_MODULE(pySepVector, clsVector) {
       });
 
   py::class_<intHyper, regSpace, std::shared_ptr<intHyper>>(clsVector,
-                                                            "intHyper")  //
+                                                            "intHyper") //
       .def(py::init<>(), "Initlialize a new int Hyper (don't use this")
       .def("getSpaceOnly", (bool (intHyper::*)()) & intHyper::getSpaceOnly,
            "Check to see if this only a description of the vector space")
@@ -1164,7 +1168,7 @@ PYBIND11_MODULE(pySepVector, clsVector) {
       });
 
   py::class_<byteHyper, regSpace, std::shared_ptr<byteHyper>>(clsVector,
-                                                              "byteHyper")  //
+                                                              "byteHyper") //
       .def(py::init<>(), "Initlialize a new byte Hyper (don't use this")
       .def("getSpaceOnly", (bool (byteHyper::*)()) & byteHyper::getSpaceOnly,
            "Check to see if this only a description of the vector space")
@@ -1237,10 +1241,10 @@ PYBIND11_MODULE(pySepVector, clsVector) {
                     const std::vector<int> &, const std::vector<int> &,
                     std::vector<int> &>(),
            "Create a 1-D slice from 1-D hypercube")
-      .def(
-          "clone",
-          (std::shared_ptr<byte1DReg>(byte1DReg::*)() const) & byte1DReg::clone,
-          "Make a copy of the vector")
+      .def("clone",
+           (std::shared_ptr<byte1DReg>(byte1DReg::*)() const) &
+               byte1DReg::clone,
+           "Make a copy of the vector")
       .def("cloneSpace",
            (std::shared_ptr<byte1DReg>(byte1DReg::*)() const) &
                byte1DReg::cloneSpace,
@@ -1285,10 +1289,10 @@ PYBIND11_MODULE(pySepVector, clsVector) {
                     const int, const bool, const std::vector<int> &,
                     const std::vector<int> &, std::vector<int> &>(),
            "Create a 2-D slice from 2-D hypercube")
-      .def(
-          "clone",
-          (std::shared_ptr<byte2DReg>(byte2DReg::*)() const) & byte2DReg::clone,
-          "Make a copy of the vector")
+      .def("clone",
+           (std::shared_ptr<byte2DReg>(byte2DReg::*)() const) &
+               byte2DReg::clone,
+           "Make a copy of the vector")
       .def("cloneSpace",
            (std::shared_ptr<byte2DReg>(byte2DReg::*)() const) &
                byte2DReg::cloneSpace,
@@ -1319,10 +1323,10 @@ PYBIND11_MODULE(pySepVector, clsVector) {
            "Initialize from an axis")
       .def("allocate", (void (byte3DReg::*)()) & byte3DReg::allocate,
            "Allocate the array")
-      .def(
-          "clone",
-          (std::shared_ptr<byte3DReg>(byte3DReg::*)() const) & byte3DReg::clone,
-          "Make a copy of the vector")
+      .def("clone",
+           (std::shared_ptr<byte3DReg>(byte3DReg::*)() const) &
+               byte3DReg::clone,
+           "Make a copy of the vector")
       .def("cloneSpace",
            (std::shared_ptr<byte3DReg>(byte3DReg::*)() const) &
                byte3DReg::cloneSpace,
@@ -1354,10 +1358,10 @@ PYBIND11_MODULE(pySepVector, clsVector) {
       .def(py::init<std::shared_ptr<hypercube>>(), "Initialize with hypercube")
       .def("allocate", (void (byte4DReg::*)()) & byte4DReg::allocate,
            "Allocate the array")
-      .def(
-          "clone",
-          (std::shared_ptr<byte4DReg>(byte4DReg::*)() const) & byte4DReg::clone,
-          "Make a copy of the vector")
+      .def("clone",
+           (std::shared_ptr<byte4DReg>(byte4DReg::*)() const) &
+               byte4DReg::clone,
+           "Make a copy of the vector")
       .def("cloneSpace",
            (std::shared_ptr<byte4DReg>(byte4DReg::*)() const) &
                byte4DReg::cloneSpace,
@@ -1391,10 +1395,10 @@ PYBIND11_MODULE(pySepVector, clsVector) {
       .def(py::init<std::shared_ptr<hypercube>>(), "Initialize with hypercube")
       .def("allocate", (void (byte5DReg::*)()) & byte5DReg::allocate,
            "Allocate the array")
-      .def(
-          "clone",
-          (std::shared_ptr<byte5DReg>(byte5DReg::*)() const) & byte5DReg::clone,
-          "Make a copy of the vector")
+      .def("clone",
+           (std::shared_ptr<byte5DReg>(byte5DReg::*)() const) &
+               byte5DReg::clone,
+           "Make a copy of the vector")
       .def("cloneSpace",
            (std::shared_ptr<byte5DReg>(byte5DReg::*)() const) &
                byte5DReg::cloneSpace,
@@ -1434,10 +1438,10 @@ PYBIND11_MODULE(pySepVector, clsVector) {
       .def(py::init<std::shared_ptr<hypercube>>(), "Initialize with hypercube")
       .def("allocate", (void (byte6DReg::*)()) & byte6DReg::allocate,
            "Allocate the array")
-      .def(
-          "clone",
-          (std::shared_ptr<byte6DReg>(byte6DReg::*)() const) & byte6DReg::clone,
-          "Make a copy of the vector")
+      .def("clone",
+           (std::shared_ptr<byte6DReg>(byte6DReg::*)() const) &
+               byte6DReg::clone,
+           "Make a copy of the vector")
       .def("cloneSpace",
            (std::shared_ptr<byte6DReg>(byte6DReg::*)() const) &
                byte6DReg::cloneSpace,
@@ -1471,7 +1475,7 @@ PYBIND11_MODULE(pySepVector, clsVector) {
 
   py::class_<complexHyper, regSpace, std::shared_ptr<complexHyper>>(
       clsVector,
-      "complexHyper")  //
+      "complexHyper") //
       .def(py::init<>(), "Initlialize a new complex Hyper (don't use this")
       .def("getSpaceOnly",
            (bool (complexHyper::*)()) & complexHyper::getSpaceOnly,
@@ -1755,9 +1759,9 @@ PYBIND11_MODULE(pySepVector, clsVector) {
              sizeof(std::complex<float>) * m.getHyper()->getAxis(1).n,
              sizeof(std::complex<float>)});
       });
-py::class_<complexDoubleHyper, regSpace, std::shared_ptr<complexDoubleHyper>>(
+  py::class_<complexDoubleHyper, regSpace, std::shared_ptr<complexDoubleHyper>>(
       clsVector,
-      "complexDoubleHyper")  //
+      "complexDoubleHyper") //
       .def(py::init<>(), "Initlialize a new complex Hyper (don't use this")
       .def("getSpaceOnly",
            (bool (complexDoubleHyper::*)()) & complexDoubleHyper::getSpaceOnly,
@@ -1768,7 +1772,8 @@ py::class_<complexDoubleHyper, regSpace, std::shared_ptr<complexDoubleHyper>>(
                complexDoubleHyper::setData,
            "Set the data pointer")
       .def("getVals",
-           (std::complex<double> * (complexDoubleHyper::*)()) & complexDoubleHyper::getVals,
+           (std::complex<double> * (complexDoubleHyper::*)()) &
+               complexDoubleHyper::getVals,
            "Get the data pointer")
 
       .def("isDifferent",
@@ -1781,17 +1786,20 @@ py::class_<complexDoubleHyper, regSpace, std::shared_ptr<complexDoubleHyper>>(
                complexDoubleHyper::mult,
            "vec=vec*vec2")
       .def("dot",
-           (double (complexDoubleHyper::*)(std::shared_ptr<complexDoubleHyper>) const) &
+           (double (complexDoubleHyper::*)(std::shared_ptr<complexDoubleHyper>)
+                const) &
                complexDoubleHyper::dot,
            "Calculate dot product")
-      .def_property("_vals", &complexDoubleHyper::getVals, &complexDoubleHyper::setData,
+      .def_property("_vals", &complexDoubleHyper::getVals,
+                    &complexDoubleHyper::setData,
                     py::return_value_policy::reference)
       .def("scale",
-           (void (complexDoubleHyper::*)(const double)) & complexDoubleHyper::scale,
+           (void (complexDoubleHyper::*)(const double)) &
+               complexDoubleHyper::scale,
            "Scale a vector")
       .def("scaleAdd",
-           (void (complexDoubleHyper::*)(std::shared_ptr<complexDoubleHyper>, const double,
-                                   const double)) &
+           (void (complexDoubleHyper::*)(std::shared_ptr<complexDoubleHyper>,
+                                         const double, const double)) &
                complexDoubleHyper::scaleAdd,
            "vec=vec*sc1+vec2*sc2")
       .def("calcCheckSum",
@@ -1799,7 +1807,8 @@ py::class_<complexDoubleHyper, regSpace, std::shared_ptr<complexDoubleHyper>>(
                complexDoubleHyper::calcCheckSum,
            "Calculate checksum of a vector")
       .def("norm",
-           (double (complexDoubleHyper::*)(const int n) const) & complexDoubleHyper::norm,
+           (double (complexDoubleHyper::*)(const int n) const) &
+               complexDoubleHyper::norm,
            "Calculate n-norm of a vector")
       .def("zero", (void (complexDoubleHyper::*)()) & complexDoubleHyper::zero,
            "Fill a vector with zero")
@@ -1807,38 +1816,45 @@ py::class_<complexDoubleHyper, regSpace, std::shared_ptr<complexDoubleHyper>>(
            (void (complexDoubleHyper::*)(const std::complex<double>)) &
                complexDoubleHyper::set,
            "Fill a vector with a value")
-      .def("rand", (void (complexDoubleHyper::*)()) & complexDoubleHyper::random,
+      .def("rand",
+           (void (complexDoubleHyper::*)()) & complexDoubleHyper::random,
            "Fill a vector with random number")
       .def("clipVector",
            (void (complexDoubleHyper::*)(const std::shared_ptr<doubleHyper>,
-                                   const std::shared_ptr<doubleHyper>)) &
+                                         const std::shared_ptr<doubleHyper>)) &
                complexDoubleHyper::clipVector,
            "vec=min(max(low,vec),high)")
       .def("clipVector",
-           (void (complexDoubleHyper::*)(const std::shared_ptr<complexDoubleHyper>,
-                                   const std::shared_ptr<complexDoubleHyper>)) &
+           (void (complexDoubleHyper::*)(
+               const std::shared_ptr<complexDoubleHyper>,
+               const std::shared_ptr<complexDoubleHyper>)) &
                complexDoubleHyper::clipVector,
            "vec=min(max(low,vec),high)")
       .def("checkSame",
-           (bool (complexDoubleHyper::*)(const std::shared_ptr<complexDoubleHyper>) const) &
+           (bool (complexDoubleHyper::*)(
+               const std::shared_ptr<complexDoubleHyper>) const) &
                complexDoubleHyper::checkSame,
            "Check to make sure the vectors exist in the same space");
 
-  py::class_<complexDouble1DReg, complexDoubleHyper, std::shared_ptr<complexDouble1DReg>>(
+  py::class_<complexDouble1DReg, complexDoubleHyper,
+             std::shared_ptr<complexDouble1DReg>>(
       clsVector, "complexDouble1DReg", py::buffer_protocol())
       .def(py::init<const int>(), "Initialize giving size")
       .def(py::init<const axis &>(), "Initialize from an axis")
       .def(py::init<std::shared_ptr<hypercube>>(), "Initialize with hypercube")
 
-      .def("clone",
-           (std::shared_ptr<complexDouble1DReg>(complexDouble1DReg::*)() const) &
-               complexDouble1DReg::clone,
-           "Make a copy of the vector")
-      .def("cloneSpace",
-           (std::shared_ptr<complexDouble1DReg>(complexDouble1DReg::*)() const) &
-               complexDouble1DReg::cloneSpace,
-           "Make a copy of the vector space")
-      .def("allocate", (void (complexDouble1DReg::*)()) & complexDouble1DReg::allocate,
+      .def(
+          "clone",
+          (std::shared_ptr<complexDouble1DReg>(complexDouble1DReg::*)() const) &
+              complexDouble1DReg::clone,
+          "Make a copy of the vector")
+      .def(
+          "cloneSpace",
+          (std::shared_ptr<complexDouble1DReg>(complexDouble1DReg::*)() const) &
+              complexDouble1DReg::cloneSpace,
+          "Make a copy of the vector space")
+      .def("allocate",
+           (void (complexDouble1DReg::*)()) & complexDouble1DReg::allocate,
            "Allocate the array")
       .def("window",
            (std::shared_ptr<complexDouble1DReg>(complexDouble1DReg::*)(
@@ -1853,20 +1869,24 @@ py::class_<complexDoubleHyper, regSpace, std::shared_ptr<complexDoubleHyper>>(
             py::format_descriptor<std::complex<double>>::format(), 1,
             {m.getHyper()->getAxis(1).n}, {sizeof(std::complex<double>)});
       });
-  py::class_<complexDouble2DReg, complexDoubleHyper, std::shared_ptr<complexDouble2DReg>>(
+  py::class_<complexDouble2DReg, complexDoubleHyper,
+             std::shared_ptr<complexDouble2DReg>>(
       clsVector, "complexDouble2DReg", py::buffer_protocol())
       .def(py::init<const int, const int>(), "Initialize giving size")
       .def(py::init<const axis &, const axis &>(), "Initialize from an axis")
       .def(py::init<std::shared_ptr<hypercube>>(), "Initialize with hypercube")
-      .def("clone",
-           (std::shared_ptr<complexDouble2DReg>(complexDouble2DReg::*)() const) &
-               complexDouble2DReg::clone,
-           "Make a copy of the vector")
-      .def("cloneSpace",
-           (std::shared_ptr<complexDouble2DReg>(complexDouble2DReg::*)() const) &
-               complexDouble2DReg::cloneSpace,
-           "Make a copy of the vector space")
-      .def("allocate", (void (complexDouble2DReg::*)()) & complexDouble2DReg::allocate,
+      .def(
+          "clone",
+          (std::shared_ptr<complexDouble2DReg>(complexDouble2DReg::*)() const) &
+              complexDouble2DReg::clone,
+          "Make a copy of the vector")
+      .def(
+          "cloneSpace",
+          (std::shared_ptr<complexDouble2DReg>(complexDouble2DReg::*)() const) &
+              complexDouble2DReg::cloneSpace,
+          "Make a copy of the vector space")
+      .def("allocate",
+           (void (complexDouble2DReg::*)()) & complexDouble2DReg::allocate,
            "Allocate the array")
       .def("window",
            (std::shared_ptr<complexDouble2DReg>(complexDouble2DReg::*)(
@@ -1883,23 +1903,27 @@ py::class_<complexDoubleHyper, regSpace, std::shared_ptr<complexDoubleHyper>>(
              sizeof(std::complex<double>)});
       });
 
-  py::class_<complexDouble3DReg, complexDoubleHyper, std::shared_ptr<complexDouble3DReg>>(
+  py::class_<complexDouble3DReg, complexDoubleHyper,
+             std::shared_ptr<complexDouble3DReg>>(
       clsVector, "complexDouble3DReg", py::buffer_protocol())
       .def(py::init<const int, const int, const int>(),
            "Initialize giving size")
       .def(py::init<std::shared_ptr<hypercube>>(), "Initialize with hypercube")
       .def(py::init<const axis &, const axis &, const axis &>(),
            "Initialize from an axis")
-      .def("allocate", (void (complexDouble3DReg::*)()) & complexDouble3DReg::allocate,
+      .def("allocate",
+           (void (complexDouble3DReg::*)()) & complexDouble3DReg::allocate,
            "Allocate the array")
-      .def("clone",
-           (std::shared_ptr<complexDouble3DReg>(complexDouble3DReg::*)() const) &
-               complexDouble3DReg::clone,
-           "Make a copy of the vector")
-      .def("cloneSpace",
-           (std::shared_ptr<complexDouble3DReg>(complexDouble3DReg::*)() const) &
-               complexDouble3DReg::cloneSpace,
-           "Make a copy of the vector space")
+      .def(
+          "clone",
+          (std::shared_ptr<complexDouble3DReg>(complexDouble3DReg::*)() const) &
+              complexDouble3DReg::clone,
+          "Make a copy of the vector")
+      .def(
+          "cloneSpace",
+          (std::shared_ptr<complexDouble3DReg>(complexDouble3DReg::*)() const) &
+              complexDouble3DReg::cloneSpace,
+          "Make a copy of the vector space")
       .def("window",
            (std::shared_ptr<complexDouble3DReg>(complexDouble3DReg::*)(
                const std::vector<int> &, const std::vector<int> &,
@@ -1918,23 +1942,27 @@ py::class_<complexDoubleHyper, regSpace, std::shared_ptr<complexDoubleHyper>>(
              sizeof(std::complex<double>)});
       });
 
-  py::class_<complexDouble4DReg, complexDoubleHyper, std::shared_ptr<complexDouble4DReg>>(
+  py::class_<complexDouble4DReg, complexDoubleHyper,
+             std::shared_ptr<complexDouble4DReg>>(
       clsVector, "complexDouble4DReg", py::buffer_protocol())
       .def(py::init<const int, const int, const int, const int>(),
            "Initialize giving size")
       .def(py::init<const axis &, const axis &, const axis &, const axis &>(),
            "Initialize from an axis")
       .def(py::init<std::shared_ptr<hypercube>>(), "Initialize with hypercube")
-      .def("allocate", (void (complexDouble4DReg::*)()) & complexDouble4DReg::allocate,
+      .def("allocate",
+           (void (complexDouble4DReg::*)()) & complexDouble4DReg::allocate,
            "Allocate the array")
-      .def("clone",
-           (std::shared_ptr<complexDouble4DReg>(complexDouble4DReg::*)() const) &
-               complexDouble4DReg::clone,
-           "Make a copy of the vector")
-      .def("cloneSpace",
-           (std::shared_ptr<complexDouble4DReg>(complexDouble4DReg::*)() const) &
-               complexDouble4DReg::cloneSpace,
-           "Make a copy of the vector space")
+      .def(
+          "clone",
+          (std::shared_ptr<complexDouble4DReg>(complexDouble4DReg::*)() const) &
+              complexDouble4DReg::clone,
+          "Make a copy of the vector")
+      .def(
+          "cloneSpace",
+          (std::shared_ptr<complexDouble4DReg>(complexDouble4DReg::*)() const) &
+              complexDouble4DReg::cloneSpace,
+          "Make a copy of the vector space")
       .def("window",
            (std::shared_ptr<complexDouble4DReg>(complexDouble4DReg::*)(
                const std::vector<int> &, const std::vector<int> &,
@@ -1954,7 +1982,8 @@ py::class_<complexDoubleHyper, regSpace, std::shared_ptr<complexDoubleHyper>>(
              sizeof(std::complex<double>) * m.getHyper()->getAxis(1).n,
              sizeof(std::complex<double>)});
       });
-  py::class_<complexDouble5DReg, complexDoubleHyper, std::shared_ptr<complexDouble5DReg>>(
+  py::class_<complexDouble5DReg, complexDoubleHyper,
+             std::shared_ptr<complexDouble5DReg>>(
       clsVector, "complexDouble5DReg", py::buffer_protocol())
       .def(py::init<const int, const int, const int, const int, const int>(),
            "Initialize giving size")
@@ -1962,16 +1991,19 @@ py::class_<complexDoubleHyper, regSpace, std::shared_ptr<complexDoubleHyper>>(
                     const axis &>(),
            "Initialize from an axis")
       .def(py::init<std::shared_ptr<hypercube>>(), "Initialize with hypercube")
-      .def("allocate", (void (complexDouble5DReg::*)()) & complexDouble5DReg::allocate,
+      .def("allocate",
+           (void (complexDouble5DReg::*)()) & complexDouble5DReg::allocate,
            "Allocate the array")
-      .def("clone",
-           (std::shared_ptr<complexDouble5DReg>(complexDouble5DReg::*)() const) &
-               complexDouble5DReg::clone,
-           "Make a copy of the vector")
-      .def("cloneSpace",
-           (std::shared_ptr<complexDouble5DReg>(complexDouble5DReg::*)() const) &
-               complexDouble5DReg::cloneSpace,
-           "Make a copy of the vector space")
+      .def(
+          "clone",
+          (std::shared_ptr<complexDouble5DReg>(complexDouble5DReg::*)() const) &
+              complexDouble5DReg::clone,
+          "Make a copy of the vector")
+      .def(
+          "cloneSpace",
+          (std::shared_ptr<complexDouble5DReg>(complexDouble5DReg::*)() const) &
+              complexDouble5DReg::cloneSpace,
+          "Make a copy of the vector space")
       .def("window",
            (std::shared_ptr<complexDouble5DReg>(complexDouble5DReg::*)(
                const std::vector<int> &, const std::vector<int> &,
@@ -1996,7 +2028,8 @@ py::class_<complexDoubleHyper, regSpace, std::shared_ptr<complexDoubleHyper>>(
              sizeof(std::complex<double>)});
       });
 
-  py::class_<complexDouble6DReg, complexDoubleHyper, std::shared_ptr<complexDouble6DReg>>(
+  py::class_<complexDouble6DReg, complexDoubleHyper,
+             std::shared_ptr<complexDouble6DReg>>(
       clsVector, "complexDouble6DReg", py::buffer_protocol())
       .def(py::init<const int, const int, const int, const int, const int,
                     const int>(),
@@ -2005,16 +2038,19 @@ py::class_<complexDoubleHyper, regSpace, std::shared_ptr<complexDoubleHyper>>(
                     const axis &, const axis &>(),
            "Initialize from an axis")
       .def(py::init<std::shared_ptr<hypercube>>(), "Initialize with hypercube")
-      .def("allocate", (void (complexDouble6DReg::*)()) & complexDouble6DReg::allocate,
+      .def("allocate",
+           (void (complexDouble6DReg::*)()) & complexDouble6DReg::allocate,
            "Allocate the array")
-      .def("clone",
-           (std::shared_ptr<complexDouble6DReg>(complexDouble6DReg::*)() const) &
-               complexDouble6DReg::clone,
-           "Make a copy of the vector")
-      .def("cloneSpace",
-           (std::shared_ptr<complexDouble6DReg>(complexDouble6DReg::*)() const) &
-               complexDouble6DReg::cloneSpace,
-           "Make a copy of the vector space")
+      .def(
+          "clone",
+          (std::shared_ptr<complexDouble6DReg>(complexDouble6DReg::*)() const) &
+              complexDouble6DReg::clone,
+          "Make a copy of the vector")
+      .def(
+          "cloneSpace",
+          (std::shared_ptr<complexDouble6DReg>(complexDouble6DReg::*)() const) &
+              complexDouble6DReg::cloneSpace,
+          "Make a copy of the vector space")
       .def("window",
            (std::shared_ptr<complexDouble6DReg>(complexDouble6DReg::*)(
                const std::vector<int> &, const std::vector<int> &,
@@ -2041,5 +2077,5 @@ py::class_<complexDoubleHyper, regSpace, std::shared_ptr<complexDoubleHyper>>(
              sizeof(std::complex<double>) * m.getHyper()->getAxis(1).n,
              sizeof(std::complex<double>)});
       });
-}  // namespace SEP
-}  // namespace SEP
+} // namespace SEP
+} // namespace SEP

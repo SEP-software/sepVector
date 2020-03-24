@@ -65,6 +65,16 @@ class vector(pyVector.vectorIC):
         """Return a numpy version of the array (same memory"""
         return numpy.array(self.cppMode, copy=False)
 
+    def adjustHyper(self,hyper):
+        """Adjust the hypercube associated with vector. Does not reallocate. Must be same dims/size"""
+        hyperOld=self.getHyper()
+        if hyperOld.getN123() != =hyper.getN123():
+            raise Exception("Trying to reset with a different sized hyper")
+        if len(hyperOld.axes) != len(hyper.axes):
+            raise Exception("Trying to reset with a different sized hyper")
+        self.cppMode.setHyper(hyper.cppMode)
+
+
     def windowInternal(self, **kw):
         """Window a vector return another vector (of the same dimension
             specify min1..min6, max1...max6, f1...f6, j1...j6, n1...n6, or
@@ -174,7 +184,7 @@ class floatVector(vector):
 
     def __repr__(self):
         """Override print method"""
-        return "floatVector\n%s"%str(self._hyper)
+        return "f loatVector\n%s"%str(self._hyper)
 
     def calcHisto(self, nelem, mn, mx):
         """Calculate histogram
