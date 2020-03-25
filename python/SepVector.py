@@ -68,7 +68,7 @@ class vector(pyVector.vectorIC):
     def adjustHyper(self,hyper):
         """Adjust the hypercube associated with vector. Does not reallocate. Must be same dims/size"""
         hyperOld=self.getHyper()
-        if hyperOld.getN123() != =hyper.getN123():
+        if hyperOld.getN123() != hyper.getN123():
             raise Exception("Trying to reset with a different sized hyper")
         if len(hyperOld.axes) != len(hyper.axes):
             raise Exception("Trying to reset with a different sized hyper")
