@@ -184,7 +184,7 @@ class floatVector(vector):
 
     def __repr__(self):
         """Override print method"""
-        return "f loatVector\n%s"%str(self._hyper)
+        return "f loatVector\n%s"%str(self.getHyper())
 
     def calcHisto(self, nelem, mn, mx):
         """Calculate histogram
@@ -266,7 +266,7 @@ class doubleVector(vector):
     
     def __repr__(self):
         """Override print method"""
-        return "doubleVector\n%s"%str(self._hyper)
+        return "doubleVector\n%s"%str(self.getHyper())
     
     def rand(self):
         """Function to fill with random numbers"""
@@ -338,7 +338,7 @@ class intVector(vector):
 
     def __repr__(self):
         """Override print method"""
-        return "intVector\n%s"%str(self._hyper)
+        return "intVector\n%s"%str(self.getHyper())
 
 
 class complexVector(vector):
@@ -378,7 +378,7 @@ class complexVector(vector):
         return self
     def __repr__(self):
         """Override print method"""
-        return "complexVector\n%s"%str(self._hyper)
+        return "complexVector\n%s"%str(self.getHyper())
 
     def clone(self):
         """clone a vector"""
@@ -427,7 +427,7 @@ class complexDoubleVector(vector):
         return self.cppMode.norm(N)
     def __repr__(self):
         """Override print method"""
-        return "complexDoubleVector\n%s"%str(self._hyper)
+        return "complexDoubleVector\n%s"%str(self.getHyper())
     def zero(self):
         """Function to zero out a vector"""
         self.cppMode.set(0.)
@@ -499,7 +499,7 @@ class byteVector(vector):
         return histo
     def __repr__(self):
         """Override print method"""
-        return "byteVector\n%s"%str(self._hyper)
+        return "byteVector\n%s"%str(self.getHyper())
 
 def getSepVector(*args, **keys):
     """ Get a sepVector object
