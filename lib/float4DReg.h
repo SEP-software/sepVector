@@ -26,17 +26,13 @@ Create a 4-D float vector from just lengths
 
 */
   float4DReg(const int n1, const int n2, const int n3, const int n4) {
-	  std::cerr<<"what is going on 1"<<std::endl;
     std::vector<SEP::axis> a;
     a.push_back(SEP::axis(n1));
     a.push_back(SEP::axis(n2));
     a.push_back(SEP::axis(n3));
     a.push_back(SEP::axis(n4));
-	  std::cerr<<"2hat is going on 1"<<std::endl;
     std::shared_ptr<SEP::hypercube> hyp(new SEP::hypercube(a));
-	  std::cerr<<"3hat is going on 1"<<std::endl;
     initNoData(hyp);
-	  std::cerr<<"4hat is going on 1"<<std::endl;
   }
   /*!
    Create a 4-D float vector from axes

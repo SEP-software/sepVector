@@ -219,7 +219,6 @@ void shortHyper::calcCheckSum() {
 
 bool shortHyper::checkSame(const std::shared_ptr<shortHyper> vec2) const {
   if (!vec2) {
-    std::cerr << "Not allocated vec2" << std::endl;
     return false;
   }
   //  if (getHyper() == vec2->getHyper()) return true;

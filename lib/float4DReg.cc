@@ -54,17 +54,13 @@ std::shared_ptr<float4DReg> float4DReg::cloneSpace() const {
 void float4DReg::initNoData(std::shared_ptr<SEP::hypercube> hyp) {
   const std::vector<SEP::axis> axes = hyp->getAxes();
   setHyper(hyp);
-  std::cerr<<"wha1 is going on one "<<std::endl;
   if (axes.size() != 4)
     throw(SEPException(std::string("Axes size must be 4 is ") +
                        std::to_string(axes.size())));
 
-  std::cerr<<"wha2 is going on one "<<std::endl;
   _mat.reset(
       new float4D(boost::extents[axes[3].n][axes[2].n][axes[1].n][axes[0].n]));
-  std::cerr<<"wha3 is going on one "<<std::endl;
   setData(_mat->data());
-  std::cerr<<"wha4 is going on one "<<std::endl;
 }
 void float4DReg::initData(std::shared_ptr<SEP::hypercube> hyp,
                           const float4D &vals) {
