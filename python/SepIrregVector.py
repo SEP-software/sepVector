@@ -602,7 +602,7 @@ class sepIrregVector(pyVector.vectorIC):
 
     def __repr__(self):
         """Override print method"""
-        return "Irregular vector \n%s\n%s"%(str(self._headers),str(self._traces))
+        return "Irregular vector \n%s\n%s"%(str(self._header),str(self._traces))
 
 
     def rand(self):
