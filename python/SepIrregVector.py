@@ -275,8 +275,13 @@ class headerBlock:
             out="Grid hypercube\n%s\nkeys:\n"%str(self._gridHyper)
         else:
             out="%d headers\nkeys:\n"%self._nh
-        for k in self._keyOrder:
-            out+="%s %s\n"%(k,self._keys[k].getDType())
+        for k in self._keyOrdder:
+            if len(k)<8:
+                out+="\t%s \t \t \t %s\n"%(k,self._keys[k].getDType())
+            elif len(k)<16:
+                out+="\t%s \t \t %s\n"%(k,self._keys[k].getDType())
+            else:
+                out+="\t%s \t  %s\n"%(k,self._keys[k].getDType())
         return(out)
     def getKeyTypes(self):
         """Return the key types"""
