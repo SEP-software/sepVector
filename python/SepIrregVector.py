@@ -287,7 +287,7 @@ class headerBlock:
         """Return the key types"""
         typ={}
         for k,v in self._keys.items():
-            typ[k]=SepVector.dtypeToSepVecType(str(v.getDType()))
+            typ[k]=SepVector.dtypeToSepVecType[str(v.getDType())]
         return typ
     def getHeaderNumbers(self,**kw):
         """Get the header numbers assocaited with a window"""
