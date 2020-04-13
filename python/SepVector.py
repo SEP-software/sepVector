@@ -1,7 +1,7 @@
 import pyHypercube
 import pySepVector
 import Hypercube
-import numpy
+import numpy 
 import pyVector
 from sys import version_info
 
@@ -15,6 +15,8 @@ dtypeToSepVecType={
  "complex128":"dataComplexDouble"
 
  }
+SepVecTypeToDtype= {v: k for k, v in dtypeToSepVecType.items()}
+
 
 class vector(pyVector.vectorIC):
     """Generic sepVector class"""
@@ -81,83 +83,7 @@ class vector(pyVector.vectorIC):
             any of these by lists.
             Can not specify n and min or max """
         axes = self.getHyper().axes
-        ndim = len(axes)
-        nw = []
-        fw = []
-        jw = []
-        for i in range(1, ndim + 1):
-            nset = False
-            fset = False
-            jset = False
-            if "n%d" % i in kw:
-                nset = True
-                n = int(kw["n%d" % i])
-            if "f%d" % i in kw:
-                fset = True
-                f = int(kw["f%d" % i])
-            if "j%d" % i in kw:
-                jset = True
-                j = int(kw["j%d" % i])
-            biSet = False
-            eiSet = False
-            if "min%d" % i in kw:
-                bi = int(float(kw["min" %
-                                  i] - axes[i - 1].o) / axes[i - 1].d + .5)
-                biSet = True
-            if "max%d" % i in kw:
-                ei = int(float(kw["max" %
-                                  i] - axes[i - 1].o) / axes[i - 1].d + .5)
-                eiSet = True
-            if fset:
-                if axes[i - 1].n <= f:
-                    raise Exception(
-                        "invalid f%d=%d parameter n%d of data=%d" %
-                        (i, f, i, axes[
-                            i - 1].n))
-            if nset:
-                if axes[i - 1].n < n:
-                    raise Exception(
-                        "invalid n%d=%d parameter n%d of data=%d" %
-                        (i, n, i, axes[
-                            i - 1].n))
-            if jset and j <= 0:
-                raise Exception("invalid j%d=%d " % (i, j))
-            if not jset:
-                j = 1
-            if not nset:
-                if not fset:
-                    if not biSet:
-                        f = 0
-                    elif bi < 0 or bi >= axes[i - 1].n:
-                        raise Exception("Invalid min%d=%f" %
-                                        (i, kw["min%d" % i]))
-                    else:
-                        f = bi
-                if eiSet:
-                    if ei <= f or ei >= axes[i - 1].n:
-                        raise Exception("Invalid max%d=%f" %
-                                        (i, kw["max%d" % i]))
-                    else:
-                        n = (ei - f - 1) / j + 1
-                else:
-                    n = (axes[i - 1].n - f - 1) / j + 1
-
-                if not biSet and not eiSet and not jset and not fset:
-                    n = axes[i - 1].n
-                    j = 1
-                    f = 0
-            elif not fset:
-                if not biSet:
-                    f = 0
-                elif bi < 0 or bi >= axes[i - 1].n:
-                    raise Exception("Invalid min%d=%f" % (i, kw["min%d" % i]))
-                else:
-                    f = fi
-            if axes[i - 1].n < (1 + f + j * (n - 1)):
-                raise Exception("Invalid window parameter")
-            nw.append(int(n))
-            fw.append(int(f))
-            jw.append(int(j))
+        fixWindow(axes,**kw)
         return self.cppMode.window(nw, fw, jw)
 
     def checkSame(self, vec2):
@@ -184,7 +110,7 @@ class floatVector(vector):
 
     def __repr__(self):
         """Override print method"""
-        return "f loatVector\n%s"%str(self.getHyper())
+        return "floatVector\n%s"%str(self.getHyper())
 
     def calcHisto(self, nelem, mn, mx):
         """Calculate histogram
@@ -791,3 +717,90 @@ def readColTextFile(file):
             lst.append(array[j][i])
         array2.append(lst)
     return array2
+def fixWindow(axes,*kw):
+    """Create full window parameters 
+
+    axes - Axes for dataset
+    kw = n1, f1, j1 - Window parameters
+
+    returns 
+      nw,fw,jw - Full window paramters
+    """
+    ndim = len(axes)
+    nw = []
+    fw = []
+    jw = []
+    for i in range(1, ndim + 1):
+        nset = False
+        fset = False
+        jset = False
+        if "n%d" % i in kw:
+            nset = True
+            n = int(kw["n%d" % i])
+        if "f%d" % i in kw:
+            fset = True
+            f = int(kw["f%d" % i])
+        if "j%d" % i in kw:
+            jset = True
+            j = int(kw["j%d" % i])
+        biSet = False
+        eiSet = False
+        if "min%d" % i in kw:
+            bi = int(float(kw["min" %
+                                i] - axes[i - 1].o) / axes[i - 1].d + .5)
+            biSet = True
+        if "max%d" % i in kw:
+            ei = int(float(kw["max" %
+                                i] - axes[i - 1].o) / axes[i - 1].d + .5)
+            eiSet = True
+        if fset:
+            if axes[i - 1].n <= f:
+                raise Exception(
+                    "invalid f%d=%d parameter n%d of data=%d" %
+                    (i, f, i, axes[
+                        i - 1].n))
+        if nset:
+            if axes[i - 1].n < n:
+                raise Exception(
+                    "invalid n%d=%d parameter n%d of data=%d" %
+                    (i, n, i, axes[
+                        i - 1].n))
+        if jset and j <= 0:
+            raise Exception("invalid j%d=%d " % (i, j))
+        if not jset:
+            j = 1
+        if not nset:
+            if not fset:
+                if not biSet:
+                    f = 0
+                elif bi < 0 or bi >= axes[i - 1].n:
+                    raise Exception("Invalid min%d=%f" %
+                                    (i, kw["min%d" % i]))
+                else:
+                    f = bi
+            if eiSet:
+                if ei <= f or ei >= axes[i - 1].n:
+                    raise Exception("Invalid max%d=%f" %
+                                    (i, kw["max%d" % i]))
+                else:
+                    n = (ei - f - 1) / j + 1
+            else:
+                n = (axes[i - 1].n - f - 1) / j + 1
+
+            if not biSet and not eiSet and not jset and not fset:
+                n = axes[i - 1].n
+                j = 1
+                f = 0
+        elif not fset:
+            if not biSet:
+                f = 0
+            elif bi < 0 or bi >= axes[i - 1].n:
+                raise Exception("Invalid min%d=%f" % (i, kw["min%d" % i]))
+            else:
+                f = fi
+        if axes[i - 1].n < (1 + f + j * (n - 1)):
+            raise Exception("Invalid window parameter")
+        nw.append(int(n))
+        fw.append(int(f))
+        jw.append(int(j))
+        return nw,fw,jw

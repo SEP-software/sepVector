@@ -29,8 +29,15 @@ if(BUILD_TEST)
     LD_LIBRARY_PATH=${CMAKE_CURRENT_BINARY_DIR}/../external/hypercube/python:${CMAKE_CURRENT_SOURCE_DIR}/../external/hypercube/python:${CMAKE_CURRENT_BINARY_DIR}
     ${PYTHON_EXECUTABLE} -m test_SepVector 
   WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
-endif(BUILD_TEST)
+
+	add_test(NAME sepIrregVector 
+    COMMAND ${CMAKE_COMMAND} -E env
+    PYTHONPATH=${CMAKE_CURRENT_BINARY_DIR}/../external/hypercube/python:${CMAKE_CURRENT_SOURCE_DIR}/../external/hypercube/python:${CMAKE_CURRENT_BINARY_DIR}:${CMAKE_CURRENT_SOURCE_DIR}/../external/python-solver/GenericSolver/python
+    LD_LIBRARY_PATH=${CMAKE_CURRENT_BINARY_DIR}/../external/hypercube/python:${CMAKE_CURRENT_SOURCE_DIR}/../external/hypercube/python:${CMAKE_CURRENT_BINARY_DIR}
+    ${PYTHON_EXECUTABLE} -m test_SepIrregVector 
+  WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
+  endif(BUILD_TEST)
 
 target_link_libraries(pySepVector PRIVATE sepVector hypercube )
 install(TARGETS pySepVector DESTINATION lib/python EXPORT sepVectorTargets)
-install(FILES SepVector.py DESTINATION lib/python)
+install(FILES SepVector.py SepIrregVector.py DESTINATION lib/python)
