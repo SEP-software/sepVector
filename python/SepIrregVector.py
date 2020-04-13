@@ -18,7 +18,6 @@ class key:
             raise Exception("Expecting nd array")
         if val.ndim != 1:
             raise Exception("Expecting 1-D array")
-        print("see type",val.dtype)
         self._vals=np.copy(val)
 
 

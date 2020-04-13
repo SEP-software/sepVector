@@ -258,7 +258,6 @@ class intVector(vector):
     """Generic int vector class"""
 
     def __init__(self, **kw):
-        print("in int vector",kw["fromCpp"])
         self.kw = kw
         super().__init__()
         self.storage = "dataInt"
