@@ -588,7 +588,7 @@ class sepIrregVector(pyVector.vectorIC):
                 axes.append(self._header._gridHyper.axes[i])
         else:
             axes.append(Hypercube.axis(n=self._header._nh))
-        return Hypercube.hypercube(axes)
+        return Hypercube.hypercube(axes=axes)
 
     def checkSame(self, vec2):
         """Function to check if two vectors belong to the same vector space"""
