@@ -803,4 +803,4 @@ def fixWindow(axes,*kw):
         nw.append(int(n))
         fw.append(int(f))
         jw.append(int(j))
-        return nw,fw,jw
+    return nw,fw,jw
