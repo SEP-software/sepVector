@@ -248,7 +248,7 @@ class headerBlock:
         if self._gridHyper:
             return self._grid
         else:
-            g=byte1DReg(self._nh)
+            g=SepVector.getSepVector(storage="dataByte",ns=[self._nh])
             g.getNdArray().fill(1)
             return g
     def putGridWindow(self,headers,**kw):
