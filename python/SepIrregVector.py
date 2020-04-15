@@ -510,7 +510,7 @@ def createGrid(byteA,intA):
         else:
             intA[i]=-1
 
-class sepIrregVector(pyVector.vectorIC):
+class vector(pyVector.vectorIC):
     def __init__(self,**kw):
         """A block of traces with headers
 
@@ -592,7 +592,7 @@ class sepIrregVector(pyVector.vectorIC):
 
     def checkSame(self, vec2):
         """Function to check if two vectors belong to the same vector space"""
-        if not isinstance(vec2,sepIrregVector):
+        if not isinstance(vec2,vector):
             return False
         return self._header.checkSame(vec2._header)
 
@@ -617,7 +617,7 @@ class sepIrregVector(pyVector.vectorIC):
 
     def clone(self):
         """Function to clone (deep copy) a vector"""
-        return sepIrregVec(traces=self._traces.clone(), header=self._header.clone())
+        return vector(traces=self._traces.clone(), header=self._header.clone())
 
     def clipVector(self, low, high):
         """Clip vector element by element vec=min(high,max(low,vec))"""
@@ -626,7 +626,7 @@ class sepIrregVector(pyVector.vectorIC):
 
     def cloneSpace(self):
         """Funtion tor return the space of a vector"""
-        return sepIrregVec(traces=self._traces.cloneSpace(),header=self._header.clonseSpace())
+        return vector(traces=self._traces.cloneSpace(),header=self._header.clonseSpace())
 
     def scaleAdd(self, vec2, sc1=1., sc2=1.):
         """self = self * sc1 + sc2 * vec2"""
@@ -668,7 +668,7 @@ class sepIrregVector(pyVector.vectorIC):
         hyper=Hypercube.hypercube(axes=[self._hyper.axes[0],ax2])
         dat=SepVector.getSepVector(hyper,storage=self.traces.getStorageType())
         getTraces(traceNum,self._traces.getNdArray(),dat.getNdArray())
-        return sepIrregVector(traces=dat,header=header)
+        return vector(traces=dat,header=header)
     
     def putGridWindow(self,block,**kw):
             """Put header window from the grid
@@ -694,7 +694,7 @@ class sepIrregVector(pyVector.vectorIC):
         axes.append(Hypercube.axis(n=iorder.shape[0]))
         trNew=SepVector.getSepVector(axes=axes,storage=self._traces.getStorage())
         getTraces(iorder,self._traces.getNdArray(),trNew.getNdArray())
-        return sepIrregVector(traces=trNew,header=head)
+        return vector(traces=trNew,header=head)
 
 @numba.jit(nopython=True,parallel=True)
 def getTraces(num,ina,outa):
