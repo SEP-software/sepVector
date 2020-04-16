@@ -534,6 +534,7 @@ class vector(pyVector.vectorIC):
             self._traces=kw["traces"]
             self._hyper=self._traces.getHyper()
             if len(self._hyper.axes)!=2:
+                print("XXX",self._hyper,"YYY")
                 raise Exception("Only support 2-D hypercube. Axes size ",len(self._hyper.axes))
             if self._header._nh != self._hyper.axes[1].n:
                 raise Exception("Header and data don't have the same number of traces")
