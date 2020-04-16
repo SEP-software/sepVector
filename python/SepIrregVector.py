@@ -447,7 +447,6 @@ def arrToSortedTupleList(arr):
 def keyToInt(ikey,n,o,d,key,arr):
     for i in range(arr.shape[0]):
         arr[i,ikey]=round((key[i]-o)/d)
-        print("CHECK ",i,ikey,key[i],o,d,arr[i,ikey])
         if arr[i,ikey] < 0 or arr[i,ikey] >= n:
             arr[i,7]=1
         arr[i,6]=i 
@@ -535,7 +534,7 @@ class vector(pyVector.vectorIC):
             self._traces=kw["traces"]
             self._hyper=self._traces.getHyper()
             if len(self._hyper.axes)!=2:
-                raise Exception("Only support 2-D hypercube")
+                raise Exception("Only support 2-D hypercube. Axes size ",len(self._hyper.axes))
             if self._header._nh != self._hyper.axes[1].n:
                 raise Exception("Header and data don't have the same number of traces")
         elif "hyper" in kw:
@@ -693,9 +692,7 @@ class vector(pyVector.vectorIC):
         axs=[]
         axs.append(self._traces.getHyper().axes[0])
         axes.append(Hypercube.axis(n=iorder.shape[0]))
-        print("what 1")
         trNew=SepVector.getSepVector(axes=axes,storage=self._traces.getStorageType())
-        print("what 2",iorder)
         getTraces(iorder,self._traces.getNdArray(),trNew.getNdArray())
         return vector(traces=trNew,header=head)
 
