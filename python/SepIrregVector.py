@@ -447,6 +447,7 @@ def arrToSortedTupleList(arr):
 def keyToInt(ikey,n,o,d,key,arr):
     for i in range(arr.shape[0]):
         arr[i,ikey]=round((key[i]-o)/d)
+        print("CHECK ",i,ikey,arr[i,ikey])
         if arr[i,ikey] < 0 or arr[i,ikey] >= n:
             arr[i,7]=1
         arr[i,6]=i 
@@ -701,6 +702,7 @@ class vector(pyVector.vectorIC):
 @numba.jit(nopython=True,parallel=True)
 def getTraces(num,ina,outa):
     """Copy traces from big to small"""
+    print(outa.shape[1],ina.shape[1],"SIZE COMPARISON")
     for i2 in numba.prange(num.shape[0]):
         outa[i2,:]=ina[num[i2],:]
 @numba.jit(nopython=True,parallel=True)
