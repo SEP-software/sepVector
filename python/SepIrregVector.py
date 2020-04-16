@@ -692,7 +692,9 @@ class vector(pyVector.vectorIC):
         axs=[]
         axs.append(self._traces.getHyper().axes[0])
         axes.append(Hypercube.axis(n=iorder.shape[0]))
+        print("what 1")
         trNew=SepVector.getSepVector(axes=axes,storage=self._traces.getStorageType())
+        print("what 2",iorder)
         getTraces(iorder,self._traces.getNdArray(),trNew.getNdArray())
         return vector(traces=trNew,header=head)
 
