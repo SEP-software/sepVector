@@ -123,11 +123,12 @@ class headerBlock:
         if "grid" in kw:
             self._grid=kw["grid"]
             if not self._grid is None:
-                if not instance(self._grid,np.ndarray):
-                    raise Exception("Grid must be a numpy array")
-                if not self._grid.ndim!=1:
+                if not instance(self._grid,SepVector.byteVector):
+                    raise Exception("Grid must be a SepVector byte")
+                self._gridN=self._grid.getNdArray()
+                if not self._gridN.ndim!=1:
                     raise Exception("Expecting the grid to be 1-D")
-                if not self._grid.dtype!=np._uint8:
+                if not self._gridN.dtype!=np._uint8:
                     raise Exception("Expecting grid to be byte")
                 if not "gridHyper" in kw:
                     raise Exception("Expecting gridHyper when grid is specified")
@@ -137,7 +138,7 @@ class headerBlock:
                 n=1
                 for i in range(1,len(self._gridHyper.axes)):
                     n=n*self._gridHyper.axes[i].n 
-                if n== self._grid.shape[0]:
+                if n== self._gridN.shape[0]:
                     raise Exception("Grid hyper n123/n[0] != size of grid")
     def clone(self):
         """Make a copy of headers"""
@@ -218,8 +219,8 @@ class headerBlock:
         """Create the ability to access through grid coordinates"""
         if self._grid is None:
             raise Exception("Can not enable grid access when grid is not assocated")
-        self._gridI=np.zeros(self._grid.shape[0],dtype=np.int32)
-        createGrid(self._grid,self._gridI)
+        self._gridI=np.zeros(self._gridN.shape[0],dtype=np.int32)
+        createGrid(self._gridN,self._gridI)
     
     def getGridWindow(self,**kw):
         """Get a header window from the grid
@@ -338,14 +339,16 @@ class headerBlock:
         if n1==1:
             axes.insert(0,Hypercube.axis(n=1))
             gridHyper=Hypercube.hypercube(axes=axes)
-            grdB,grdI,iorder=sortNoDuplicate(lst,ns,n123,ngood)                
+            grdB=SepVector.getSepVector(ns=[n123],storage="dataByte")
+            grdI,iorder=sortNoDuplicate(grdB,lst,ns,n123,ngood)                
         else:
             ns.insert(0,n1)
             n123=n123*ns[0]
             axes.insert(0,Hypercube.axis(n=n1,label="trace_in_bin"))
             axes.insert(0,Hypercube.axis(n=1))
             gridHyper=Hypercube.hypercube(axes=axes)
-            grdB,grdI,iorder=sortDuplicate(lst,ns,n123,ngood,n1)
+            grdB=SepVector.getSepVector(ns=[n123],storage="dataByte")
+            grdI,iorder=sortDuplicate(grdB,lst,ns,n123,ngood,n1)
         headNew=headerBlock(nh=ngood)
         for k in self._keyOrder:
             a=np.zeros((ngood,),dtype=self._keys[k].getDType())
@@ -356,8 +359,7 @@ class headerBlock:
         headNew.gridI=grdI
         return headNew,iorder
 @numba.jit(nopython=True)
-def sortDuplicate(lst,ns,n123,ngood,n1):
-    grdB=np.zeros(n123,dtype=np.uint8)
+def sortDuplicate(grdB,lst,ns,n123,ngood,n1):
     grdI=np.zeros(n123,dtype=np.int32)
     iorder=np.zeros(ngood,dtype=np.int32)
     nb=np.zeros(7,dtype=np.int64)
@@ -381,10 +383,9 @@ def sortDuplicate(lst,ns,n123,ngood,n1):
             grdI[icell*n1+ib]=igood
             iorder[igood]=lst[i][6]
             igood+=1
-    return grdB,grdI,iorder
+    return grdI,iorder
 @numba.jit(nopython=True)
-def sortNoDuplicate(lst,ns,n123,ngood):
-    grdB=np.zeros(n123,dtype=np.uint8)
+def sortNoDuplicate(grdB,lst,ns,n123,ngood):
     grdI=np.zeros(n123,dtype=np.int32)
     iorder=np.zeros(ngood,dtype=np.int32)
     nb=np.zeros(7,dtype=np.int64)
@@ -401,7 +402,7 @@ def sortNoDuplicate(lst,ns,n123,ngood):
             grdI[icell]=igood
             iorder[igood]=lst[i][6]
             igood+=1
-    return grdB,grdI,iorder
+    return grdI,iorder
 
             
 
