@@ -140,7 +140,7 @@ class headerBlock:
                     print("comparison ",n,self._gridN.shape[0])
                 if n== self._gridN.shape[0]:
                     print(self._gridHyper,n,self._gridN.shape[0])
-                    raise Exception("Grid hyper n123/n[0] != size of grid")
+                    raise Exception("Grid hyper n123/n[0] != size of grid %d %s %d"%(n,str(self._gridHyper),self._gridN.shape[0]))
     def clone(self):
         """Make a copy of headers"""
         return headerBlock(keys=self._keys,drn=self._drn,keyOrder=self._keyOrder,grid=self._grid,gridHyper=self._gridHyper)
