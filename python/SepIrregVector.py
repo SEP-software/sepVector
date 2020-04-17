@@ -340,7 +340,7 @@ class headerBlock:
             axes.insert(0,Hypercube.axis(n=1))
             gridHyper=Hypercube.hypercube(axes=axes)
             grdB=SepVector.getSepVector(ns=[n123],storage="dataByte")
-            grdI,iorder=sortNoDuplicate(grdB,lst,ns,n123,ngood)                
+            grdI,iorder=sortNoDuplicate(grdB.getNdArray(),lst,ns,n123,ngood)                
         else:
             ns.insert(0,n1)
             n123=n123*ns[0]
@@ -348,7 +348,7 @@ class headerBlock:
             axes.insert(0,Hypercube.axis(n=1))
             gridHyper=Hypercube.hypercube(axes=axes)
             grdB=SepVector.getSepVector(ns=[n123],storage="dataByte")
-            grdI,iorder=sortDuplicate(grdB,lst,ns,n123,ngood,n1)
+            grdI,iorder=sortDuplicate(grdB.getNdArray(),lst,ns,n123,ngood,n1)
         headNew=headerBlock(nh=ngood)
         for k in self._keyOrder:
             a=np.zeros((ngood,),dtype=self._keys[k].getDType())
