@@ -134,13 +134,10 @@ class headerBlock:
                 if not isinstance(self._gridHyper,Hypercube.hypercube):
                     raise Exception("Expecting gridHyper to be a Hypercube.hypercube object instead is ",type(self._gridHyper))
                 n=1
-                print("what",self._gridHyper,"happened")
                 for i in range(1,len(self._gridHyper.axes)):
                     n=n*self._gridHyper.axes[i].n
-                    print("comparison ",n,self._gridN.shape[0])
                 if n!= self._gridN.shape[0]:
-                    print(self._gridHyper,n,self._gridN.shape[0])
-                    raise Exception("Grid hyper n123/n[0] != size of grid %d %s %d"%(n,str(self._gridHyper),self._gridN.shape[0]))
+                    raise Exception("Grid hyper n123/n[0] != size of grid ")
     def clone(self):
         """Make a copy of headers"""
         return headerBlock(keys=self._keys,drn=self._drn,keyOrder=self._keyOrder,grid=self._grid,gridHyper=self._gridHyper)
