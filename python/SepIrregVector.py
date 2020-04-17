@@ -132,7 +132,7 @@ class headerBlock:
                     raise Exception("Expecting gridHyper when grid is specified")
                 self._gridHyper=kw["gridHyper"]
                 if not isinstance(Hypercube.hypercube,self._gridHyper):
-                    raise Exception("Expecting gridHyper to be a Hypercube.hypercube object")
+                    raise Exception("Expecting gridHyper to be a Hypercube.hypercube object instead is ",type(self._gridHyper))
                 n=1
                 for i in range(1,len(self._gridHyper.axes)):
                     n=n*self._gridHyper.axes[i].n 
