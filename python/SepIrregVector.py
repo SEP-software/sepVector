@@ -135,7 +135,8 @@ class headerBlock:
                     raise Exception("Expecting gridHyper to be a Hypercube.hypercube object instead is ",type(self._gridHyper))
                 n=1
                 for i in range(1,len(self._gridHyper.axes)):
-                    n=n*self._gridHyper.axes[i].n 
+                    n=n*self._gridHyper.axes[i].n
+                    print("comparison ",n,self._gridN.shape[0])
                 if n== self._gridN.shape[0]:
                     raise Exception("Grid hyper n123/n[0] != size of grid")
     def clone(self):
