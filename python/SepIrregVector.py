@@ -127,7 +127,7 @@ class headerBlock:
                     raise Exception("Grid must be a SepVector byte instead is ",type(self._grid))
                 self._gridN=self._grid.getNdArray()
                 if not self._gridN.ndim!=1:
-                    raise Exception("Expecting the grid to be 1-D")
+                    raise Exception("Expecting the grid to be 1-D instead ",self._gridN.ndim)
                 if not self._gridN.dtype!=np._uint8:
                     raise Exception("Expecting grid to be byte")
                 if not "gridHyper" in kw:
