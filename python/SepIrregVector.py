@@ -535,7 +535,6 @@ class vector(pyVector.vectorIC):
             self._traces=kw["traces"]
             self._hyper=self._traces.getHyper()
             if len(self._hyper.axes)!=2:
-                print("XXX",self._hyper,"YYY")
                 raise Exception("Only support 2-D hypercube. Axes size ",len(self._hyper.axes))
             if self._header._nh != self._hyper.axes[1].n:
                 raise Exception("Header and data don't have the same number of traces")
@@ -695,14 +694,12 @@ class vector(pyVector.vectorIC):
         axs.append(self._traces.getHyper().axes[0])
         axs.append(Hypercube.axis(n=iorder.shape[0]))
         trNew=SepVector.getSepVector(axes=axs,storage=self._traces.getStorageType())
-        print(trNew,self._traces)
         getTraces(iorder,self._traces.getNdArray(),trNew.getNdArray())
         return vector(traces=trNew,header=head)
 
 @numba.jit(nopython=True,parallel=True)
 def getTraces(num,ina,outa):
     """Copy traces from big to small"""
-    print(outa.shape[1],ina.shape[1],"SIZE COMPARISON")
     for i2 in numba.prange(num.shape[0]):
         for i1 in range(ina.shape[1]):
             outa[i2,i1]=ina[num[i2],i1]
