@@ -123,7 +123,7 @@ class headerBlock:
         if "grid" in kw:
             self._grid=kw["grid"]
             if not self._grid is None:
-                if not instance(self._grid,SepVector.byteVector):
+                if not isinstance(self._grid,SepVector.byteVector):
                     raise Exception("Grid must be a SepVector byte")
                 self._gridN=self._grid.getNdArray()
                 if not self._gridN.ndim!=1:
