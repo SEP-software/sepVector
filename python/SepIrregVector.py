@@ -692,9 +692,9 @@ class vector(pyVector.vectorIC):
         head,iorder=self._header.gridData(axes)
         axs=[]
         axs.append(self._traces.getHyper().axes[0])
-        axes.append(Hypercube.axis(n=iorder.shape[0]))
-        trNew=SepVector.getSepVector(axes=axes,storage=self._traces.getStorageType())
-        print(trNew)
+        axe.append(Hypercube.axis(n=iorder.shape[0]))
+        trNew=SepVector.getSepVector(axes=axs,storage=self._traces.getStorageType())
+        print(trNew,self._traces)
         getTraces(iorder,self._traces.getNdArray(),trNew.getNdArray())
         return vector(traces=trNew,header=head)
 
