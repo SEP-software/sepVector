@@ -4,6 +4,7 @@ set(CMAKE_INCLUDE_CURRENT_DIR TRUE)
 
 #find_package(NumPy REQUIRED)
 
+set(PYTHON_DIR "lib/python${PYTHON_VERSION_MAJOR}.${PYTHON_VERSION_MINOR}")
 include_directories("${CMAKE_CURRENT_SOURCE_DIR}/../lib")
 
 find_package(Boost 1.40 REQUIRED)
@@ -39,5 +40,5 @@ if(BUILD_TEST)
   endif(BUILD_TEST)
 
 target_link_libraries(pySepVector PRIVATE sepVector hypercube )
-install(TARGETS pySepVector DESTINATION lib/python EXPORT sepVectorTargets)
-install(FILES SepVector.py SepIrregVector.py DESTINATION lib/python)
+install(TARGETS pySepVector DESTINATION ${PYTHON_DIR} EXPORT sepVectorTargets)
+install(FILES SepVector.py SepIrregVector.py DESTINATION ${PYTHON_DIR})
