@@ -171,9 +171,9 @@ class headerBlock:
         if vals.size() != self._nh:
             raise Exception("Key size doesn't match nh size")
         if isinstance(vals,SepVector.vector):
-            self._keys[name]=vals.getNdArray()
+            self._keys[name]=key(vals.getNdArray())
         elif isinstance(vals,np.ndarray):
-            self._keys[name]=vals
+            self._keys[name]=key(vals)
         else:
             raise SEPException("Expecting vals to be numpy array or sepVector")
 
