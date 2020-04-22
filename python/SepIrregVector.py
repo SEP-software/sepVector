@@ -542,7 +542,7 @@ class vector(pyVector.vectorIC):
                 raise Exception("Expecting hyper to be hypercube")
             if not "dataType" in kw:
                 kw["dataType"]="dataFloat"
-            self._traces=SepVector.getSepVector(hyper,storage=kw["dataType"])
+            self._traces=SepVector.getSepVector(self._hyper,storage=kw["dataType"])
             self._headers=headerBlock(nh=self._hyper.axes[1].n)
             
             
