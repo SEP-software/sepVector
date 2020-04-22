@@ -170,7 +170,12 @@ class headerBlock:
         """Return key"""
         if vals.size() != self._nh:
             raise Exception("Key size doesn't match nh size")
-        self._keys[name]=vals
+        if isinstance(vals,SepVector.vector):
+            self._keys[name]=vals.getNdArray()
+        elif isinstance(vals,np.ndarray):
+            self._keys[name]=vals
+        else:
+            raise SEPException("Expecting vals to be numpy array or sepVector")
 
     def checkSame(self,header2):
         """ Check to see if two header blocks are the same 
