@@ -207,7 +207,7 @@ class headerBlock:
         elif "typ" in kw:
             if not kw["typ"] in SepVector.SepVecTypeToDtype:
                 raise Expception("Unsupported key type")
-            ar=np.zeros((nh,),dtype=SepVector.SepVecTypeToDtype[kw["typ"]])
+            ar=np.zeros((self._nh,),dtype=SepVector.SepVecTypeToDtype[kw["typ"]])
             self._keys[name]=key(ar)
         else: 
             raise Exception("Unknown initialization type")
