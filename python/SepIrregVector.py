@@ -543,7 +543,7 @@ class vector(pyVector.vectorIC):
             if not "dataType" in kw:
                 kw["dataType"]="dataFloat"
                 self._traces=SepVector.getSepVector(hyper,storage=kw["dataType"])
-            self._headers=headers(self._hyper.axes[1].n)
+            self._headers=headerBlock(self._hyper.axes[1].n)
             
         super().__init__(self._traces.getNdArray())
     def clip(self, bclip, eclip):
