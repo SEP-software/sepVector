@@ -717,7 +717,7 @@ def readColTextFile(file):
             lst.append(array[j][i])
         array2.append(lst)
     return array2
-def fixWindow(axes,*kw):
+def fixWindow(axes,**kw):
     """Create full window parameters 
 
     axes - Axes for dataset
