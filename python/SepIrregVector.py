@@ -96,7 +96,7 @@ class headerBlock:
                 else:
                     self._keyOrder.append(k)
                 if not isinstance(v,key):
-                    raise Exception("Expecting a key as the value in the dictionary")
+                    raise Exception("Expecting a key as the value in the dictionary, instead %s"%type(v))
                 if self._nh==0:
                     self._nh=v.size()
                 else:
