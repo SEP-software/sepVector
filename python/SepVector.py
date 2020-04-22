@@ -739,7 +739,7 @@ def fixWindow(axes,*kw):
             if isinstance(kw["n"],list):
                 if len(kw["n"]) >= i:
                     kw["n%d"%i]=kw["n"][i-1]
-         if "f" in kw:
+        if "f" in kw:
             if isinstance(kw["f"],list):
                 if len(kw["f"]) >= i:
                     kw["f%d"%i]=kw["f"][i-1]
