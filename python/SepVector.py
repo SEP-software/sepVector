@@ -730,10 +730,23 @@ def fixWindow(axes,*kw):
     nw = []
     fw = []
     jw = []
+
     for i in range(1, ndim + 1):
         nset = False
         fset = False
         jset = False
+        if "n" in kw:
+            if isinstance(kw["n"],list):
+                if len(kw["n"]) >= i:
+                    kw["n%d"%i]=kw["n"][i-1]
+         if "f" in kw:
+            if isinstance(kw["f"],list):
+                if len(kw["f"]) >= i:
+                    kw["f%d"%i]=kw["f"][i-1]
+        if "j" in kw:
+            if isinstance(kw["j"],list):
+                if len(kw["j"]) >= i:
+                    kw["j%d"%i]=kw["j"][i-1]                   
         if "n%d" % i in kw:
             nset = True
             n = int(kw["n%d" % i])
