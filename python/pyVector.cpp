@@ -1499,7 +1499,7 @@ PYBIND11_MODULE(pySepVector, clsVector) {
                complexHyper::mult,
            "vec=vec*vec2")
       .def("dot",
-           (double (complexHyper::*)(std::shared_ptr<complexHyper>) const) &
+           (complex<float> (complexHyper::*)(std::shared_ptr<complexHyper>) const) &
                complexHyper::dot,
            "Calculate dot product")
       .def_property("_vals", &complexHyper::getVals, &complexHyper::setData,
@@ -1786,7 +1786,7 @@ PYBIND11_MODULE(pySepVector, clsVector) {
                complexDoubleHyper::mult,
            "vec=vec*vec2")
       .def("dot",
-           (double (complexDoubleHyper::*)(std::shared_ptr<complexDoubleHyper>)
+           (complex<double> (complexDoubleHyper::*)(std::shared_ptr<complexDoubleHyper>)
                 const) &
                complexDoubleHyper::dot,
            "Calculate dot product")
