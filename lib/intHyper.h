@@ -23,46 +23,46 @@ Initializer for intHyper class. Only used by inherited class
   /*!
     \param vec Vector to add to the current vector
   */
-  virtual void add(std::shared_ptr<intHyper> vec);
+   void add(std::shared_ptr<intHyper> vec);
   //! Scale vector self*=scale
   /*!
     \param val What to scale vector by
   */
-  virtual void scale(const double val);
+   void scale(const double val);
   //! Add to vector scaling each self=self*sc1+vec*sc2
   /*!
     \param sc1 What to scale current vector by
     \param vec2 Other vector to scale add to current vector
     \param sc2 What to scale the second vector by
   */
-  virtual void scaleAdd(std::shared_ptr<intHyper> vec2, const double sc1,
+   void scaleAdd(std::shared_ptr<intHyper> vec2, const double sc1,
                         const double sc2);
   //! Fill vector with random number
-  virtual void random();
+   void random();
   /*!
    Signum function
 
     if a!=0:
        a[]/|a[]|
 */
-  virtual void signum();
+   void signum();
   /*!
    Multiply vector by another vector
 
    self*=vec2
 */
-  virtual void mult(std::shared_ptr<intHyper> vec2);
+   void mult(std::shared_ptr<intHyper> vec2);
   /*!  Return the dot product of current vec and another vec
    return SUM(this[]*vec2[])
    \param vec2 Vector to calculate the dot prodcut with
    */
-  virtual double dot(std::shared_ptr<intHyper> vec2) const;
+   double dot(std::shared_ptr<intHyper> vec2) const;
   /*!  Set that this is only vector space with no storage
    */
-  virtual void setSpace() { _spaceOnly = true; }
+   void setSpace() { _spaceOnly = true; }
   /*!  Set that this has storage along with the vector sapce
    */
-  virtual void setNotSpace() { _spaceOnly = false; }
+   void setNotSpace() { _spaceOnly = false; }
   /*!
    Create a mask from a vector. Useful for filling in missing data.
 
@@ -168,10 +168,10 @@ Set the valule of vector to 0
 
    \param sc Value to use in softclip
 */
-  virtual void softClip(const float sc);
+   void softClip(const float sc);
   //! Return the absolute maximum value of vector
 
-  virtual int absMax() const;
+   int absMax() const;
   //! Return the  minimum value of vector
 
   int min() const;
@@ -183,13 +183,13 @@ Set the valule of vector to 0
 \param lev  Level of debugging information to provide
 \param str  Stream to add debugging info to
 */
-  virtual void infoStream(const int lev, std::stringstream &str);
+   void infoStream(const int lev, std::stringstream &str);
   /*!  Check to see if current vector belongs to the same space as vec2
 
  \param vec2 Vector to check the space with
  */
 
-  virtual bool checkSame(const std::shared_ptr<SEP::intHyper> vec2) const;
+   bool checkSame(const std::shared_ptr<SEP::intHyper> vec2) const;
   ///! Return checksum value
 
   uint64_t getCheckSum() { return _checkSum; }
