@@ -168,10 +168,7 @@ class headerBlock:
 
     def setKey(self,name,vals):
         """Return key"""
-        print("DSSS",vals)
-        print("what the ",vals.size(),self._nh)
-        if vals.size() != self._nh:
-            raise Exception("Key size doesn't match nh size")
+
         if isinstance(vals,SepVector.vector):
             self._keys[name]=key(vals.getNdArray())
         elif isinstance(vals,np.ndarray):
