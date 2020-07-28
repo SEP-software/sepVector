@@ -168,6 +168,7 @@ class headerBlock:
 
     def setKey(self,name,vals):
         """Return key"""
+        print("what the ",vels.size(),self._nh)
         if vals.size() != self._nh:
             raise Exception("Key size doesn't match nh size")
         if isinstance(vals,SepVector.vector):
