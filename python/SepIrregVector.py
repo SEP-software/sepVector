@@ -531,6 +531,7 @@ class vector(pyVector.vectorIC):
         """
         print("In init")
         if "traces" in kw:
+            print("in 2 init")
             if not "header"  in kw:
                 raise Exception("When providing traces must also provide header")
             self._header=kw["header"]
@@ -546,7 +547,8 @@ class vector(pyVector.vectorIC):
             if self._header._nh != self._hyper.axes[1].n:
                 raise Exception("Header and data don't have the same number of traces")
             print("In main init")
-        elif "hyper" in kw:
+        elif "hyper" in kw and "header" not in kw:
+            print("in 3 init")
             self._hyper=kw["hyper"]
             if not isinstance(self._hyper,Hypercube.hypercube):
                 raise Exception("Expecting hyper to be hypercube")
