@@ -531,7 +531,6 @@ class vector(pyVector.vectorIC):
         """
         isVector=True
         if "traces" in kw:
-            print("in 2 init")
             if not "header"  in kw:
                 raise Exception("When providing traces must also provide header")
             self._header=kw["header"]
@@ -546,9 +545,7 @@ class vector(pyVector.vectorIC):
                 raise Exception("Only support 2-D hypercube. Axes size ",len(self._hyper.axes))
             if self._header._nh != self._hyper.axes[1].n:
                 raise Exception("Header and data don't have the same number of traces")
-            print("In main init")
         elif "hyper" in kw and "header" not in kw:
-            print("in 3 init")
             self._hyper=kw["hyper"]
             if not isinstance(self._hyper,Hypercube.hypercube):
                 raise Exception("Expecting hyper to be hypercube")
@@ -557,7 +554,6 @@ class vector(pyVector.vectorIC):
             self._traces=SepVector.getSepVector(self._hyper,storage=kw["dataType"])
             self._header=headerBlock(nh=self._hyper.axes[1].n)
         elif "header" in kw:
-            print("in header only init")
             self._traces=None
             self._header=kw["header"]
             if "hyper" in kw:
@@ -644,7 +640,6 @@ class vector(pyVector.vectorIC):
 
     def clone(self):
         """Function to clone (deep copy) a vector"""
-        print(self._traces,type(self._traces))
         if self._traces==None:
             return vector(header=self._header.clone(),hyper=self._hyper.clone())
         else:
