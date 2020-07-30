@@ -636,7 +636,10 @@ class vector(pyVector.vectorIC):
 
     def clone(self):
         """Function to clone (deep copy) a vector"""
-        return vector(traces=self._traces.clone(), header=self._header.clone())
+        if self._traces==None:
+            return vector(header=self._header.clone(),hyper=self._hyper.clone())
+        else:
+            return vector(traces=self._traces.clone(), header=self._header.clone())
 
     def clipVector(self, low, high):
         """Clip vector element by element vec=min(high,max(low,vec))"""
