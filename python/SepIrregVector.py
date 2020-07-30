@@ -529,7 +529,7 @@ class vector(pyVector.vectorIC):
              header = A header block
              Hyper  = Hypercube with nt,nheaders
         """
-        print("In init")
+        isVector=True
         if "traces" in kw:
             print("in 2 init")
             if not "header"  in kw:
@@ -567,10 +567,10 @@ class vector(pyVector.vectorIC):
             else:
                 raise Exception("Must provide hypercube when creating with with header")
             if not isinstance(self._headers,headerBlock):
-                raise Exception("Expecting header to be a headerblock")   
-            
-            
-        super().__init__(self._traces.getNdArray())
+                raise Exception("Expecting header to be a headerblock") 
+            isVector=False
+        if  isVector: 
+            super().__init__(self._traces.getNdArray())
     def clip(self, bclip, eclip):
         """Clip dataset
                 bclip - Minimum value to clip to
