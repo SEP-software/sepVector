@@ -606,7 +606,10 @@ class vector(pyVector.vectorIC):
     def getHyper(self):
         """Get the hypercube associated with dataset"""
         axes=[]
-        axes.append(self._traces.getHyper().axes[0])
+        if self._traces==None:
+            axes.append(Hypercube.axis(n=1000))
+        else:
+            axes.append(self._traces.getHyper().axes[0])
         if self._header._gridHyper:
             for i in range(1,len(self._header._gridHyper.axes)):
                 axes.append(self._header._gridHyper.axes[i])
