@@ -559,14 +559,14 @@ class vector(pyVector.vectorIC):
         elif "header" in kw:
             print("in header only init")
             self._traces=None
-            self._headers=kw["header"]
+            self._header=kw["header"]
             if "hyper" in kw:
                 self._hyper=kw["hyper"]
                 if not isinstance(self._hyper,Hypercube.hypercube):
                     raise Exception("Keyword hyper must be a hypercube object")
             else:
                 raise Exception("Must provide hypercube when creating with with header")
-            if not isinstance(self._headers,headerBlock):
+            if not isinstance(self._header,headerBlock):
                 raise Exception("Expecting header to be a headerblock") 
             isVector=False
         if  isVector: 
