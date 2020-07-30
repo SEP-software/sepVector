@@ -544,6 +544,7 @@ class vector(pyVector.vectorIC):
                 raise Exception("Only support 2-D hypercube. Axes size ",len(self._hyper.axes))
             if self._header._nh != self._hyper.axes[1].n:
                 raise Exception("Header and data don't have the same number of traces")
+            print("In main init")
         elif "hyper" in kw:
             self._hyper=kw["hyper"]
             if not isinstance(self._hyper,Hypercube.hypercube):
@@ -553,6 +554,7 @@ class vector(pyVector.vectorIC):
             self._traces=SepVector.getSepVector(self._hyper,storage=kw["dataType"])
             self._header=headerBlock(nh=self._hyper.axes[1].n)
         elif "header" in kw:
+            print("in header only init")
             self._traces=None
             self._headers=kw["header"]
             if "hyper" in kw:
