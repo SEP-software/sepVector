@@ -566,7 +566,7 @@ class vector(pyVector.vectorIC):
                     raise Exception("Keyword hyper must be a hypercube object")
             else:
                 raise Exception("Must provide hypercube when creating with with header")
-            if not isinstance(self._header,headerBlock):
+            if not isinstance(self._headers,headerBlock):
                 raise Exception("Expecting header to be a headerblock")   
             
             
