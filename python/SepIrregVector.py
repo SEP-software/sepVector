@@ -636,6 +636,7 @@ class vector(pyVector.vectorIC):
 
     def clone(self):
         """Function to clone (deep copy) a vector"""
+        print(self._traces,type(self._traces))
         if self._traces==None:
             return vector(header=self._header.clone(),hyper=self._hyper.clone())
         else:
