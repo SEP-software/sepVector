@@ -529,6 +529,7 @@ class vector(pyVector.vectorIC):
              header = A header block
              Hyper  = Hypercube with nt,nheaders
         """
+        print("In init")
         if "traces" in kw:
             if not "header"  in kw:
                 raise Exception("When providing traces must also provide header")
