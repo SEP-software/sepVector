@@ -524,6 +524,10 @@ class vector(pyVector.vectorIC):
              Method2:
              hyper = 2-D Hypercube with nt,ntraces
              dataType  = Type of data we are going to store (defaults to dataFloat)
+
+             Method 3:
+             header = A header block
+             Hyper  = Hypercube with nt,nheaders
         """
         if "traces" in kw:
             if not "header"  in kw:
@@ -548,6 +552,17 @@ class vector(pyVector.vectorIC):
                 kw["dataType"]="dataFloat"
             self._traces=SepVector.getSepVector(self._hyper,storage=kw["dataType"])
             self._header=headerBlock(nh=self._hyper.axes[1].n)
+        elif "header" in kw:
+            self._traces=None
+            self._headers=kw["header"]
+            if "hyper" in kw:
+                self._hyper=kw["hyper"]
+                if not isinstance(self._hyper,Hypercube.hypercube):
+                    raise Exception("Keyword hyper must be a hypercube object")
+            else:
+                raise Exception("Must provide hypercube when creating with with header")
+            if not isinstance(self._header,headerBlock):
+                raise Exception("Expecting header to be a headerblock")   
             
             
         super().__init__(self._traces.getNdArray())
