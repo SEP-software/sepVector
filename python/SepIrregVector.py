@@ -94,6 +94,7 @@ class headerBlock:
                     if k not in self._keyOrder:
                         raise Exception("Key must exist in keyorder if set")
                 else:
+                    print("IN BAD")
                     self._keyOrder.append(k)
                 if not isinstance(v,key):
                     raise Exception("Expecting a key as the value in the dictionary, instead %s"%type(v))
@@ -217,6 +218,7 @@ class headerBlock:
             self._keys[name]=key(ar)
         else: 
             raise Exception("Unknown initialization type")
+        print("IN this one")
         self._keyOrder.append(name)
         
     def enableGridAccess(self):
