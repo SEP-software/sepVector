@@ -643,6 +643,7 @@ class vector(pyVector.vectorIC):
         if self._traces==None:
             return vector(header=self._header.clone(),hyper=self._hyper.clone())
         else:
+            print("what the",self._traces,self._header)
             return vector(traces=self._traces.clone(), header=self._header.clone())
 
     def clipVector(self, low, high):
