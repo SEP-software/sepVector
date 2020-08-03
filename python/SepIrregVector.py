@@ -138,6 +138,7 @@ class headerBlock:
                     n=n*self._gridHyper.axes[i].n
                 if n!= self._gridN.shape[0]:
                     raise Exception("Grid hyper n123/n[0] != size of grid ")
+        print("AFTER CREATE",self._keyOrder)
     def clone(self):
         """Make a copy of headers"""
         print("BEFORE CLONE",self._keyOrder)
