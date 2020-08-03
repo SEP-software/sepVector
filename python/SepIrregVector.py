@@ -94,7 +94,6 @@ class headerBlock:
                     if k not in self._keyOrder:
                         raise Exception("Key must exist in keyorder if set")
                 else:
-                    print("IN BAD")
                     self._keyOrder.append(k)
                 if not isinstance(v,key):
                     raise Exception("Expecting a key as the value in the dictionary, instead %s"%type(v))
@@ -139,10 +138,8 @@ class headerBlock:
                     n=n*self._gridHyper.axes[i].n
                 if n!= self._gridN.shape[0]:
                     raise Exception("Grid hyper n123/n[0] != size of grid ")
-        print("AFTER CREATE",self._keyOrder)
     def clone(self):
         """Make a copy of headers"""
-        print("BEFORE CLONE",self._keyOrder)
         return headerBlock(keys=self._keys,drn=self._drn,keyOrder=self._keyOrder,grid=self._grid,gridHyper=self._gridHyper)
   
     def cloneSpace(self):
@@ -218,7 +215,6 @@ class headerBlock:
             self._keys[name]=key(ar)
         else: 
             raise Exception("Unknown initialization type")
-        print("IN this one")
         self._keyOrder.append(name)
         
     def enableGridAccess(self):
