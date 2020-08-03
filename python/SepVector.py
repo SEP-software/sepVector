@@ -266,7 +266,9 @@ class intVector(vector):
         """Override print method"""
         return "intVector\n%s"%str(self.getHyper())
 
-
+    def clone(self):
+        """Function to clone (deep copy) a vector"""
+        return intVector(fromCpp=self.cppMode.clone())
 class complexVector(vector):
     """Generic complex vector class"""
 
@@ -423,6 +425,9 @@ class byteVector(vector):
         histo = getSepVector(ns=[nelem], storage="dataInt")
         self.cppMode.calcHisto(histo.getCpp(), mn, mx)
         return histo
+    def clone(self):
+        """Function to clone (deep copy) a vector"""
+        return byteVector(fromCpp=self.cppMode.clone())
     def __repr__(self):
         """Override print method"""
         return "byteVector\n%s"%str(self.getHyper())
