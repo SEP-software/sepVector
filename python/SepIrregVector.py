@@ -140,6 +140,7 @@ class headerBlock:
                     raise Exception("Grid hyper n123/n[0] != size of grid ")
     def clone(self):
         """Make a copy of headers"""
+        print("BEFORE CLONE",self._keyOrder)
         return headerBlock(keys=self._keys,drn=self._drn,keyOrder=self._keyOrder,grid=self._grid,gridHyper=self._gridHyper)
   
     def cloneSpace(self):
