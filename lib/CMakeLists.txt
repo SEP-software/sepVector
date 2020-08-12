@@ -16,7 +16,10 @@ set(SOURCES
     regSpace.cc
     rectFilter.cc
     float5DReg.cc
-    float6DReg.cc)
+    float6DReg.cc
+        float7DReg.cc
+
+    )
 
   set(SOURCES
       ${SOURCES}
@@ -46,7 +49,10 @@ set(SOURCES
       complex3DReg.cc
       complex4DReg.cc
       complex5DReg.cc
-      complex6DReg.cc)
+      complex6DReg.cc
+            complex7DReg.cc
+
+      )
 
   set(SOURCES
       ${SOURCES}
@@ -56,7 +62,10 @@ set(SOURCES
       double3DReg.cc
       double4DReg.cc
       double5DReg.cc
-      double6DReg.cc)
+      double6DReg.cc
+            double7DReg.cc
+
+      )
 
   set(SOURCES
       ${SOURCES}
@@ -66,7 +75,10 @@ set(SOURCES
       complexDouble3DReg.cc
       complexDouble4DReg.cc
       complexDouble5DReg.cc
-      complexDouble6DReg.cc)
+      complexDouble6DReg.cc
+            complexDouble7DReg.cc
+
+      )
 
 
   set(SOURCES ${SOURCES} short1DReg.cc shortHyper.cc)
@@ -82,6 +94,8 @@ set(INCLUDES
     float4DReg.h
     float5DReg.h
     float6DReg.h
+        float7DReg.h
+
     intHyper.h
     int1DReg.h
     int2DReg.h
@@ -103,6 +117,15 @@ set(INCLUDES
     complex4DReg.h
     complex5DReg.h
     complex6DReg.h
+        complex7DReg.h
+    complexDoubleHyper.h
+    complexDouble1DReg.h
+    complexDouble2DReg.h
+    complexDouble3DReg.h
+    complexDouble4DReg.h
+    complexDouble5DReg.h
+    complexDouble6DReg.h
+        complexDouble7DReg.h
     doubleHyper.h
     double1DReg.h
     double2DReg.h
@@ -110,6 +133,8 @@ set(INCLUDES
     double4DReg.h
     double5DReg.h
     double6DReg.h
+        double7DReg.h
+
     regVector.h
     short1DReg.h
     shortHyper.h)
