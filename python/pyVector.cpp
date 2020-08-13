@@ -1830,7 +1830,7 @@ namespace SEP {
                 });
 
         py::class_<complex7DReg, complexHyper, std::shared_ptr<complex7DReg>>(
-            clsVector, "complex6DReg", py::buffer_protocol())
+            clsVector, "complex7DReg", py::buffer_protocol())
             .def(py::init<const int, const int, const int, const int, const int, const int,
                 const int>(),
                 "Initialize giving size")
