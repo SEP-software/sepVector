@@ -138,6 +138,12 @@ class headerBlock:
                     n=n*self._gridHyper.axes[i].n
                 if n!= self._gridN.shape[0]:
                     raise Exception("Grid hyper n123/n[0] != size of grid ")
+
+    def setNoGrid(self):
+        """Remove grid from dataset"""
+        self._grid=None
+        self._gridHyper=None
+        self._gridI=None
     def clone(self):
         """Make a copy of headers"""
         return headerBlock(keys=self._keys,drn=self._drn,keyOrder=self._keyOrder,grid=self._grid,gridHyper=self._gridHyper)
@@ -202,8 +208,8 @@ class headerBlock:
         Method 2:
             typ - Type of array 
             """
-        if name in self._keys:
-            raise Exception("Key already exists can not add")
+#        if name in self._keys:
+#            raise Exception("Key already exists can not add")
         if "vals" in kw:
             if not isinstance(kw["vals"],np.ndarray):
                 raise Exception("Expecting vals to be a numpy array")
@@ -215,7 +221,8 @@ class headerBlock:
             self._keys[name]=key(ar)
         else: 
             raise Exception("Unknown initialization type")
-        self._keyOrder.append(name)
+        if name not in self._keyOrder:
+            self._keyOrder.append(name)
         
     def enableGridAccess(self):
         """Create the ability to access through grid coordinates"""
@@ -242,7 +249,13 @@ class headerBlock:
             extractKey(self._keys[i],itr,ar)
             hdr.addKey(k,vals=ar)
         return hdr,itrs
-         
+    def shrinkZero(self,nc):
+        """Shrink vector number of traces/headers"""
+        self._nh=nc
+        kty=self.getKeyTypes()
+        for k,v in kyp.items():
+            self.addKey(k,typ=v)
+        
     def getCreateGrid(self):
         """Return a grid
 
@@ -582,11 +595,25 @@ class vector(pyVector.vectorIC):
         """Return type of storage"""
         return self._traces.getStorageType()
 
+    def shrinkZero(self,nc):
+        """Shrink vector number of traces/headers"""
+        self._headers.shrinkZero(nc)
+        if self._traces:
+            axes=[]
+            axes.append(self._hyper.axes[0])
+            axes.append(Hypercube.axis(n=nc))
+            self._hyper=Hypercube.hypercube(axes=axes)
+            self._traces=SepVector.getSepVector(self._hyper,self._traces.getDataType())
+
+
+
     def zero(self):
         """Function to zero out a vector"""
         self._traces.zero()
         return self
-
+    def noGrid(self):
+        """Remove grid from dataset"""
+        self._header.noGrid()
     def set(self, val):
         """Function to a vector to a value"""
         self._traces.set(val)
