@@ -20,7 +20,7 @@ target_include_directories(
   pySepVector
   PUBLIC ${PYTHON_INCLUDE_DIR}
          ${pybind11_INCLUDE_DIR}
-         ${PYTHON_INCLUDE_PATH}
+         $<INSTALL_INTERFACE:${PYTHON_INCLUDE_PATH}>
          $<INSTALL_INTERFACE:include>
          $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}../src>)
 if(BUILD_TEST)
