@@ -19,8 +19,8 @@ pybind11_add_module(pySepVector MODULE pyVector.cpp
 target_include_directories(
   pySepVector
   PUBLIC ${PYTHON_INCLUDE_DIR}
-         $<INSTALL_INTERFACE:${pybind11_INCLUDE_DIR}>
-         $<INSTALL_INTERFACE:${PYTHON_INCLUDE_PATH}>
+         #$<INSTALL_INTERFACE:${pybind11_INCLUDE_DIR}>
+         $<INSTALL_INTERFACE:../external/hypercube/external/pybind11/include>
          $<INSTALL_INTERFACE:include>
          $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}../src>)
 if(BUILD_TEST)
