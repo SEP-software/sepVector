@@ -119,18 +119,18 @@ add_subdirectory(lib)
 if(BUILD_PYTHON)
   add_subdirectory(python)
 endif(BUILD_PYTHON)
-include(CMakePackageConfigHelpers)
-configure_package_config_file(
-  sepVectorConfig.cmake.in
-  "${CMAKE_CURRENT_BINARY_DIR}/sepVectorConfig.cmake"
-  INSTALL_DESTINATION
-  cmake/SEP/IO)
-
-install(EXPORT sepVectorTargets
-        FILE sepVectorTargets.cmake
-        NAMESPACE SEP::IO
-        DESTINATION cmake/sep/io)
-
+#include(CMakePackageConfigHelpers)
+#configure_package_config_file(
+#  sepVectorConfig.cmake.in
+#  "${CMAKE_CURRENT_BINARY_DIR}/sepVectorConfig.cmake"
+#  INSTALL_DESTINATION
+#  cmake/SEP/IO)
+#
+#install(EXPORT sepVectorTargets
+#        FILE sepVectorTargets.cmake
+#        NAMESPACE SEP::IO
+#        DESTINATION cmake/sep/io)
+#
 include(InstallRequiredSystemLibraries)
 set(CPACK_RESOURCE_FILE_LICENSE "${PROJECT_SOURCE_DIR}/LICENSE")
 set(CPACK_PACKAGE_VERSION_MAJOR "${sepVector_MAJOR_VERSION}")
