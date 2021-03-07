@@ -83,7 +83,7 @@ class vector(pyVector.vectorIC):
             any of these by lists.
             Can not specify n and min or max """
         axes = self.getHyper().axes
-        fixWindow(axes,**kw)
+        nw,fw,jw=fixWindow(axes,**kw)
         return self.cppMode.window(nw, fw, jw)
 
     def checkSame(self, vec2):
