@@ -8,18 +8,18 @@
 #include <random>
 #include "int1DReg.h"
 using namespace SEP;
-
 void floatHyper::add(const std::shared_ptr<floatHyper> vec2)
 {
   if (!checkSame(vec2))
     throw(std::string("Vectors not of the same space"));
   std::shared_ptr<floatHyper> vec2H =
       std::dynamic_pointer_cast<floatHyper>(vec2);
+    float *v=getVals(),*v2=vec2->getVals();
 
   tbb::parallel_for(tbb::blocked_range<long long>(0, getHyper()->getN123()),
                     [&](const tbb::blocked_range<long long> &r) {
                       for (long long i = r.begin(); i != r.end(); ++i)
-                        _vals[i] += vec2H->_vals[i];
+                        v[i] += v2[i];
                     });
   calcCheckSum();
 }
@@ -29,11 +29,12 @@ void floatHyper::mult(const std::shared_ptr<floatHyper> vec2)
     throw(std::string("Vectors not of the same space"));
   std::shared_ptr<floatHyper> vec2H =
       std::dynamic_pointer_cast<floatHyper>(vec2);
+    float *v=getVals(),*v2=vec2->getVals();
 
   tbb::parallel_for(tbb::blocked_range<long long>(0, getHyper()->getN123()),
                     [&](const tbb::blocked_range<long long> &r) {
                       for (long long i = r.begin(); i != r.end(); ++i)
-                        _vals[i] *= vec2H->_vals[i];
+                        v[i] *= v2[i];
                     });
   calcCheckSum();
 }
@@ -44,14 +45,15 @@ void floatHyper::clipVector(const std::shared_ptr<floatHyper> beg,
     throw(std::string("Vectors not of the same space"));
   if (!checkSame(end))
     throw(std::string("Vectors not of the same space"));
+    float *v=getVals(),*bv=beg->getVals(),*ev=end->getVals();
 
   std::shared_ptr<floatHyper> begH = std::dynamic_pointer_cast<floatHyper>(beg);
   std::shared_ptr<floatHyper> endH = std::dynamic_pointer_cast<floatHyper>(end);
   tbb::parallel_for(tbb::blocked_range<long long>(0, getHyper()->getN123()),
                     [&](const tbb::blocked_range<long long> &r) {
                       for (long long i = r.begin(); i != r.end(); ++i)
-                        _vals[i] = std::min(endH->_vals[i],
-                                            std::max(begH->_vals[i], _vals[i]));
+                        v[i] = std::min(ev[i],
+                                            std::max(bv[i], v[i]));
                     });
   calcCheckSum();
 }
@@ -60,6 +62,7 @@ void floatHyper::scaleAdd(std::shared_ptr<floatHyper> vec2, const double sc1,
 {
   if (!checkSame(vec2))
     throw(std::string("Vectors not of the same space"));
+    float *v=getVals(),*v2=vec2->getVals();
 
   std::shared_ptr<floatHyper> vec2H =
       std::dynamic_pointer_cast<floatHyper>(vec2);
@@ -67,7 +70,7 @@ void floatHyper::scaleAdd(std::shared_ptr<floatHyper> vec2, const double sc1,
   tbb::parallel_for(tbb::blocked_range<long long>(0, getHyper()->getN123()),
                     [&](const tbb::blocked_range<long long> &r) {
                       for (long long i = r.begin(); i != r.end(); ++i)
-                        _vals[i] = _vals[i] * sc1 + sc2 * vec2H->_vals[i];
+                        v[i] = v[i] * sc1 + sc2 * v2[i];
                     });
   calcCheckSum();
 }
@@ -125,19 +128,21 @@ void floatHyper::clip(const float bclip, const float eclip, bool outer)
 {
   if (spaceOnly())
     throw(std::string("Vectors not allocated"));
+        float *v=getVals();
+
   tbb::parallel_for(tbb::blocked_range<long long>(0, getHyper()->getN123()),
                     [&](const tbb::blocked_range<long long> &r) {
                       if (outer)
                       {
                         for (long long i = r.begin(); i != r.end(); ++i)
-                          _vals[i] = std::min(eclip, std::max(bclip, _vals[i]));
+                          v[i] = std::min(eclip, std::max(bclip, v[i]));
                       }
                       else
                       {
                         for (long long i = r.begin(); i != r.end(); ++i)
                         {
-                          if (_vals[i] < eclip && _vals[i] > bclip)
-                            _vals[i] = 0;
+                          if (v[i] < eclip && v[i] > bclip)
+                            v[i] = 0;
                         }
                       }
                     });
@@ -147,17 +152,17 @@ void floatHyper::signum()
 {
   if (spaceOnly())
     throw(std::string("Vectors not allocated"));
-
+  float *v=getVals();
   tbb::parallel_for(tbb::blocked_range<long long>(0, getHyper()->getN123()),
                     [&](const tbb::blocked_range<long long> &r) {
                       for (long long i = r.begin(); i != r.end(); ++i)
                       {
-                        if (_vals[i] > 1e-20)
-                          _vals[i] = 1;
-                        else if (_vals[i] < -1e-20)
-                          _vals[i] = -1;
+                        if (v[i] > 1e-20)
+                          v[i] = 1;
+                        else if (v[i] < -1e-20)
+                          v[i] = -1;
                         else
-                          _vals[i] = 0;
+                          v[i] = 0;
                       }
                     });
 
@@ -167,10 +172,12 @@ void floatHyper::scale(double sc)
 {
   if (spaceOnly())
     throw(std::string("Vectors not allocated"));
+      float *v=getVals();
+
   tbb::parallel_for(tbb::blocked_range<long long>(0, getHyper()->getN123()),
                     [&](const tbb::blocked_range<long long> &r) {
                       for (long long i = r.begin(); i != r.end(); ++i)
-                        _vals[i] = _vals[i] * sc;
+                        v[i] = v[i] * sc;
                     });
   calcCheckSum();
 }
@@ -178,16 +185,20 @@ void floatHyper::random()
 {
   if (spaceOnly())
     throw(std::string("Vectors not allocated"));
+      float *v=getVals();
+
   tbb::parallel_for(tbb::blocked_range<long long>(0, getHyper()->getN123()),
                     [&](const tbb::blocked_range<long long> &r) {
                       for (long long i = r.begin(); i != r.end(); ++i)
-                        _vals[i] = ((double)rand() / (RAND_MAX)) - .5;
+                        v[i] = ((double)rand() / (RAND_MAX)) - .5;
                     });
   calcCheckSum();
 }
 
 double floatHyper::norm(const int n) const
 {
+    const float *vs=getCVals();
+
   double dt = tbb::parallel_reduce(
       tbb::blocked_range<size_t>(0, getHyper()->getN123()), 0.,
       [&](const tbb::blocked_range<size_t> &r, double v) {
@@ -195,14 +206,14 @@ double floatHyper::norm(const int n) const
         {
           for (size_t i = r.begin(); i != r.end(); ++i)
           {
-            v += (double)fabsf(_vals[i]);
+            v += (double)fabsf(vs[i]);
           }
         }
         else
         {
           for (size_t i = r.begin(); i != r.end(); ++i)
           {
-            v += (double)_vals[i] * (double)_vals[i];
+            v += (double)vs[i] * (double)vs[i];
           }
         }
         return v;
@@ -215,10 +226,12 @@ double floatHyper::norm(const int n) const
 }
 void floatHyper::set(const float val)
 {
+    float *v=getVals();
+
   tbb::parallel_for(tbb::blocked_range<long long>(0, getHyper()->getN123()),
                     [&](const tbb::blocked_range<long long> &r) {
                       for (long long i = r.begin(); i != r.end(); ++i)
-                        _vals[i] = val;
+                        v[i] = val;
                     });
 
   calcCheckSum();
@@ -229,6 +242,8 @@ void floatHyper::calcHisto(std::shared_ptr<int1DReg> &histo, float mn,
   long long nelem = histo->getHyper()->getN123();
   float delta = (mx - mn) / (nelem - 1);
   float idelta = 1. / delta;
+    float *v=getVals();
+
   std::vector<int> h = tbb::parallel_reduce(
       tbb::blocked_range<size_t>(0, getHyper()->getN123()),
       std::vector<int>(nelem, 0),
@@ -237,7 +252,7 @@ void floatHyper::calcHisto(std::shared_ptr<int1DReg> &histo, float mn,
         {
           int ielem = std::max(
               (long long)0,
-              std::min(nelem - 1, (long long)((_vals[i] - mn) * idelta)));
+              std::min(nelem - 1, (long long)((v[i] - mn) * idelta)));
           tmp[ielem] += 1;
         }
         return tmp;
@@ -260,13 +275,15 @@ double floatHyper::dot(const std::shared_ptr<floatHyper> vec2) const
     throw(std::string("Vectors not of the same space"));
   std::shared_ptr<floatHyper> vec2H =
       std::dynamic_pointer_cast<floatHyper>(vec2);
+      const float *vs=getCVals(),*v2=getCVals();
+
 
   double dot = tbb::parallel_reduce(
       tbb::blocked_range<size_t>(0, getHyper()->getN123()), 0.,
       [&](const tbb::blocked_range<size_t> &r, double v) {
         for (size_t i = r.begin(); i != r.end(); ++i)
         {
-          v += (double)_vals[i] * (double)vec2H->_vals[i];
+          v += (double)vs[i] * (double)v2[i];
         }
         return v;
       },
@@ -276,15 +293,18 @@ double floatHyper::dot(const std::shared_ptr<floatHyper> vec2) const
 }
 void floatHyper::createMask(const float zero, const float err)
 {
+
+    float *v=getVals();
+
   tbb::parallel_for(tbb::blocked_range<long long>(0, getHyper()->getN123()),
                     [&](const tbb::blocked_range<long long> &r) {
                       for (long long i = r.begin(); i != r.end(); ++i)
                       {
-                        if (fabs(_vals[i] - zero) > err)
+                        if (fabs(v[i] - zero) > err)
 
-                          _vals[i] = 0.;
+                          v[i] = 0.;
                         else
-                          _vals[i] = 1;
+                          v[i] = 1;
                       }
                     });
   calcCheckSum();
@@ -293,6 +313,7 @@ void floatHyper::createMask(const float zero, const float err)
 void floatHyper::infoStream(const int lev, std::stringstream &x)
 {
   getHyper()->infoStream(x);
+  const float *v=getCVals();
   if (spaceOnly())
     x << "Only space\n";
   else
@@ -300,30 +321,34 @@ void floatHyper::infoStream(const int lev, std::stringstream &x)
     x << "Allocated\n";
     long long npts = std::min((const long long)lev, getHyper()->getN123());
     for (long long i = 0; i < npts; i++)
-      x << std::to_string(i) << std::string(" ") << std::to_string(_vals[i])
+      x << std::to_string(i) << std::string(" ") << std::to_string(v[i])
         << std::endl;
   }
 }
 void floatHyper::softClip(const float scale)
 {
   float sc2 = scale * scale;
+    float *v=getVals();
+
   tbb::parallel_for(tbb::blocked_range<long long>(0, getHyper()->getN123()),
                     [&](const tbb::blocked_range<long long> &r) {
                       for (long long i = r.begin(); i != r.end(); ++i)
-                        _vals[i] = scale * _vals[i] /
-                                   sqrtf(1. + sc2 * _vals[i] * _vals[i]);
+                        v[i] = scale * v[i] /
+                                   sqrtf(1. + sc2 * v[i] * v[i]);
                     });
   calcCheckSum();
 }
 
 double floatHyper::absMax() const
 {
+    const float *vs=getCVals();
+
   float val = tbb::parallel_reduce(
       tbb::blocked_range<size_t>(0, getHyper()->getN123()), -1e31,
       [&](const tbb::blocked_range<size_t> &r, float v) {
         for (size_t i = r.begin(); i != r.end(); ++i)
         {
-          v = std::max(v, fabsf(_vals[i]));
+          v = std::max(v, fabsf(vs[i]));
         }
         return v;
       },
@@ -336,12 +361,14 @@ double floatHyper::absMax() const
 }
 double floatHyper::max() const
 {
+    const float *vs=getCVals();
+
   float val = tbb::parallel_reduce(
       tbb::blocked_range<size_t>(0, getHyper()->getN123()), -1e31,
       [&](const tbb::blocked_range<size_t> &r, float v) {
         for (size_t i = r.begin(); i != r.end(); ++i)
         {
-          v = std::max(v, _vals[i]);
+          v = std::max(v, vs[i]);
         }
         return v;
       },
@@ -354,12 +381,14 @@ double floatHyper::max() const
 }
 double floatHyper::min() const
 {
+    const float *vs=getCVals();
+
   float val = tbb::parallel_reduce(
       tbb::blocked_range<size_t>(0, getHyper()->getN123()), 1e31,
       [&](const tbb::blocked_range<size_t> &r, float v) {
         for (size_t i = r.begin(); i != r.end(); ++i)
         {
-          v = std::min(v, _vals[i]);
+          v = std::min(v, vs[i]);
         }
         return v;
       },
@@ -378,6 +407,7 @@ void floatHyper::calcCheckSum()
   std::vector<uint32_t> sum1(nsect), sum2(nsect);
   sz[nsect - 1] = getHyper()->getN123() - (nsect - 1) * 100000;
   uint32_t mx = 4294967295;
+  const float *v=getCVals();
 
   tbb::parallel_for(tbb::blocked_range<long long>(0, nsect),
                     [&](const tbb::blocked_range<long long> &r) {
@@ -386,7 +416,7 @@ void floatHyper::calcCheckSum()
                         sum1[i] = 0;
                         sum2[i] = 0;
                         uint32_t *data =
-                            (uint32_t *)(&_vals[r.begin() * 100000]);
+                            (uint32_t *)(&v[r.begin() * 100000]);
                         for (long long j = 0; j < sz[i]; j++)
                         {
                           sum1[i] = (sum1[i] + data[j]) % mx;
@@ -424,4 +454,8 @@ bool floatHyper::checkSame(const std::shared_ptr<floatHyper> vec2) const
   }
 
   return b;
+}
+
+void floatHyper::copyVals(const float *vals){
+   memcpy(getVals(), vals, getHyper()->getN123()*sizeof(float));
 }

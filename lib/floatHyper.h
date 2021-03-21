@@ -184,6 +184,9 @@ Set the valule of vector to 0
       Return the pointer to the memory for the vector
   */
   float *getVals() { return _vals; }
+
+
+
   /*!
     Return the pointer to the memory for the vector with const tag
 */
@@ -217,6 +220,13 @@ Set the valule of vector to 0
   ///! Return checksum value
 
   uint64_t getCheckSum() { return _checkSum; }
+
+ protected:
+ /*
+   set vals
+   \param vals -Values to copy into structure
+  */
+ void copyVals(const float *vals);
 
  private:
   float *_vals;        ///< Storage for vector

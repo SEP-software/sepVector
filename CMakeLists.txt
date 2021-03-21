@@ -11,7 +11,6 @@ else(NOT SUBPACKAGE)
 
 endif(NOT SUBPACKAGE)
 
-
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
 option(BUILD_DOUBLE "Build double support" ON)
@@ -21,7 +20,7 @@ option(BUILD_BYTE "Build byte support" ON)
 option(BUILD_SHORT "Build short support" ON)
 
 if(BUILD_TEST)
-	enable_testing()
+  enable_testing()
 endif(BUILD_TEST)
 
 if(BUILD_DOUBLE)
@@ -55,7 +54,7 @@ project(sepVector LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-#set(CMAKE_POSITION_INDEPENDENT_CODE True)
+# set(CMAKE_POSITION_INDEPENDENT_CODE True)
 
 project(sepVector)
 set(CMAKE_INCLUDE_CURRENT_DIR TRUE)
@@ -75,12 +74,13 @@ set(sepVector_DIRNAME_include "include")
 include(${CMAKE_ROOT}/Modules/ExternalProject.cmake)
 
 if(NOT SUBPACKAGE)
-  execute_process(COMMAND git submodule update --init --recursive --
-                          external/python-solver
-                  WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
-  execute_process(COMMAND git submodule update --init --recursive --
-                          external/hypercube
-                  WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
+  execute_process(
+    COMMAND git submodule update --init --recursive -- external/python-solver
+    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
+  execute_process(
+    COMMAND git submodule update --init --recursive -- external/hypercube
+    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
+
 endif()
 
 configure_file("${PROJECT_SOURCE_DIR}/sepVectorConfig.h.in"
@@ -99,37 +99,34 @@ if(BUILD_DOC)
 
     # note the option ALL which allows to build the docs together with the
     # application
-    add_custom_target(doc_doxygen_sepVector ALL
-                      COMMAND ${DOXYGEN_EXECUTABLE} ${DOXYGEN_OUT}
-                      WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
-                      COMMENT "Generating API documentation with Doxygen"
-                      VERBATIM)
+    add_custom_target(
+      doc_doxygen_sepVector ALL
+      COMMAND ${DOXYGEN_EXECUTABLE} ${DOXYGEN_OUT}
+      WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+      COMMENT "Generating API documentation with Doxygen"
+      VERBATIM)
   else(DOXYGEN_FOUND)
     message(
       "Doxygen need to be installed to generate the doxygen documentation")
   endif(DOXYGEN_FOUND)
 else(BUILD_DOC)
+
 endif(BUILD_DOC)
 set(SUBPACKAGE true)
 if(NOT TARGET hypercube)
-add_subdirectory(external/hypercube)
+  add_subdirectory(external/hypercube)
 endif(NOT TARGET hypercube)
 add_subdirectory(external/python-solver/GenericSolver)
 add_subdirectory(lib)
 if(BUILD_PYTHON)
   add_subdirectory(python)
 endif(BUILD_PYTHON)
-#include(CMakePackageConfigHelpers)
-#configure_package_config_file(
-#  sepVectorConfig.cmake.in
-#  "${CMAKE_CURRENT_BINARY_DIR}/sepVectorConfig.cmake"
-#  INSTALL_DESTINATION
-#  cmake/SEP/IO)
+# include(CMakePackageConfigHelpers) configure_package_config_file(
+# sepVectorConfig.cmake.in "${CMAKE_CURRENT_BINARY_DIR}/sepVectorConfig.cmake"
+# INSTALL_DESTINATION cmake/SEP/IO)
 #
-#install(EXPORT sepVectorTargets
-#        FILE sepVectorTargets.cmake
-#        NAMESPACE SEP::IO
-#        DESTINATION cmake/sep/io)
+# install(EXPORT sepVectorTargets FILE sepVectorTargets.cmake NAMESPACE SEP::IO
+# DESTINATION cmake/sep/io)
 #
 include(InstallRequiredSystemLibraries)
 set(CPACK_RESOURCE_FILE_LICENSE "${PROJECT_SOURCE_DIR}/LICENSE")
