@@ -218,6 +218,8 @@ Set the valule of vector to 0
 
   uint64_t getCheckSum() { return _checkSum; }
 
+  void copyVals(const float *buf);
+
  private:
   float *_vals;        ///< Storage for vector
   uint64_t _checkSum;  ///< Checksum value

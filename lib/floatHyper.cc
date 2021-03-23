@@ -425,3 +425,6 @@ bool floatHyper::checkSame(const std::shared_ptr<floatHyper> vec2) const
 
   return b;
 }
+void floatHyper::copyVals(const float *val){
+   memcpy(getVals(),val,sizeof(float)*getHyper()->getN123());
+}

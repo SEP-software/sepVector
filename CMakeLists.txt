@@ -62,8 +62,9 @@ if(NOT SUBPACKAGE)
   execute_process(
     COMMAND git submodule update --init --recursive -- external/hypercube
     WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
-  execute_process(COMMAND git submodule update --init --recursive -- external/xt
-                  WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
+  execute_process(
+    COMMAND git submodule update --init --recursive -- external/xtl
+    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
   execute_process(
     COMMAND git submodule update --init --recursive -- external/xsimd
     WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
@@ -105,11 +106,14 @@ set(SUBPACKAGE true)
 if(NOT TARGET hypercube)
   add_subdirectory(external/hypercube)
 endif(NOT TARGET hypercube)
+
+add_subdirectory(external/python-solver/GenericSolver)
+
+set(XTENSOR_USE_XSIMD 1)
+set(XTENSOR_USE_TBB 1)
 add_subdirectory(external/xtl)
 add_subdirectory(external/xsimd)
 add_subdirectory(external/xtensor)
-
-add_subdirectory(external/python-solver/GenericSolver)
 add_subdirectory(lib)
 if(BUILD_PYTHON)
   add_subdirectory(python)
