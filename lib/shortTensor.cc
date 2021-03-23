@@ -1,34 +1,34 @@
-#include <floatTensor.h>
+#include <shortTensor.h>
 #include <xtensor/xview.hpp>
 
 using namespace SEP;
 
-std::shared_ptr<floatTensor7D> floatTensor7D::clone() const
+std::shared_ptr<shortTensor7D> shortTensor7D::clone() const
 {
     if (getSpaceOnly())
     {
-        std::shared_ptr<floatTensor7D> x(new floatTensor7D(getHyper()));
+        std::shared_ptr<shortTensor7D> x(new shortTensor7D(getHyper()));
 
         return x;
     }
     else
     {
-        std::shared_ptr<floatTensor7D> x(new floatTensor7D(getHyper(), getCVals()));
+        std::shared_ptr<shortTensor7D> x(new shortTensor7D(getHyper(), getCVals()));
 
         return x;
     }
 }
 
-std::shared_ptr<floatTensor7D> floatTensor7D::cloneSpace() const
+std::shared_ptr<shortTensor7D> shortTensor7D::cloneSpace() const
 {
-    std::shared_ptr<floatTensor7D> x(new floatTensor7D(getHyper()));
+    std::shared_ptr<shortTensor7D> x(new shortTensor7D(getHyper()));
     x->mat = {{{{{{{0}}}}}}};
 
     x->setSpace();
     return x;
 }
 
-void floatTensor7D::initNoData(std::shared_ptr<SEP::hypercube> hyp)
+void shortTensor7D::initNoData(std::shared_ptr<SEP::hypercube> hyp)
 {
     const std::vector<SEP::axis> axes = hyp->getAxes();
     setHyper(hyp);
@@ -42,7 +42,7 @@ void floatTensor7D::initNoData(std::shared_ptr<SEP::hypercube> hyp)
     setData(mat.data());
 }
 
-std::shared_ptr<floatTensor7D> floatTensor7D::window(
+std::shared_ptr<shortTensor7D> shortTensor7D::window(
     const std::vector<int> &nw, const std::vector<int> &fw,
     const std::vector<int> &jw) const
 {
@@ -65,7 +65,7 @@ std::shared_ptr<floatTensor7D> floatTensor7D::window(
             axis(nw[i], axes[i].o + axes[i].d * fw[i], axes[i].d * jw[i]));
     }
     std::shared_ptr<hypercube> hypOut(new hypercube(aout));
-    std::shared_ptr<floatTensor7D> out(new floatTensor7D(hypOut));
+    std::shared_ptr<shortTensor7D> out(new shortTensor7D(hypOut));
     auto vw = xt::view(mat, xt::range(beg[6], end[6], sk[6]),
                        xt::range(beg[5], end[5], sk[5]),
                        xt::range(beg[4], end[4], sk[4]),
@@ -86,32 +86,32 @@ std::shared_ptr<floatTensor7D> floatTensor7D::window(
 }
 
 //6-D
-std::shared_ptr<floatTensor6D> floatTensor6D::clone() const
+std::shared_ptr<shortTensor6D> shortTensor6D::clone() const
 {
     if (getSpaceOnly())
     {
-        std::shared_ptr<floatTensor6D> x(new floatTensor6D(getHyper()));
+        std::shared_ptr<shortTensor6D> x(new shortTensor6D(getHyper()));
 
         return x;
     }
     else
     {
-        std::shared_ptr<floatTensor6D> x(new floatTensor6D(getHyper(), getCVals()));
+        std::shared_ptr<shortTensor6D> x(new shortTensor6D(getHyper(), getCVals()));
 
         return x;
     }
 }
 
-std::shared_ptr<floatTensor6D> floatTensor6D::cloneSpace() const
+std::shared_ptr<shortTensor6D> shortTensor6D::cloneSpace() const
 {
-    std::shared_ptr<floatTensor6D> x(new floatTensor6D(getHyper()));
+    std::shared_ptr<shortTensor6D> x(new shortTensor6D(getHyper()));
     x->mat = {{{{{{0}}}}}};
 
     x->setSpace();
     return x;
 }
 
-void floatTensor6D::initNoData(std::shared_ptr<SEP::hypercube> hyp)
+void shortTensor6D::initNoData(std::shared_ptr<SEP::hypercube> hyp)
 {
     const std::vector<SEP::axis> axes = hyp->getAxes();
     setHyper(hyp);
@@ -125,7 +125,7 @@ void floatTensor6D::initNoData(std::shared_ptr<SEP::hypercube> hyp)
     setData(mat.data());
 }
 
-std::shared_ptr<floatTensor6D> floatTensor6D::window(
+std::shared_ptr<shortTensor6D> shortTensor6D::window(
     const std::vector<int> &nw, const std::vector<int> &fw,
     const std::vector<int> &jw) const
 {
@@ -148,7 +148,7 @@ std::shared_ptr<floatTensor6D> floatTensor6D::window(
             axis(nw[i], axes[i].o + axes[i].d * fw[i], axes[i].d * jw[i]));
     }
     std::shared_ptr<hypercube> hypOut(new hypercube(aout));
-    std::shared_ptr<floatTensor6D> out(new floatTensor6D(hypOut));
+    std::shared_ptr<shortTensor6D> out(new shortTensor6D(hypOut));
     auto vw = xt::view(mat,
                        xt::range(beg[5], end[5], sk[5]),
                        xt::range(beg[4], end[4], sk[4]),
@@ -169,32 +169,32 @@ std::shared_ptr<floatTensor6D> floatTensor6D::window(
 
 //5D version
 
-std::shared_ptr<floatTensor5D> floatTensor5D::clone() const
+std::shared_ptr<shortTensor5D> shortTensor5D::clone() const
 {
     if (getSpaceOnly())
     {
-        std::shared_ptr<floatTensor5D> x(new floatTensor5D(getHyper()));
+        std::shared_ptr<shortTensor5D> x(new shortTensor5D(getHyper()));
 
         return x;
     }
     else
     {
-        std::shared_ptr<floatTensor5D> x(new floatTensor5D(getHyper(), getCVals()));
+        std::shared_ptr<shortTensor5D> x(new shortTensor5D(getHyper(), getCVals()));
 
         return x;
     }
 }
 
-std::shared_ptr<floatTensor5D> floatTensor5D::cloneSpace() const
+std::shared_ptr<shortTensor5D> shortTensor5D::cloneSpace() const
 {
-    std::shared_ptr<floatTensor5D> x(new floatTensor5D(getHyper()));
+    std::shared_ptr<shortTensor5D> x(new shortTensor5D(getHyper()));
     x->mat = {{{{{0}}}}};
 
     x->setSpace();
     return x;
 }
 
-void floatTensor5D::initNoData(std::shared_ptr<SEP::hypercube> hyp)
+void shortTensor5D::initNoData(std::shared_ptr<SEP::hypercube> hyp)
 {
     const std::vector<SEP::axis> axes = hyp->getAxes();
     setHyper(hyp);
@@ -208,7 +208,7 @@ void floatTensor5D::initNoData(std::shared_ptr<SEP::hypercube> hyp)
     setData(mat.data());
 }
 
-std::shared_ptr<floatTensor5D> floatTensor5D::window(
+std::shared_ptr<shortTensor5D> shortTensor5D::window(
     const std::vector<int> &nw, const std::vector<int> &fw,
     const std::vector<int> &jw) const
 {
@@ -231,7 +231,7 @@ std::shared_ptr<floatTensor5D> floatTensor5D::window(
             axis(nw[i], axes[i].o + axes[i].d * fw[i], axes[i].d * jw[i]));
     }
     std::shared_ptr<hypercube> hypOut(new hypercube(aout));
-    std::shared_ptr<floatTensor5D> out(new floatTensor5D(hypOut));
+    std::shared_ptr<shortTensor5D> out(new shortTensor5D(hypOut));
     auto vw = xt::view(mat,
 
                        xt::range(beg[4], end[4], sk[4]),
@@ -251,32 +251,32 @@ std::shared_ptr<floatTensor5D> floatTensor5D::window(
 
 //4D version
 
-std::shared_ptr<floatTensor4D> floatTensor4D::clone() const
+std::shared_ptr<shortTensor4D> shortTensor4D::clone() const
 {
     if (getSpaceOnly())
     {
-        std::shared_ptr<floatTensor4D> x(new floatTensor4D(getHyper()));
+        std::shared_ptr<shortTensor4D> x(new shortTensor4D(getHyper()));
 
         return x;
     }
     else
     {
-        std::shared_ptr<floatTensor4D> x(new floatTensor4D(getHyper(), getCVals()));
+        std::shared_ptr<shortTensor4D> x(new shortTensor4D(getHyper(), getCVals()));
 
         return x;
     }
 }
 
-std::shared_ptr<floatTensor4D> floatTensor4D::cloneSpace() const
+std::shared_ptr<shortTensor4D> shortTensor4D::cloneSpace() const
 {
-    std::shared_ptr<floatTensor4D> x(new floatTensor4D(getHyper()));
+    std::shared_ptr<shortTensor4D> x(new shortTensor4D(getHyper()));
     x->mat = {{{{0}}}};
 
     x->setSpace();
     return x;
 }
 
-void floatTensor4D::initNoData(std::shared_ptr<SEP::hypercube> hyp)
+void shortTensor4D::initNoData(std::shared_ptr<SEP::hypercube> hyp)
 {
     const std::vector<SEP::axis> axes = hyp->getAxes();
     setHyper(hyp);
@@ -290,7 +290,7 @@ void floatTensor4D::initNoData(std::shared_ptr<SEP::hypercube> hyp)
     setData(mat.data());
 }
 
-std::shared_ptr<floatTensor4D> floatTensor4D::window(
+std::shared_ptr<shortTensor4D> shortTensor4D::window(
     const std::vector<int> &nw, const std::vector<int> &fw,
     const std::vector<int> &jw) const
 {
@@ -313,7 +313,7 @@ std::shared_ptr<floatTensor4D> floatTensor4D::window(
             axis(nw[i], axes[i].o + axes[i].d * fw[i], axes[i].d * jw[i]));
     }
     std::shared_ptr<hypercube> hypOut(new hypercube(aout));
-    std::shared_ptr<floatTensor4D> out(new floatTensor4D(hypOut));
+    std::shared_ptr<shortTensor4D> out(new shortTensor4D(hypOut));
     auto vw = xt::view(mat,
 
                        xt::range(beg[3], end[3], sk[3]),
@@ -331,32 +331,32 @@ std::shared_ptr<floatTensor4D> floatTensor4D::window(
 
 //3D version
 
-std::shared_ptr<floatTensor3D> floatTensor3D::clone() const
+std::shared_ptr<shortTensor3D> shortTensor3D::clone() const
 {
     if (getSpaceOnly())
     {
-        std::shared_ptr<floatTensor3D> x(new floatTensor3D(getHyper()));
+        std::shared_ptr<shortTensor3D> x(new shortTensor3D(getHyper()));
 
         return x;
     }
     else
     {
-        std::shared_ptr<floatTensor3D> x(new floatTensor3D(getHyper(), getCVals()));
+        std::shared_ptr<shortTensor3D> x(new shortTensor3D(getHyper(), getCVals()));
 
         return x;
     }
 }
 
-std::shared_ptr<floatTensor3D> floatTensor3D::cloneSpace() const
+std::shared_ptr<shortTensor3D> shortTensor3D::cloneSpace() const
 {
-    std::shared_ptr<floatTensor3D> x(new floatTensor3D(getHyper()));
+    std::shared_ptr<shortTensor3D> x(new shortTensor3D(getHyper()));
     x->mat = {{{0}}};
 
     x->setSpace();
     return x;
 }
 
-void floatTensor3D::initNoData(std::shared_ptr<SEP::hypercube> hyp)
+void shortTensor3D::initNoData(std::shared_ptr<SEP::hypercube> hyp)
 {
     const std::vector<SEP::axis> axes = hyp->getAxes();
     setHyper(hyp);
@@ -370,7 +370,7 @@ void floatTensor3D::initNoData(std::shared_ptr<SEP::hypercube> hyp)
     setData(mat.data());
 }
 
-std::shared_ptr<floatTensor3D> floatTensor3D::window(
+std::shared_ptr<shortTensor3D> shortTensor3D::window(
     const std::vector<int> &nw, const std::vector<int> &fw,
     const std::vector<int> &jw) const
 {
@@ -393,7 +393,7 @@ std::shared_ptr<floatTensor3D> floatTensor3D::window(
             axis(nw[i], axes[i].o + axes[i].d * fw[i], axes[i].d * jw[i]));
     }
     std::shared_ptr<hypercube> hypOut(new hypercube(aout));
-    std::shared_ptr<floatTensor3D> out(new floatTensor3D(hypOut));
+    std::shared_ptr<shortTensor3D> out(new shortTensor3D(hypOut));
     auto vw = xt::view(mat,
                        xt::range(beg[2], end[2], sk[2]),
                        xt::range(beg[1], end[1], sk[1]),
@@ -408,32 +408,32 @@ std::shared_ptr<floatTensor3D> floatTensor3D::window(
 
 //2D version
 
-std::shared_ptr<floatTensor2D> floatTensor2D::clone() const
+std::shared_ptr<shortTensor2D> shortTensor2D::clone() const
 {
     if (getSpaceOnly())
     {
-        std::shared_ptr<floatTensor2D> x(new floatTensor2D(getHyper()));
+        std::shared_ptr<shortTensor2D> x(new shortTensor2D(getHyper()));
 
         return x;
     }
     else
     {
-        std::shared_ptr<floatTensor2D> x(new floatTensor2D(getHyper(), getCVals()));
+        std::shared_ptr<shortTensor2D> x(new shortTensor2D(getHyper(), getCVals()));
 
         return x;
     }
 }
 
-std::shared_ptr<floatTensor2D> floatTensor2D::cloneSpace() const
+std::shared_ptr<shortTensor2D> shortTensor2D::cloneSpace() const
 {
-    std::shared_ptr<floatTensor2D> x(new floatTensor2D(getHyper()));
+    std::shared_ptr<shortTensor2D> x(new shortTensor2D(getHyper()));
     x->mat = {{0}};
 
     x->setSpace();
     return x;
 }
 
-void floatTensor2D::initNoData(std::shared_ptr<SEP::hypercube> hyp)
+void shortTensor2D::initNoData(std::shared_ptr<SEP::hypercube> hyp)
 {
     const std::vector<SEP::axis> axes = hyp->getAxes();
     setHyper(hyp);
@@ -447,7 +447,7 @@ void floatTensor2D::initNoData(std::shared_ptr<SEP::hypercube> hyp)
     setData(mat.data());
 }
 
-std::shared_ptr<floatTensor2D> floatTensor2D::window(
+std::shared_ptr<shortTensor2D> shortTensor2D::window(
     const std::vector<int> &nw, const std::vector<int> &fw,
     const std::vector<int> &jw) const
 {
@@ -470,7 +470,7 @@ std::shared_ptr<floatTensor2D> floatTensor2D::window(
             axis(nw[i], axes[i].o + axes[i].d * fw[i], axes[i].d * jw[i]));
     }
     std::shared_ptr<hypercube> hypOut(new hypercube(aout));
-    std::shared_ptr<floatTensor2D> out(new floatTensor2D(hypOut));
+    std::shared_ptr<shortTensor2D> out(new shortTensor2D(hypOut));
     auto vw = xt::view(mat,
                        xt::range(beg[1], end[1], sk[1]),
                        xt::range(beg[0], end[0], sk[0]));
@@ -481,8 +481,8 @@ std::shared_ptr<floatTensor2D> floatTensor2D::window(
     return out;
 }
 
-floatTensor2D::floatTensor2D(
-    const std::shared_ptr<floatTensor7D> old, const int iax1,
+shortTensor2D::shortTensor2D(
+    const std::shared_ptr<shortTensor7D> old, const int iax1,
     const bool rev1, const int iax2, const bool rev2,
     const std::vector<int> &ipos, const std::vector<int> &beg,
     const std::vector<int> &end)
@@ -490,13 +490,13 @@ floatTensor2D::floatTensor2D(
     std::vector<int> n, f, j;
     std::shared_ptr<hypercube> hyperOut;
     std::tie(hyperOut, n, f, j) = sliceToWindow2D(iax1, iax2, beg, end, ipos);
-    std::shared_ptr<floatTensor7D> tmp = old->window(n, f, j);
+    std::shared_ptr<shortTensor7D> tmp = old->window(n, f, j);
     initNoData(hyperOut);
     doTraverse2D(n, iax1, rev1, iax2, rev2, tmp->getCVals(), getVals(), sizeof(float));
 }
 
-floatTensor2D::floatTensor2D(
-    const std::shared_ptr<floatTensor6D> old, const int iax1,
+shortTensor2D::shortTensor2D(
+    const std::shared_ptr<shortTensor6D> old, const int iax1,
     const bool rev1, const int iax2, const bool rev2,
     const std::vector<int> &ipos, const std::vector<int> &beg,
     const std::vector<int> &end)
@@ -504,12 +504,12 @@ floatTensor2D::floatTensor2D(
     std::vector<int> n, f, j;
     std::shared_ptr<hypercube> hyperOut;
     std::tie(hyperOut, n, f, j) = sliceToWindow2D(iax1, iax2, beg, end, ipos);
-    std::shared_ptr<floatTensor6D> tmp = old->window(n, f, j);
+    std::shared_ptr<shortTensor6D> tmp = old->window(n, f, j);
     initNoData(hyperOut);
     doTraverse2D(n, iax1, rev1, iax2, rev2, tmp->getCVals(), getVals(), sizeof(float));
 }
-floatTensor2D::floatTensor2D(
-    const std::shared_ptr<floatTensor5D> old, const int iax1,
+shortTensor2D::shortTensor2D(
+    const std::shared_ptr<shortTensor5D> old, const int iax1,
     const bool rev1, const int iax2, const bool rev2,
     const std::vector<int> &ipos, const std::vector<int> &beg,
     const std::vector<int> &end)
@@ -517,12 +517,12 @@ floatTensor2D::floatTensor2D(
     std::vector<int> n, f, j;
     std::shared_ptr<hypercube> hyperOut;
     std::tie(hyperOut, n, f, j) = sliceToWindow2D(iax1, iax2, beg, end, ipos);
-    std::shared_ptr<floatTensor5D> tmp = old->window(n, f, j);
+    std::shared_ptr<shortTensor5D> tmp = old->window(n, f, j);
     initNoData(hyperOut);
     doTraverse2D(n, iax1, rev1, iax2, rev2, tmp->getCVals(), getVals(), sizeof(float));
 }
-floatTensor2D::floatTensor2D(
-    const std::shared_ptr<floatTensor4D> old, const int iax1,
+shortTensor2D::shortTensor2D(
+    const std::shared_ptr<shortTensor4D> old, const int iax1,
     const bool rev1, const int iax2, const bool rev2,
     const std::vector<int> &ipos, const std::vector<int> &beg,
     const std::vector<int> &end)
@@ -530,12 +530,12 @@ floatTensor2D::floatTensor2D(
     std::vector<int> n, f, j;
     std::shared_ptr<hypercube> hyperOut;
     std::tie(hyperOut, n, f, j) = sliceToWindow2D(iax1, iax2, beg, end, ipos);
-    std::shared_ptr<floatTensor4D> tmp = old->window(n, f, j);
+    std::shared_ptr<shortTensor4D> tmp = old->window(n, f, j);
     initNoData(hyperOut);
     doTraverse2D(n, iax1, rev1, iax2, rev2, tmp->getCVals(), getVals(), sizeof(float));
 }
-floatTensor2D::floatTensor2D(
-    const std::shared_ptr<floatTensor3D> old, const int iax1,
+shortTensor2D::shortTensor2D(
+    const std::shared_ptr<shortTensor3D> old, const int iax1,
     const bool rev1, const int iax2, const bool rev2,
     const std::vector<int> &ipos, const std::vector<int> &beg,
     const std::vector<int> &end)
@@ -543,12 +543,12 @@ floatTensor2D::floatTensor2D(
     std::vector<int> n, f, j;
     std::shared_ptr<hypercube> hyperOut;
     std::tie(hyperOut, n, f, j) = sliceToWindow2D(iax1, iax2, beg, end, ipos);
-    std::shared_ptr<floatTensor3D> tmp = old->window(n, f, j);
+    std::shared_ptr<shortTensor3D> tmp = old->window(n, f, j);
     initNoData(hyperOut);
     doTraverse2D(n, iax1, rev1, iax2, rev2, tmp->getCVals(), getVals(), sizeof(float));
 }
-floatTensor2D::floatTensor2D(
-    const std::shared_ptr<floatTensor2D> old, const int iax1,
+shortTensor2D::shortTensor2D(
+    const std::shared_ptr<shortTensor2D> old, const int iax1,
     const bool rev1, const int iax2, const bool rev2,
     const std::vector<int> &ipos, const std::vector<int> &beg,
     const std::vector<int> &end)
@@ -556,39 +556,39 @@ floatTensor2D::floatTensor2D(
     std::vector<int> n, f, j;
     std::shared_ptr<hypercube> hyperOut;
     std::tie(hyperOut, n, f, j) = sliceToWindow2D(iax1, iax2, beg, end, ipos);
-    std::shared_ptr<floatTensor2D> tmp = old->window(n, f, j);
+    std::shared_ptr<shortTensor2D> tmp = old->window(n, f, j);
     initNoData(hyperOut);
     doTraverse2D(n, iax1, rev1, iax2, rev2, tmp->getCVals(), getVals(), sizeof(float));
 }
 
 //1D version
 
-std::shared_ptr<floatTensor1D> floatTensor1D::clone() const
+std::shared_ptr<shortTensor1D> shortTensor1D::clone() const
 {
     if (getSpaceOnly())
     {
-        std::shared_ptr<floatTensor1D> x(new floatTensor1D(getHyper()));
+        std::shared_ptr<shortTensor1D> x(new shortTensor1D(getHyper()));
 
         return x;
     }
     else
     {
-        std::shared_ptr<floatTensor1D> x(new floatTensor1D(getHyper(), getCVals()));
+        std::shared_ptr<shortTensor1D> x(new shortTensor1D(getHyper(), getCVals()));
 
         return x;
     }
 }
 
-std::shared_ptr<floatTensor1D> floatTensor1D::cloneSpace() const
+std::shared_ptr<shortTensor1D> shortTensor1D::cloneSpace() const
 {
-    std::shared_ptr<floatTensor1D> x(new floatTensor1D(getHyper()));
+    std::shared_ptr<shortTensor1D> x(new shortTensor1D(getHyper()));
     x->mat = {0};
 
     x->setSpace();
     return x;
 }
 
-void floatTensor1D::initNoData(std::shared_ptr<SEP::hypercube> hyp)
+void shortTensor1D::initNoData(std::shared_ptr<SEP::hypercube> hyp)
 {
     const std::vector<SEP::axis> axes = hyp->getAxes();
     setHyper(hyp);
@@ -602,7 +602,7 @@ void floatTensor1D::initNoData(std::shared_ptr<SEP::hypercube> hyp)
     setData(mat.data());
 }
 
-std::shared_ptr<floatTensor1D> floatTensor1D::window(
+std::shared_ptr<shortTensor1D> shortTensor1D::window(
     const std::vector<int> &nw, const std::vector<int> &fw,
     const std::vector<int> &jw) const
 {
@@ -625,7 +625,7 @@ std::shared_ptr<floatTensor1D> floatTensor1D::window(
             axis(nw[i], axes[i].o + axes[i].d * fw[i], axes[i].d * jw[i]));
     }
     std::shared_ptr<hypercube> hypOut(new hypercube(aout));
-    std::shared_ptr<floatTensor1D> out(new floatTensor1D(hypOut));
+    std::shared_ptr<shortTensor1D> out(new shortTensor1D(hypOut));
     auto vw = xt::view(mat,
                        xt::range(beg[0], end[0], sk[0]));
     for (int i0 = 0; i0 < nw[0]; i0++)
@@ -634,8 +634,8 @@ std::shared_ptr<floatTensor1D> floatTensor1D::window(
     return out;
 }
 
-floatTensor1D::floatTensor1D(
-    const std::shared_ptr<floatTensor7D> old, const int iax1,
+shortTensor1D::shortTensor1D(
+    const std::shared_ptr<shortTensor7D> old, const int iax1,
     const bool rev1,
     const std::vector<int> &ipos, const std::vector<int> &beg,
     const std::vector<int> &end)
@@ -643,13 +643,13 @@ floatTensor1D::floatTensor1D(
     std::vector<int> n, f, j;
     std::shared_ptr<hypercube> hyperOut;
     std::tie(hyperOut, n, f, j) = sliceToWindow1D(iax1, beg, end, ipos);
-    std::shared_ptr<floatTensor7D> tmp = old->window(n, f, j);
+    std::shared_ptr<shortTensor7D> tmp = old->window(n, f, j);
     initNoData(hyperOut);
     doTraverse1D(n, iax1, rev1, tmp->getCVals(), getVals(), sizeof(float));
 }
 
-floatTensor1D::floatTensor1D(
-    const std::shared_ptr<floatTensor6D> old, const int iax1,
+shortTensor1D::shortTensor1D(
+    const std::shared_ptr<shortTensor6D> old, const int iax1,
     const bool rev1,
     const std::vector<int> &ipos, const std::vector<int> &beg,
     const std::vector<int> &end)
@@ -657,12 +657,12 @@ floatTensor1D::floatTensor1D(
     std::vector<int> n, f, j;
     std::shared_ptr<hypercube> hyperOut;
     std::tie(hyperOut, n, f, j) = sliceToWindow1D(iax1, beg, end, ipos);
-    std::shared_ptr<floatTensor6D> tmp = old->window(n, f, j);
+    std::shared_ptr<shortTensor6D> tmp = old->window(n, f, j);
     initNoData(hyperOut);
     doTraverse1D(n, iax1, rev1, tmp->getCVals(), getVals(), sizeof(float));
 }
-floatTensor1D::floatTensor1D(
-    const std::shared_ptr<floatTensor5D> old, const int iax1,
+shortTensor1D::shortTensor1D(
+    const std::shared_ptr<shortTensor5D> old, const int iax1,
     const bool rev1,
     const std::vector<int> &ipos, const std::vector<int> &beg,
     const std::vector<int> &end)
@@ -670,12 +670,12 @@ floatTensor1D::floatTensor1D(
     std::vector<int> n, f, j;
     std::shared_ptr<hypercube> hyperOut;
     std::tie(hyperOut, n, f, j) = sliceToWindow1D(iax1, beg, end, ipos);
-    std::shared_ptr<floatTensor5D> tmp = old->window(n, f, j);
+    std::shared_ptr<shortTensor5D> tmp = old->window(n, f, j);
     initNoData(hyperOut);
     doTraverse1D(n, iax1, rev1, tmp->getCVals(), getVals(), sizeof(float));
 }
-floatTensor1D::floatTensor1D(
-    const std::shared_ptr<floatTensor4D> old, const int iax1,
+shortTensor1D::shortTensor1D(
+    const std::shared_ptr<shortTensor4D> old, const int iax1,
     const bool rev1,
     const std::vector<int> &ipos, const std::vector<int> &beg,
     const std::vector<int> &end)
@@ -683,12 +683,12 @@ floatTensor1D::floatTensor1D(
     std::vector<int> n, f, j;
     std::shared_ptr<hypercube> hyperOut;
     std::tie(hyperOut, n, f, j) = sliceToWindow1D(iax1, beg, end, ipos);
-    std::shared_ptr<floatTensor4D> tmp = old->window(n, f, j);
+    std::shared_ptr<shortTensor4D> tmp = old->window(n, f, j);
     initNoData(hyperOut);
     doTraverse1D(n, iax1, rev1, tmp->getCVals(), getVals(), sizeof(float));
 }
-floatTensor1D::floatTensor1D(
-    const std::shared_ptr<floatTensor3D> old, const int iax1,
+shortTensor1D::shortTensor1D(
+    const std::shared_ptr<shortTensor3D> old, const int iax1,
     const bool rev1,
     const std::vector<int> &ipos, const std::vector<int> &beg,
     const std::vector<int> &end)
@@ -696,12 +696,12 @@ floatTensor1D::floatTensor1D(
     std::vector<int> n, f, j;
     std::shared_ptr<hypercube> hyperOut;
     std::tie(hyperOut, n, f, j) = sliceToWindow1D(iax1, beg, end, ipos);
-    std::shared_ptr<floatTensor3D> tmp = old->window(n, f, j);
+    std::shared_ptr<shortTensor3D> tmp = old->window(n, f, j);
     initNoData(hyperOut);
     doTraverse1D(n, iax1, rev1, tmp->getCVals(), getVals(), sizeof(float));
 }
-floatTensor1D::floatTensor1D(
-    const std::shared_ptr<floatTensor2D> old, const int iax1,
+shortTensor1D::shortTensor1D(
+    const std::shared_ptr<shortTensor2D> old, const int iax1,
     const bool rev1,
     const std::vector<int> &ipos, const std::vector<int> &beg,
     const std::vector<int> &end)
@@ -709,12 +709,12 @@ floatTensor1D::floatTensor1D(
     std::vector<int> n, f, j;
     std::shared_ptr<hypercube> hyperOut;
     std::tie(hyperOut, n, f, j) = sliceToWindow1D(iax1, beg, end, ipos);
-    std::shared_ptr<floatTensor2D> tmp = old->window(n, f, j);
+    std::shared_ptr<shortTensor2D> tmp = old->window(n, f, j);
     initNoData(hyperOut);
     doTraverse1D(n, iax1, rev1, tmp->getCVals(), getVals(), sizeof(float));
 }
-floatTensor1D::floatTensor1D(
-    const std::shared_ptr<floatTensor1D> old, const int iax1,
+shortTensor1D::shortTensor1D(
+    const std::shared_ptr<shortTensor1D> old, const int iax1,
     const bool rev1,
     const std::vector<int> &ipos, const std::vector<int> &beg,
     const std::vector<int> &end)
@@ -722,7 +722,7 @@ floatTensor1D::floatTensor1D(
     std::vector<int> n, f, j;
     std::shared_ptr<hypercube> hyperOut;
     std::tie(hyperOut, n, f, j) = sliceToWindow1D(iax1, beg, end, ipos);
-    std::shared_ptr<floatTensor1D> tmp = old->window(n, f, j);
+    std::shared_ptr<shortTensor1D> tmp = old->window(n, f, j);
     initNoData(hyperOut);
     doTraverse1D(n, iax1, rev1, tmp->getCVals(), getVals(), sizeof(float));
 }

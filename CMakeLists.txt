@@ -23,25 +23,6 @@ if(BUILD_TEST)
   enable_testing()
 endif(BUILD_TEST)
 
-if(BUILD_DOUBLE)
-  set(USE_DOUBLE true)
-endif(BUILD_DOUBLE)
-
-if(BUILD_COMPLEX)
-  set(USE_COMPLEX true)
-endif(BUILD_COMPLEX)
-
-if(BUILD_INT)
-  set(USE_INT true)
-endif(BUILD_INT)
-
-if(BUILD_BYTE)
-  set(USE_BYTE true)
-endif(BUILD_BYTE)
-if(BUILD_SHORT)
-  set(USE_SHORT true)
-endif(BUILD_SHORT)
-
 if(POLICY CMP0028)
   cmake_policy(SET CMP0028 NEW)
 endif()
@@ -51,9 +32,14 @@ if(POLICY CMP0042)
 endif()
 
 project(sepVector LANGUAGES CXX)
-set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
+<<<<<<< HEAD
 
+=======
+set(XTENSOR_USE_XSIMD ON)
+set(XTENSOR_USE_TBB ON)
+>>>>>>> xtensor
 # set(CMAKE_POSITION_INDEPENDENT_CODE True)
 
 project(sepVector)
@@ -80,7 +66,19 @@ if(NOT SUBPACKAGE)
   execute_process(
     COMMAND git submodule update --init --recursive -- external/hypercube
     WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
+<<<<<<< HEAD
 
+=======
+  execute_process(
+    COMMAND git submodule update --init --recursive -- external/xtl
+    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
+  execute_process(
+    COMMAND git submodule update --init --recursive -- external/xsimd
+    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
+  execute_process(
+    COMMAND git submodule update --init --recursive -- external/xtensor
+    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
+>>>>>>> xtensor
 endif()
 
 configure_file("${PROJECT_SOURCE_DIR}/sepVectorConfig.h.in"
@@ -116,7 +114,14 @@ set(SUBPACKAGE true)
 if(NOT TARGET hypercube)
   add_subdirectory(external/hypercube)
 endif(NOT TARGET hypercube)
+
 add_subdirectory(external/python-solver/GenericSolver)
+
+set(XTENSOR_USE_XSIMD 1)
+set(XTENSOR_USE_TBB 1)
+add_subdirectory(external/xtl)
+add_subdirectory(external/xsimd)
+add_subdirectory(external/xtensor)
 add_subdirectory(lib)
 if(BUILD_PYTHON)
   add_subdirectory(python)

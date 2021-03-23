@@ -10,3 +10,13 @@
 	path = external/python-solver
 	url = http://cees-gitlab.Stanford.EDU/ettore88/python-solver.git
 	ignore=dirty
+[submodule "external/xtensor"]
+	path = external/xtensor
+	url = https://github.com/xtensor-stack/xtensor.git
+        ignore=dirty
+[submodule "external/xsimd"]
+	path = external/xsimd
+	url = https://github.com/xtensor-stack/xsimd.git
+[submodule "external/xtl"]
+	path = external/xtl
+	url = https://github.com/xtensor-stack/xtl.git

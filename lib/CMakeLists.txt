@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 3.4)
 project(sepVector-lib)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/../external/xtensor/include)
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/../external/xtl/include)
 
 # find_package(Boost 1.40 COMPONENTS program_options unit_test_framework
 # REQUIRED)
@@ -21,8 +22,13 @@ set(SOURCES
     float5DReg.cc
     float6DReg.cc
     float7DReg.cc
-    # floatTensor.cc
-)
+    byteTensor.cc
+    complexTensor.cc
+    complexDoubleTensor.cc
+    doubleTensor.cc
+    floatTensor.cc
+    intTensor.cc
+    shortTensor.cc)
 
 set(SOURCES
     ${SOURCES}
@@ -83,6 +89,13 @@ set(INCLUDES
     Vector.h
     regSpace.h
     rectFilter.h
+    floatTensor.h
+    byteTensor.h
+    complexTensor.h
+    complexDoubleTensor.h
+    doubleTensor.h
+    intTensor.h
+    shortTensor.h
     float1DReg.h
     float2DReg.h
     float3DReg.h
@@ -91,7 +104,6 @@ set(INCLUDES
     float5DReg.h
     float6DReg.h
     float7DReg.h
-    # floatTensor.h
     intHyper.h
     int1DReg.h
     int2DReg.h
@@ -142,7 +154,7 @@ target_include_directories(
          $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/../>
          $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>)
 
-target_link_libraries(sepVector hypercube ${TBB_LIBRARIES})
+target_link_libraries(sepVector hypercube xtensor ${TBB_LIBRARIES})
 install(FILES ${INCLUDES} DESTINATION include)
 install(
   TARGETS sepVector

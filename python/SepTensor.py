@@ -2,7 +2,7 @@ import pyHypercube
 import pySepVector
 import Hypercube
 import numpy 
-import pyVector
+import pytensor
 from sys import version_info
 
 
@@ -18,15 +18,15 @@ dtypeToSepVecType={
 SepVecTypeToDtype= {v: k for k, v in dtypeToSepVecType.items()}
 
 
-class vector(pyVector.vectorIC):
-    """Generic sepVector class"""
+class tensor(pytensor.tensorIC):
+    """Generic septensor class"""
 
     def __init__(self):
-        """Initialize a vector object"""
+        """Initialize a tensor object"""
         if "fromCpp" in self.kw:
             self.cppMode = self.kw["fromCpp"]
         elif "fromHyper" in self.kw:
-            self.cppMode = getCppSepVector(self.kw["fromHyper"], self.kw)
+            self.cppMode = getCppSepTensor(self.kw["fromHyper"], self.kw)
         super().__init__(self.getNdArray())
 
     def getCpp(self):
@@ -50,17 +50,17 @@ class vector(pyVector.vectorIC):
         return self.storage
 
     def zero(self):
-        """Function to zero out a vector"""
+        """Function to zero out a tensor"""
         self.cppMode.set(0.)
         return self
 
     def set(self, val):
-        """Function to a vector to a value"""
+        """Function to a tensor to a value"""
         self.cppMode.set(val)
         return self
 
     def getHyper(self):
-        """Return the hypercube associated with the vector"""
+        """Return the hypercube associated with the tensor"""
         return Hypercube.hypercube(hypercube=self.cppMode.getHyper())
 
     def getNdArray(self):
@@ -68,7 +68,7 @@ class vector(pyVector.vectorIC):
         return numpy.array(self.cppMode, copy=False)
 
     def adjustHyper(self,hyper):
-        """Adjust the hypercube associated with vector. Does not reallocate. Must be same dims/size"""
+        """Adjust the hypercube associated with tensor. Does not reallocate. Must be same dims/size"""
         hyperOld=self.getHyper()
         if hyperOld.getN123() != hyper.getN123():
             raise Exception("Trying to reset with a different sized hyper")
@@ -78,7 +78,7 @@ class vector(pyVector.vectorIC):
 
 
     def windowInternal(self, **kw):
-        """Window a vector return another vector (of the same dimension
+        """Window a tensor return another tensor (of the same dimension
             specify min1..min6, max1...max6, f1...f6, j1...j6, n1...n6, or
             any of these by lists.
             Can not specify n and min or max """
@@ -87,12 +87,12 @@ class vector(pyVector.vectorIC):
         return self.cppMode.window(nw, fw, jw)
 
     def checkSame(self, vec2):
-        """Function to check if two vectors belong to the same vector space"""
+        """Function to check if two tensors belong to the same tensor space"""
         return self.getCpp().checkSame(vec2.getCpp())
 
 
-class floatVector(vector):
-    """Generic float vector class"""
+class FloatTensor(tensor):
+    """Generic float tensor class"""
 
     def __init__(self, **kw):
         self.kw = kw
@@ -100,17 +100,17 @@ class floatVector(vector):
         self.storage = "dataFloat"
 
     def norm(self, N=2):
-        """Function to compute vector N-norm"""
+        """Function to compute tensor N-norm"""
         self.cppMode.norm(N)
         return self
     def scale(self, sc):
-        """Function to scale a vector"""
+        """Function to scale a tensor"""
         self.cppMode.scale(sc)
         return self
 
     def __repr__(self):
         """Override print method"""
-        return "floatVector\n%s"%str(self.getHyper())
+        return "FloatTensor\n%s"%str(self.getHyper())
 
     def calcHisto(self, nelem, mn, mx):
         """Calculate histogram
@@ -119,7 +119,7 @@ class floatVector(vector):
            nelem - Return number of elements in histogram
 
            @return Histogram """
-        histo = getSepVector(ns=[nelem], storage="dataInt")
+        histo = getSepTensor(ns=[nelem], storage="dataInt")
         self.cppMode.calcHisto(histo.getCpp(), mn, mx)
         return histo
 
@@ -129,17 +129,17 @@ class floatVector(vector):
         return self
 
     def clone(self):
-        """Function to clone (deep copy) a vector"""
-        return floatVector(fromCpp=self.cppMode.clone())
+        """Function to clone (deep copy) a tensor"""
+        return FloatTensor(fromCpp=self.cppMode.clone())
 
-    def clipVector(self, low, high):
-        """Clip vector element by element vec=min(high,max(low,vec))"""
-        self.cppMode.clipVector(low.cppMode, high.cppMode)
+    def cliptensor(self, low, high):
+        """Clip tensor element by element vec=min(high,max(low,vec))"""
+        self.cppMode.cliptensor(low.cppMode, high.cppMode)
         return self
 
     def cloneSpace(self):
-        """Funtion tor return the space of a vector"""
-        return floatVector(fromCpp=self.cppMode.cloneSpace())
+        """Funtion tor return the space of a tensor"""
+        return FloatTensor(fromCpp=self.cppMode.cloneSpace())
 
     def scaleAdd(self, vec2, sc1=1., sc2=1.):
         """self = self * sc1 + sc2 * vec2"""
@@ -152,7 +152,7 @@ class floatVector(vector):
         return self
 
     def dot(self, vec2):
-        """Compute dot product of two vectors"""
+        """Compute dot product of two tensors"""
         return self.cppMode.dot(vec2.cppMode)
 
     def multiply(self, vec2):
@@ -161,19 +161,19 @@ class floatVector(vector):
         return self
 
     def norm(self, nrm=2):
-        """Return the norm of a vector"""
+        """Return the norm of a tensor"""
         return self.cppMode.norm(nrm)
 
     def window(self, **kw):
-        """Window a vector return another vector (of the same dimension
+        """Window a tensor return another tensor (of the same dimension
             specify min1..min6, max1...max6, f1...f6, j1...j6, n1...n6, or
             any of these by lists.
             Can not specify n and min or max """
-        return floatVector(fromCpp=self.windowInternal(**kw))
+        return FloatTensor(fromCpp=self.windowInternal(**kw))
 
 
-class doubleVector(vector):
-    """Generic double vector class"""
+class DoubleTensor(tensor):
+    """Generic double tensor class"""
 
     def __init__(self, **kw):
         self.kw = kw
@@ -181,27 +181,27 @@ class doubleVector(vector):
         self.storage = "dataDouble"
 
     def norm(self, N=2):
-        """Function to compute vector N - norm"""
+        """Function to compute tensor N - norm"""
         self.cppMode.norm(N)
         return self
 
     def scale(self, sc):
-        """Function to scale a vector"""
+        """Function to scale a tensor"""
         self.cppMode.scale(sc)
         return self
     
     def __repr__(self):
         """Override print method"""
-        return "doubleVector\n%s"%str(self.getHyper())
+        return "DoubleTensor\n%s"%str(self.getHyper())
     
     def rand(self):
         """Function to fill with random numbers"""
         self.cppMode.rand()
         return self
 
-    def clipVector(self, low, high):
-        """Clip vector element by element vec=min(high,max(low,vec))"""
-        self.cppMode.clipVector(low.cppMode, high.cppMode)
+    def cliptensor(self, low, high):
+        """Clip tensor element by element vec=min(high,max(low,vec))"""
+        self.cppMode.cliptensor(low.cppMode, high.cppMode)
         return self
 
     def calcHisto(self, nelem, mn, mx):
@@ -211,13 +211,13 @@ class doubleVector(vector):
            nelem - Return number of elements in histogram
 
            @return Histogram """
-        histo = getSepVector(ns=[nelem], storage="dataInt")
+        histo = getSepTensor(ns=[nelem], storage="dataInt")
         self.cppMode.calcHisto(histo.getCpp(), mn, mx)
         return histo
 
     def clone(self):
-        """Function to clone (deep copy) a vector"""
-        return doubleVector(fromCpp=self.cppMode.clone())
+        """Function to clone (deep copy) a tensor"""
+        return DoubleTensor(fromCpp=self.cppMode.clone())
 
     def copy(self, vec2):
         """Copy vec2 into self"""
@@ -225,8 +225,8 @@ class doubleVector(vector):
         return self
 
     def cloneSpace(self):
-        """Funtion tor return the space of a vector"""
-        return doubleVector(fromCpp=self.cppMode.cloneSpace())
+        """Funtion tor return the space of a tensor"""
+        return DoubleTensor(fromCpp=self.cppMode.cloneSpace())
 
     def scaleAdd(self, vec2, sc1=1., sc2=1.):
         """self = self * sc1 + sc2 * vec2"""
@@ -234,7 +234,7 @@ class doubleVector(vector):
         return self
 
     def dot(self, vec2):
-        """Compute dot product of two vectors"""
+        """Compute dot product of two tensors"""
         return self.cppMode.dot(vec2.cppMode)
 
     def multiply(self, vec2):
@@ -243,19 +243,19 @@ class doubleVector(vector):
         return self
 
     def norm(self, nrm=2):
-        """Return the norm of a vector"""
+        """Return the norm of a tensor"""
         return self.cppMode.norm(nrm)
 
     def window(self, **kw):
-        """Window a vector return another vector (of the same dimension
+        """Window a tensor return another tensor (of the same dimension
             specify min1..min6, max1...max6, f1...f6, j1...j6, n1...n6, or
             any of these by lists.
             Can not specify n and min or max """
-        return doubleVector(fromCpp=self.windowInternal(**kw))
+        return DoubleTensor(fromCpp=self.windowInternal(**kw))
 
 
-class intVector(vector):
-    """Generic int vector class"""
+class IntTensor(tensor):
+    """Generic int tensor class"""
 
     def __init__(self, **kw):
         self.kw = kw
@@ -264,13 +264,13 @@ class intVector(vector):
 
     def __repr__(self):
         """Override print method"""
-        return "intVector\n%s"%str(self.getHyper())
+        return "IntTensor\n%s"%str(self.getHyper())
 
     def clone(self):
-        """Function to clone (deep copy) a vector"""
-        return intVector(fromCpp=self.cppMode.clone())
-class complexVector(vector):
-    """Generic complex vector class"""
+        """Function to clone (deep copy) a tensor"""
+        return IntTensor(fromCpp=self.cppMode.clone())
+class ComplexTensor(tensor):
+    """Generic complex tensor class"""
 
     def __init__(self, **kw):
         self.kw = kw
@@ -278,15 +278,15 @@ class complexVector(vector):
         self.storage = "dataComplex"
 
     def cloneSpace(self):
-        """Funtion tor return the space of a vector"""
-        return complexVector(fromCpp=self.cppMode.cloneSpace())
+        """Funtion tor return the space of a tensor"""
+        return ComplexTensor(fromCpp=self.cppMode.cloneSpace())
 
     def norm(self, N=2):
-        """Function to compute vector N-norm"""
+        """Function to compute tensor N-norm"""
         return self.cppMode.norm(N)
 
     def zero(self):
-        """Function to zero out a vector"""
+        """Function to zero out a tensor"""
         self.cppMode.set(0.)
         return self
 
@@ -306,23 +306,23 @@ class complexVector(vector):
         return self
     def __repr__(self):
         """Override print method"""
-        return "complexVector\n%s"%str(self.getHyper())
+        return "ComplexTensor\n%s"%str(self.getHyper())
 
     def clone(self):
-        """clone a vector"""
-        return complexVector(fromCpp=self.cppMode.clone())
+        """clone a tensor"""
+        return ComplexTensor(fromCpp=self.cppMode.clone())
 
-    def clipVector(self, low, high):
-        """Clip vector element by element vec=min(high,max(low,vec))"""
-        self.cppMode.clipVector(low.cppMode, high.cppMode)
+    def cliptensor(self, low, high):
+        """Clip tensor element by element vec=min(high,max(low,vec))"""
+        self.cppMode.cliptensor(low.cppMode, high.cppMode)
         return self
 
     def dot(self, vec2):
-        """Compute dot product of two vectors"""
+        """Compute dot product of two tensors"""
         return self.cppMode.dot(vec2.cppMode)
 
     def scale(self, sc):
-        """Function to scale a vector"""
+        """Function to scale a tensor"""
         self.cppMode.scale(sc)
         return self
 
@@ -332,14 +332,14 @@ class complexVector(vector):
         return self
 
     def window(self, **kw):
-        """Window a vector return another vector (of the same dimension
+        """Window a tensor return another tensor (of the same dimension
             specify min1..min6, max1...max6, f1...f6, j1...j6, n1...n6, or
             any of these by lists.
             Can not specify n and min or max """
-        return complexVector(fromCpp=self.windowInternal(**kw))
+        return ComplexTensor(fromCpp=self.windowInternal(**kw))
 
-class complexDoubleVector(vector):
-    """Generic complex vector class"""
+class ComplexDoubleTensor(tensor):
+    """Generic complex tensor class"""
 
     def __init__(self, **kw):
         self.kw = kw
@@ -347,17 +347,17 @@ class complexDoubleVector(vector):
         self.storage = "dataComplexDouble"
 
     def cloneSpace(self):
-        """Funtion tor return the space of a vector"""
-        return complexDoubleVector(fromCpp=self.cppMode.cloneSpace())
+        """Funtion tor return the space of a tensor"""
+        return ComplexDoubleTensor(fromCpp=self.cppMode.cloneSpace())
 
     def norm(self, N=2):
-        """Function to compute vector N-norm"""
+        """Function to compute tensor N-norm"""
         return self.cppMode.norm(N)
     def __repr__(self):
         """Override print method"""
-        return "complexDoubleVector\n%s"%str(self.getHyper())
+        return "ComplexDoubleTensor\n%s"%str(self.getHyper())
     def zero(self):
-        """Function to zero out a vector"""
+        """Function to zero out a tensor"""
         self.cppMode.set(0.)
         return self
 
@@ -377,20 +377,20 @@ class complexDoubleVector(vector):
         return self
 
     def clone(self):
-        """clone a vector"""
-        return complexDoubleVector(fromCpp=self.cppMode.clone())
+        """clone a tensor"""
+        return ComplexDoubleTensor(fromCpp=self.cppMode.clone())
 
-    def clipVector(self, low, high):
-        """Clip vector element by element vec=min(high,max(low,vec))"""
-        self.cppMode.clipVector(low.cppMode, high.cppMode)
+    def cliptensor(self, low, high):
+        """Clip tensor element by element vec=min(high,max(low,vec))"""
+        self.cppMode.cliptensor(low.cppMode, high.cppMode)
         return self
 
     def dot(self, vec2):
-        """Compute dot product of two vectors"""
+        """Compute dot product of two tensors"""
         return self.cppMode.dot(vec2.cppMode)
 
     def scale(self, sc):
-        """Function to scale a vector"""
+        """Function to scale a tensor"""
         self.cppMode.scale(sc)
         return self
 
@@ -400,15 +400,15 @@ class complexDoubleVector(vector):
         return self
 
     def window(self, **kw):
-        """Window a vector return another vector (of the same dimension
+        """Window a tensor return another tensor (of the same dimension
             specify min1..min6, max1...max6, f1...f6, j1...j6, n1...n6, or
             any of these by lists.
             Can not specify n and min or max """
-        return complexDoubleVector(fromCpp=self.windowInternal(**kw))
+        return ComplexDoubleTensor(fromCpp=self.windowInternal(**kw))
 
 
-class byteVector(vector):
-    """Generic byte vector class"""
+class ByteTensor(tensor):
+    """Generic byte tensor class"""
 
     def __init__(self, **kw):
         self.kw = kw
@@ -422,18 +422,18 @@ class byteVector(vector):
            nelem - Return number of elements in histogram
 
            @return Histogram """
-        histo = getSepVector(ns=[nelem], storage="dataInt")
+        histo = getSepTensor(ns=[nelem], storage="dataInt")
         self.cppMode.calcHisto(histo.getCpp(), mn, mx)
         return histo
     def clone(self):
-        """Function to clone (deep copy) a vector"""
-        return byteVector(fromCpp=self.cppMode.clone())
+        """Function to clone (deep copy) a tensor"""
+        return ByteTensor(fromCpp=self.cppMode.clone())
     def __repr__(self):
         """Override print method"""
-        return "byteVector\n%s"%str(self.getHyper())
+        return "ByteTensor\n%s"%str(self.getHyper())
 
-def getSepVector(*args, **keys):
-    """ Get a sepVector object
+def getSepTensor(*args, **keys):
+    """ Get a septensor object
             Option 1 (supply hypercube):
                     hyper, kw args
             Option 2 (build hypercube):
@@ -443,7 +443,7 @@ def getSepVector(*args, **keys):
                     labels = [] list of labels
                     axes = [] list of axes
             Option 3 (get 2 - D slice)
-                    vector - vector to grab from
+                    tensor - tensor to grab from
                     iax1, iax2 - axes to grab
                     rev1, rev1 - whether or not to reverse axes
                     beg, end - beg and end position for all axes(lists)
@@ -481,24 +481,24 @@ def getSepVector(*args, **keys):
     elif len(args) == 0:
         if "axes" in keys or "ns" in keys:
             hyper = Hypercube.hypercube(**keys)
-        elif "vector" in keys:
+        elif "tensor" in keys:
             if "iax1" in keys and "iax2" in keys and "rev1" in keys and "rev2" in keys and "ipos" in keys and "beg" in keys and "end" in keys:
-                if isinstance(keys["vector"], floatVector):
-                    return floatVector(fromCpp=pySepVector.float2DReg(keys["vector"].getCpp(), keys["iax1"], keys["rev1"],
+                if isinstance(keys["tensor"], FloatTensor):
+                    return FloatTensor(fromCpp=pySepVector.float2DReg(keys["tensor"].getCpp(), keys["iax1"], keys["rev1"],
                                                                       keys["iax2"], keys["rev2"], keys["ipos"], keys["beg"], keys["end"]))
-                elif isinstance(keys["vector"], doubleVector):
-                    return doubleVector(fromCpp=pySepVector.double2DReg(keys["vector"].cppMode, keys["iax1"], keys["rev1"],
+                elif isinstance(keys["tensor"], DoubleTensor):
+                    return DoubleTensor(fromCpp=pySepVector.double2DReg(keys["tensor"].cppMode, keys["iax1"], keys["rev1"],
                                                                         keys["iax2"], keys["rev2"], keys["ipos"], keys["beg"], keys["end"]))
-                elif isinstance(keys["vector"], intVector):
-                    return intVector(fromCpp=pySepVector.int2DReg(keys["vector"].cppMode, keys["iax1"], keys["rev1"],
+                elif isinstance(keys["tensor"], IntTensor):
+                    return IntTensor(fromCpp=pySepVector.int2DReg(keys["tensor"].cppMode, keys["iax1"], keys["rev1"],
                                                                   keys["iax2"], keys["rev2"], keys["ipos"], keys["beg"], keys["end"]))
-                elif isinstance(keys["vector"], byteVector):
-                    return byteVector(fromCpp=pySepVector.byte2DReg(keys["vector"].cppMode, keys["iax1"], keys["rev1"],
+                elif isinstance(keys["tensor"], ByteTensor):
+                    return ByteTensor(fromCpp=pySepVector.byte2DReg(keys["tensor"].cppMode, keys["iax1"], keys["rev1"],
                                                                     keys["iax2"], keys["rev2"], keys["ipos"], keys["beg"], keys["end"]))
             else:
                 raise Exception("Must supply iax1,iax2,rev1,rev2,ipos,beg,end")
         else:
-            raise Exception("Must supply Hypercube,vector  or ns/axes")
+            raise Exception("Must supply Hypercube,tensor  or ns/axes")
     else:
         raise Exception(
             "Only understand 0 or 1 (hypercube) non-keyword arguments")
@@ -515,154 +515,154 @@ def getSepVector(*args, **keys):
             myt = keys["storage"]
 
     if myt == "dataFloat":
-        x = getFloatVector(hyper)
-        y= floatVector(fromCpp=x)
+        x = getFloatTensor(hyper)
+        y= FloatTensor(fromCpp=x)
     elif myt == "dataComplexDouble":
-        x = getComplexDoubleVector(hyper)
-        y=complexDoubleVector(fromCpp=x)
+        x = getComplexDoubleTensor(hyper)
+        y=ComplexDoubleTensor(fromCpp=x)
     elif myt == "dataComplex":
-        x = getComplexVector(hyper)
-        y=complexVector(fromCpp=x)
+        x = getComplexTensor(hyper)
+        y=ComplexTensor(fromCpp=x)
     elif myt == "dataDouble":
-        x = getDoubleVector(hyper)
-        y= doubleVector(fromCpp=x)
+        x = getDoubleTensor(hyper)
+        y= DoubleTensor(fromCpp=x)
     elif myt == "dataInt":
-        x = getintVector(hyper)
-        y= intVector(fromCpp=x)
+        x = getIntTensor(hyper)
+        y= IntTensor(fromCpp=x)
     elif myt == "dataByte":
-        x = getByteVector(hyper)
-        y= byteVector(fromCpp=x)
+        x = getByteTensor(hyper)
+        y= ByteTensor(fromCpp=x)
     else:
         raise Exception("Unknown type %s" % myt)
     if haveNumpy:
         numpy.copyto(y.getNdArray(),array)
     return y
 
-def getCppSepVector(hyper, **keys):
+def getCppSepTensor(hyper, **keys):
     h = hyper.getCpp()
     myt = "dataFloat"
     if "storage" in keys:
         myt = keys["storage"]
     if myt == "datFloat":
-        x = getFloatVector(hyper)
+        x = getFloatTensor(hyper)
     elif myt == "dataComplex":
-        x = getComplexVector(hyper)
+        x = getComplexTensor(hyper)
     elif myt == "dataComplexDouble":
-        x = getComplexDoubleVector(hyper)
+        x = getComplexDoubleTensor(hyper)
     elif myt == "dataDouble":
-        x = getDoubleVector(hyper)
+        x = getDoubleTensor(hyper)
     elif myt == "dataInt":
-        x = getintVector(hyper)
+        x = getIntTensor(hyper)
     elif myt == "dataByte":
-        x = getByteVector(hyper)
+        x = getByteTensor(hyper)
     else:
         raise Exception("Unknown type" % myt)
 
 
-def getFloatVector(hyper):
+def getFloatTensor(hyper):
     h = hyper.getCpp()
     if len(hyper.axes) == 1:
-        return pySepVector.float1DReg(h)
+        return pySepVector.floatTensor1D(h)
     elif len(hyper.axes) == 2:
-        return pySepVector.float2DReg(h)
+        return pySepVector.floatTensor2D(h)
     elif len(hyper.axes) == 3:
-        return pySepVector.float3DReg(h)
+        return pySepVector.floatTensor3D(h)
     elif len(hyper.axes) == 4:
-        return pySepVector.float4DReg(h)
+        return pySepVector.floatTensor4D(h)
     elif len(hyper.axes) == 5:
-        return pySepVector.float5DReg(h)
+        return pySepVector.floatTensor5D(h)
     elif len(hyper.axes) == 6:
-        return pySepVector.float6DReg(h)
+        return pySepVector.floatTensor6D(h)
     elif len(hyper.axes) == 7:
-        return pySepVector.float7DReg(h)
+        return pySepVector.floatTensor7D(h)
 
-def getComplexVector(hyper):
+def getComplexTensor(hyper):
     h = hyper.getCpp()
 
     if len(hyper.axes) == 1:
-        return pySepVector.complex1DReg(h)
+        return pySepVector.complexTensor1D(h)
     elif len(hyper.axes) == 2:
-        return pySepVector.complex2DReg(h)
+        return pySepVector.complexTensor2D(h)
     elif len(hyper.axes) == 3:
-        return pySepVector.complex3DReg(h)
+        return pySepVector.complexTensor3D(h)
     elif len(hyper.axes) == 4:
-        return pySepVector.complex4DReg(h)
+        return pySepVector.complexTensor4D(h)
     elif len(hyper.axes) == 5:
-        return pySepVector.complex5DReg(h)
+        return pySepVector.complexTensor5D(h)
     elif len(hyper.axes) == 6:
-        return pySepVector.complex6DReg(h)
+        return pySepVector.complexTensor6D(h)
     elif len(hyper.axes) == 7:
-        return pySepVector.complex7DReg(h)
-def getComplexDoubleVector(hyper):
+        return pySepVector.complexTensor7D(h)
+def getComplexDoubleTensor(hyper):
     h = hyper.getCpp()
 
     if len(hyper.axes) == 1:
-        return pySepVector.complexDouble1DReg(h)
+        return pySepVector.complexDoubleTensor1D(h)
     elif len(hyper.axes) == 2:
-        return pySepVector.complexDouble2DReg(h)
+        return pySepVector.complexDoubleTensor2D(h)
     elif len(hyper.axes) == 3:
-        return pySepVector.complexDouble3DReg(h)
+        return pySepVector.complexDoubleTensor3D(h)
     elif len(hyper.axes) == 4:
-        return pySepVector.complexDouble4DReg(h)
+        return pySepVector.complexDoubleTensor4D(h)
     elif len(hyper.axes) == 5:
-        return pySepVector.complexDouble5DReg(h)
+        return pySepVector.complexDoubleTensor5D(h)
     elif len(hyper.axes) == 6:
-        return pySepVector.complexDouble6DReg(h)
+        return pySepVector.complexDoubleTensor6D(h)
     elif len(hyper.axes) == 7:
-        return pySepVector.complex7DReg(h)
+        return pySepVector.complexDoubleTensor7D(h)
 
 
-def getByteVector(hyper):
+def getByteTensor(hyper):
     h = hyper.getCpp()
 
     if len(hyper.axes) == 1:
-        return pySepVector.byte1DReg(h)
+        return pySepVector.byteTensor1D(h)
     elif len(hyper.axes) == 2:
-        return pySepVector.byte2DReg(h)
+        return pySepVector.byteTensor2D(h)
     elif len(hyper.axes) == 3:
-        return pySepVector.byte3DReg(h)
+        return pySepVector.byteTensor3D(h)
     elif len(hyper.axes) == 4:
-        return pySepVector.byte4DReg(h)
+        return pySepVector.byteTensor4D(h)
     elif len(hyper.axes) == 5:
-        return pySepVector.byte5DReg(h)
+        return pySepVector.byteTensor5D(h)
     elif len(hyper.axes) == 6:
-        return pySepVector.byte6DReg(h)
+        return pySepVector.byteTensor6D(h)
 
 
-def getDoubleVector(hyper):
+def getDoubleTensor(hyper):
     h = hyper.getCpp()
     if len(hyper.axes) == 1:
-        return pySepVector.double1DReg(h)
+        return pySepVector.doubleTensor1D(h)
     elif len(hyper.axes) == 2:
-        return pySepVector.double2DReg(h)
+        return pySepVector.doubleTensor2D(h)
     elif len(hyper.axes) == 3:
-        return pySepVector.double3DReg(h)
+        return pySepVector.doubleTensor3D(h)
     elif len(hyper.axes) == 4:
-        return pySepVector.double4DReg(h)
+        return pySepVector.doubleTensor4D(h)
     elif len(hyper.axes) == 5:
-        return pySepVector.double5DReg(h)
+        return pySepVector.doubleTensor5D(h)
     elif len(hyper.axes) == 6:
-        return pySepVector.double6DReg(h)
+        return pySepVector.doubleTensor6D(h)
     elif len(hyper.axes) == 7:
-        return pySepVector.double7DReg(h)
+        return pySepVector.doubleTensor7D(h)
 
-def getintVector(hyper):
+def getIntTensor(hyper):
     h = hyper.getCpp()
     if len(hyper.axes) == 1:
-        return pySepVector.int1DReg(h)
+        return pySepVector.intTensor1D(h)
     elif len(hyper.axes) == 2:
-        return pySepVector.int2DReg(h)
+        return pySepVector.intTensor2D(h)
     elif len(hyper.axes) == 3:
-        return pySepVector.int3DReg(h)
+        return pySepVector.intTensor3D(h)
     elif len(hyper.axes) == 4:
-        return pySepVector.int4DReg(h)
+        return pySepVector.intTensor4D(h)
     elif len(hyper.axes) == 5:
-        return pySepVector.int5DReg(h)
+        return pySepVector.intTensor5D(h)
     elif len(hyper.axes) == 6:
-        return pySepVector.int6DReg(h)
+        return pySepVector.intTensor6D(h)
 
 
-class rectFilter1D(floatVector):
+class rectFilter1D(FloatTensor):
 
     def __init__(self, n, f, pef=False):
         """Initialize a rectFilter1D
@@ -672,7 +672,7 @@ class rectFilter1D(floatVector):
         self.cppMode = pySepVector.rectFilter1D(n, f, pef)
 
 
-class rectFilter2D(floatVector):
+class rectFilter2D(FloatTensor):
 
     def __init__(self, *arg, **kw):
         """Initialize a rectFilter2D
@@ -698,11 +698,11 @@ class rectFilter2D(floatVector):
             raise Exception("Unknown way to create rectFilter2D")
 
     def clone(self):
-        """Function to clone (deep copy) a vector"""
+        """Function to clone (deep copy) a tensor"""
         return rectFilter2D(clone=self.cppMode)
 
     def cloneSpace(self):
-        """Funtion tor return the space of a vector"""
+        """Funtion tor return the space of a tensor"""
         return rectFilter2D(clone=self.cppMode, space=False)
 
 

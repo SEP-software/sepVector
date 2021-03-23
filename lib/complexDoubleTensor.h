@@ -18,7 +18,7 @@ namespace SEP
     /*!
     A regular sampled 7-D function with float storage
     */
-    class floatTensor7D : public floatHyper
+    class complexDoubleTensor7D : public floatHyper
     {
     public:
         /*!
@@ -26,7 +26,7 @@ namespace SEP
               \param hyper Hypercube describing RSF
 
          */
-        floatTensor7D(std::shared_ptr<SEP::hypercube> hyper)
+        complexDoubleTensor7D(std::shared_ptr<SEP::hypercube> hyper)
         {
             initNoData(hyper);
         }
@@ -35,8 +35,8 @@ namespace SEP
             \param n1,n2,n3,n4,n5,n6,n7 Dimensions of the hypercube
 
        */
-        floatTensor7D(const int n1, const int n2, const int n3, const int n4,
-                      const int n5, const int n6, const int n7)
+        complexDoubleTensor7D(const int n1, const int n2, const int n3, const int n4,
+                              const int n5, const int n6, const int n7)
         {
             std::vector<SEP::axis> a;
             std::vector<int> ns = {n1, n2, n3, n4, n5, n6, n7};
@@ -50,8 +50,8 @@ namespace SEP
           \param a1,a2,a3,a4,a5,a6, a7 Axes if the hypercube
 
       */
-        floatTensor7D(const SEP::axis &a1, const SEP::axis &a2, const SEP::axis &a3,
-                      const SEP::axis &a4, const SEP::axis &a5, const SEP::axis &a6, const SEP::axis &a7)
+        complexDoubleTensor7D(const SEP::axis &a1, const SEP::axis &a2, const SEP::axis &a3,
+                              const SEP::axis &a4, const SEP::axis &a5, const SEP::axis &a6, const SEP::axis &a7)
         {
             std::vector<SEP::axis> a = {a1, a2, a3, a4, a5, a6, a7};
             std::shared_ptr<SEP::hypercube> hyp(new SEP::hypercube(a));
@@ -63,7 +63,7 @@ namespace SEP
             \param vals Values to fill vector with
 
        */
-        floatTensor7D(const std::shared_ptr<SEP::hypercube> hyper, const float *vals)
+        complexDoubleTensor7D(const std::shared_ptr<SEP::hypercube> hyper, const float *vals)
         {
             initNoData(hyper);
             copyVals(vals);
@@ -74,8 +74,8 @@ namespace SEP
           \param vals Values to fill vector with
 
       */
-        floatTensor7D(const int n1, const int n2, const int n3, const int n4,
-                      const int n5, const int n6, const int n7, const float *vals)
+        complexDoubleTensor7D(const int n1, const int n2, const int n3, const int n4,
+                              const int n5, const int n6, const int n7, const float *vals)
         {
             std::vector<SEP::axis> a;
             std::vector<int> ns = {n1, n2, n3, n4, n5, n6, n7};
@@ -91,9 +91,9 @@ namespace SEP
             \param a1,a2,a3,a4,a5,a6,a7 Axes if the hypercube
             \param vals Values to fill vector with
        */
-        floatTensor7D(const SEP::axis &a1, const SEP::axis &a2, const SEP::axis &a3,
-                      const SEP::axis &a4, const SEP::axis &a5, const SEP::axis &a6, const SEP::axis &a7,
-                      const float *vals)
+        complexDoubleTensor7D(const SEP::axis &a1, const SEP::axis &a2, const SEP::axis &a3,
+                              const SEP::axis &a4, const SEP::axis &a5, const SEP::axis &a6, const SEP::axis &a7,
+                              const float *vals)
         {
             std::vector<SEP::axis> a = {a1, a2, a3, a4, a5, a6, a7};
             std::shared_ptr<SEP::hypercube> hyp(new SEP::hypercube(a));
@@ -113,18 +113,18 @@ namespace SEP
         /*!
       Make a copy of the vector
       */
-        std::shared_ptr<floatTensor7D> clone() const;
+        std::shared_ptr<complexDoubleTensor7D> clone() const;
         /*!
        Make a copy of the vector space
        */
-        std::shared_ptr<floatTensor7D> cloneSpace() const;
+        std::shared_ptr<complexDoubleTensor7D> cloneSpace() const;
         /*!
                                         Return a subset of the vector
                                         \param nw,fw,jw Windowing parameters
                                         */
-        std::shared_ptr<floatTensor7D> window(const std::vector<int> &nw,
-                                              const std::vector<int> &fw,
-                                              const std::vector<int> &jw) const;
+        std::shared_ptr<complexDoubleTensor7D> window(const std::vector<int> &nw,
+                                                      const std::vector<int> &fw,
+                                                      const std::vector<int> &jw) const;
         /*!
         Deallocate storage for vector, turn into vector space
          */
@@ -156,7 +156,7 @@ namespace SEP
     /*!
     A regular sampled 6-D function with float storage
     */
-    class floatTensor6D : public floatHyper
+    class complexDoubleTensor6D : public floatHyper
     {
     public:
         /*!
@@ -164,7 +164,7 @@ namespace SEP
               \param hyper Hypercube describing RSF
 
          */
-        floatTensor6D(std::shared_ptr<SEP::hypercube> hyper)
+        complexDoubleTensor6D(std::shared_ptr<SEP::hypercube> hyper)
         {
             initNoData(hyper);
         }
@@ -173,8 +173,8 @@ namespace SEP
             \param n1,n2,n3,n4,n5,n6 Dimensions of the hypercube
 
        */
-        floatTensor6D(const int n1, const int n2, const int n3, const int n4,
-                      const int n5, const int n6)
+        complexDoubleTensor6D(const int n1, const int n2, const int n3, const int n4,
+                              const int n5, const int n6)
         {
             std::vector<SEP::axis> a;
             std::vector<int> ns = {n1, n2, n3, n4, n5, n6};
@@ -188,8 +188,8 @@ namespace SEP
           \param a1,a2,a3,a4,a5,a6 Axes if the hypercube
 
       */
-        floatTensor6D(const SEP::axis &a1, const SEP::axis &a2, const SEP::axis &a3,
-                      const SEP::axis &a4, const SEP::axis &a5, const SEP::axis &a6)
+        complexDoubleTensor6D(const SEP::axis &a1, const SEP::axis &a2, const SEP::axis &a3,
+                              const SEP::axis &a4, const SEP::axis &a5, const SEP::axis &a6)
         {
             std::vector<SEP::axis> a = {a1, a2, a3, a4, a5, a6};
             std::shared_ptr<SEP::hypercube> hyp(new SEP::hypercube(a));
@@ -201,7 +201,7 @@ namespace SEP
             \param vals Values to fill vector with
 
        */
-        floatTensor6D(const std::shared_ptr<SEP::hypercube> hyper, const float *vals)
+        complexDoubleTensor6D(const std::shared_ptr<SEP::hypercube> hyper, const float *vals)
         {
             initNoData(hyper);
             copyVals(vals);
@@ -212,8 +212,8 @@ namespace SEP
           \param vals Values to fill vector with
 
       */
-        floatTensor6D(const int n1, const int n2, const int n3, const int n4,
-                      const int n5, const int n6, const float *vals)
+        complexDoubleTensor6D(const int n1, const int n2, const int n3, const int n4,
+                              const int n5, const int n6, const float *vals)
         {
             std::vector<SEP::axis> a;
             std::vector<int> ns = {n1, n2, n3, n4, n5, n6};
@@ -229,9 +229,9 @@ namespace SEP
             \param a1,a2,a3,a4,a5,a6 Axes if the hypercube
             \param vals Values to fill vector with
        */
-        floatTensor6D(const SEP::axis &a1, const SEP::axis &a2, const SEP::axis &a3,
-                      const SEP::axis &a4, const SEP::axis &a5, const SEP::axis &a6,
-                      const float *vals)
+        complexDoubleTensor6D(const SEP::axis &a1, const SEP::axis &a2, const SEP::axis &a3,
+                              const SEP::axis &a4, const SEP::axis &a5, const SEP::axis &a6,
+                              const float *vals)
         {
             std::vector<SEP::axis> a = {a1, a2, a3, a4, a5, a6};
             std::shared_ptr<SEP::hypercube> hyp(new SEP::hypercube(a));
@@ -251,18 +251,18 @@ namespace SEP
         /*!
       Make a copy of the vector
       */
-        std::shared_ptr<floatTensor6D> clone() const;
+        std::shared_ptr<complexDoubleTensor6D> clone() const;
         /*!
        Make a copy of the vector space
        */
-        std::shared_ptr<floatTensor6D> cloneSpace() const;
+        std::shared_ptr<complexDoubleTensor6D> cloneSpace() const;
         /*!
                                         Return a subset of the vector
                                         \param nw,fw,jw Windowing parameters
                                         */
-        std::shared_ptr<floatTensor6D> window(const std::vector<int> &nw,
-                                              const std::vector<int> &fw,
-                                              const std::vector<int> &jw) const;
+        std::shared_ptr<complexDoubleTensor6D> window(const std::vector<int> &nw,
+                                                      const std::vector<int> &fw,
+                                                      const std::vector<int> &jw) const;
         /*!
         Deallocate storage for vector, turn into vector space
          */
@@ -294,7 +294,7 @@ namespace SEP
     /*!
     A regular sampled 5-D function with float storage
     */
-    class floatTensor5D : public floatHyper
+    class complexDoubleTensor5D : public floatHyper
     {
     public:
         /*!
@@ -302,7 +302,7 @@ namespace SEP
               \param hyper Hypercube describing RSF
 
          */
-        floatTensor5D(std::shared_ptr<SEP::hypercube> hyper)
+        complexDoubleTensor5D(std::shared_ptr<SEP::hypercube> hyper)
         {
             initNoData(hyper);
         }
@@ -311,8 +311,8 @@ namespace SEP
             \param n1,n2,n3,n4,n5  Dimensions of the hypercube
 
        */
-        floatTensor5D(const int n1, const int n2, const int n3, const int n4,
-                      const int n5)
+        complexDoubleTensor5D(const int n1, const int n2, const int n3, const int n4,
+                              const int n5)
         {
             std::vector<SEP::axis> a;
             std::vector<int> ns = {n1, n2, n3, n4, n5};
@@ -326,8 +326,8 @@ namespace SEP
           \param a1,a2,a3,a4,a5,a6 Axes if the hypercube
 
       */
-        floatTensor5D(const SEP::axis &a1, const SEP::axis &a2, const SEP::axis &a3,
-                      const SEP::axis &a4, const SEP::axis &a5)
+        complexDoubleTensor5D(const SEP::axis &a1, const SEP::axis &a2, const SEP::axis &a3,
+                              const SEP::axis &a4, const SEP::axis &a5)
         {
             std::vector<SEP::axis> a = {a1, a2, a3, a4, a5};
             std::shared_ptr<SEP::hypercube> hyp(new SEP::hypercube(a));
@@ -339,7 +339,7 @@ namespace SEP
             \param vals Values to fill vector with
 
        */
-        floatTensor5D(const std::shared_ptr<SEP::hypercube> hyper, const float *vals)
+        complexDoubleTensor5D(const std::shared_ptr<SEP::hypercube> hyper, const float *vals)
         {
             initNoData(hyper);
             copyVals(vals);
@@ -350,8 +350,8 @@ namespace SEP
           \param vals Values to fill vector with
 
       */
-        floatTensor5D(const int n1, const int n2, const int n3, const int n4,
-                      const int n5, const float *vals)
+        complexDoubleTensor5D(const int n1, const int n2, const int n3, const int n4,
+                              const int n5, const float *vals)
         {
             std::vector<SEP::axis> a;
             std::vector<int> ns = {n1, n2, n3, n4, n5};
@@ -367,9 +367,9 @@ namespace SEP
             \param a1,a2,a3,a4,a5 Axes if the hypercube
             \param vals Values to fill vector with
        */
-        floatTensor5D(const SEP::axis &a1, const SEP::axis &a2, const SEP::axis &a3,
-                      const SEP::axis &a4, const SEP::axis &a5,
-                      const float *vals)
+        complexDoubleTensor5D(const SEP::axis &a1, const SEP::axis &a2, const SEP::axis &a3,
+                              const SEP::axis &a4, const SEP::axis &a5,
+                              const float *vals)
         {
             std::vector<SEP::axis> a = {a1, a2, a3, a4, a5};
             std::shared_ptr<SEP::hypercube> hyp(new SEP::hypercube(a));
@@ -389,18 +389,18 @@ namespace SEP
         /*!
       Make a copy of the vector
       */
-        std::shared_ptr<floatTensor5D> clone() const;
+        std::shared_ptr<complexDoubleTensor5D> clone() const;
         /*!
        Make a copy of the vector space
        */
-        std::shared_ptr<floatTensor5D> cloneSpace() const;
+        std::shared_ptr<complexDoubleTensor5D> cloneSpace() const;
         /*!
                                         Return a subset of the vector
                                         \param nw,fw,jw Windowing parameters
                                         */
-        std::shared_ptr<floatTensor5D> window(const std::vector<int> &nw,
-                                              const std::vector<int> &fw,
-                                              const std::vector<int> &jw) const;
+        std::shared_ptr<complexDoubleTensor5D> window(const std::vector<int> &nw,
+                                                      const std::vector<int> &fw,
+                                                      const std::vector<int> &jw) const;
         /*!
         Deallocate storage for vector, turn into vector space
          */
@@ -432,7 +432,7 @@ namespace SEP
     /*!
     A regular sampled 4-D function with float storage
     */
-    class floatTensor4D : public floatHyper
+    class complexDoubleTensor4D : public floatHyper
     {
     public:
         /*!
@@ -440,7 +440,7 @@ namespace SEP
               \param hyper Hypercube describing RSF
 
          */
-        floatTensor4D(std::shared_ptr<SEP::hypercube> hyper)
+        complexDoubleTensor4D(std::shared_ptr<SEP::hypercube> hyper)
         {
             initNoData(hyper);
         }
@@ -449,7 +449,7 @@ namespace SEP
             \param n1,n2,n3,n4 Dimensions of the hypercube
 
        */
-        floatTensor4D(const int n1, const int n2, const int n3, const int n4)
+        complexDoubleTensor4D(const int n1, const int n2, const int n3, const int n4)
         {
             std::vector<SEP::axis> a;
             std::vector<int> ns = {n1, n2, n3, n4};
@@ -463,8 +463,8 @@ namespace SEP
           \param a1,a2,a3,a4 Axes if the hypercube
 
       */
-        floatTensor4D(const SEP::axis &a1, const SEP::axis &a2, const SEP::axis &a3,
-                      const SEP::axis &a4)
+        complexDoubleTensor4D(const SEP::axis &a1, const SEP::axis &a2, const SEP::axis &a3,
+                              const SEP::axis &a4)
         {
             std::vector<SEP::axis> a = {a1, a2, a3, a4};
             std::shared_ptr<SEP::hypercube> hyp(new SEP::hypercube(a));
@@ -476,7 +476,7 @@ namespace SEP
             \param vals Values to fill vector with
 
        */
-        floatTensor4D(const std::shared_ptr<SEP::hypercube> hyper, const float *vals)
+        complexDoubleTensor4D(const std::shared_ptr<SEP::hypercube> hyper, const float *vals)
         {
             initNoData(hyper);
             copyVals(vals);
@@ -487,7 +487,7 @@ namespace SEP
           \param vals Values to fill vector with
 
       */
-        floatTensor4D(const int n1, const int n2, const int n3, const int n4, const float *vals)
+        complexDoubleTensor4D(const int n1, const int n2, const int n3, const int n4, const float *vals)
         {
             std::vector<SEP::axis> a;
             std::vector<int> ns = {n1, n2, n3, n4};
@@ -503,9 +503,9 @@ namespace SEP
             \param a1,a2,a3,a4 Axes if the hypercube
             \param vals Values to fill vector with
        */
-        floatTensor4D(const SEP::axis &a1, const SEP::axis &a2, const SEP::axis &a3,
-                      const SEP::axis &a4,
-                      const float *vals)
+        complexDoubleTensor4D(const SEP::axis &a1, const SEP::axis &a2, const SEP::axis &a3,
+                              const SEP::axis &a4,
+                              const float *vals)
         {
             std::vector<SEP::axis> a = {a1, a2, a3, a4};
             std::shared_ptr<SEP::hypercube> hyp(new SEP::hypercube(a));
@@ -525,18 +525,18 @@ namespace SEP
         /*!
       Make a copy of the vector
       */
-        std::shared_ptr<floatTensor4D> clone() const;
+        std::shared_ptr<complexDoubleTensor4D> clone() const;
         /*!
        Make a copy of the vector space
        */
-        std::shared_ptr<floatTensor4D> cloneSpace() const;
+        std::shared_ptr<complexDoubleTensor4D> cloneSpace() const;
         /*!
                                         Return a subset of the vector
                                         \param nw,fw,jw Windowing parameters
                                         */
-        std::shared_ptr<floatTensor4D> window(const std::vector<int> &nw,
-                                              const std::vector<int> &fw,
-                                              const std::vector<int> &jw) const;
+        std::shared_ptr<complexDoubleTensor4D> window(const std::vector<int> &nw,
+                                                      const std::vector<int> &fw,
+                                                      const std::vector<int> &jw) const;
         /*!
         Deallocate storage for vector, turn into vector space
          */
@@ -568,7 +568,7 @@ namespace SEP
     /*!
     A regular sampled 3-D function with float storage
     */
-    class floatTensor3D : public floatHyper
+    class complexDoubleTensor3D : public floatHyper
     {
     public:
         /*!
@@ -576,7 +576,7 @@ namespace SEP
               \param hyper Hypercube describing RSF
 
          */
-        floatTensor3D(std::shared_ptr<SEP::hypercube> hyper)
+        complexDoubleTensor3D(std::shared_ptr<SEP::hypercube> hyper)
         {
             initNoData(hyper);
         }
@@ -585,7 +585,7 @@ namespace SEP
             \param n1,n2,n3  Dimensions of the hypercube
 
        */
-        floatTensor3D(const int n1, const int n2, const int n3)
+        complexDoubleTensor3D(const int n1, const int n2, const int n3)
         {
             std::vector<SEP::axis> a;
             std::vector<int> ns = {n1, n2, n3};
@@ -599,7 +599,7 @@ namespace SEP
           \param a1,a2,a3  Axes if the hypercube
 
       */
-        floatTensor3D(const SEP::axis &a1, const SEP::axis &a2, const SEP::axis &a3)
+        complexDoubleTensor3D(const SEP::axis &a1, const SEP::axis &a2, const SEP::axis &a3)
         {
             std::vector<SEP::axis> a = {a1, a2, a3};
             std::shared_ptr<SEP::hypercube> hyp(new SEP::hypercube(a));
@@ -611,7 +611,7 @@ namespace SEP
             \param vals Values to fill vector with
 
        */
-        floatTensor3D(const std::shared_ptr<SEP::hypercube> hyper, const float *vals)
+        complexDoubleTensor3D(const std::shared_ptr<SEP::hypercube> hyper, const float *vals)
         {
             initNoData(hyper);
             copyVals(vals);
@@ -622,7 +622,7 @@ namespace SEP
           \param vals Values to fill vector with
 
       */
-        floatTensor3D(const int n1, const int n2, const int n3, const float *vals)
+        complexDoubleTensor3D(const int n1, const int n2, const int n3, const float *vals)
         {
             std::vector<SEP::axis> a;
             std::vector<int> ns = {n1, n2, n3};
@@ -638,8 +638,8 @@ namespace SEP
             \param a1,a2,a3 Axes if the hypercube
             \param vals Values to fill vector with
        */
-        floatTensor3D(const SEP::axis &a1, const SEP::axis &a2, const SEP::axis &a3,
-                      const float *vals)
+        complexDoubleTensor3D(const SEP::axis &a1, const SEP::axis &a2, const SEP::axis &a3,
+                              const float *vals)
         {
             std::vector<SEP::axis> a = {a1, a2, a3};
             std::shared_ptr<SEP::hypercube> hyp(new SEP::hypercube(a));
@@ -659,18 +659,18 @@ namespace SEP
         /*!
       Make a copy of the vector
       */
-        std::shared_ptr<floatTensor3D> clone() const;
+        std::shared_ptr<complexDoubleTensor3D> clone() const;
         /*!
        Make a copy of the vector space
        */
-        std::shared_ptr<floatTensor3D> cloneSpace() const;
+        std::shared_ptr<complexDoubleTensor3D> cloneSpace() const;
         /*!
                                         Return a subset of the vector
                                         \param nw,fw,jw Windowing parameters
                                         */
-        std::shared_ptr<floatTensor3D> window(const std::vector<int> &nw,
-                                              const std::vector<int> &fw,
-                                              const std::vector<int> &jw) const;
+        std::shared_ptr<complexDoubleTensor3D> window(const std::vector<int> &nw,
+                                                      const std::vector<int> &fw,
+                                                      const std::vector<int> &jw) const;
         /*!
         Deallocate storage for vector, turn into vector space
          */
@@ -702,7 +702,7 @@ namespace SEP
     /*!
     A regular sampled 2-D function with float storage
     */
-    class floatTensor2D : public floatHyper
+    class complexDoubleTensor2D : public floatHyper
     {
     public:
         /*!
@@ -710,7 +710,7 @@ namespace SEP
               \param hyper Hypercube describing RSF
 
          */
-        floatTensor2D(std::shared_ptr<SEP::hypercube> hyper)
+        complexDoubleTensor2D(std::shared_ptr<SEP::hypercube> hyper)
         {
             initNoData(hyper);
         }
@@ -727,10 +727,10 @@ namespace SEP
           \param beg,end Begining and end of the subset to grab along  
           */
 
-        floatTensor2D(const std::shared_ptr<floatTensor7D> old, const int iax1,
-                      const bool rev1, const int iax2, const bool rev2,
-                      const std::vector<int> &ipos, const std::vector<int> &beg,
-                      const std::vector<int> &end);
+        complexDoubleTensor2D(const std::shared_ptr<complexDoubleTensor7D> old, const int iax1,
+                              const bool rev1, const int iax2, const bool rev2,
+                              const std::vector<int> &ipos, const std::vector<int> &beg,
+                              const std::vector<int> &end);
 
         /*!
           Create a 2-D float vector from a 6-D float
@@ -744,10 +744,10 @@ namespace SEP
           \param beg,end Begining and end of the subset to grab along  
           */
 
-        floatTensor2D(const std::shared_ptr<floatTensor6D> old, const int iax1,
-                      const bool rev1, const int iax2, const bool rev2,
-                      const std::vector<int> &ipos, const std::vector<int> &beg,
-                      const std::vector<int> &end);
+        complexDoubleTensor2D(const std::shared_ptr<complexDoubleTensor6D> old, const int iax1,
+                              const bool rev1, const int iax2, const bool rev2,
+                              const std::vector<int> &ipos, const std::vector<int> &beg,
+                              const std::vector<int> &end);
 
         /*!
           Create a 2-D float vector from a 5-D float
@@ -761,10 +761,10 @@ namespace SEP
           \param beg,end Begining and end of the subset to grab along  
           */
 
-        floatTensor2D(const std::shared_ptr<floatTensor5D> old, const int iax1,
-                      const bool rev1, const int iax2, const bool rev2,
-                      const std::vector<int> &ipos, const std::vector<int> &beg,
-                      const std::vector<int> &end);
+        complexDoubleTensor2D(const std::shared_ptr<complexDoubleTensor5D> old, const int iax1,
+                              const bool rev1, const int iax2, const bool rev2,
+                              const std::vector<int> &ipos, const std::vector<int> &beg,
+                              const std::vector<int> &end);
 
         /*!
           Create a 2-D float vector from a 4-D float
@@ -778,10 +778,10 @@ namespace SEP
           \param beg,end Begining and end of the subset to grab along  
           */
 
-        floatTensor2D(const std::shared_ptr<floatTensor4D> old, const int iax1,
-                      const bool rev1, const int iax2, const bool rev2,
-                      const std::vector<int> &ipos, const std::vector<int> &beg,
-                      const std::vector<int> &end);
+        complexDoubleTensor2D(const std::shared_ptr<complexDoubleTensor4D> old, const int iax1,
+                              const bool rev1, const int iax2, const bool rev2,
+                              const std::vector<int> &ipos, const std::vector<int> &beg,
+                              const std::vector<int> &end);
 
         /*!
           Create a 2-D float vector from a 3-D float
@@ -795,10 +795,10 @@ namespace SEP
           \param beg,end Begining and end of the subset to grab along  
           */
 
-        floatTensor2D(const std::shared_ptr<floatTensor3D> old, const int iax1,
-                      const bool rev1, const int iax2, const bool rev2,
-                      const std::vector<int> &ipos, const std::vector<int> &beg,
-                      const std::vector<int> &end);
+        complexDoubleTensor2D(const std::shared_ptr<complexDoubleTensor3D> old, const int iax1,
+                              const bool rev1, const int iax2, const bool rev2,
+                              const std::vector<int> &ipos, const std::vector<int> &beg,
+                              const std::vector<int> &end);
 
         /*!
           Create a 2-D float vector from a 2-D float
@@ -812,17 +812,17 @@ namespace SEP
           \param beg,end Begining and end of the subset to grab along  
           */
 
-        floatTensor2D(const std::shared_ptr<floatTensor2D> old, const int iax1,
-                      const bool rev1, const int iax2, const bool rev2,
-                      const std::vector<int> &ipos, const std::vector<int> &beg,
-                      const std::vector<int> &end);
+        complexDoubleTensor2D(const std::shared_ptr<complexDoubleTensor2D> old, const int iax1,
+                              const bool rev1, const int iax2, const bool rev2,
+                              const std::vector<int> &ipos, const std::vector<int> &beg,
+                              const std::vector<int> &end);
 
         /*!
        Create a 2-D float vector from just lengths
             \param n1,n2   Dimensions of the hypercube
 
        */
-        floatTensor2D(const int n1, const int n2)
+        complexDoubleTensor2D(const int n1, const int n2)
         {
             std::vector<SEP::axis> a;
             std::vector<int> ns = {n1, n2};
@@ -837,7 +837,7 @@ namespace SEP
           \param a1,a2  Axes if the hypercube
 
       */
-        floatTensor2D(const SEP::axis &a1, const SEP::axis &a2)
+        complexDoubleTensor2D(const SEP::axis &a1, const SEP::axis &a2)
         {
             std::vector<SEP::axis> a = {a1, a2};
             std::shared_ptr<SEP::hypercube> hyp(new SEP::hypercube(a));
@@ -849,7 +849,7 @@ namespace SEP
             \param vals Values to fill vector with
 
        */
-        floatTensor2D(const std::shared_ptr<SEP::hypercube> hyper, const float *vals)
+        complexDoubleTensor2D(const std::shared_ptr<SEP::hypercube> hyper, const float *vals)
         {
             initNoData(hyper);
             copyVals(vals);
@@ -860,7 +860,7 @@ namespace SEP
           \param vals Values to fill vector with
 
       */
-        floatTensor2D(const int n1, const int n2, const float *vals)
+        complexDoubleTensor2D(const int n1, const int n2, const float *vals)
         {
             std::vector<SEP::axis> a;
             std::vector<int> ns = {n1, n2};
@@ -876,8 +876,8 @@ namespace SEP
             \param a1,a2  Axes if the hypercube
             \param vals Values to fill vector with
        */
-        floatTensor2D(const SEP::axis &a1, const SEP::axis &a2,
-                      const float *vals)
+        complexDoubleTensor2D(const SEP::axis &a1, const SEP::axis &a2,
+                              const float *vals)
         {
             std::vector<SEP::axis> a = {a1, a2};
             std::shared_ptr<SEP::hypercube> hyp(new SEP::hypercube(a));
@@ -897,18 +897,18 @@ namespace SEP
         /*!
       Make a copy of the vector
       */
-        std::shared_ptr<floatTensor2D> clone() const;
+        std::shared_ptr<complexDoubleTensor2D> clone() const;
         /*!
        Make a copy of the vector space
        */
-        std::shared_ptr<floatTensor2D> cloneSpace() const;
+        std::shared_ptr<complexDoubleTensor2D> cloneSpace() const;
         /*!
                                         Return a subset of the vector
                                         \param nw,fw,jw Windowing parameters
                                         */
-        std::shared_ptr<floatTensor2D> window(const std::vector<int> &nw,
-                                              const std::vector<int> &fw,
-                                              const std::vector<int> &jw) const;
+        std::shared_ptr<complexDoubleTensor2D> window(const std::vector<int> &nw,
+                                                      const std::vector<int> &fw,
+                                                      const std::vector<int> &jw) const;
         /*!
         Deallocate storage for vector, turn into vector space
          */
@@ -940,7 +940,7 @@ namespace SEP
     /*!
     A regular sampled 1-D function with float storage
     */
-    class floatTensor1D : public floatHyper
+    class complexDoubleTensor1D : public floatHyper
     {
     public:
         /*!
@@ -948,7 +948,7 @@ namespace SEP
               \param hyper Hypercube describing RSF
 
          */
-        floatTensor1D(std::shared_ptr<SEP::hypercube> hyper)
+        complexDoubleTensor1D(std::shared_ptr<SEP::hypercube> hyper)
         {
             initNoData(hyper);
         }
@@ -957,7 +957,7 @@ namespace SEP
             \param n1   Dimensions of the hypercube
 
        */
-        floatTensor1D(const int n1)
+        complexDoubleTensor1D(const int n1)
         {
             std::vector<SEP::axis> a;
             std::vector<int> ns = {n1};
@@ -972,7 +972,7 @@ namespace SEP
           \param a1   Axes if the hypercube
 
       */
-        floatTensor1D(const SEP::axis &a1)
+        complexDoubleTensor1D(const SEP::axis &a1)
         {
             std::vector<SEP::axis> a = {a1};
             std::shared_ptr<SEP::hypercube> hyp(new SEP::hypercube(a));
@@ -984,7 +984,7 @@ namespace SEP
             \param vals Values to fill vector with
 
        */
-        floatTensor1D(const std::shared_ptr<SEP::hypercube> hyper, const float *vals)
+        complexDoubleTensor1D(const std::shared_ptr<SEP::hypercube> hyper, const float *vals)
         {
             initNoData(hyper);
             copyVals(vals);
@@ -1000,10 +1000,10 @@ namespace SEP
           \param beg,end Begining and end of the subset to grab along  
           */
 
-        floatTensor1D(const std::shared_ptr<floatTensor2D> old, const int iax1,
-                      const bool rev1,
-                      const std::vector<int> &ipos, const std::vector<int> &beg,
-                      const std::vector<int> &end);
+        complexDoubleTensor1D(const std::shared_ptr<complexDoubleTensor2D> old, const int iax1,
+                              const bool rev1,
+                              const std::vector<int> &ipos, const std::vector<int> &beg,
+                              const std::vector<int> &end);
 
         /*!
           Create a 1-D float vector from a 3-D float
@@ -1015,10 +1015,10 @@ namespace SEP
           \param beg,end Begining and end of the subset to grab along  
           */
 
-        floatTensor1D(const std::shared_ptr<floatTensor3D> old, const int iax1,
-                      const bool rev1,
-                      const std::vector<int> &ipos, const std::vector<int> &beg,
-                      const std::vector<int> &end);
+        complexDoubleTensor1D(const std::shared_ptr<complexDoubleTensor3D> old, const int iax1,
+                              const bool rev1,
+                              const std::vector<int> &ipos, const std::vector<int> &beg,
+                              const std::vector<int> &end);
         /*!
           Create a 1-D float vector from a 4-D float
 
@@ -1029,10 +1029,10 @@ namespace SEP
           \param beg,end Begining and end of the subset to grab along  
           */
 
-        floatTensor1D(const std::shared_ptr<floatTensor4D> old, const int iax1,
-                      const bool rev1,
-                      const std::vector<int> &ipos, const std::vector<int> &beg,
-                      const std::vector<int> &end);
+        complexDoubleTensor1D(const std::shared_ptr<complexDoubleTensor4D> old, const int iax1,
+                              const bool rev1,
+                              const std::vector<int> &ipos, const std::vector<int> &beg,
+                              const std::vector<int> &end);
         /*!
           Create a 1-D float vector from a 1-D float
 
@@ -1043,10 +1043,10 @@ namespace SEP
           \param beg,end Begining and end of the subset to grab along  
           */
 
-        floatTensor1D(const std::shared_ptr<floatTensor1D> old, const int iax1,
-                      const bool rev1,
-                      const std::vector<int> &ipos, const std::vector<int> &beg,
-                      const std::vector<int> &end);
+        complexDoubleTensor1D(const std::shared_ptr<complexDoubleTensor1D> old, const int iax1,
+                              const bool rev1,
+                              const std::vector<int> &ipos, const std::vector<int> &beg,
+                              const std::vector<int> &end);
         /*!
           Create a 1-D float vector from a 5-D float
 
@@ -1057,10 +1057,10 @@ namespace SEP
           \param beg,end Begining and end of the subset to grab along  
           */
 
-        floatTensor1D(const std::shared_ptr<floatTensor5D> old, const int iax1,
-                      const bool rev1,
-                      const std::vector<int> &ipos, const std::vector<int> &beg,
-                      const std::vector<int> &end);
+        complexDoubleTensor1D(const std::shared_ptr<complexDoubleTensor5D> old, const int iax1,
+                              const bool rev1,
+                              const std::vector<int> &ipos, const std::vector<int> &beg,
+                              const std::vector<int> &end);
         /*!
           Create a 1-D float vector from a 6-D float
 
@@ -1071,10 +1071,10 @@ namespace SEP
           \param beg,end Begining and end of the subset to grab along  
           */
 
-        floatTensor1D(const std::shared_ptr<floatTensor6D> old, const int iax1,
-                      const bool rev1,
-                      const std::vector<int> &ipos, const std::vector<int> &beg,
-                      const std::vector<int> &end);
+        complexDoubleTensor1D(const std::shared_ptr<complexDoubleTensor6D> old, const int iax1,
+                              const bool rev1,
+                              const std::vector<int> &ipos, const std::vector<int> &beg,
+                              const std::vector<int> &end);
         /*!
           Create a 1-D float vector from a 7-D float
 
@@ -1085,10 +1085,10 @@ namespace SEP
           \param beg,end Begining and end of the subset to grab along  
           */
 
-        floatTensor1D(const std::shared_ptr<floatTensor7D> old, const int iax1,
-                      const bool rev1,
-                      const std::vector<int> &ipos, const std::vector<int> &beg,
-                      const std::vector<int> &end);
+        complexDoubleTensor1D(const std::shared_ptr<complexDoubleTensor7D> old, const int iax1,
+                              const bool rev1,
+                              const std::vector<int> &ipos, const std::vector<int> &beg,
+                              const std::vector<int> &end);
 
         /*!
       Create a 1-D float vector from just lengths
@@ -1096,7 +1096,7 @@ namespace SEP
           \param vals Values to fill vector with
 
       */
-        floatTensor1D(const int n1, const float *vals)
+        complexDoubleTensor1D(const int n1, const float *vals)
         {
             std::vector<SEP::axis> a;
             std::vector<int> ns = {n1};
@@ -1112,8 +1112,8 @@ namespace SEP
             \param a1   Axes if the hypercube
             \param vals Values to fill vector with
        */
-        floatTensor1D(const SEP::axis &a1,
-                      const float *vals)
+        complexDoubleTensor1D(const SEP::axis &a1,
+                              const float *vals)
         {
             std::vector<SEP::axis> a = {a1};
             std::shared_ptr<SEP::hypercube> hyp(new SEP::hypercube(a));
@@ -1133,18 +1133,18 @@ namespace SEP
         /*!
       Make a copy of the vector
       */
-        std::shared_ptr<floatTensor1D> clone() const;
+        std::shared_ptr<complexDoubleTensor1D> clone() const;
         /*!
        Make a copy of the vector space
        */
-        std::shared_ptr<floatTensor1D> cloneSpace() const;
+        std::shared_ptr<complexDoubleTensor1D> cloneSpace() const;
         /*!
                                         Return a subset of the vector
                                         \param nw,fw,jw Windowing parameters
                                         */
-        std::shared_ptr<floatTensor1D> window(const std::vector<int> &nw,
-                                              const std::vector<int> &fw,
-                                              const std::vector<int> &jw) const;
+        std::shared_ptr<complexDoubleTensor1D> window(const std::vector<int> &nw,
+                                                      const std::vector<int> &fw,
+                                                      const std::vector<int> &jw) const;
         /*!
         Deallocate storage for vector, turn into vector space
          */
