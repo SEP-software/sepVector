@@ -36,9 +36,9 @@ void complexDoubleTensor7D::initNoData(std::shared_ptr<SEP::hypercube> hyp)
     if (axes.size() != 7)
         throw(SEPException(std::string("Axes size must be 7 is ") +
                            std::to_string(axes.size())));
-    xt::xtensor<float, 7>::shape_type shape = {(size_t)axes[6].n, (size_t)axes[5].n, (size_t)axes[4].n,
-                                               (size_t)axes[3].n, (size_t)axes[2].n, (size_t)axes[1].n, (size_t)axes[0].n};
-    mat = xt::xtensor<float, 7>::from_shape(shape);
+    xt::xtensor<std::complex<double>, 7>::shape_type shape = {(size_t)axes[6].n, (size_t)axes[5].n, (size_t)axes[4].n,
+                                                              (size_t)axes[3].n, (size_t)axes[2].n, (size_t)axes[1].n, (size_t)axes[0].n};
+    mat = xt::xtensor<std::complex<double>, 7>::from_shape(shape);
     setData(mat.data());
 }
 
@@ -119,9 +119,9 @@ void complexDoubleTensor6D::initNoData(std::shared_ptr<SEP::hypercube> hyp)
     if (axes.size() != 6)
         throw(SEPException(std::string("Axes size must be 6 is ") +
                            std::to_string(axes.size())));
-    xt::xtensor<float, 6>::shape_type shape = {(size_t)axes[5].n, (size_t)axes[4].n,
-                                               (size_t)axes[3].n, (size_t)axes[2].n, (size_t)axes[1].n, (size_t)axes[0].n};
-    mat = xt::xtensor<float, 6>::from_shape(shape);
+    xt::xtensor<std::complex<double>, 6>::shape_type shape = {(size_t)axes[5].n, (size_t)axes[4].n,
+                                                              (size_t)axes[3].n, (size_t)axes[2].n, (size_t)axes[1].n, (size_t)axes[0].n};
+    mat = xt::xtensor<std::complex<double>, 6>::from_shape(shape);
     setData(mat.data());
 }
 
@@ -202,9 +202,9 @@ void complexDoubleTensor5D::initNoData(std::shared_ptr<SEP::hypercube> hyp)
     if (axes.size() != 5)
         throw(SEPException(std::string("Axes size must be 5 is ") +
                            std::to_string(axes.size())));
-    xt::xtensor<float, 5>::shape_type shape = {(size_t)axes[4].n,
-                                               (size_t)axes[3].n, (size_t)axes[2].n, (size_t)axes[1].n, (size_t)axes[0].n};
-    mat = xt::xtensor<float, 5>::from_shape(shape);
+    xt::xtensor<std::complex<double>, 5>::shape_type shape = {(size_t)axes[4].n,
+                                                              (size_t)axes[3].n, (size_t)axes[2].n, (size_t)axes[1].n, (size_t)axes[0].n};
+    mat = xt::xtensor<std::complex<double>, 5>::from_shape(shape);
     setData(mat.data());
 }
 
@@ -284,9 +284,9 @@ void complexDoubleTensor4D::initNoData(std::shared_ptr<SEP::hypercube> hyp)
     if (axes.size() != 4)
         throw(SEPException(std::string("Axes size must be 4 is ") +
                            std::to_string(axes.size())));
-    xt::xtensor<float, 4>::shape_type shape = {
+    xt::xtensor<std::complex<double>, 4>::shape_type shape = {
         (size_t)axes[3].n, (size_t)axes[2].n, (size_t)axes[1].n, (size_t)axes[0].n};
-    mat = xt::xtensor<float, 4>::from_shape(shape);
+    mat = xt::xtensor<std::complex<double>, 4>::from_shape(shape);
     setData(mat.data());
 }
 
@@ -364,9 +364,9 @@ void complexDoubleTensor3D::initNoData(std::shared_ptr<SEP::hypercube> hyp)
     if (axes.size() != 3)
         throw(SEPException(std::string("Axes size must be 4 is ") +
                            std::to_string(axes.size())));
-    xt::xtensor<float, 3>::shape_type shape = {
+    xt::xtensor<std::complex<double>, 3>::shape_type shape = {
         (size_t)axes[2].n, (size_t)axes[1].n, (size_t)axes[0].n};
-    mat = xt::xtensor<float, 3>::from_shape(shape);
+    mat = xt::xtensor<std::complex<double>, 3>::from_shape(shape);
     setData(mat.data());
 }
 
@@ -441,9 +441,9 @@ void complexDoubleTensor2D::initNoData(std::shared_ptr<SEP::hypercube> hyp)
     if (axes.size() != 2)
         throw(SEPException(std::string("Axes size must be 4 is ") +
                            std::to_string(axes.size())));
-    xt::xtensor<float, 3>::shape_type shape = {
+    xt::xtensor<std::complex<double>, 3>::shape_type shape = {
         (size_t)axes[1].n, (size_t)axes[0].n};
-    mat = xt::xtensor<float, 2>::from_shape(shape);
+    mat = xt::xtensor<std::complex<double>, 2>::from_shape(shape);
     setData(mat.data());
 }
 
@@ -596,9 +596,9 @@ void complexDoubleTensor1D::initNoData(std::shared_ptr<SEP::hypercube> hyp)
     if (axes.size() != 1)
         throw(SEPException(std::string("Axes size must be 4 is ") +
                            std::to_string(axes.size())));
-    xt::xtensor<float, 1>::shape_type shape = {
+    xt::xtensor<std::complex<double>, 1>::shape_type shape = {
         (size_t)axes[0].n};
-    mat = xt::xtensor<float, 1>::from_shape(shape);
+    mat = xt::xtensor<std::complex<double>, 1>::from_shape(shape);
     setData(mat.data());
 }
 

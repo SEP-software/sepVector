@@ -36,9 +36,9 @@ void shortTensor7D::initNoData(std::shared_ptr<SEP::hypercube> hyp)
     if (axes.size() != 7)
         throw(SEPException(std::string("Axes size must be 7 is ") +
                            std::to_string(axes.size())));
-    xt::xtensor<float, 7>::shape_type shape = {(size_t)axes[6].n, (size_t)axes[5].n, (size_t)axes[4].n,
+    xt::xtensor<short, 7>::shape_type shape = {(size_t)axes[6].n, (size_t)axes[5].n, (size_t)axes[4].n,
                                                (size_t)axes[3].n, (size_t)axes[2].n, (size_t)axes[1].n, (size_t)axes[0].n};
-    mat = xt::xtensor<float, 7>::from_shape(shape);
+    mat = xt::xtensor<short, 7>::from_shape(shape);
     setData(mat.data());
 }
 
@@ -119,9 +119,9 @@ void shortTensor6D::initNoData(std::shared_ptr<SEP::hypercube> hyp)
     if (axes.size() != 6)
         throw(SEPException(std::string("Axes size must be 6 is ") +
                            std::to_string(axes.size())));
-    xt::xtensor<float, 6>::shape_type shape = {(size_t)axes[5].n, (size_t)axes[4].n,
+    xt::xtensor<short, 6>::shape_type shape = {(size_t)axes[5].n, (size_t)axes[4].n,
                                                (size_t)axes[3].n, (size_t)axes[2].n, (size_t)axes[1].n, (size_t)axes[0].n};
-    mat = xt::xtensor<float, 6>::from_shape(shape);
+    mat = xt::xtensor<short, 6>::from_shape(shape);
     setData(mat.data());
 }
 
@@ -202,9 +202,9 @@ void shortTensor5D::initNoData(std::shared_ptr<SEP::hypercube> hyp)
     if (axes.size() != 5)
         throw(SEPException(std::string("Axes size must be 5 is ") +
                            std::to_string(axes.size())));
-    xt::xtensor<float, 5>::shape_type shape = {(size_t)axes[4].n,
+    xt::xtensor<short, 5>::shape_type shape = {(size_t)axes[4].n,
                                                (size_t)axes[3].n, (size_t)axes[2].n, (size_t)axes[1].n, (size_t)axes[0].n};
-    mat = xt::xtensor<float, 5>::from_shape(shape);
+    mat = xt::xtensor<short, 5>::from_shape(shape);
     setData(mat.data());
 }
 
@@ -284,9 +284,9 @@ void shortTensor4D::initNoData(std::shared_ptr<SEP::hypercube> hyp)
     if (axes.size() != 4)
         throw(SEPException(std::string("Axes size must be 4 is ") +
                            std::to_string(axes.size())));
-    xt::xtensor<float, 4>::shape_type shape = {
+    xt::xtensor<short, 4>::shape_type shape = {
         (size_t)axes[3].n, (size_t)axes[2].n, (size_t)axes[1].n, (size_t)axes[0].n};
-    mat = xt::xtensor<float, 4>::from_shape(shape);
+    mat = xt::xtensor<short, 4>::from_shape(shape);
     setData(mat.data());
 }
 
@@ -364,9 +364,9 @@ void shortTensor3D::initNoData(std::shared_ptr<SEP::hypercube> hyp)
     if (axes.size() != 3)
         throw(SEPException(std::string("Axes size must be 4 is ") +
                            std::to_string(axes.size())));
-    xt::xtensor<float, 3>::shape_type shape = {
+    xt::xtensor<short, 3>::shape_type shape = {
         (size_t)axes[2].n, (size_t)axes[1].n, (size_t)axes[0].n};
-    mat = xt::xtensor<float, 3>::from_shape(shape);
+    mat = xt::xtensor<short, 3>::from_shape(shape);
     setData(mat.data());
 }
 
@@ -441,9 +441,9 @@ void shortTensor2D::initNoData(std::shared_ptr<SEP::hypercube> hyp)
     if (axes.size() != 2)
         throw(SEPException(std::string("Axes size must be 4 is ") +
                            std::to_string(axes.size())));
-    xt::xtensor<float, 3>::shape_type shape = {
+    xt::xtensor<short, 3>::shape_type shape = {
         (size_t)axes[1].n, (size_t)axes[0].n};
-    mat = xt::xtensor<float, 2>::from_shape(shape);
+    mat = xt::xtensor<short, 2>::from_shape(shape);
     setData(mat.data());
 }
 
@@ -492,7 +492,7 @@ shortTensor2D::shortTensor2D(
     std::tie(hyperOut, n, f, j) = sliceToWindow2D(iax1, iax2, beg, end, ipos);
     std::shared_ptr<shortTensor7D> tmp = old->window(n, f, j);
     initNoData(hyperOut);
-    doTraverse2D(n, iax1, rev1, iax2, rev2, tmp->getCVals(), getVals(), sizeof(float));
+    doTraverse2D(n, iax1, rev1, iax2, rev2, tmp->getCVals(), getVals(), sizeof(short));
 }
 
 shortTensor2D::shortTensor2D(
@@ -506,7 +506,7 @@ shortTensor2D::shortTensor2D(
     std::tie(hyperOut, n, f, j) = sliceToWindow2D(iax1, iax2, beg, end, ipos);
     std::shared_ptr<shortTensor6D> tmp = old->window(n, f, j);
     initNoData(hyperOut);
-    doTraverse2D(n, iax1, rev1, iax2, rev2, tmp->getCVals(), getVals(), sizeof(float));
+    doTraverse2D(n, iax1, rev1, iax2, rev2, tmp->getCVals(), getVals(), sizeof(short));
 }
 shortTensor2D::shortTensor2D(
     const std::shared_ptr<shortTensor5D> old, const int iax1,
@@ -519,7 +519,7 @@ shortTensor2D::shortTensor2D(
     std::tie(hyperOut, n, f, j) = sliceToWindow2D(iax1, iax2, beg, end, ipos);
     std::shared_ptr<shortTensor5D> tmp = old->window(n, f, j);
     initNoData(hyperOut);
-    doTraverse2D(n, iax1, rev1, iax2, rev2, tmp->getCVals(), getVals(), sizeof(float));
+    doTraverse2D(n, iax1, rev1, iax2, rev2, tmp->getCVals(), getVals(), sizeof(short));
 }
 shortTensor2D::shortTensor2D(
     const std::shared_ptr<shortTensor4D> old, const int iax1,
@@ -532,7 +532,7 @@ shortTensor2D::shortTensor2D(
     std::tie(hyperOut, n, f, j) = sliceToWindow2D(iax1, iax2, beg, end, ipos);
     std::shared_ptr<shortTensor4D> tmp = old->window(n, f, j);
     initNoData(hyperOut);
-    doTraverse2D(n, iax1, rev1, iax2, rev2, tmp->getCVals(), getVals(), sizeof(float));
+    doTraverse2D(n, iax1, rev1, iax2, rev2, tmp->getCVals(), getVals(), sizeof(short));
 }
 shortTensor2D::shortTensor2D(
     const std::shared_ptr<shortTensor3D> old, const int iax1,
@@ -545,7 +545,7 @@ shortTensor2D::shortTensor2D(
     std::tie(hyperOut, n, f, j) = sliceToWindow2D(iax1, iax2, beg, end, ipos);
     std::shared_ptr<shortTensor3D> tmp = old->window(n, f, j);
     initNoData(hyperOut);
-    doTraverse2D(n, iax1, rev1, iax2, rev2, tmp->getCVals(), getVals(), sizeof(float));
+    doTraverse2D(n, iax1, rev1, iax2, rev2, tmp->getCVals(), getVals(), sizeof(short));
 }
 shortTensor2D::shortTensor2D(
     const std::shared_ptr<shortTensor2D> old, const int iax1,
@@ -558,7 +558,7 @@ shortTensor2D::shortTensor2D(
     std::tie(hyperOut, n, f, j) = sliceToWindow2D(iax1, iax2, beg, end, ipos);
     std::shared_ptr<shortTensor2D> tmp = old->window(n, f, j);
     initNoData(hyperOut);
-    doTraverse2D(n, iax1, rev1, iax2, rev2, tmp->getCVals(), getVals(), sizeof(float));
+    doTraverse2D(n, iax1, rev1, iax2, rev2, tmp->getCVals(), getVals(), sizeof(short));
 }
 
 //1D version
@@ -596,9 +596,9 @@ void shortTensor1D::initNoData(std::shared_ptr<SEP::hypercube> hyp)
     if (axes.size() != 1)
         throw(SEPException(std::string("Axes size must be 4 is ") +
                            std::to_string(axes.size())));
-    xt::xtensor<float, 1>::shape_type shape = {
+    xt::xtensor<short, 1>::shape_type shape = {
         (size_t)axes[0].n};
-    mat = xt::xtensor<float, 1>::from_shape(shape);
+    mat = xt::xtensor<short, 1>::from_shape(shape);
     setData(mat.data());
 }
 
@@ -645,7 +645,7 @@ shortTensor1D::shortTensor1D(
     std::tie(hyperOut, n, f, j) = sliceToWindow1D(iax1, beg, end, ipos);
     std::shared_ptr<shortTensor7D> tmp = old->window(n, f, j);
     initNoData(hyperOut);
-    doTraverse1D(n, iax1, rev1, tmp->getCVals(), getVals(), sizeof(float));
+    doTraverse1D(n, iax1, rev1, tmp->getCVals(), getVals(), sizeof(short));
 }
 
 shortTensor1D::shortTensor1D(
@@ -659,7 +659,7 @@ shortTensor1D::shortTensor1D(
     std::tie(hyperOut, n, f, j) = sliceToWindow1D(iax1, beg, end, ipos);
     std::shared_ptr<shortTensor6D> tmp = old->window(n, f, j);
     initNoData(hyperOut);
-    doTraverse1D(n, iax1, rev1, tmp->getCVals(), getVals(), sizeof(float));
+    doTraverse1D(n, iax1, rev1, tmp->getCVals(), getVals(), sizeof(short));
 }
 shortTensor1D::shortTensor1D(
     const std::shared_ptr<shortTensor5D> old, const int iax1,
@@ -672,7 +672,7 @@ shortTensor1D::shortTensor1D(
     std::tie(hyperOut, n, f, j) = sliceToWindow1D(iax1, beg, end, ipos);
     std::shared_ptr<shortTensor5D> tmp = old->window(n, f, j);
     initNoData(hyperOut);
-    doTraverse1D(n, iax1, rev1, tmp->getCVals(), getVals(), sizeof(float));
+    doTraverse1D(n, iax1, rev1, tmp->getCVals(), getVals(), sizeof(short));
 }
 shortTensor1D::shortTensor1D(
     const std::shared_ptr<shortTensor4D> old, const int iax1,
@@ -685,7 +685,7 @@ shortTensor1D::shortTensor1D(
     std::tie(hyperOut, n, f, j) = sliceToWindow1D(iax1, beg, end, ipos);
     std::shared_ptr<shortTensor4D> tmp = old->window(n, f, j);
     initNoData(hyperOut);
-    doTraverse1D(n, iax1, rev1, tmp->getCVals(), getVals(), sizeof(float));
+    doTraverse1D(n, iax1, rev1, tmp->getCVals(), getVals(), sizeof(short));
 }
 shortTensor1D::shortTensor1D(
     const std::shared_ptr<shortTensor3D> old, const int iax1,
@@ -698,7 +698,7 @@ shortTensor1D::shortTensor1D(
     std::tie(hyperOut, n, f, j) = sliceToWindow1D(iax1, beg, end, ipos);
     std::shared_ptr<shortTensor3D> tmp = old->window(n, f, j);
     initNoData(hyperOut);
-    doTraverse1D(n, iax1, rev1, tmp->getCVals(), getVals(), sizeof(float));
+    doTraverse1D(n, iax1, rev1, tmp->getCVals(), getVals(), sizeof(short));
 }
 shortTensor1D::shortTensor1D(
     const std::shared_ptr<shortTensor2D> old, const int iax1,
@@ -711,7 +711,7 @@ shortTensor1D::shortTensor1D(
     std::tie(hyperOut, n, f, j) = sliceToWindow1D(iax1, beg, end, ipos);
     std::shared_ptr<shortTensor2D> tmp = old->window(n, f, j);
     initNoData(hyperOut);
-    doTraverse1D(n, iax1, rev1, tmp->getCVals(), getVals(), sizeof(float));
+    doTraverse1D(n, iax1, rev1, tmp->getCVals(), getVals(), sizeof(short));
 }
 shortTensor1D::shortTensor1D(
     const std::shared_ptr<shortTensor1D> old, const int iax1,
@@ -724,5 +724,5 @@ shortTensor1D::shortTensor1D(
     std::tie(hyperOut, n, f, j) = sliceToWindow1D(iax1, beg, end, ipos);
     std::shared_ptr<shortTensor1D> tmp = old->window(n, f, j);
     initNoData(hyperOut);
-    doTraverse1D(n, iax1, rev1, tmp->getCVals(), getVals(), sizeof(float));
+    doTraverse1D(n, iax1, rev1, tmp->getCVals(), getVals(), sizeof(short));
 }

@@ -1,8 +1,8 @@
-#ifndef float_tensor_h
-#define float_tensor_h 1
+#ifndef complex_tensor_h
+#define complex_tensor_h 1
 #include "SEPException.h"
 #include "Vector.h"
-#include "floatHyper.h"
+#include "complexHyper.h"
 #include "regSpace.h"
 #include "xtensor/xtensor.hpp"
 #include <cstdint>
@@ -11,18 +11,18 @@
 #include <sstream>
 
 /*!
-  A regular sampled function that stores float values
+  A regular sampled function that stores std::complex<float> values
 */
 namespace SEP
 {
     /*!
-    A regular sampled 7-D function with float storage
+    A regular sampled 7-D function with std::complex<float> storage
     */
-    class complexTensor7D : public floatHyper
+    class complexTensor7D : public complexHyper
     {
     public:
         /*!
-         Create a 7-D float vector from a hypercube
+         Create a 7-D std::complex<float> vector from a hypercube
               \param hyper Hypercube describing RSF
 
          */
@@ -31,7 +31,7 @@ namespace SEP
             initNoData(hyper);
         }
         /*!
-       Create a 7-D float vector from just lengths
+       Create a 7-D std::complex<float> vector from just lengths
             \param n1,n2,n3,n4,n5,n6,n7 Dimensions of the hypercube
 
        */
@@ -46,7 +46,7 @@ namespace SEP
             initNoData(hyp);
         }
         /*!
-      Create a 7-D float vector from axes
+      Create a 7-D std::complex<float> vector from axes
           \param a1,a2,a3,a4,a5,a6, a7 Axes if the hypercube
 
       */
@@ -58,24 +58,24 @@ namespace SEP
             initNoData(hyp);
         }
         /*!
-       Create a 7-D float vector from a hypercube
+       Create a 7-D std::complex<float> vector from a hypercube
             \param hyper Hypercube describing RSF
             \param vals Values to fill vector with
 
        */
-        complexTensor7D(const std::shared_ptr<SEP::hypercube> hyper, const float *vals)
+        complexTensor7D(const std::shared_ptr<SEP::hypercube> hyper, const std::complex<float> *vals)
         {
             initNoData(hyper);
             copyVals(vals);
         }
         /*!
-      Create a 7-D float vector from just lengths
+      Create a 7-D std::complex<float> vector from just lengths
           \param n1,n2,n3,n4,n5,n6,n7 Dimensions of the hypercube
           \param vals Values to fill vector with
 
       */
         complexTensor7D(const int n1, const int n2, const int n3, const int n4,
-                        const int n5, const int n6, const int n7, const float *vals)
+                        const int n5, const int n6, const int n7, const std::complex<float> *vals)
         {
             std::vector<SEP::axis> a;
             std::vector<int> ns = {n1, n2, n3, n4, n5, n6, n7};
@@ -87,13 +87,13 @@ namespace SEP
             copyVals(vals);
         }
         /*!
-       Create a 7-D float vector from axes
+       Create a 7-D std::complex<float> vector from axes
             \param a1,a2,a3,a4,a5,a6,a7 Axes if the hypercube
             \param vals Values to fill vector with
        */
         complexTensor7D(const SEP::axis &a1, const SEP::axis &a2, const SEP::axis &a3,
                         const SEP::axis &a4, const SEP::axis &a5, const SEP::axis &a6, const SEP::axis &a7,
-                        const float *vals)
+                        const std::complex<float> *vals)
         {
             std::vector<SEP::axis> a = {a1, a2, a3, a4, a5, a6, a7};
             std::shared_ptr<SEP::hypercube> hyp(new SEP::hypercube(a));
@@ -105,9 +105,9 @@ namespace SEP
         void allocate()
         {
             std::vector<int> ns = getHyper()->getNs();
-            xt::xtensor<float, 7>::shape_type shape = {(size_t)ns[6], (size_t)ns[5], (size_t)ns[4],
-                                                       (size_t)ns[3], (size_t)ns[2], (size_t)ns[1], (size_t)ns[0]};
-            mat = xt::xtensor<float, 7>::from_shape(shape);
+            xt::xtensor<std::complex<float>, 7>::shape_type shape = {(size_t)ns[6], (size_t)ns[5], (size_t)ns[4],
+                                                                     (size_t)ns[3], (size_t)ns[2], (size_t)ns[1], (size_t)ns[0]};
+            mat = xt::xtensor<std::complex<float>, 7>::from_shape(shape);
             setData(mat.data());
         }
         /*!
@@ -133,7 +133,7 @@ namespace SEP
             mat = {{{{{{{0}}}}}}};
             setSpace();
         }
-        xt::xtensor<float, 7> mat; ///< Storage for vector
+        xt::xtensor<std::complex<float>, 7> mat; ///< Storage for vector
 
     protected:
         /*!
@@ -146,7 +146,7 @@ namespace SEP
       \param hyper Hypercube describing space
       \param vals Data to copy in
       */
-        void initData(std::shared_ptr<SEP::hypercube> hyper, const float *vals)
+        void initData(std::shared_ptr<SEP::hypercube> hyper, const std::complex<float> *vals)
         {
             initNoData(hyper);
             copyVals(vals);
@@ -154,13 +154,13 @@ namespace SEP
     };
 
     /*!
-    A regular sampled 6-D function with float storage
+    A regular sampled 6-D function with std::complex<float> storage
     */
-    class complexTensor6D : public floatHyper
+    class complexTensor6D : public complexHyper
     {
     public:
         /*!
-         Create a 6-D float vector from a hypercube
+         Create a 6-D std::complex<float> vector from a hypercube
               \param hyper Hypercube describing RSF
 
          */
@@ -169,7 +169,7 @@ namespace SEP
             initNoData(hyper);
         }
         /*!
-       Create a 6-D float vector from just lengths
+       Create a 6-D std::complex<float> vector from just lengths
             \param n1,n2,n3,n4,n5,n6 Dimensions of the hypercube
 
        */
@@ -184,7 +184,7 @@ namespace SEP
             initNoData(hyp);
         }
         /*!
-      Create a 6-D float vector from axes
+      Create a 6-D std::complex<float> vector from axes
           \param a1,a2,a3,a4,a5,a6 Axes if the hypercube
 
       */
@@ -196,24 +196,24 @@ namespace SEP
             initNoData(hyp);
         }
         /*!
-       Create a 6-D float vector from a hypercube
+       Create a 6-D std::complex<float> vector from a hypercube
             \param hyper Hypercube describing RSF
             \param vals Values to fill vector with
 
        */
-        complexTensor6D(const std::shared_ptr<SEP::hypercube> hyper, const float *vals)
+        complexTensor6D(const std::shared_ptr<SEP::hypercube> hyper, const std::complex<float> *vals)
         {
             initNoData(hyper);
             copyVals(vals);
         }
         /*!
-      Create a 6-D float vector from just lengths
+      Create a 6-D std::complex<float> vector from just lengths
           \param n1,n2,n3,n4,n5,n6 Dimensions of the hypercube
           \param vals Values to fill vector with
 
       */
         complexTensor6D(const int n1, const int n2, const int n3, const int n4,
-                        const int n5, const int n6, const float *vals)
+                        const int n5, const int n6, const std::complex<float> *vals)
         {
             std::vector<SEP::axis> a;
             std::vector<int> ns = {n1, n2, n3, n4, n5, n6};
@@ -225,13 +225,13 @@ namespace SEP
             copyVals(vals);
         }
         /*!
-       Create a 6-D float vector from axes
+       Create a 6-D std::complex<float> vector from axes
             \param a1,a2,a3,a4,a5,a6 Axes if the hypercube
             \param vals Values to fill vector with
        */
         complexTensor6D(const SEP::axis &a1, const SEP::axis &a2, const SEP::axis &a3,
                         const SEP::axis &a4, const SEP::axis &a5, const SEP::axis &a6,
-                        const float *vals)
+                        const std::complex<float> *vals)
         {
             std::vector<SEP::axis> a = {a1, a2, a3, a4, a5, a6};
             std::shared_ptr<SEP::hypercube> hyp(new SEP::hypercube(a));
@@ -243,9 +243,9 @@ namespace SEP
         void allocate()
         {
             std::vector<int> ns = getHyper()->getNs();
-            xt::xtensor<float, 6>::shape_type shape = {(size_t)ns[5], (size_t)ns[4],
-                                                       (size_t)ns[3], (size_t)ns[2], (size_t)ns[1], (size_t)ns[0]};
-            mat = xt::xtensor<float, 6>::from_shape(shape);
+            xt::xtensor<std::complex<float>, 6>::shape_type shape = {(size_t)ns[5], (size_t)ns[4],
+                                                                     (size_t)ns[3], (size_t)ns[2], (size_t)ns[1], (size_t)ns[0]};
+            mat = xt::xtensor<std::complex<float>, 6>::from_shape(shape);
             setData(mat.data());
         }
         /*!
@@ -271,7 +271,7 @@ namespace SEP
             mat = {{{{{{0}}}}}};
             setSpace();
         }
-        xt::xtensor<float, 6> mat; ///< Storage for vector
+        xt::xtensor<std::complex<float>, 6> mat; ///< Storage for vector
 
     protected:
         /*!
@@ -284,7 +284,7 @@ namespace SEP
       \param hyper Hypercube describing space
       \param vals Data to copy in
       */
-        void initData(std::shared_ptr<SEP::hypercube> hyper, const float *vals)
+        void initData(std::shared_ptr<SEP::hypercube> hyper, const std::complex<float> *vals)
         {
             initNoData(hyper);
             copyVals(vals);
@@ -292,13 +292,13 @@ namespace SEP
     };
 
     /*!
-    A regular sampled 5-D function with float storage
+    A regular sampled 5-D function with std::complex<float> storage
     */
-    class complexTensor5D : public floatHyper
+    class complexTensor5D : public complexHyper
     {
     public:
         /*!
-         Create a 5-D float vector from a hypercube
+         Create a 5-D std::complex<float> vector from a hypercube
               \param hyper Hypercube describing RSF
 
          */
@@ -307,7 +307,7 @@ namespace SEP
             initNoData(hyper);
         }
         /*!
-       Create a 6-D float vector from just lengths
+       Create a 6-D std::complex<float> vector from just lengths
             \param n1,n2,n3,n4,n5  Dimensions of the hypercube
 
        */
@@ -322,7 +322,7 @@ namespace SEP
             initNoData(hyp);
         }
         /*!
-      Create a 6-D float vector from axes
+      Create a 6-D std::complex<float> vector from axes
           \param a1,a2,a3,a4,a5,a6 Axes if the hypercube
 
       */
@@ -334,24 +334,24 @@ namespace SEP
             initNoData(hyp);
         }
         /*!
-       Create a 5-D float vector from a hypercube
+       Create a 5-D std::complex<float> vector from a hypercube
             \param hyper Hypercube describing RSF
             \param vals Values to fill vector with
 
        */
-        complexTensor5D(const std::shared_ptr<SEP::hypercube> hyper, const float *vals)
+        complexTensor5D(const std::shared_ptr<SEP::hypercube> hyper, const std::complex<float> *vals)
         {
             initNoData(hyper);
             copyVals(vals);
         }
         /*!
-      Create a 5-D float vector from just lengths
+      Create a 5-D std::complex<float> vector from just lengths
           \param n1,n2,n3,n4,n5 Dimensions of the hypercube
           \param vals Values to fill vector with
 
       */
         complexTensor5D(const int n1, const int n2, const int n3, const int n4,
-                        const int n5, const float *vals)
+                        const int n5, const std::complex<float> *vals)
         {
             std::vector<SEP::axis> a;
             std::vector<int> ns = {n1, n2, n3, n4, n5};
@@ -363,13 +363,13 @@ namespace SEP
             copyVals(vals);
         }
         /*!
-       Create a 5-D float vector from axes
+       Create a 5-D std::complex<float> vector from axes
             \param a1,a2,a3,a4,a5 Axes if the hypercube
             \param vals Values to fill vector with
        */
         complexTensor5D(const SEP::axis &a1, const SEP::axis &a2, const SEP::axis &a3,
                         const SEP::axis &a4, const SEP::axis &a5,
-                        const float *vals)
+                        const std::complex<float> *vals)
         {
             std::vector<SEP::axis> a = {a1, a2, a3, a4, a5};
             std::shared_ptr<SEP::hypercube> hyp(new SEP::hypercube(a));
@@ -381,9 +381,9 @@ namespace SEP
         void allocate()
         {
             std::vector<int> ns = getHyper()->getNs();
-            xt::xtensor<float, 5>::shape_type shape = {(size_t)ns[4],
-                                                       (size_t)ns[3], (size_t)ns[2], (size_t)ns[1], (size_t)ns[0]};
-            mat = xt::xtensor<float, 5>::from_shape(shape);
+            xt::xtensor<std::complex<float>, 5>::shape_type shape = {(size_t)ns[4],
+                                                                     (size_t)ns[3], (size_t)ns[2], (size_t)ns[1], (size_t)ns[0]};
+            mat = xt::xtensor<std::complex<float>, 5>::from_shape(shape);
             setData(mat.data());
         }
         /*!
@@ -409,7 +409,7 @@ namespace SEP
             mat = {{{{{0}}}}};
             setSpace();
         }
-        xt::xtensor<float, 5> mat; ///< Storage for vector
+        xt::xtensor<std::complex<float>, 5> mat; ///< Storage for vector
 
     protected:
         /*!
@@ -422,7 +422,7 @@ namespace SEP
       \param hyper Hypercube describing space
       \param vals Data to copy in
       */
-        void initData(std::shared_ptr<SEP::hypercube> hyper, const float *vals)
+        void initData(std::shared_ptr<SEP::hypercube> hyper, const std::complex<float> *vals)
         {
             initNoData(hyper);
             copyVals(vals);
@@ -430,13 +430,13 @@ namespace SEP
     };
 
     /*!
-    A regular sampled 4-D function with float storage
+    A regular sampled 4-D function with std::complex<float> storage
     */
-    class complexTensor4D : public floatHyper
+    class complexTensor4D : public complexHyper
     {
     public:
         /*!
-         Create a 4-D float vector from a hypercube
+         Create a 4-D std::complex<float> vector from a hypercube
               \param hyper Hypercube describing RSF
 
          */
@@ -445,7 +445,7 @@ namespace SEP
             initNoData(hyper);
         }
         /*!
-       Create a 4-D float vector from just lengths
+       Create a 4-D std::complex<float> vector from just lengths
             \param n1,n2,n3,n4 Dimensions of the hypercube
 
        */
@@ -459,7 +459,7 @@ namespace SEP
             initNoData(hyp);
         }
         /*!
-      Create a 4-D float vector from axes
+      Create a 4-D std::complex<float> vector from axes
           \param a1,a2,a3,a4 Axes if the hypercube
 
       */
@@ -471,23 +471,23 @@ namespace SEP
             initNoData(hyp);
         }
         /*!
-       Create a 4-D float vector from a hypercube
+       Create a 4-D std::complex<float> vector from a hypercube
             \param hyper Hypercube describing RSF
             \param vals Values to fill vector with
 
        */
-        complexTensor4D(const std::shared_ptr<SEP::hypercube> hyper, const float *vals)
+        complexTensor4D(const std::shared_ptr<SEP::hypercube> hyper, const std::complex<float> *vals)
         {
             initNoData(hyper);
             copyVals(vals);
         }
         /*!
-      Create a 4-D float vector from just lengths
+      Create a 4-D std::complex<float> vector from just lengths
           \param n1,n2,n3,n4  Dimensions of the hypercube
           \param vals Values to fill vector with
 
       */
-        complexTensor4D(const int n1, const int n2, const int n3, const int n4, const float *vals)
+        complexTensor4D(const int n1, const int n2, const int n3, const int n4, const std::complex<float> *vals)
         {
             std::vector<SEP::axis> a;
             std::vector<int> ns = {n1, n2, n3, n4};
@@ -499,13 +499,13 @@ namespace SEP
             copyVals(vals);
         }
         /*!
-       Create a 4-D float vector from axes
+       Create a 4-D std::complex<float> vector from axes
             \param a1,a2,a3,a4 Axes if the hypercube
             \param vals Values to fill vector with
        */
         complexTensor4D(const SEP::axis &a1, const SEP::axis &a2, const SEP::axis &a3,
                         const SEP::axis &a4,
-                        const float *vals)
+                        const std::complex<float> *vals)
         {
             std::vector<SEP::axis> a = {a1, a2, a3, a4};
             std::shared_ptr<SEP::hypercube> hyp(new SEP::hypercube(a));
@@ -517,9 +517,9 @@ namespace SEP
         void allocate()
         {
             std::vector<int> ns = getHyper()->getNs();
-            xt::xtensor<float, 4>::shape_type shape = {
+            xt::xtensor<std::complex<float>, 4>::shape_type shape = {
                 (size_t)ns[3], (size_t)ns[2], (size_t)ns[1], (size_t)ns[0]};
-            mat = xt::xtensor<float, 4>::from_shape(shape);
+            mat = xt::xtensor<std::complex<float>, 4>::from_shape(shape);
             setData(mat.data());
         }
         /*!
@@ -545,7 +545,7 @@ namespace SEP
             mat = {{{{0}}}};
             setSpace();
         }
-        xt::xtensor<float, 4> mat; ///< Storage for vector
+        xt::xtensor<std::complex<float>, 4> mat; ///< Storage for vector
 
     protected:
         /*!
@@ -558,7 +558,7 @@ namespace SEP
       \param hyper Hypercube describing space
       \param vals Data to copy in
       */
-        void initData(std::shared_ptr<SEP::hypercube> hyper, const float *vals)
+        void initData(std::shared_ptr<SEP::hypercube> hyper, const std::complex<float> *vals)
         {
             initNoData(hyper);
             copyVals(vals);
@@ -566,13 +566,13 @@ namespace SEP
     };
 
     /*!
-    A regular sampled 3-D function with float storage
+    A regular sampled 3-D function with std::complex<float> storage
     */
-    class complexTensor3D : public floatHyper
+    class complexTensor3D : public complexHyper
     {
     public:
         /*!
-         Create a 3-D float vector from a hypercube
+         Create a 3-D std::complex<float> vector from a hypercube
               \param hyper Hypercube describing RSF
 
          */
@@ -581,7 +581,7 @@ namespace SEP
             initNoData(hyper);
         }
         /*!
-       Create a 3-D float vector from just lengths
+       Create a 3-D std::complex<float> vector from just lengths
             \param n1,n2,n3  Dimensions of the hypercube
 
        */
@@ -595,7 +595,7 @@ namespace SEP
             initNoData(hyp);
         }
         /*!
-      Create a 3-D float vector from axes
+      Create a 3-D std::complex<float> vector from axes
           \param a1,a2,a3  Axes if the hypercube
 
       */
@@ -606,23 +606,23 @@ namespace SEP
             initNoData(hyp);
         }
         /*!
-       Create a 3-D float vector from a hypercube
+       Create a 3-D std::complex<float> vector from a hypercube
             \param hyper Hypercube describing RSF
             \param vals Values to fill vector with
 
        */
-        complexTensor3D(const std::shared_ptr<SEP::hypercube> hyper, const float *vals)
+        complexTensor3D(const std::shared_ptr<SEP::hypercube> hyper, const std::complex<float> *vals)
         {
             initNoData(hyper);
             copyVals(vals);
         }
         /*!
-      Create a 3-D float vector from just lengths
+      Create a 3-D std::complex<float> vector from just lengths
           \param n1,n2,n3   Dimensions of the hypercube
           \param vals Values to fill vector with
 
       */
-        complexTensor3D(const int n1, const int n2, const int n3, const float *vals)
+        complexTensor3D(const int n1, const int n2, const int n3, const std::complex<float> *vals)
         {
             std::vector<SEP::axis> a;
             std::vector<int> ns = {n1, n2, n3};
@@ -634,12 +634,12 @@ namespace SEP
             copyVals(vals);
         }
         /*!
-       Create a 3-D float vector from axes
+       Create a 3-D std::complex<float> vector from axes
             \param a1,a2,a3 Axes if the hypercube
             \param vals Values to fill vector with
        */
         complexTensor3D(const SEP::axis &a1, const SEP::axis &a2, const SEP::axis &a3,
-                        const float *vals)
+                        const std::complex<float> *vals)
         {
             std::vector<SEP::axis> a = {a1, a2, a3};
             std::shared_ptr<SEP::hypercube> hyp(new SEP::hypercube(a));
@@ -651,9 +651,9 @@ namespace SEP
         void allocate()
         {
             std::vector<int> ns = getHyper()->getNs();
-            xt::xtensor<float, 3>::shape_type shape = {
+            xt::xtensor<std::complex<float>, 3>::shape_type shape = {
                 (size_t)ns[2], (size_t)ns[1], (size_t)ns[0]};
-            mat = xt::xtensor<float, 3>::from_shape(shape);
+            mat = xt::xtensor<std::complex<float>, 3>::from_shape(shape);
             setData(mat.data());
         }
         /*!
@@ -679,7 +679,7 @@ namespace SEP
             mat = {{{{0}}}};
             setSpace();
         }
-        xt::xtensor<float, 3> mat; ///< Storage for vector
+        xt::xtensor<std::complex<float>, 3> mat; ///< Storage for vector
 
     protected:
         /*!
@@ -692,7 +692,7 @@ namespace SEP
       \param hyper Hypercube describing space
       \param vals Data to copy in
       */
-        void initData(std::shared_ptr<SEP::hypercube> hyper, const float *vals)
+        void initData(std::shared_ptr<SEP::hypercube> hyper, const std::complex<float> *vals)
         {
             initNoData(hyper);
             copyVals(vals);
@@ -700,13 +700,13 @@ namespace SEP
     };
 
     /*!
-    A regular sampled 2-D function with float storage
+    A regular sampled 2-D function with std::complex<float> storage
     */
-    class complexTensor2D : public floatHyper
+    class complexTensor2D : public complexHyper
     {
     public:
         /*!
-         Create a 2-D float vector from a hypercube
+         Create a 2-D std::complex<float> vector from a hypercube
               \param hyper Hypercube describing RSF
 
          */
@@ -716,7 +716,7 @@ namespace SEP
         }
 
         /*!
-          Create a 2-D float vector from a 7-D float
+          Create a 2-D std::complex<float> vector from a 7-D std::complex<float>
 
           \param old - Vector to grab from
           \param iax1 - Fast axis
@@ -733,7 +733,7 @@ namespace SEP
                         const std::vector<int> &end);
 
         /*!
-          Create a 2-D float vector from a 6-D float
+          Create a 2-D std::complex<float> vector from a 6-D std::complex<float>
 
           \param old - Vector to grab from
           \param iax1 - Fast axis
@@ -750,7 +750,7 @@ namespace SEP
                         const std::vector<int> &end);
 
         /*!
-          Create a 2-D float vector from a 5-D float
+          Create a 2-D std::complex<float> vector from a 5-D std::complex<float>
 
           \param old - Vector to grab from
           \param iax1 - Fast axis
@@ -767,7 +767,7 @@ namespace SEP
                         const std::vector<int> &end);
 
         /*!
-          Create a 2-D float vector from a 4-D float
+          Create a 2-D std::complex<float> vector from a 4-D std::complex<float>
 
           \param old - Vector to grab from
           \param iax1 - Fast axis
@@ -784,7 +784,7 @@ namespace SEP
                         const std::vector<int> &end);
 
         /*!
-          Create a 2-D float vector from a 3-D float
+          Create a 2-D std::complex<float> vector from a 3-D std::complex<float>
 
           \param old - Vector to grab from
           \param iax1 - Fast axis
@@ -801,7 +801,7 @@ namespace SEP
                         const std::vector<int> &end);
 
         /*!
-          Create a 2-D float vector from a 2-D float
+          Create a 2-D std::complex<float> vector from a 2-D std::complex<float>
 
           \param old - Vector to grab from
           \param iax1 - Fast axis
@@ -818,7 +818,7 @@ namespace SEP
                         const std::vector<int> &end);
 
         /*!
-       Create a 2-D float vector from just lengths
+       Create a 2-D std::complex<float> vector from just lengths
             \param n1,n2   Dimensions of the hypercube
 
        */
@@ -833,7 +833,7 @@ namespace SEP
         }
 
         /*!
-      Create a 2-D float vector from axes
+      Create a 2-D std::complex<float> vector from axes
           \param a1,a2  Axes if the hypercube
 
       */
@@ -844,23 +844,23 @@ namespace SEP
             initNoData(hyp);
         }
         /*!
-       Create a 2-D float vector from a hypercube
+       Create a 2-D std::complex<float> vector from a hypercube
             \param hyper Hypercube describing RSF
             \param vals Values to fill vector with
 
        */
-        complexTensor2D(const std::shared_ptr<SEP::hypercube> hyper, const float *vals)
+        complexTensor2D(const std::shared_ptr<SEP::hypercube> hyper, const std::complex<float> *vals)
         {
             initNoData(hyper);
             copyVals(vals);
         }
         /*!
-      Create a 2-D float vector from just lengths
+      Create a 2-D std::complex<float> vector from just lengths
           \param n1,n2   Dimensions of the hypercube
           \param vals Values to fill vector with
 
       */
-        complexTensor2D(const int n1, const int n2, const float *vals)
+        complexTensor2D(const int n1, const int n2, const std::complex<float> *vals)
         {
             std::vector<SEP::axis> a;
             std::vector<int> ns = {n1, n2};
@@ -872,12 +872,12 @@ namespace SEP
             copyVals(vals);
         }
         /*!
-       Create a 2-D float vector from axes
+       Create a 2-D std::complex<float> vector from axes
             \param a1,a2  Axes if the hypercube
             \param vals Values to fill vector with
        */
         complexTensor2D(const SEP::axis &a1, const SEP::axis &a2,
-                        const float *vals)
+                        const std::complex<float> *vals)
         {
             std::vector<SEP::axis> a = {a1, a2};
             std::shared_ptr<SEP::hypercube> hyp(new SEP::hypercube(a));
@@ -889,9 +889,9 @@ namespace SEP
         void allocate()
         {
             std::vector<int> ns = getHyper()->getNs();
-            xt::xtensor<float, 2>::shape_type shape = {
+            xt::xtensor<std::complex<float>, 2>::shape_type shape = {
                 (size_t)ns[1], (size_t)ns[0]};
-            mat = xt::xtensor<float, 2>::from_shape(shape);
+            mat = xt::xtensor<std::complex<float>, 2>::from_shape(shape);
             setData(mat.data());
         }
         /*!
@@ -917,7 +917,7 @@ namespace SEP
             mat = {{{{0}}}};
             setSpace();
         }
-        xt::xtensor<float, 2> mat; ///< Storage for vector
+        xt::xtensor<std::complex<float>, 2> mat; ///< Storage for vector
 
     protected:
         /*!
@@ -930,7 +930,7 @@ namespace SEP
       \param hyper Hypercube describing space
       \param vals Data to copy in
       */
-        void initData(std::shared_ptr<SEP::hypercube> hyper, const float *vals)
+        void initData(std::shared_ptr<SEP::hypercube> hyper, const std::complex<float> *vals)
         {
             initNoData(hyper);
             copyVals(vals);
@@ -938,13 +938,13 @@ namespace SEP
     };
 
     /*!
-    A regular sampled 1-D function with float storage
+    A regular sampled 1-D function with std::complex<float> storage
     */
-    class complexTensor1D : public floatHyper
+    class complexTensor1D : public complexHyper
     {
     public:
         /*!
-         Create a 1-D float vector from a hypercube
+         Create a 1-D std::complex<float> vector from a hypercube
               \param hyper Hypercube describing RSF
 
          */
@@ -953,7 +953,7 @@ namespace SEP
             initNoData(hyper);
         }
         /*!
-       Create a 1-D float vector from just lengths
+       Create a 1-D std::complex<float> vector from just lengths
             \param n1   Dimensions of the hypercube
 
        */
@@ -968,7 +968,7 @@ namespace SEP
         }
 
         /*!
-      Create a 1-D float vector from axes
+      Create a 1-D std::complex<float> vector from axes
           \param a1   Axes if the hypercube
 
       */
@@ -979,19 +979,19 @@ namespace SEP
             initNoData(hyp);
         }
         /*!
-       Create a 1-D float vector from a hypercube
+       Create a 1-D std::complex<float> vector from a hypercube
             \param hyper Hypercube describing RSF
             \param vals Values to fill vector with
 
        */
-        complexTensor1D(const std::shared_ptr<SEP::hypercube> hyper, const float *vals)
+        complexTensor1D(const std::shared_ptr<SEP::hypercube> hyper, const std::complex<float> *vals)
         {
             initNoData(hyper);
             copyVals(vals);
         }
 
         /*!
-          Create a 1-D float vector from a 2-D float
+          Create a 1-D std::complex<float> vector from a 2-D std::complex<float>
 
           \param old - Vector to grab from
           \param iax1 - Fast axis
@@ -1006,7 +1006,7 @@ namespace SEP
                         const std::vector<int> &end);
 
         /*!
-          Create a 1-D float vector from a 3-D float
+          Create a 1-D std::complex<float> vector from a 3-D std::complex<float>
 
           \param old - Vector to grab from
           \param iax1 - Fast axis
@@ -1020,7 +1020,7 @@ namespace SEP
                         const std::vector<int> &ipos, const std::vector<int> &beg,
                         const std::vector<int> &end);
         /*!
-          Create a 1-D float vector from a 4-D float
+          Create a 1-D std::complex<float> vector from a 4-D std::complex<float>
 
           \param old - Vector to grab from
           \param iax1 - Fast axis
@@ -1034,7 +1034,7 @@ namespace SEP
                         const std::vector<int> &ipos, const std::vector<int> &beg,
                         const std::vector<int> &end);
         /*!
-          Create a 1-D float vector from a 1-D float
+          Create a 1-D std::complex<float> vector from a 1-D std::complex<float>
 
           \param old - Vector to grab from
           \param iax1 - Fast axis
@@ -1048,7 +1048,7 @@ namespace SEP
                         const std::vector<int> &ipos, const std::vector<int> &beg,
                         const std::vector<int> &end);
         /*!
-          Create a 1-D float vector from a 5-D float
+          Create a 1-D std::complex<float> vector from a 5-D std::complex<float>
 
           \param old - Vector to grab from
           \param iax1 - Fast axis
@@ -1062,7 +1062,7 @@ namespace SEP
                         const std::vector<int> &ipos, const std::vector<int> &beg,
                         const std::vector<int> &end);
         /*!
-          Create a 1-D float vector from a 6-D float
+          Create a 1-D std::complex<float> vector from a 6-D std::complex<float>
 
           \param old - Vector to grab from
           \param iax1 - Fast axis
@@ -1076,7 +1076,7 @@ namespace SEP
                         const std::vector<int> &ipos, const std::vector<int> &beg,
                         const std::vector<int> &end);
         /*!
-          Create a 1-D float vector from a 7-D float
+          Create a 1-D std::complex<float> vector from a 7-D std::complex<float>
 
           \param old - Vector to grab from
           \param iax1 - Fast axis
@@ -1091,12 +1091,12 @@ namespace SEP
                         const std::vector<int> &end);
 
         /*!
-      Create a 1-D float vector from just lengths
+      Create a 1-D std::complex<float> vector from just lengths
           \param n1    Dimensions of the hypercube
           \param vals Values to fill vector with
 
       */
-        complexTensor1D(const int n1, const float *vals)
+        complexTensor1D(const int n1, const std::complex<float> *vals)
         {
             std::vector<SEP::axis> a;
             std::vector<int> ns = {n1};
@@ -1108,12 +1108,12 @@ namespace SEP
             copyVals(vals);
         }
         /*!
-       Create a 1-D float vector from axes
+       Create a 1-D std::complex<float> vector from axes
             \param a1   Axes if the hypercube
             \param vals Values to fill vector with
        */
         complexTensor1D(const SEP::axis &a1,
-                        const float *vals)
+                        const std::complex<float> *vals)
         {
             std::vector<SEP::axis> a = {a1};
             std::shared_ptr<SEP::hypercube> hyp(new SEP::hypercube(a));
@@ -1125,9 +1125,9 @@ namespace SEP
         void allocate()
         {
             std::vector<int> ns = getHyper()->getNs();
-            xt::xtensor<float, 1>::shape_type shape = {
+            xt::xtensor<std::complex<float>, 1>::shape_type shape = {
                 (size_t)ns[0]};
-            mat = xt::xtensor<float, 1>::from_shape(shape);
+            mat = xt::xtensor<std::complex<float>, 1>::from_shape(shape);
             setData(mat.data());
         }
         /*!
@@ -1153,7 +1153,7 @@ namespace SEP
             mat = {0};
             setSpace();
         }
-        xt::xtensor<float, 1> mat; ///< Storage for vector
+        xt::xtensor<std::complex<float>, 1> mat; ///< Storage for vector
 
     protected:
         /*!
@@ -1166,7 +1166,7 @@ namespace SEP
       \param hyper Hypercube describing space
       \param vals Data to copy in
       */
-        void initData(std::shared_ptr<SEP::hypercube> hyper, const float *vals)
+        void initData(std::shared_ptr<SEP::hypercube> hyper, const std::complex<float> *vals)
         {
             initNoData(hyper);
             copyVals(vals);

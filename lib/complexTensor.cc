@@ -36,9 +36,9 @@ void complexTensor7D::initNoData(std::shared_ptr<SEP::hypercube> hyp)
     if (axes.size() != 7)
         throw(SEPException(std::string("Axes size must be 7 is ") +
                            std::to_string(axes.size())));
-    xt::xtensor<float, 7>::shape_type shape = {(size_t)axes[6].n, (size_t)axes[5].n, (size_t)axes[4].n,
-                                               (size_t)axes[3].n, (size_t)axes[2].n, (size_t)axes[1].n, (size_t)axes[0].n};
-    mat = xt::xtensor<float, 7>::from_shape(shape);
+    xt::xtensor<std::complex<float>, 7>::shape_type shape = {(size_t)axes[6].n, (size_t)axes[5].n, (size_t)axes[4].n,
+                                                             (size_t)axes[3].n, (size_t)axes[2].n, (size_t)axes[1].n, (size_t)axes[0].n};
+    mat = xt::xtensor<std::complex<float>, 7>::from_shape(shape);
     setData(mat.data());
 }
 
@@ -119,9 +119,9 @@ void complexTensor6D::initNoData(std::shared_ptr<SEP::hypercube> hyp)
     if (axes.size() != 6)
         throw(SEPException(std::string("Axes size must be 6 is ") +
                            std::to_string(axes.size())));
-    xt::xtensor<float, 6>::shape_type shape = {(size_t)axes[5].n, (size_t)axes[4].n,
-                                               (size_t)axes[3].n, (size_t)axes[2].n, (size_t)axes[1].n, (size_t)axes[0].n};
-    mat = xt::xtensor<float, 6>::from_shape(shape);
+    xt::xtensor<std::complex<float>, 6>::shape_type shape = {(size_t)axes[5].n, (size_t)axes[4].n,
+                                                             (size_t)axes[3].n, (size_t)axes[2].n, (size_t)axes[1].n, (size_t)axes[0].n};
+    mat = xt::xtensor<std::complex<float>, 6>::from_shape(shape);
     setData(mat.data());
 }
 
@@ -202,9 +202,9 @@ void complexTensor5D::initNoData(std::shared_ptr<SEP::hypercube> hyp)
     if (axes.size() != 5)
         throw(SEPException(std::string("Axes size must be 5 is ") +
                            std::to_string(axes.size())));
-    xt::xtensor<float, 5>::shape_type shape = {(size_t)axes[4].n,
-                                               (size_t)axes[3].n, (size_t)axes[2].n, (size_t)axes[1].n, (size_t)axes[0].n};
-    mat = xt::xtensor<float, 5>::from_shape(shape);
+    xt::xtensor<std::complex<float>, 5>::shape_type shape = {(size_t)axes[4].n,
+                                                             (size_t)axes[3].n, (size_t)axes[2].n, (size_t)axes[1].n, (size_t)axes[0].n};
+    mat = xt::xtensor<std::complex<float>, 5>::from_shape(shape);
     setData(mat.data());
 }
 
@@ -284,9 +284,9 @@ void complexTensor4D::initNoData(std::shared_ptr<SEP::hypercube> hyp)
     if (axes.size() != 4)
         throw(SEPException(std::string("Axes size must be 4 is ") +
                            std::to_string(axes.size())));
-    xt::xtensor<float, 4>::shape_type shape = {
+    xt::xtensor<std::complex<float>, 4>::shape_type shape = {
         (size_t)axes[3].n, (size_t)axes[2].n, (size_t)axes[1].n, (size_t)axes[0].n};
-    mat = xt::xtensor<float, 4>::from_shape(shape);
+    mat = xt::xtensor<std::complex<float>, 4>::from_shape(shape);
     setData(mat.data());
 }
 
@@ -364,9 +364,9 @@ void complexTensor3D::initNoData(std::shared_ptr<SEP::hypercube> hyp)
     if (axes.size() != 3)
         throw(SEPException(std::string("Axes size must be 4 is ") +
                            std::to_string(axes.size())));
-    xt::xtensor<float, 3>::shape_type shape = {
+    xt::xtensor<std::complex<float>, 3>::shape_type shape = {
         (size_t)axes[2].n, (size_t)axes[1].n, (size_t)axes[0].n};
-    mat = xt::xtensor<float, 3>::from_shape(shape);
+    mat = xt::xtensor<std::complex<float>, 3>::from_shape(shape);
     setData(mat.data());
 }
 
@@ -441,9 +441,9 @@ void complexTensor2D::initNoData(std::shared_ptr<SEP::hypercube> hyp)
     if (axes.size() != 2)
         throw(SEPException(std::string("Axes size must be 4 is ") +
                            std::to_string(axes.size())));
-    xt::xtensor<float, 3>::shape_type shape = {
+    xt::xtensor<std::complex<float>, 3>::shape_type shape = {
         (size_t)axes[1].n, (size_t)axes[0].n};
-    mat = xt::xtensor<float, 2>::from_shape(shape);
+    mat = xt::xtensor<std::complex<float>, 2>::from_shape(shape);
     setData(mat.data());
 }
 
@@ -492,7 +492,7 @@ complexTensor2D::complexTensor2D(
     std::tie(hyperOut, n, f, j) = sliceToWindow2D(iax1, iax2, beg, end, ipos);
     std::shared_ptr<complexTensor7D> tmp = old->window(n, f, j);
     initNoData(hyperOut);
-    doTraverse2D(n, iax1, rev1, iax2, rev2, tmp->getCVals(), getVals(), sizeof(std::complex<float>));
+    doTraverse2D(n, iax1, rev1, iax2, rev2, tmp->getCVals(), getVals(), sizeof(std::complex<std::complex<float> >));
 }
 
 complexTensor2D::complexTensor2D(
@@ -506,7 +506,7 @@ complexTensor2D::complexTensor2D(
     std::tie(hyperOut, n, f, j) = sliceToWindow2D(iax1, iax2, beg, end, ipos);
     std::shared_ptr<complexTensor6D> tmp = old->window(n, f, j);
     initNoData(hyperOut);
-    doTraverse2D(n, iax1, rev1, iax2, rev2, tmp->getCVals(), getVals(), sizeof(std::complex<float>));
+    doTraverse2D(n, iax1, rev1, iax2, rev2, tmp->getCVals(), getVals(), sizeof(std::complex<std::complex<float> >));
 }
 complexTensor2D::complexTensor2D(
     const std::shared_ptr<complexTensor5D> old, const int iax1,
@@ -519,7 +519,7 @@ complexTensor2D::complexTensor2D(
     std::tie(hyperOut, n, f, j) = sliceToWindow2D(iax1, iax2, beg, end, ipos);
     std::shared_ptr<complexTensor5D> tmp = old->window(n, f, j);
     initNoData(hyperOut);
-    doTraverse2D(n, iax1, rev1, iax2, rev2, tmp->getCVals(), getVals(), sizeof(std::complex<float>));
+    doTraverse2D(n, iax1, rev1, iax2, rev2, tmp->getCVals(), getVals(), sizeof(std::complex<std::complex<float> >));
 }
 complexTensor2D::complexTensor2D(
     const std::shared_ptr<complexTensor4D> old, const int iax1,
@@ -532,7 +532,7 @@ complexTensor2D::complexTensor2D(
     std::tie(hyperOut, n, f, j) = sliceToWindow2D(iax1, iax2, beg, end, ipos);
     std::shared_ptr<complexTensor4D> tmp = old->window(n, f, j);
     initNoData(hyperOut);
-    doTraverse2D(n, iax1, rev1, iax2, rev2, tmp->getCVals(), getVals(), sizeof(std::complex<float>));
+    doTraverse2D(n, iax1, rev1, iax2, rev2, tmp->getCVals(), getVals(), sizeof(std::complex<std::complex<float> >));
 }
 complexTensor2D::complexTensor2D(
     const std::shared_ptr<complexTensor3D> old, const int iax1,
@@ -545,7 +545,7 @@ complexTensor2D::complexTensor2D(
     std::tie(hyperOut, n, f, j) = sliceToWindow2D(iax1, iax2, beg, end, ipos);
     std::shared_ptr<complexTensor3D> tmp = old->window(n, f, j);
     initNoData(hyperOut);
-    doTraverse2D(n, iax1, rev1, iax2, rev2, tmp->getCVals(), getVals(), sizeof(std::complex<float>));
+    doTraverse2D(n, iax1, rev1, iax2, rev2, tmp->getCVals(), getVals(), sizeof(std::complex<std::complex<float> >));
 }
 complexTensor2D::complexTensor2D(
     const std::shared_ptr<complexTensor2D> old, const int iax1,
@@ -558,7 +558,7 @@ complexTensor2D::complexTensor2D(
     std::tie(hyperOut, n, f, j) = sliceToWindow2D(iax1, iax2, beg, end, ipos);
     std::shared_ptr<complexTensor2D> tmp = old->window(n, f, j);
     initNoData(hyperOut);
-    doTraverse2D(n, iax1, rev1, iax2, rev2, tmp->getCVals(), getVals(), sizeof(std::complex<float>));
+    doTraverse2D(n, iax1, rev1, iax2, rev2, tmp->getCVals(), getVals(), sizeof(std::complex<std::complex<float> >));
 }
 
 //1D version
@@ -596,9 +596,9 @@ void complexTensor1D::initNoData(std::shared_ptr<SEP::hypercube> hyp)
     if (axes.size() != 1)
         throw(SEPException(std::string("Axes size must be 4 is ") +
                            std::to_string(axes.size())));
-    xt::xtensor<float, 1>::shape_type shape = {
+    xt::xtensor<std::complex<float>, 1>::shape_type shape = {
         (size_t)axes[0].n};
-    mat = xt::xtensor<float, 1>::from_shape(shape);
+    mat = xt::xtensor<std::complex<float>, 1>::from_shape(shape);
     setData(mat.data());
 }
 
@@ -645,7 +645,7 @@ complexTensor1D::complexTensor1D(
     std::tie(hyperOut, n, f, j) = sliceToWindow1D(iax1, beg, end, ipos);
     std::shared_ptr<complexTensor7D> tmp = old->window(n, f, j);
     initNoData(hyperOut);
-    doTraverse1D(n, iax1, rev1, tmp->getCVals(), getVals(), sizeof(std::complex<float>));
+    doTraverse1D(n, iax1, rev1, tmp->getCVals(), getVals(), sizeof(std::complex<std::complex<float> >));
 }
 
 complexTensor1D::complexTensor1D(
@@ -659,7 +659,7 @@ complexTensor1D::complexTensor1D(
     std::tie(hyperOut, n, f, j) = sliceToWindow1D(iax1, beg, end, ipos);
     std::shared_ptr<complexTensor6D> tmp = old->window(n, f, j);
     initNoData(hyperOut);
-    doTraverse1D(n, iax1, rev1, tmp->getCVals(), getVals(), sizeof(std::complex<float>));
+    doTraverse1D(n, iax1, rev1, tmp->getCVals(), getVals(), sizeof(std::complex<std::complex<float> >));
 }
 complexTensor1D::complexTensor1D(
     const std::shared_ptr<complexTensor5D> old, const int iax1,
@@ -672,7 +672,7 @@ complexTensor1D::complexTensor1D(
     std::tie(hyperOut, n, f, j) = sliceToWindow1D(iax1, beg, end, ipos);
     std::shared_ptr<complexTensor5D> tmp = old->window(n, f, j);
     initNoData(hyperOut);
-    doTraverse1D(n, iax1, rev1, tmp->getCVals(), getVals(), sizeof(std::complex<float>));
+    doTraverse1D(n, iax1, rev1, tmp->getCVals(), getVals(), sizeof(std::complex<std::complex<float> >));
 }
 complexTensor1D::complexTensor1D(
     const std::shared_ptr<complexTensor4D> old, const int iax1,
@@ -685,7 +685,7 @@ complexTensor1D::complexTensor1D(
     std::tie(hyperOut, n, f, j) = sliceToWindow1D(iax1, beg, end, ipos);
     std::shared_ptr<complexTensor4D> tmp = old->window(n, f, j);
     initNoData(hyperOut);
-    doTraverse1D(n, iax1, rev1, tmp->getCVals(), getVals(), sizeof(std::complex<float>));
+    doTraverse1D(n, iax1, rev1, tmp->getCVals(), getVals(), sizeof(std::complex<std::complex<float> >));
 }
 complexTensor1D::complexTensor1D(
     const std::shared_ptr<complexTensor3D> old, const int iax1,
@@ -698,7 +698,7 @@ complexTensor1D::complexTensor1D(
     std::tie(hyperOut, n, f, j) = sliceToWindow1D(iax1, beg, end, ipos);
     std::shared_ptr<complexTensor3D> tmp = old->window(n, f, j);
     initNoData(hyperOut);
-    doTraverse1D(n, iax1, rev1, tmp->getCVals(), getVals(), sizeof(std::complex<float>));
+    doTraverse1D(n, iax1, rev1, tmp->getCVals(), getVals(), sizeof(std::complex<std::complex<float> >));
 }
 complexTensor1D::complexTensor1D(
     const std::shared_ptr<complexTensor2D> old, const int iax1,
@@ -711,7 +711,7 @@ complexTensor1D::complexTensor1D(
     std::tie(hyperOut, n, f, j) = sliceToWindow1D(iax1, beg, end, ipos);
     std::shared_ptr<complexTensor2D> tmp = old->window(n, f, j);
     initNoData(hyperOut);
-    doTraverse1D(n, iax1, rev1, tmp->getCVals(), getVals(), sizeof(std::complex<float>));
+    doTraverse1D(n, iax1, rev1, tmp->getCVals(), getVals(), sizeof(std::complex<std::complex<float> >));
 }
 complexTensor1D::complexTensor1D(
     const std::shared_ptr<complexTensor1D> old, const int iax1,
@@ -724,5 +724,5 @@ complexTensor1D::complexTensor1D(
     std::tie(hyperOut, n, f, j) = sliceToWindow1D(iax1, beg, end, ipos);
     std::shared_ptr<complexTensor1D> tmp = old->window(n, f, j);
     initNoData(hyperOut);
-    doTraverse1D(n, iax1, rev1, tmp->getCVals(), getVals(), sizeof(std::complex<float>));
+    doTraverse1D(n, iax1, rev1, tmp->getCVals(), getVals(), sizeof(std::complex<std::complex<float> >));
 }

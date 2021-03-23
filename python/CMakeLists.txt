@@ -17,9 +17,15 @@ pybind11_add_module(
   pyComplexDR.cpp
   pyDoubleR.cpp
   pyFloatT.cpp
+  pyIntT.cpp
+  pyDoubleT.cpp
+  pyComplexT.cpp
+  pyComplexDT.cpp
+  pyShortT.cpp
   pyRect.cpp
   pyShortR.cpp
   pyByteR.cpp
+  pyByteT.cpp
   pyComplexR.cpp
   pyFloatR.cpp
   pyIntR.cpp

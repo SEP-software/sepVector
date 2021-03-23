@@ -14,9 +14,9 @@ namespace py = pybind11;
 namespace SEP
 {
 
-     void init_floatT(py::module &clsVector)
+     void init_doubleT(py::module &clsVector)
      {
-          /* Float hyper */
+          /* double hyper */
           py::class_<doubleTensor1D, doubleHyper, std::shared_ptr<doubleTensor1D> >(
               clsVector, "doubleTensor1D", py::buffer_protocol())
               .def(py::init<const int>(), "Initialize giving size")
@@ -65,11 +65,11 @@ namespace SEP
                    "Allocate the array")
 
               .def_buffer([](doubleTensor1D &m) -> py::buffer_info {
-                   return py::buffer_info(m.getVals(), sizeof(float),
-                                          py::format_descriptor<float>::format(), 1,
-                                          {m.getHyper()->getAxis(1).n}, {sizeof(float)});
+                   return py::buffer_info(m.getVals(), sizeof(double),
+                                          py::format_descriptor<double>::format(), 1,
+                                          {m.getHyper()->getAxis(1).n}, {sizeof(double)});
               });
-          py::class_<doubleTensor2D, floatHyper, std::shared_ptr<doubleTensor2D> >(
+          py::class_<doubleTensor2D, doubleHyper, std::shared_ptr<doubleTensor2D> >(
               clsVector, "doubleTensor2D", py::buffer_protocol())
               .def(py::init<const int, const int>(), "Initialize giving size")
               .def(py::init<const axis &, const axis &>(), "Initialize from an axis")
@@ -113,12 +113,12 @@ namespace SEP
 
               .def_buffer([](doubleTensor2D &m) -> py::buffer_info {
                    return py::buffer_info(
-                       m.getVals(), sizeof(float), py::format_descriptor<float>::format(),
+                       m.getVals(), sizeof(double), py::format_descriptor<double>::format(),
                        2, {m.getHyper()->getAxis(2).n, m.getHyper()->getAxis(1).n},
-                       {sizeof(float) * m.getHyper()->getAxis(1).n, sizeof(float)});
+                       {sizeof(double) * m.getHyper()->getAxis(1).n, sizeof(double)});
               });
 
-          py::class_<doubleTensor3D, floatHyper, std::shared_ptr<doubleTensor3D> >(
+          py::class_<doubleTensor3D, doubleHyper, std::shared_ptr<doubleTensor3D> >(
               clsVector, "doubleTensor3D", py::buffer_protocol())
               .def(py::init<const int, const int, const int>(),
                    "Initialize giving size")
@@ -144,16 +144,16 @@ namespace SEP
 
               .def_buffer([](doubleTensor3D &m) -> py::buffer_info {
                    return py::buffer_info(
-                       m.getVals(), sizeof(float), py::format_descriptor<float>::format(),
+                       m.getVals(), sizeof(double), py::format_descriptor<double>::format(),
                        3,
                        {m.getHyper()->getAxis(3).n, m.getHyper()->getAxis(2).n,
                         m.getHyper()->getAxis(1).n},
-                       {sizeof(float) * m.getHyper()->getAxis(1).n *
+                       {sizeof(double) * m.getHyper()->getAxis(1).n *
                             m.getHyper()->getAxis(2).n,
-                        sizeof(float) * m.getHyper()->getAxis(1).n, sizeof(float)});
+                        sizeof(double) * m.getHyper()->getAxis(1).n, sizeof(double)});
               });
 
-          py::class_<doubleTensor4D, floatHyper, std::shared_ptr<doubleTensor4D> >(
+          py::class_<doubleTensor4D, doubleHyper, std::shared_ptr<doubleTensor4D> >(
               clsVector, "doubleTensor4D", py::buffer_protocol())
               .def(py::init<const int, const int, const int, const int>(),
                    "Initialize giving size")
@@ -179,17 +179,17 @@ namespace SEP
 
               .def_buffer([](doubleTensor4D &m) -> py::buffer_info {
                    return py::buffer_info(
-                       m.getVals(), sizeof(float), py::format_descriptor<float>::format(),
+                       m.getVals(), sizeof(double), py::format_descriptor<double>::format(),
                        4,
                        {m.getHyper()->getAxis(4).n, m.getHyper()->getAxis(3).n,
                         m.getHyper()->getAxis(2).n, m.getHyper()->getAxis(1).n},
-                       {sizeof(float) * m.getHyper()->getAxis(1).n *
+                       {sizeof(double) * m.getHyper()->getAxis(1).n *
                             m.getHyper()->getAxis(2).n * m.getHyper()->getAxis(3).n,
-                        sizeof(float) * m.getHyper()->getAxis(1).n *
+                        sizeof(double) * m.getHyper()->getAxis(1).n *
                             m.getHyper()->getAxis(2).n,
-                        sizeof(float) * m.getHyper()->getAxis(1).n, sizeof(float)});
+                        sizeof(double) * m.getHyper()->getAxis(1).n, sizeof(double)});
               });
-          py::class_<doubleTensor5D, floatHyper, std::shared_ptr<doubleTensor5D> >(
+          py::class_<doubleTensor5D, doubleHyper, std::shared_ptr<doubleTensor5D> >(
               clsVector, "doubleTensor5D", py::buffer_protocol())
               .def(py::init<const int, const int, const int, const int, const int>(),
                    "Initialize giving size")
@@ -216,22 +216,22 @@ namespace SEP
 
               .def_buffer([](doubleTensor5D &m) -> py::buffer_info {
                    return py::buffer_info(
-                       m.getVals(), sizeof(float), py::format_descriptor<float>::format(),
+                       m.getVals(), sizeof(double), py::format_descriptor<double>::format(),
                        5,
                        {m.getHyper()->getAxis(5).n, m.getHyper()->getAxis(4).n,
                         m.getHyper()->getAxis(3).n, m.getHyper()->getAxis(2).n,
                         m.getHyper()->getAxis(1).n},
-                       {sizeof(float) * m.getHyper()->getAxis(1).n *
+                       {sizeof(double) * m.getHyper()->getAxis(1).n *
                             m.getHyper()->getAxis(2).n * m.getHyper()->getAxis(3).n *
                             m.getHyper()->getAxis(4).n,
-                        sizeof(float) * m.getHyper()->getAxis(1).n *
+                        sizeof(double) * m.getHyper()->getAxis(1).n *
                             m.getHyper()->getAxis(2).n * m.getHyper()->getAxis(3).n,
-                        sizeof(float) * m.getHyper()->getAxis(1).n *
+                        sizeof(double) * m.getHyper()->getAxis(1).n *
                             m.getHyper()->getAxis(2).n,
-                        sizeof(float) * m.getHyper()->getAxis(1).n, sizeof(float)});
+                        sizeof(double) * m.getHyper()->getAxis(1).n, sizeof(double)});
               });
 
-          py::class_<doubleTensor6D, floatHyper, std::shared_ptr<doubleTensor6D> >(
+          py::class_<doubleTensor6D, doubleHyper, std::shared_ptr<doubleTensor6D> >(
               clsVector, "doubleTensor6D", py::buffer_protocol())
               .def(py::init<const int, const int, const int, const int, const int,
                             const int>(),
@@ -259,24 +259,24 @@ namespace SEP
                    "Make a copy of the vector space")
               .def_buffer([](doubleTensor6D &m) -> py::buffer_info {
                    return py::buffer_info(
-                       m.getVals(), sizeof(float), py::format_descriptor<float>::format(),
+                       m.getVals(), sizeof(double), py::format_descriptor<double>::format(),
                        6,
                        {m.getHyper()->getAxis(6).n, m.getHyper()->getAxis(5).n,
                         m.getHyper()->getAxis(4).n, m.getHyper()->getAxis(3).n,
                         m.getHyper()->getAxis(2).n, m.getHyper()->getAxis(1).n},
-                       {sizeof(float) * m.getHyper()->getAxis(1).n *
+                       {sizeof(double) * m.getHyper()->getAxis(1).n *
                             m.getHyper()->getAxis(2).n * m.getHyper()->getAxis(3).n *
                             m.getHyper()->getAxis(4).n * m.getHyper()->getAxis(5).n,
-                        sizeof(float) * m.getHyper()->getAxis(1).n *
+                        sizeof(double) * m.getHyper()->getAxis(1).n *
                             m.getHyper()->getAxis(2).n * m.getHyper()->getAxis(3).n *
                             m.getHyper()->getAxis(4).n,
-                        sizeof(float) * m.getHyper()->getAxis(1).n *
+                        sizeof(double) * m.getHyper()->getAxis(1).n *
                             m.getHyper()->getAxis(2).n * m.getHyper()->getAxis(3).n,
-                        sizeof(float) * m.getHyper()->getAxis(1).n *
+                        sizeof(double) * m.getHyper()->getAxis(1).n *
                             m.getHyper()->getAxis(2).n,
-                        sizeof(float) * m.getHyper()->getAxis(1).n, sizeof(float)});
+                        sizeof(double) * m.getHyper()->getAxis(1).n, sizeof(double)});
               });
-          py::class_<doubleTensor7D, floatHyper, std::shared_ptr<doubleTensor7D> >(
+          py::class_<doubleTensor7D, doubleHyper, std::shared_ptr<doubleTensor7D> >(
               clsVector, "doubleTensor7D", py::buffer_protocol())
               .def(py::init<const int, const int, const int, const int, const int, const int,
                             const int>(),
@@ -304,25 +304,25 @@ namespace SEP
                    "Make a copy of the vector space")
               .def_buffer([](doubleTensor7D &m) -> py::buffer_info {
                    return py::buffer_info(
-                       m.getVals(), sizeof(float), py::format_descriptor<float>::format(),
+                       m.getVals(), sizeof(double), py::format_descriptor<double>::format(),
                        7,
                        {m.getHyper()->getAxis(7).n, m.getHyper()->getAxis(6).n, m.getHyper()->getAxis(5).n,
                         m.getHyper()->getAxis(4).n, m.getHyper()->getAxis(3).n,
                         m.getHyper()->getAxis(2).n, m.getHyper()->getAxis(1).n},
-                       {sizeof(float) * m.getHyper()->getAxis(1).n *
+                       {sizeof(double) * m.getHyper()->getAxis(1).n *
                             m.getHyper()->getAxis(2).n * m.getHyper()->getAxis(3).n *
                             m.getHyper()->getAxis(4).n * m.getHyper()->getAxis(5).n * m.getHyper()->getAxis(6).n,
-                        sizeof(float) * m.getHyper()->getAxis(1).n *
+                        sizeof(double) * m.getHyper()->getAxis(1).n *
                             m.getHyper()->getAxis(2).n * m.getHyper()->getAxis(3).n *
                             m.getHyper()->getAxis(4).n * m.getHyper()->getAxis(5).n,
-                        sizeof(float) * m.getHyper()->getAxis(1).n *
+                        sizeof(double) * m.getHyper()->getAxis(1).n *
                             m.getHyper()->getAxis(2).n * m.getHyper()->getAxis(3).n *
                             m.getHyper()->getAxis(4).n,
-                        sizeof(float) * m.getHyper()->getAxis(1).n *
+                        sizeof(double) * m.getHyper()->getAxis(1).n *
                             m.getHyper()->getAxis(2).n * m.getHyper()->getAxis(3).n,
-                        sizeof(float) * m.getHyper()->getAxis(1).n *
+                        sizeof(double) * m.getHyper()->getAxis(1).n *
                             m.getHyper()->getAxis(2).n,
-                        sizeof(float) * m.getHyper()->getAxis(1).n, sizeof(float)});
+                        sizeof(double) * m.getHyper()->getAxis(1).n, sizeof(double)});
               });
      }
 

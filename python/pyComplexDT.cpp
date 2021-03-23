@@ -16,7 +16,7 @@ namespace SEP
 
      void init_complexDoubleT(py::module &clsVector)
      {
-          /* Float hyper */
+          /* complex double hyper */
           py::class_<complexDoubleTensor1D, complexDoubleHyper, std::shared_ptr<complexDoubleTensor1D> >(
               clsVector, "complexDoubleTensor1D", py::buffer_protocol())
               .def(py::init<const int>(), "Initialize giving size")
@@ -65,11 +65,11 @@ namespace SEP
                    "Allocate the array")
 
               .def_buffer([](complexDoubleTensor1D &m) -> py::buffer_info {
-                   return py::buffer_info(m.getVals(), sizeof(float),
-                                          py::format_descriptor<float>::format(), 1,
-                                          {m.getHyper()->getAxis(1).n}, {sizeof(float)});
+                   return py::buffer_info(m.getVals(), sizeof(std::complex<double>),
+                                          py::format_descriptor<std::complex<double> >::format(), 1,
+                                          {m.getHyper()->getAxis(1).n}, {sizeof(std::complex<double>)});
               });
-          py::class_<complexDoubleTensor2D, floatHyper, std::shared_ptr<complexDoubleTensor2D> >(
+          py::class_<complexDoubleTensor2D, complexDoubleHyper, std::shared_ptr<complexDoubleTensor2D> >(
               clsVector, "complexDoubleTensor2D", py::buffer_protocol())
               .def(py::init<const int, const int>(), "Initialize giving size")
               .def(py::init<const axis &, const axis &>(), "Initialize from an axis")
@@ -113,12 +113,12 @@ namespace SEP
 
               .def_buffer([](complexDoubleTensor2D &m) -> py::buffer_info {
                    return py::buffer_info(
-                       m.getVals(), sizeof(float), py::format_descriptor<float>::format(),
+                       m.getVals(), sizeof(std::complex<double>), py::format_descriptor<std::complex<double> >::format(),
                        2, {m.getHyper()->getAxis(2).n, m.getHyper()->getAxis(1).n},
-                       {sizeof(float) * m.getHyper()->getAxis(1).n, sizeof(float)});
+                       {sizeof(std::complex<double>) * m.getHyper()->getAxis(1).n, sizeof(std::complex<double>)});
               });
 
-          py::class_<complexDoubleTensor3D, floatHyper, std::shared_ptr<complexDoubleTensor3D> >(
+          py::class_<complexDoubleTensor3D, complexDoubleHyper, std::shared_ptr<complexDoubleTensor3D> >(
               clsVector, "complexDoubleTensor3D", py::buffer_protocol())
               .def(py::init<const int, const int, const int>(),
                    "Initialize giving size")
@@ -144,16 +144,16 @@ namespace SEP
 
               .def_buffer([](complexDoubleTensor3D &m) -> py::buffer_info {
                    return py::buffer_info(
-                       m.getVals(), sizeof(float), py::format_descriptor<float>::format(),
+                       m.getVals(), sizeof(std::complex<double>), py::format_descriptor<std::complex<double> >::format(),
                        3,
                        {m.getHyper()->getAxis(3).n, m.getHyper()->getAxis(2).n,
                         m.getHyper()->getAxis(1).n},
-                       {sizeof(float) * m.getHyper()->getAxis(1).n *
+                       {sizeof(std::complex<double>) * m.getHyper()->getAxis(1).n *
                             m.getHyper()->getAxis(2).n,
-                        sizeof(float) * m.getHyper()->getAxis(1).n, sizeof(float)});
+                        sizeof(std::complex<double>) * m.getHyper()->getAxis(1).n, sizeof(std::complex<double>)});
               });
 
-          py::class_<complexDoubleTensor4D, floatHyper, std::shared_ptr<complexDoubleTensor4D> >(
+          py::class_<complexDoubleTensor4D, complexDoubleHyper, std::shared_ptr<complexDoubleTensor4D> >(
               clsVector, "complexDoubleTensor4D", py::buffer_protocol())
               .def(py::init<const int, const int, const int, const int>(),
                    "Initialize giving size")
@@ -179,17 +179,17 @@ namespace SEP
 
               .def_buffer([](complexDoubleTensor4D &m) -> py::buffer_info {
                    return py::buffer_info(
-                       m.getVals(), sizeof(float), py::format_descriptor<float>::format(),
+                       m.getVals(), sizeof(std::complex<double>), py::format_descriptor<std::complex<double> >::format(),
                        4,
                        {m.getHyper()->getAxis(4).n, m.getHyper()->getAxis(3).n,
                         m.getHyper()->getAxis(2).n, m.getHyper()->getAxis(1).n},
-                       {sizeof(float) * m.getHyper()->getAxis(1).n *
+                       {sizeof(std::complex<double>) * m.getHyper()->getAxis(1).n *
                             m.getHyper()->getAxis(2).n * m.getHyper()->getAxis(3).n,
-                        sizeof(float) * m.getHyper()->getAxis(1).n *
+                        sizeof(std::complex<double>) * m.getHyper()->getAxis(1).n *
                             m.getHyper()->getAxis(2).n,
-                        sizeof(float) * m.getHyper()->getAxis(1).n, sizeof(float)});
+                        sizeof(std::complex<double>) * m.getHyper()->getAxis(1).n, sizeof(std::complex<double>)});
               });
-          py::class_<complexDoubleTensor5D, floatHyper, std::shared_ptr<complexDoubleTensor5D> >(
+          py::class_<complexDoubleTensor5D, complexDoubleHyper, std::shared_ptr<complexDoubleTensor5D> >(
               clsVector, "complexDoubleTensor5D", py::buffer_protocol())
               .def(py::init<const int, const int, const int, const int, const int>(),
                    "Initialize giving size")
@@ -216,22 +216,22 @@ namespace SEP
 
               .def_buffer([](complexDoubleTensor5D &m) -> py::buffer_info {
                    return py::buffer_info(
-                       m.getVals(), sizeof(float), py::format_descriptor<float>::format(),
+                       m.getVals(), sizeof(std::complex<double>), py::format_descriptor<std::complex<double> >::format(),
                        5,
                        {m.getHyper()->getAxis(5).n, m.getHyper()->getAxis(4).n,
                         m.getHyper()->getAxis(3).n, m.getHyper()->getAxis(2).n,
                         m.getHyper()->getAxis(1).n},
-                       {sizeof(float) * m.getHyper()->getAxis(1).n *
+                       {sizeof(std::complex<double>) * m.getHyper()->getAxis(1).n *
                             m.getHyper()->getAxis(2).n * m.getHyper()->getAxis(3).n *
                             m.getHyper()->getAxis(4).n,
-                        sizeof(float) * m.getHyper()->getAxis(1).n *
+                        sizeof(std::complex<double>) * m.getHyper()->getAxis(1).n *
                             m.getHyper()->getAxis(2).n * m.getHyper()->getAxis(3).n,
-                        sizeof(float) * m.getHyper()->getAxis(1).n *
+                        sizeof(std::complex<double>) * m.getHyper()->getAxis(1).n *
                             m.getHyper()->getAxis(2).n,
-                        sizeof(float) * m.getHyper()->getAxis(1).n, sizeof(float)});
+                        sizeof(std::complex<double>) * m.getHyper()->getAxis(1).n, sizeof(std::complex<double>)});
               });
 
-          py::class_<complexDoubleTensor6D, floatHyper, std::shared_ptr<complexDoubleTensor6D> >(
+          py::class_<complexDoubleTensor6D, complexDoubleHyper, std::shared_ptr<complexDoubleTensor6D> >(
               clsVector, "complexDoubleTensor6D", py::buffer_protocol())
               .def(py::init<const int, const int, const int, const int, const int,
                             const int>(),
@@ -259,24 +259,24 @@ namespace SEP
                    "Make a copy of the vector space")
               .def_buffer([](complexDoubleTensor6D &m) -> py::buffer_info {
                    return py::buffer_info(
-                       m.getVals(), sizeof(float), py::format_descriptor<float>::format(),
+                       m.getVals(), sizeof(std::complex<double>), py::format_descriptor<std::complex<double> >::format(),
                        6,
                        {m.getHyper()->getAxis(6).n, m.getHyper()->getAxis(5).n,
                         m.getHyper()->getAxis(4).n, m.getHyper()->getAxis(3).n,
                         m.getHyper()->getAxis(2).n, m.getHyper()->getAxis(1).n},
-                       {sizeof(float) * m.getHyper()->getAxis(1).n *
+                       {sizeof(std::complex<double>) * m.getHyper()->getAxis(1).n *
                             m.getHyper()->getAxis(2).n * m.getHyper()->getAxis(3).n *
                             m.getHyper()->getAxis(4).n * m.getHyper()->getAxis(5).n,
-                        sizeof(float) * m.getHyper()->getAxis(1).n *
+                        sizeof(std::complex<double>) * m.getHyper()->getAxis(1).n *
                             m.getHyper()->getAxis(2).n * m.getHyper()->getAxis(3).n *
                             m.getHyper()->getAxis(4).n,
-                        sizeof(float) * m.getHyper()->getAxis(1).n *
+                        sizeof(std::complex<double>) * m.getHyper()->getAxis(1).n *
                             m.getHyper()->getAxis(2).n * m.getHyper()->getAxis(3).n,
-                        sizeof(float) * m.getHyper()->getAxis(1).n *
+                        sizeof(std::complex<double>) * m.getHyper()->getAxis(1).n *
                             m.getHyper()->getAxis(2).n,
-                        sizeof(float) * m.getHyper()->getAxis(1).n, sizeof(float)});
+                        sizeof(std::complex<double>) * m.getHyper()->getAxis(1).n, sizeof(std::complex<double>)});
               });
-          py::class_<complexDoubleTensor7D, floatHyper, std::shared_ptr<complexDoubleTensor7D> >(
+          py::class_<complexDoubleTensor7D, complexDoubleHyper, std::shared_ptr<complexDoubleTensor7D> >(
               clsVector, "complexDoubleTensor7D", py::buffer_protocol())
               .def(py::init<const int, const int, const int, const int, const int, const int,
                             const int>(),
@@ -304,25 +304,25 @@ namespace SEP
                    "Make a copy of the vector space")
               .def_buffer([](complexDoubleTensor7D &m) -> py::buffer_info {
                    return py::buffer_info(
-                       m.getVals(), sizeof(float), py::format_descriptor<float>::format(),
+                       m.getVals(), sizeof(std::complex<double>), py::format_descriptor<std::complex<double> >::format(),
                        7,
                        {m.getHyper()->getAxis(7).n, m.getHyper()->getAxis(6).n, m.getHyper()->getAxis(5).n,
                         m.getHyper()->getAxis(4).n, m.getHyper()->getAxis(3).n,
                         m.getHyper()->getAxis(2).n, m.getHyper()->getAxis(1).n},
-                       {sizeof(float) * m.getHyper()->getAxis(1).n *
+                       {sizeof(std::complex<double>) * m.getHyper()->getAxis(1).n *
                             m.getHyper()->getAxis(2).n * m.getHyper()->getAxis(3).n *
                             m.getHyper()->getAxis(4).n * m.getHyper()->getAxis(5).n * m.getHyper()->getAxis(6).n,
-                        sizeof(float) * m.getHyper()->getAxis(1).n *
+                        sizeof(std::complex<double>) * m.getHyper()->getAxis(1).n *
                             m.getHyper()->getAxis(2).n * m.getHyper()->getAxis(3).n *
                             m.getHyper()->getAxis(4).n * m.getHyper()->getAxis(5).n,
-                        sizeof(float) * m.getHyper()->getAxis(1).n *
+                        sizeof(std::complex<double>) * m.getHyper()->getAxis(1).n *
                             m.getHyper()->getAxis(2).n * m.getHyper()->getAxis(3).n *
                             m.getHyper()->getAxis(4).n,
-                        sizeof(float) * m.getHyper()->getAxis(1).n *
+                        sizeof(std::complex<double>) * m.getHyper()->getAxis(1).n *
                             m.getHyper()->getAxis(2).n * m.getHyper()->getAxis(3).n,
-                        sizeof(float) * m.getHyper()->getAxis(1).n *
+                        sizeof(std::complex<double>) * m.getHyper()->getAxis(1).n *
                             m.getHyper()->getAxis(2).n,
-                        sizeof(float) * m.getHyper()->getAxis(1).n, sizeof(float)});
+                        sizeof(std::complex<double>) * m.getHyper()->getAxis(1).n, sizeof(std::complex<double>)});
               });
      }
 

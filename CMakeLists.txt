@@ -34,12 +34,8 @@ endif()
 project(sepVector LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-<<<<<<< HEAD
-
-=======
 set(XTENSOR_USE_XSIMD ON)
 set(XTENSOR_USE_TBB ON)
->>>>>>> xtensor
 # set(CMAKE_POSITION_INDEPENDENT_CODE True)
 
 project(sepVector)
@@ -66,9 +62,6 @@ if(NOT SUBPACKAGE)
   execute_process(
     COMMAND git submodule update --init --recursive -- external/hypercube
     WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
-<<<<<<< HEAD
-
-=======
   execute_process(
     COMMAND git submodule update --init --recursive -- external/xtl
     WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
@@ -78,7 +71,6 @@ if(NOT SUBPACKAGE)
   execute_process(
     COMMAND git submodule update --init --recursive -- external/xtensor
     WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
->>>>>>> xtensor
 endif()
 
 configure_file("${PROJECT_SOURCE_DIR}/sepVectorConfig.h.in"
