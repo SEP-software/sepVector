@@ -247,7 +247,7 @@ void regSpace::doTraverse1D(const std::vector<int> &nd, const int iax1, const bo
         \param j1  Skip every j1 elements along fast axis
        
     */
-std::tuple<int, int> calcTraverse1D(
+std::tuple<int, int> regSpace::calcTraverse1D(
     const std::vector<int> &nd, const int iax1, const bool rev1)
 {
 
