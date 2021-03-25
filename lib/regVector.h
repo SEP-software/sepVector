@@ -47,7 +47,17 @@
 #include "int4DReg.h"
 #include "int5DReg.h"
 #include "int6DReg.h"
-namespace SEP {
+
+#include "byteTensor.h"
+#include "floatTensor.h"
+#include "complexTensor.h"
+#include "complexDoubleTensor.h"
+#include "doubleTensor.h"
+#include "intTensor.h"
+#include "shortTensor.h"
+
+namespace SEP
+{
     /*!
        Return a vector of specifc type based on dataType and hypercube describing
        the sapce
@@ -57,8 +67,20 @@ namespace SEP {
        \param g1   Maximum dimensions based on last axis greater 1 length
       */
     std::shared_ptr<regSpace> vecFromHyper(const std::shared_ptr<hypercube> hyper,
-        const dataType typ,
-        const bool g1 = true);
+                                           const dataType typ,
+                                           const bool g1 = true);
+
+    /*!
+       Return a tensor of specifc type based on dataType and hypercube describing
+       the sapce
+
+       \param hyper Hypercube describing the space
+       \param typ  Datatype (float,complex,int,..)
+       \param g1   Maximum dimensions based on last axis greater 1 length
+      */
+    std::shared_ptr<regSpace> tensorFromHyper(const std::shared_ptr<hypercube> hyper,
+                                              const dataType typ,
+                                              const bool g1 = true);
     /*!
        Return a vector that is potentially smaller than the hypercube
         \param hyper Hypercube describing larger vector space
@@ -82,5 +104,5 @@ namespace SEP {
         \param storage Space to clone
         */
     std::shared_ptr<regSpace> cloneRegSpace(std::shared_ptr<regSpace> storage);
-}  // namespace SEP
+} // namespace SEP
 #endif
