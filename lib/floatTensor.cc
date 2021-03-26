@@ -394,6 +394,10 @@ std::shared_ptr<floatTensor3D> floatTensor3D::window(
     }
     std::shared_ptr<hypercube> hypOut(new hypercube(aout));
     std::shared_ptr<floatTensor3D> out(new floatTensor3D(hypOut));
+    std::cerr << "what about you beg " << beg[0] << " " << beg[1] << " " << beg[2] << " " << std::endl;
+    std::cerr << "what about you ebd " << end[0] << " " << end[1] << " " << end[2] << " " << std::endl;
+    std::cerr << "what about you skp " << sk[0] << " " << sk[1] << " " << sk[2] << " " << std::endl;
+
     auto vw = xt::view(mat,
                        xt::range(beg[2], end[2], sk[2]),
                        xt::range(beg[1], end[1], sk[1]),
