@@ -91,7 +91,7 @@ class tensor(pyVector.vectorIC):
         return self.getCpp().checkSame(vec2.getCpp())
 
 
-class FloatTensor(tensor):
+class floatTensor(tensor):
     """Generic float tensor class"""
 
     def __init__(self, **kw):
@@ -172,7 +172,7 @@ class FloatTensor(tensor):
         return FloatTensor(fromCpp=self.windowInternal(**kw))
 
 
-class DoubleTensor(tensor):
+class doubleTensor(tensor):
     """Generic double tensor class"""
 
     def __init__(self, **kw):
@@ -254,7 +254,7 @@ class DoubleTensor(tensor):
         return DoubleTensor(fromCpp=self.windowInternal(**kw))
 
 
-class IntTensor(tensor):
+class intTensor(tensor):
     """Generic int tensor class"""
 
     def __init__(self, **kw):
@@ -269,7 +269,7 @@ class IntTensor(tensor):
     def clone(self):
         """Function to clone (deep copy) a tensor"""
         return IntTensor(fromCpp=self.cppMode.clone())
-class ComplexTensor(tensor):
+class complexTensor(tensor):
     """Generic complex tensor class"""
 
     def __init__(self, **kw):
@@ -338,7 +338,7 @@ class ComplexTensor(tensor):
             Can not specify n and min or max """
         return ComplexTensor(fromCpp=self.windowInternal(**kw))
 
-class ComplexDoubleTensor(tensor):
+class complexDoubleTensor(tensor):
     """Generic complex tensor class"""
 
     def __init__(self, **kw):
@@ -407,7 +407,7 @@ class ComplexDoubleTensor(tensor):
         return ComplexDoubleTensor(fromCpp=self.windowInternal(**kw))
 
 
-class ByteTensor(tensor):
+class byteTensor(tensor):
     """Generic byte tensor class"""
 
     def __init__(self, **kw):
