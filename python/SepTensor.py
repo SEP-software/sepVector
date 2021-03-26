@@ -484,16 +484,16 @@ def getSepTensor(*args, **keys):
         elif "tensor" in keys:
             if "iax1" in keys and "iax2" in keys and "rev1" in keys and "rev2" in keys and "ipos" in keys and "beg" in keys and "end" in keys:
                 if isinstance(keys["tensor"], FloatTensor):
-                    return FloatTensor(fromCpp=pySepVector.float2DReg(keys["tensor"].getCpp(), keys["iax1"], keys["rev1"],
+                    return floatTensor(fromCpp=pySepVector.float2DReg(keys["tensor"].getCpp(), keys["iax1"], keys["rev1"],
                                                                       keys["iax2"], keys["rev2"], keys["ipos"], keys["beg"], keys["end"]))
                 elif isinstance(keys["tensor"], DoubleTensor):
-                    return DoubleTensor(fromCpp=pySepVector.double2DReg(keys["tensor"].cppMode, keys["iax1"], keys["rev1"],
+                    return doubleTensor(fromCpp=pySepVector.double2DReg(keys["tensor"].cppMode, keys["iax1"], keys["rev1"],
                                                                         keys["iax2"], keys["rev2"], keys["ipos"], keys["beg"], keys["end"]))
                 elif isinstance(keys["tensor"], IntTensor):
-                    return IntTensor(fromCpp=pySepVector.int2DReg(keys["tensor"].cppMode, keys["iax1"], keys["rev1"],
+                    return intTensor(fromCpp=pySepVector.int2DReg(keys["tensor"].cppMode, keys["iax1"], keys["rev1"],
                                                                   keys["iax2"], keys["rev2"], keys["ipos"], keys["beg"], keys["end"]))
                 elif isinstance(keys["tensor"], ByteTensor):
-                    return ByteTensor(fromCpp=pySepVector.byte2DReg(keys["tensor"].cppMode, keys["iax1"], keys["rev1"],
+                    return byteTensor(fromCpp=pySepVector.byte2DReg(keys["tensor"].cppMode, keys["iax1"], keys["rev1"],
                                                                     keys["iax2"], keys["rev2"], keys["ipos"], keys["beg"], keys["end"]))
             else:
                 raise Exception("Must supply iax1,iax2,rev1,rev2,ipos,beg,end")
@@ -516,22 +516,22 @@ def getSepTensor(*args, **keys):
 
     if myt == "dataFloat":
         x = getFloatTensor(hyper)
-        y= FloatTensor(fromCpp=x)
+        y= floatTensor(fromCpp=x)
     elif myt == "dataComplexDouble":
         x = getComplexDoubleTensor(hyper)
-        y=ComplexDoubleTensor(fromCpp=x)
+        y=complexDoubleTensor(fromCpp=x)
     elif myt == "dataComplex":
         x = getComplexTensor(hyper)
-        y=ComplexTensor(fromCpp=x)
+        y=complexTensor(fromCpp=x)
     elif myt == "dataDouble":
         x = getDoubleTensor(hyper)
-        y= DoubleTensor(fromCpp=x)
+        y= doubleTensor(fromCpp=x)
     elif myt == "dataInt":
         x = getIntTensor(hyper)
-        y= IntTensor(fromCpp=x)
+        y= intTensor(fromCpp=x)
     elif myt == "dataByte":
         x = getByteTensor(hyper)
-        y= ByteTensor(fromCpp=x)
+        y= byteTensor(fromCpp=x)
     else:
         raise Exception("Unknown type %s" % myt)
     if haveNumpy:
