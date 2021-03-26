@@ -64,4 +64,4 @@ install(
   TARGETS pySepVector
   DESTINATION ${PYTHON_DIR}
   EXPORT sepVectorTargets)
-install(FILES SepVector.py SepIrregVector.py DESTINATION ${PYTHON_DIR})
+install(FILES SepTensor.py SepVector.py SepIrregVector.py DESTINATION ${PYTHON_DIR})
