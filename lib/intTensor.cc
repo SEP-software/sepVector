@@ -80,7 +80,7 @@ std::shared_ptr<intTensor7D> intTensor7D::window(
                     for (int i2 = 0; i2 < nw[2]; i2++)
                         for (int i1 = 0; i1 < nw[1]; i1++)
                             for (int i0 = 0; i0 < nw[0]; i0++)
-                                out->mat(i6, i5, i4, i3, i2, i1, i0) = mat(i6, i5, i4, i3, i2, i1, i0);
+                                out->mat(i6, i5, i4, i3, i2, i1, i0) = vw(i6, i5, i4, i3, i2, i1, i0);
 
     return out;
 }
@@ -162,7 +162,7 @@ std::shared_ptr<intTensor6D> intTensor6D::window(
                 for (int i2 = 0; i2 < nw[2]; i2++)
                     for (int i1 = 0; i1 < nw[1]; i1++)
                         for (int i0 = 0; i0 < nw[0]; i0++)
-                            out->mat(i5, i4, i3, i2, i1, i0) = mat(i5, i4, i3, i2, i1, i0);
+                            out->mat(i5, i4, i3, i2, i1, i0) = vw(i5, i4, i3, i2, i1, i0);
 
     return out;
 }
@@ -244,7 +244,7 @@ std::shared_ptr<intTensor5D> intTensor5D::window(
             for (int i2 = 0; i2 < nw[2]; i2++)
                 for (int i1 = 0; i1 < nw[1]; i1++)
                     for (int i0 = 0; i0 < nw[0]; i0++)
-                        out->mat(i4, i3, i2, i1, i0) = mat(i4, i3, i2, i1, i0);
+                        out->mat(i4, i3, i2, i1, i0) = vw(i4, i3, i2, i1, i0);
 
     return out;
 }
@@ -324,7 +324,7 @@ std::shared_ptr<intTensor4D> intTensor4D::window(
         for (int i2 = 0; i2 < nw[2]; i2++)
             for (int i1 = 0; i1 < nw[1]; i1++)
                 for (int i0 = 0; i0 < nw[0]; i0++)
-                    out->mat(i3, i2, i1, i0) = mat(i3, i2, i1, i0);
+                    out->mat(i3, i2, i1, i0) = vw(i3, i2, i1, i0);
 
     return out;
 }
@@ -401,7 +401,7 @@ std::shared_ptr<intTensor3D> intTensor3D::window(
     for (int i2 = 0; i2 < nw[2]; i2++)
         for (int i1 = 0; i1 < nw[1]; i1++)
             for (int i0 = 0; i0 < nw[0]; i0++)
-                out->mat(i2, i1, i0) = mat(i2, i1, i0);
+                out->mat(i2, i1, i0) = vw(i2, i1, i0);
 
     return out;
 }
@@ -476,7 +476,7 @@ std::shared_ptr<intTensor2D> intTensor2D::window(
                        xt::range(beg[0], end[0], sk[0]));
     for (int i1 = 0; i1 < nw[1]; i1++)
         for (int i0 = 0; i0 < nw[0]; i0++)
-            out->mat(i1, i0) = mat(i1, i0);
+            out->mat(i1, i0) = vw(i1, i0);
 
     return out;
 }
@@ -629,7 +629,7 @@ std::shared_ptr<intTensor1D> intTensor1D::window(
     auto vw = xt::view(mat,
                        xt::range(beg[0], end[0], sk[0]));
     for (int i0 = 0; i0 < nw[0]; i0++)
-        out->mat(i0) = mat(i0);
+        out->mat(i0) = vw(i0);
 
     return out;
 }

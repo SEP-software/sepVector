@@ -80,7 +80,7 @@ std::shared_ptr<floatTensor7D> floatTensor7D::window(
                     for (int i2 = 0; i2 < nw[2]; i2++)
                         for (int i1 = 0; i1 < nw[1]; i1++)
                             for (int i0 = 0; i0 < nw[0]; i0++)
-                                out->mat(i6, i5, i4, i3, i2, i1, i0) = mat(i6, i5, i4, i3, i2, i1, i0);
+                                out->mat(i6, i5, i4, i3, i2, i1, i0) = vw(i6, i5, i4, i3, i2, i1, i0);
 
     return out;
 }
@@ -162,7 +162,7 @@ std::shared_ptr<floatTensor6D> floatTensor6D::window(
                 for (int i2 = 0; i2 < nw[2]; i2++)
                     for (int i1 = 0; i1 < nw[1]; i1++)
                         for (int i0 = 0; i0 < nw[0]; i0++)
-                            out->mat(i5, i4, i3, i2, i1, i0) = mat(i5, i4, i3, i2, i1, i0);
+                            out->mat(i5, i4, i3, i2, i1, i0) = vw(i5, i4, i3, i2, i1, i0);
 
     return out;
 }
@@ -244,7 +244,7 @@ std::shared_ptr<floatTensor5D> floatTensor5D::window(
             for (int i2 = 0; i2 < nw[2]; i2++)
                 for (int i1 = 0; i1 < nw[1]; i1++)
                     for (int i0 = 0; i0 < nw[0]; i0++)
-                        out->mat(i4, i3, i2, i1, i0) = mat(i4, i3, i2, i1, i0);
+                        out->mat(i4, i3, i2, i1, i0) = vw(i4, i3, i2, i1, i0);
 
     return out;
 }
@@ -324,7 +324,7 @@ std::shared_ptr<floatTensor4D> floatTensor4D::window(
         for (int i2 = 0; i2 < nw[2]; i2++)
             for (int i1 = 0; i1 < nw[1]; i1++)
                 for (int i0 = 0; i0 < nw[0]; i0++)
-                    out->mat(i3, i2, i1, i0) = mat(i3, i2, i1, i0);
+                    out->mat(i3, i2, i1, i0) = vw(i3, i2, i1, i0);
 
     return out;
 }
@@ -394,9 +394,6 @@ std::shared_ptr<floatTensor3D> floatTensor3D::window(
     }
     std::shared_ptr<hypercube> hypOut(new hypercube(aout));
     std::shared_ptr<floatTensor3D> out(new floatTensor3D(hypOut));
-    std::cerr << "what about you beg " << beg[0] << " " << beg[1] << " " << beg[2] << " " << std::endl;
-    std::cerr << "what about you ebd " << end[0] << " " << end[1] << " " << end[2] << " " << std::endl;
-    std::cerr << "what about you skp " << sk[0] << " " << sk[1] << " " << sk[2] << " " << std::endl;
 
     auto vw = xt::view(mat,
                        xt::range(beg[2], end[2], sk[2]),
@@ -405,7 +402,7 @@ std::shared_ptr<floatTensor3D> floatTensor3D::window(
     for (int i2 = 0; i2 < nw[2]; i2++)
         for (int i1 = 0; i1 < nw[1]; i1++)
             for (int i0 = 0; i0 < nw[0]; i0++)
-                out->mat(i2, i1, i0) = mat(i2, i1, i0);
+                out->mat(i2, i1, i0) = vw(i2, i1, i0);
 
     return out;
 }
@@ -480,7 +477,7 @@ std::shared_ptr<floatTensor2D> floatTensor2D::window(
                        xt::range(beg[0], end[0], sk[0]));
     for (int i1 = 0; i1 < nw[1]; i1++)
         for (int i0 = 0; i0 < nw[0]; i0++)
-            out->mat(i1, i0) = mat(i1, i0);
+            out->mat(i1, i0) = vw(i1, i0);
 
     return out;
 }
@@ -633,7 +630,7 @@ std::shared_ptr<floatTensor1D> floatTensor1D::window(
     auto vw = xt::view(mat,
                        xt::range(beg[0], end[0], sk[0]));
     for (int i0 = 0; i0 < nw[0]; i0++)
-        out->mat(i0) = mat(i0);
+        out->mat(i0) = vw(i0);
 
     return out;
 }
