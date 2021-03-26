@@ -130,7 +130,7 @@ class floatTensor(tensor):
 
     def clone(self):
         """Function to clone (deep copy) a tensor"""
-        return FloatTensor(fromCpp=self.cppMode.clone())
+        return floatTensor(fromCpp=self.cppMode.clone())
 
     def cliptensor(self, low, high):
         """Clip tensor element by element vec=min(high,max(low,vec))"""
@@ -139,7 +139,7 @@ class floatTensor(tensor):
 
     def cloneSpace(self):
         """Funtion tor return the space of a tensor"""
-        return FloatTensor(fromCpp=self.cppMode.cloneSpace())
+        return floatTensor(fromCpp=self.cppMode.cloneSpace())
 
     def scaleAdd(self, vec2, sc1=1., sc2=1.):
         """self = self * sc1 + sc2 * vec2"""
@@ -217,7 +217,7 @@ class doubleTensor(tensor):
 
     def clone(self):
         """Function to clone (deep copy) a tensor"""
-        return DoubleTensor(fromCpp=self.cppMode.clone())
+        return doubleTensor(fromCpp=self.cppMode.clone())
 
     def copy(self, vec2):
         """Copy vec2 into self"""
@@ -226,7 +226,7 @@ class doubleTensor(tensor):
 
     def cloneSpace(self):
         """Funtion tor return the space of a tensor"""
-        return DoubleTensor(fromCpp=self.cppMode.cloneSpace())
+        return doubleTensor(fromCpp=self.cppMode.cloneSpace())
 
     def scaleAdd(self, vec2, sc1=1., sc2=1.):
         """self = self * sc1 + sc2 * vec2"""
@@ -268,7 +268,7 @@ class intTensor(tensor):
 
     def clone(self):
         """Function to clone (deep copy) a tensor"""
-        return IntTensor(fromCpp=self.cppMode.clone())
+        return intTensor(fromCpp=self.cppMode.clone())
 class complexTensor(tensor):
     """Generic complex tensor class"""
 
@@ -279,7 +279,7 @@ class complexTensor(tensor):
 
     def cloneSpace(self):
         """Funtion tor return the space of a tensor"""
-        return ComplexTensor(fromCpp=self.cppMode.cloneSpace())
+        return complexTensor(fromCpp=self.cppMode.cloneSpace())
 
     def norm(self, N=2):
         """Function to compute tensor N-norm"""
@@ -310,7 +310,7 @@ class complexTensor(tensor):
 
     def clone(self):
         """clone a tensor"""
-        return ComplexTensor(fromCpp=self.cppMode.clone())
+        return complexTensor(fromCpp=self.cppMode.clone())
 
     def cliptensor(self, low, high):
         """Clip tensor element by element vec=min(high,max(low,vec))"""
@@ -348,7 +348,7 @@ class complexDoubleTensor(tensor):
 
     def cloneSpace(self):
         """Funtion tor return the space of a tensor"""
-        return ComplexDoubleTensor(fromCpp=self.cppMode.cloneSpace())
+        return complexDoubleTensor(fromCpp=self.cppMode.cloneSpace())
 
     def norm(self, N=2):
         """Function to compute tensor N-norm"""
@@ -378,7 +378,7 @@ class complexDoubleTensor(tensor):
 
     def clone(self):
         """clone a tensor"""
-        return ComplexDoubleTensor(fromCpp=self.cppMode.clone())
+        return complexDoubleTensor(fromCpp=self.cppMode.clone())
 
     def cliptensor(self, low, high):
         """Clip tensor element by element vec=min(high,max(low,vec))"""
@@ -427,7 +427,7 @@ class byteTensor(tensor):
         return histo
     def clone(self):
         """Function to clone (deep copy) a tensor"""
-        return ByteTensor(fromCpp=self.cppMode.clone())
+        return byteTensor(fromCpp=self.cppMode.clone())
     def __repr__(self):
         """Override print method"""
         return "ByteTensor\n%s"%str(self.getHyper())
