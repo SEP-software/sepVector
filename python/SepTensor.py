@@ -169,7 +169,7 @@ class floatTensor(tensor):
             specify min1..min6, max1...max6, f1...f6, j1...j6, n1...n6, or
             any of these by lists.
             Can not specify n and min or max """
-        return FloatTensor(fromCpp=self.windowInternal(**kw))
+        return floatTensor(fromCpp=self.windowInternal(**kw))
 
 
 class doubleTensor(tensor):
@@ -251,7 +251,7 @@ class doubleTensor(tensor):
             specify min1..min6, max1...max6, f1...f6, j1...j6, n1...n6, or
             any of these by lists.
             Can not specify n and min or max """
-        return DoubleTensor(fromCpp=self.windowInternal(**kw))
+        return doubleTensor(fromCpp=self.windowInternal(**kw))
 
 
 class intTensor(tensor):
@@ -336,7 +336,7 @@ class complexTensor(tensor):
             specify min1..min6, max1...max6, f1...f6, j1...j6, n1...n6, or
             any of these by lists.
             Can not specify n and min or max """
-        return ComplexTensor(fromCpp=self.windowInternal(**kw))
+        return complexTensor(fromCpp=self.windowInternal(**kw))
 
 class complexDoubleTensor(tensor):
     """Generic complex tensor class"""
@@ -404,7 +404,7 @@ class complexDoubleTensor(tensor):
             specify min1..min6, max1...max6, f1...f6, j1...j6, n1...n6, or
             any of these by lists.
             Can not specify n and min or max """
-        return ComplexDoubleTensor(fromCpp=self.windowInternal(**kw))
+        return complexDoubleTensor(fromCpp=self.windowInternal(**kw))
 
 
 class byteTensor(tensor):
