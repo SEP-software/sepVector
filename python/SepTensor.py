@@ -18,7 +18,7 @@ dtypeToSepVecType={
 SepVecTypeToDtype= {v: k for k, v in dtypeToSepVecType.items()}
 
 
-class tensor(pyVector.vectoIC):
+class tensor(pyVector.vectorIC):
     """Generic septensor class"""
 
     def __init__(self):
