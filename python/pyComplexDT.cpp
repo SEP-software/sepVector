@@ -14,7 +14,7 @@ namespace py = pybind11;
 namespace SEP
 {
 
-     void init_complexDoubleT(py::module &clsVector)
+     void init_complexDT(py::module &clsVector)
      {
           /* complex double hyper */
           py::class_<complexDoubleTensor1D, complexDoubleHyper, std::shared_ptr<complexDoubleTensor1D> >(
