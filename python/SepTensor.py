@@ -662,7 +662,7 @@ def getIntTensor(hyper):
         return pySepVector.intTensor6D(h)
 
 
-class rectFilter1D(FloatTensor):
+class rectFilter1D(floatTensor):
 
     def __init__(self, n, f, pef=False):
         """Initialize a rectFilter1D
@@ -672,7 +672,7 @@ class rectFilter1D(FloatTensor):
         self.cppMode = pySepVector.rectFilter1D(n, f, pef)
 
 
-class rectFilter2D(FloatTensor):
+class rectFilter2D(floatTensor):
 
     def __init__(self, *arg, **kw):
         """Initialize a rectFilter2D
