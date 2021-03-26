@@ -29,10 +29,11 @@ namespace SEP
     PYBIND11_MODULE(pySepVector, clsVector)
 
     {
-        init_rect(clsVector);
         init_base(clsVector);
 
         init_floatR(clsVector);
+        init_rect(clsVector);
+
         init_doubleR(clsVector);
         init_complexR(clsVector);
         init_intR(clsVector);
