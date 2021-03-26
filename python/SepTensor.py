@@ -2,7 +2,7 @@ import pyHypercube
 import pySepVector
 import Hypercube
 import numpy 
-import pytensor
+import pyVector
 from sys import version_info
 
 
