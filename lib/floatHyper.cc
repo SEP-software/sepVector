@@ -124,6 +124,7 @@ float floatHyper::cent(const long long iv, const int js) const
   // free(x);
   return m;
 }
+
 void floatHyper::clip(const float bclip, const float eclip, bool outer)
 {
   if (spaceOnly())
