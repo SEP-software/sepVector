@@ -269,6 +269,21 @@ class intTensor(tensor):
     def clone(self):
         """Function to clone (deep copy) a tensor"""
         return intTensor(fromCpp=self.cppMode.clone())
+    def window(self, **kw):
+        """Window a tensor return another tensor (of the same dimension
+            specify min1..min6, max1...max6, f1...f6, j1...j6, n1...n6, or
+            any of these by lists.
+            Can not specify n and min or max """
+        return intTensor(fromCpp=self.windowInternal(**kw))
+    def windowInternal(self, **kw):
+        """Window a tensor return another tensor (of the same dimension
+            specify min1..min6, max1...max6, f1...f6, j1...j6, n1...n6, or
+            any of these by lists.
+            Can not specify n and min or max """
+        axes = self.getHyper().axes
+        nw,fw,jw=fixWindow(axes,**kw)
+        return self.cppMode.window(nw, fw, jw)
+
 class complexTensor(tensor):
     """Generic complex tensor class"""
 
