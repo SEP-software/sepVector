@@ -149,12 +149,16 @@ set(SEPVECTOR_INTERNAL_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR})
 add_library(sepVector ${SOURCES} ${INCLUDES})
 
 target_include_directories(
-  sepVector
-  PUBLIC $<INSTALL_INTERFACE:include>
-         $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/../>
-         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>)
+  sepVector INTERFACE
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/..>
+
+  $<INSTALL_INTERFACE:include>
+      
+         )
 
 target_link_libraries(sepVector hypercube xtensor ${TBB_LIBRARIES})
+
 install(FILES ${INCLUDES} DESTINATION include)
 install(
   TARGETS sepVector

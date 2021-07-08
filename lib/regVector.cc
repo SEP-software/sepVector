@@ -1,5 +1,5 @@
 #include "regVector.h"
-#include "sepVectorConfig.h"
+
 using namespace SEP;
 std::shared_ptr<regSpace> SEP::vecFromHyper(
     const std::shared_ptr<hypercube> hyper, const dataType typ, const bool g1)
