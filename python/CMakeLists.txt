@@ -10,6 +10,18 @@ include_directories("${CMAKE_CURRENT_SOURCE_DIR}/../lib")
 find_package(Boost 1.40 REQUIRED)
 include_directories(${Boost_INCLUDE_DIR})
 
+set(PYREQ numpy)
+foreach (PACKAGE IN LISTS ${PYREQ})
+ execute_process(
+    COMMAND Python3:Interpreter -c "import ${PACKAGE}"
+    RESULT_VARIABLE EXIT_CODE
+    OUTPUT_QUIET
+)
+if (NOT ${EXIT_CODE} EQUAL 0)
+  message(FATAL_ERROR " Required ${PACKAGE} python3 package not installed")
+  endif()
+
+endforeach()
 pybind11_add_module(
   pySepVector
   MODULE
