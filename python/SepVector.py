@@ -769,11 +769,11 @@ def fixWindow(axes,**kw):
         biSet = False
         eiSet = False
         if "min%d" % i in kw:
-            bi = int(float(kw["min" %
+            bi = int(float(kw["min%d" %
                                 i] - axes[i - 1].o) / axes[i - 1].d + .5)
             biSet = True
         if "max%d" % i in kw:
-            ei = int(float(kw["max" %
+            ei = int(float(kw["max%d" %
                                 i] - axes[i - 1].o) / axes[i - 1].d + .5)
             eiSet = True
         if fset:
