@@ -1,5 +1,5 @@
-#ifndef int_hyper_h
-#define int_hyper_h 1
+#ifndef long_hyper_h
+#define lont_hyper_h 1
 #include <hypercube.h>
 #include <cstdint>
 #include "string.h"

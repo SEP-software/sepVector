@@ -1,5 +1,5 @@
-#ifndef int_tensor_h
-#define int_tensor_h 1
+#ifndef long_tensor_h
+#define long_tensor_h 1
 #include "SEPException.h"
 #include "Vector.h"
 #include "longHyper.h"

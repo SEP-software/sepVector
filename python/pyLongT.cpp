@@ -17,7 +17,7 @@ namespace SEP
      void init_longT(py::module &clsVector)
      {
           /* int hyper */
-          py::class_<longTensor1D, intHyper, std::shared_ptr<longTensor1D> >(
+          py::class_<longTensor1D, longHyper, std::shared_ptr<longTensor1D> >(
               clsVector, "longTensor1D", py::buffer_protocol())
               .def(py::init<const int>(), "Initialize giving size")
               .def(py::init<const axis &>(), "Initialize from an axis")
@@ -69,7 +69,7 @@ namespace SEP
                                           py::format_descriptor<int>::format(), 1,
                                           {m.getHyper()->getAxis(1).n}, {sizeof(long long)});
               });
-          py::class_<longTensor2D, intHyper, std::shared_ptr<longTensor2D> >(
+          py::class_<longTensor2D, longHyper, std::shared_ptr<longTensor2D> >(
               clsVector, "longTensor2D", py::buffer_protocol())
               .def(py::init<const int, const int>(), "Initialize giving size")
               .def(py::init<const axis &, const axis &>(), "Initialize from an axis")
@@ -118,7 +118,7 @@ namespace SEP
                        {sizeof(long long) * m.getHyper()->getAxis(1).n, sizeof(long long)});
               });
 
-          py::class_<longTensor3D, intHyper, std::shared_ptr<longTensor3D> >(
+          py::class_<longTensor3D, longHyper, std::shared_ptr<longTensor3D> >(
               clsVector, "longTensor3D", py::buffer_protocol())
               .def(py::init<const int, const int, const int>(),
                    "Initialize giving size")
@@ -153,7 +153,7 @@ namespace SEP
                         sizeof(long long) * m.getHyper()->getAxis(1).n, sizeof(long long)});
               });
 
-          py::class_<longTensor4D, intHyper, std::shared_ptr<longTensor4D> >(
+          py::class_<longTensor4D, longHyper, std::shared_ptr<longTensor4D> >(
               clsVector, "longTensor4D", py::buffer_protocol())
               .def(py::init<const int, const int, const int, const int>(),
                    "Initialize giving size")
@@ -189,7 +189,7 @@ namespace SEP
                             m.getHyper()->getAxis(2).n,
                         sizeof(long long) * m.getHyper()->getAxis(1).n, sizeof(long long)});
               });
-          py::class_<longTensor5D, intHyper, std::shared_ptr<longTensor5D> >(
+          py::class_<longTensor5D, longHyper, std::shared_ptr<longTensor5D> >(
               clsVector, "longTensor5D", py::buffer_protocol())
               .def(py::init<const int, const int, const int, const int, const int>(),
                    "Initialize giving size")
@@ -231,7 +231,7 @@ namespace SEP
                         sizeof(long long) * m.getHyper()->getAxis(1).n, sizeof(long long)});
               });
 
-          py::class_<longTensor6D, intHyper, std::shared_ptr<longTensor6D> >(
+          py::class_<longTensor6D, longHyper, std::shared_ptr<longTensor6D> >(
               clsVector, "longTensor6D", py::buffer_protocol())
               .def(py::init<const int, const int, const int, const int, const int,
                             const int>(),
@@ -276,7 +276,7 @@ namespace SEP
                             m.getHyper()->getAxis(2).n,
                         sizeof(long long) * m.getHyper()->getAxis(1).n, sizeof(long long)});
               });
-          py::class_<longTensor7D, intHyper, std::shared_ptr<longTensor7D> >(
+          py::class_<longTensor7D, longHyper, std::shared_ptr<longTensor7D> >(
               clsVector, "longTensor7D", py::buffer_protocol())
               .def(py::init<const int, const int, const int, const int, const int, const int,
                             const int>(),
