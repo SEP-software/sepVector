@@ -28,6 +28,8 @@ set(SOURCES
     doubleTensor.cc
     floatTensor.cc
     intTensor.cc
+    longTensor.cc
+    longHyper.cc
     shortTensor.cc)
 
 set(SOURCES
@@ -111,6 +113,8 @@ set(INCLUDES
     int4DReg.h
     int5DReg.h
     int6DReg.h
+    longTensor.h
+    longHyper.h
     byteHyper.h
     byte1DReg.h
     byte2DReg.h

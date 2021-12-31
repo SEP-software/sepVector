@@ -54,6 +54,7 @@
 #include "complexDoubleTensor.h"
 #include "doubleTensor.h"
 #include "intTensor.h"
+#include "longTensor.h"
 #include "shortTensor.h"
 
 namespace SEP

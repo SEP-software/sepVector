@@ -607,6 +607,55 @@ std::shared_ptr<regSpace> SEP::tensorFromHyper(
         }
 
         break;
+case DATA_LONG_LONG:
+        switch (ndim)
+        {
+        case 1:
+        {
+            std::shared_ptr<longTensor1D> a(new longTensor1D(hyper2));
+            return a;
+        }
+        break;
+        case 2:
+        {
+            std::shared_ptr<longTensor2D> a(new longTensor2D(hyper2));
+            return a;
+        }
+        break;
+        case 3:
+        {
+            std::shared_ptr<longTensor3D> a(new longTensor3D(hyper2));
+            return a;
+        }
+        break;
+        case 4:
+        {
+            std::shared_ptr<longTensor4D> a(new longTensor4D(hyper2));
+            return a;
+        }
+        break;
+        case 5:
+        {
+            std::shared_ptr<longTensor5D> a(new longTensor5D(hyper2));
+            return a;
+        }
+        break;
+        case 6:
+        {
+            std::shared_ptr<longTensor6D> a(new longTensor6D(hyper2));
+            return a;
+        }
+        break;
+        case 7:
+        {
+            std::shared_ptr<longTensor7D> a(new longTensor7D(hyper2));
+            return a;
+        }
+        break;
+        }
+
+        break;
+
     case DATA_DOUBLE:
         switch (ndim)
         {
@@ -1068,6 +1117,38 @@ std::shared_ptr<regSpace> SEP::cloneRegSpace(
             std::dynamic_pointer_cast<intTensor7D>(storage);
         if (af7)
             return af7->clone();
+
+
+        std::shared_ptr<longTensor1D> azz1 =
+            std::dynamic_pointer_cast<longTensor1D>(storage);
+        if (azz1)
+            return azz1->clone();
+        std::shared_ptr<longTensor2D> azz2 =
+            std::dynamic_pointer_cast<longTensor2D>(storage);
+        if (azz2)
+            return azz2->clone();
+        std::shared_ptr<longTensor3D> azz3 =
+            std::dynamic_pointer_cast<longTensor3D>(storage);
+        if (azz3)
+            return azz3->clone();
+        std::shared_ptr<longTensor4D> azz4 =
+            std::dynamic_pointer_cast<longTensor4D>(storage);
+        if (azz4)
+            return azz4->clone();
+        std::shared_ptr<longTensor5D> azz5 =
+            std::dynamic_pointer_cast<longTensor5D>(storage);
+        if (azz5)
+            return azz5->clone();
+        std::shared_ptr<longTensor6D> azz6 =
+            std::dynamic_pointer_cast<longTensor6D>(storage);
+        if (azz6)
+            return azz6->clone();
+        std::shared_ptr<longTensor7D> azz7 =
+            std::dynamic_pointer_cast<longTensor7D>(storage);
+        if (azz7)
+            return azz7->clone();
+
+
 
         std::shared_ptr<shortTensor1D> ag1 =
             std::dynamic_pointer_cast<shortTensor1D>(storage);

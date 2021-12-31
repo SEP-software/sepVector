@@ -23,6 +23,7 @@ namespace SEP
     void init_complexT(py::module &);
     void init_complexDT(py::module &);
     void init_intT(py::module &);
+    void init_longT(py::module &);
     void init_shortT(py::module &);
     using namespace SEP;
 
@@ -48,5 +49,6 @@ namespace SEP
         init_intT(clsVector);
         init_shortT(clsVector);
         init_floatT(clsVector);
+        init_longT(clsVector);
     }
 }

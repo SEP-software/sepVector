@@ -9,6 +9,7 @@ from sys import version_info
 dtypeToSepVecType={
  "float32":"dataFloat",
  "int32":"dataInt",
+ "int64":"dataLong",
  "float64":"dataDouble",
  "uint8":"dataByte",
  "complex64":"dataComplex",
@@ -275,6 +276,36 @@ class intTensor(tensor):
             any of these by lists.
             Can not specify n and min or max """
         return intTensor(fromCpp=self.windowInternal(**kw))
+    def windowInternal(self, **kw):
+        """Window a tensor return another tensor (of the same dimension
+            specify min1..min6, max1...max6, f1...f6, j1...j6, n1...n6, or
+            any of these by lists.
+            Can not specify n and min or max """
+        axes = self.getHyper().axes
+        nw,fw,jw=fixWindow(axes,**kw)
+        return self.cppMode.window(nw, fw, jw)
+
+class longTensor(tensor):
+    """Generic int tensor class"""
+
+    def __init__(self, **kw):
+        self.kw = kw
+        super().__init__()
+        self.storage = "dataInt"
+
+    def __repr__(self):
+        """Override print method"""
+        return "LongTensor\n%s"%str(self.getHyper())
+
+    def clone(self):
+        """Function to clone (deep copy) a tensor"""
+        return longTensor(fromCpp=self.cppMode.clone())
+    def window(self, **kw):
+        """Window a tensor return another tensor (of the same dimension
+            specify min1..min6, max1...max6, f1...f6, j1...j6, n1...n6, or
+            any of these by lists.
+            Can not specify n and min or max """
+        return longTensor(fromCpp=self.windowInternal(**kw))
     def windowInternal(self, **kw):
         """Window a tensor return another tensor (of the same dimension
             specify min1..min6, max1...max6, f1...f6, j1...j6, n1...n6, or

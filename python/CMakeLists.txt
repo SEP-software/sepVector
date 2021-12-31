@@ -30,6 +30,7 @@ pybind11_add_module(
   pyDoubleR.cpp
   pyFloatT.cpp
   pyIntT.cpp
+  pyLongT.cpp
   pyDoubleT.cpp
   pyComplexT.cpp
   pyComplexDT.cpp
