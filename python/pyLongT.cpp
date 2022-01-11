@@ -17,6 +17,60 @@ namespace SEP
      void init_longT(py::module &clsVector)
      {
           /* int hyper */
+
+            py::class_<longHyper, regSpace, std::shared_ptr<longHyper> >(clsVector,
+                                                                     "longHyper") //
+              .def(py::init<>(), "Initlialize a new int Hyper (don't use this")
+              .def("getSpaceOnly", (bool (longHyper::*)()) & longHyper::getSpaceOnly,
+                   "Check to see if this only a description of the vector space")
+
+              .def("setData", (void (longHyper::*)(int *)) & longHyper::setData,
+                   "Set the data pointer")
+              .def("getVals", (int *(longHyper::*)()) & longHyper::getVals,
+                   "Get the data pointer")
+
+              .def("isDifferent",
+                   (bool (longHyper::*)(std::shared_ptr<longHyper>)) &
+                       longHyper::isDifferent,
+                   "Check to  see if two vectors are different")
+
+              .def_property("_vals", &longHyper::getVals, &longHyper::setData,
+                            py::return_value_policy::reference)
+              .def("clip", (void (longHyper::*)(const int, const int)) & longHyper::clip,
+                   "Clip a dataset given minumum and maximum value")
+              .def("cent",
+                   (int (longHyper::*)(const float pct, const int jsamp) const) &
+                       longHyper::cent,
+                   "Calculate  the percentile of a dataset")
+              .def("add",
+                   (void (longHyper::*)(std::shared_ptr<longHyper>)) & longHyper::add,
+                   "Add two vectors")
+              .def("scale", (void (longHyper::*)(const int)) & longHyper::scale,
+                   "Scale a vector")
+              .def("scaleAdd",
+                   (void (longHyper::*)(std::shared_ptr<longHyper>, const int,
+                                       const int)) &
+                       longHyper::scaleAdd,
+                   "vec=vec*sc1+vec2*sc2")
+              .def("calcCheckSum", (int (longHyper::*)() const) & longHyper::calcCheckSum,
+                   "Calculate checksum of a vector")
+              .def("zero", (void (longHyper::*)()) & longHyper::zero,
+                   "Fill a vector with zero")
+              .def("set", (void (longHyper::*)(const int)) & longHyper::set,
+                   "Fill a vector with a value")
+              .def("signum", (void (longHyper::*)()) & longHyper::signum,
+                   "Fill a vector with it's signum")
+              .def("rand", (void (longHyper::*)()) & longHyper::random,
+                   "Fill a vector with random number")
+              .def("mult",
+                   (void (longHyper::*)(std::shared_ptr<longHyper>)) & longHyper::mult,
+                   "vec=vec*vec2")
+              .def("checkSame",
+                   (bool (longHyper::*)(const std::shared_ptr<longHyper>) const) &
+                       longHyper::checkSame,
+                   "Check to make sure the vectors exist in the same space");
+
+
           py::class_<longTensor1D, longHyper, std::shared_ptr<longTensor1D> >(
               clsVector, "longTensor1D", py::buffer_protocol())
               .def(py::init<const int>(), "Initialize giving size")
