@@ -121,6 +121,7 @@ namespace SEP
 */
     void clipVector(const std::shared_ptr<floatHyper> bclip,
                     const std::shared_ptr<floatHyper> eclip);
+
     /*!
      Create a mask from a vector. Useful for filling in missing data.
 

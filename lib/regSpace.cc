@@ -1,6 +1,6 @@
 
 #include <iostream>
-
+#include <cstring>
 #include "regSpace.h"
 using namespace SEP;
 void regSpace::checkWindow(const int n, const int nw, const int fw,
@@ -54,7 +54,17 @@ std::vector<float> regSpace::axisToKey(const int ix) const
   }
   return key;
 }
+void regSpace::copyElements(const std::shared_ptr<regSpace> otherVec){
 
+  long long n123=getHyper()->getN123();
+  if(n123!=otherVec->getHyper()->getN123())
+    throw SEPException("Can not copy vecetor elements when not the same size");
+  memcpy(getVoidPtr(),otherVec->getCVoidPtr(),getEsize()*n123);
+
+
+
+
+}
 std::tuple<std::shared_ptr<hypercube>, std::vector<int>, std::vector<int>, std::vector<int> >
 regSpace::sliceToWindow2D(const int iax1, const int iax2, const std::vector<int> beg,
                           const std::vector<int> end, const std::vector<int> ipos)

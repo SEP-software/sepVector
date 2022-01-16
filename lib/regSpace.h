@@ -52,7 +52,8 @@ namespace SEP
     \param iax Axis to convert to a key
     */
     std::vector<float> axisToKey(const int iaxis) const;
-
+    ///*  Return pointer to storage
+    void *getCVoidPtr() const { return _storage; }
     ///*  Return pointer to storage
     void *getVoidPtr() { return _storage; }
     ///* Get the size of each element in  vector
@@ -239,7 +240,14 @@ namespace SEP
         \param esize Element size
 
     */
+   /*! copyElements
 
+     CopyElements - Copy the elements of another vector,
+        size must be same but shape does not
+
+        \param otherVec Vector to copy from
+  */
+    void copyElements(const std::shared_ptr<regSpace> otherVec);
     void doTraverse1D(const std::vector<int> &nd, const int iax1, const bool rev1,
                       const void *inA, void *outA, const int esize);
     /*

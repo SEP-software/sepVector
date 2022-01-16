@@ -1,3 +1,5 @@
+from contextlib import AsyncExitStack
+from tkinter import N
 import pyHypercube
 import pySepVector
 import Hypercube
@@ -77,7 +79,74 @@ class tensor(pyVector.vectorIC):
             raise Exception("Trying to reset with a different sized hyper")
         self.cppMode.setHyper(hyper.cppMode)
 
+    def reshape(self,**kw):
+        """Reshape a vector (preserving the number
+            of elements.
 
+            Option 1; Specify hypercube
+                hyper=hyper
+            Option 2: Specify axes
+                axes=axes
+            Option 3: Specify ns
+                ns=ns
+            Option 4: reshape
+                reshape=[] 
+                    Example 1,2,4 will combine lenght
+                    of axes and 4
+            Option 5:
+                    squish=True,
+        """
+        if "hyper" in kw:
+            hyper=kw["hyper"]
+            if not isinstance(hyper,Hypercube.hypercube):
+                raise Exception("hyper must be of type hypercube")
+        elif "axes" in kw:
+            if not isinstance(kw["axes"],lst):
+                raise Exception("axes must be a list")
+            if not  isinstance(kw[axes][0],Hypercube.axis):
+                raise Exception("Expecting axes to be a list of axes")
+            hyper=Hypercube.hypercube(axes=kw["axes"])
+        elif "ns" in kw:
+            if not isinstance(ke["ns"],lst):
+                raise Exception("Expecting lst for ns")
+            hyper=Hypercube.hypercube(ns=kw["ms"])
+        elif "reshape" in kw:
+            if not  isinstance(kw["reshape"],lst):
+                raise Exception("Expecting reshape to be a list")
+            if kw["reshape"][0]<1:
+                raise Exception("First axis must be >=1")
+            last=0
+            axes=getHyper().axes
+            aout=[]
+            for i,ax in enumerate(kw["reshape"]):
+                if ax < last:
+                    raise Exception("reshape can not decrease")
+                elif ax >= len(axes):
+                    raise Exception("Can not specify axis larger than im array")
+                elif ax == last+1:
+                    aout.append(axes[i-1])
+                elif ax==last:
+                    aout.append(Hypercube.axis(n=1))
+                else:
+                    n123=1
+                    for i in range(last,ax):
+                        n123*=axes[i].n
+                    aout.append(Hypercube.axis(n=n123))
+                hyper=Hypercube.hypercube(axes=aout)
+        elif "squish" in kw:
+            axes=getHyper().axes
+            aout=[]
+            for ax in axes:
+                if ax.n !=1:
+                    aout.append(ax)
+            hyper=Hypercube.hypercube(axes=aout)
+        else:
+            raise SEPException("Unknown way to reshape")
+        if getHyper.getN123() != hyper.getN123():
+            raise Exception("Input and output not the same size")
+        vec=getSepTensor(hyper,storage=self.storage)
+        vec.cppMode.copyValues(self.cppMode)
+        return vec
     def windowInternal(self, **kw):
         """Window a tensor return another tensor (of the same dimension
             specify min1..min6, max1...max6, f1...f6, j1...j6, n1...n6, or
@@ -477,6 +546,7 @@ class byteTensor(tensor):
     def __repr__(self):
         """Override print method"""
         return "ByteTensor\n%s"%str(self.getHyper())
+
 
 def getSepTensor(*args, **keys):
     """ Get a septensor object
