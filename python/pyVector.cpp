@@ -9,6 +9,8 @@ namespace py = pybind11;
 namespace SEP
 {
     void init_floatT(py::module &);
+        void init_reg(py::module &);
+
     void init_floatR(py::module &);
     void init_doubleR(py::module &);
     void init_complexDR(py::module &);
