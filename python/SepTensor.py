@@ -141,7 +141,7 @@ class tensor(pyVector.vectorIC):
             hyper=Hypercube.hypercube(axes=aout)
         else:
             raise Exception("Unknown way to reshape")
-        if self.getHyper.getN123() != hyper.getN123():
+        if self.getHyper().getN123() != hyper.getN123():
             raise Exception("Input and output not the same size")
         vec=getSepTensor(hyper,storage=self.storage)
         vec.cppMode.copyValues(self.cppMode)
