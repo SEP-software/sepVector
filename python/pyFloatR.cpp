@@ -23,7 +23,7 @@ namespace SEP
      void init_floatR(py::module &clsVector)
      {
 
-          py::class_<floatHyper, Vector, regSpace, std::shared_ptr<floatHyper> >(
+          py::class_<floatHyper,  regSpace, std::shared_ptr<floatHyper> >(
               clsVector,
               "floatHyper") //
               .def(py::init<>(), "Initlialize a new Float Hyper (don't use this")
