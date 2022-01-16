@@ -144,7 +144,7 @@ class tensor(pyVector.vectorIC):
         if self.getHyper().getN123() != hyper.getN123():
             raise Exception("Input and output not the same size")
         vec=getSepTensor(hyper,storage=self.storage)
-        vec.cppMode.copyValues(self.cppMode)
+        vec.cppMode.copyElements(self.cppMode)
         return vec
     def windowInternal(self, **kw):
         """Window a tensor return another tensor (of the same dimension
