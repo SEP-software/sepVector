@@ -115,7 +115,7 @@ class tensor(pyVector.vectorIC):
             if kw["reshape"][0]<1:
                 raise Exception("First axis must be >=1")
             last=0
-            axes=getHyper().axes
+            axes=self.getHyper().axes
             aout=[]
             for i,ax in enumerate(kw["reshape"]):
                 if ax < last:
@@ -133,7 +133,7 @@ class tensor(pyVector.vectorIC):
                     aout.append(Hypercube.axis(n=n123))
                 hyper=Hypercube.hypercube(axes=aout)
         elif "squish" in kw:
-            axes=getHyper().axes
+            axes=self.getHyper().axes
             aout=[]
             for ax in axes:
                 if ax.n !=1:
@@ -141,7 +141,7 @@ class tensor(pyVector.vectorIC):
             hyper=Hypercube.hypercube(axes=aout)
         else:
             raise Exception("Unknown way to reshape")
-        if getHyper.getN123() != hyper.getN123():
+        if self.getHyper.getN123() != hyper.getN123():
             raise Exception("Input and output not the same size")
         vec=getSepTensor(hyper,storage=self.storage)
         vec.cppMode.copyValues(self.cppMode)
