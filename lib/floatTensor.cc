@@ -446,6 +446,8 @@ void floatTensor2D::initNoData(std::shared_ptr<SEP::hypercube> hyp)
         (size_t)axes[1].n, (size_t)axes[0].n};
     mat = xt::xtensor<float, 2>::from_shape(shape);
     setData(mat.data());
+
+
 }
 
 std::shared_ptr<floatTensor2D> floatTensor2D::window(
