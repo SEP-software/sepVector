@@ -28,7 +28,6 @@
 #include "double6DReg.h"
 #include "double7DReg.h"
 
-#include "floatHyper.h"
 #include "float1DReg.h"
 #include "float2DReg.h"
 #include "float3DReg.h"
@@ -36,6 +35,7 @@
 #include "float5DReg.h"
 #include "float6DReg.h"
 #include "float7DReg.h"
+#include "floatHyper.h"
 #include "floatTensor.h"
 
 #include "int1DReg.h"
@@ -54,31 +54,31 @@
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
 namespace py = pybind11;
-namespace SEP
-{
+namespace SEP {
 
-     void init_base(py::module &clsVector)
-     {
+void init_base(py::module &clsVector) {
 
-          py::class_<Vector, std::shared_ptr<Vector> >(clsVector, "Vector")
-              .def(py::init<>(), "Initlialize a new Vector (don't use this");
+  py::class_<Vector, std::shared_ptr<Vector>>(clsVector, "Vector")
+      .def(py::init<>(), "Initlialize a new Vector (don't use this");
 
-          py::class_<regSpace, std::shared_ptr<regSpace> >(clsVector, "regSpace")
-              .def(py::init<>(), "Initlialize a new regSpace (don't use this")
-              .def("getHyper",
-                   (std::shared_ptr<hypercube>(regSpace::*)()) & regSpace::getHyper,
-                   "Get the hypercube")
-              .def_property("_hyper", &regSpace::getHyper, &regSpace::setHyper,
-                            py::return_value_policy::reference)
+  py::class_<regSpace, std::shared_ptr<regSpace>>(clsVector, "regSpace")
+      .def(py::init<>(), "Initlialize a new regSpace (don't use this")
+      .def("getHyper",
+           (std::shared_ptr<hypercube>(regSpace::*)()) & regSpace::getHyper,
+           "Get the hypercube")
+      .def_property("_hyper", &regSpace::getHyper, &regSpace::setHyper,
+                    py::return_value_policy::reference)
+      .def("copyElements",
+           (void(regSpace::*)(const std::shared_ptr<regSpace>)) &
+               regSpace::copyElements,
+           "Copy elements")
+      .def("setHyper",
+           (void(regSpace::*)(std::shared_ptr<hypercube>)) & regSpace::setHyper,
+           "Get the hypercube")
+      .def("getVoidPtr", (void *(regSpace::*)()) & regSpace::getVoidPtr,
+           "Get a void ptr")
+      .def("getEsize", (int(regSpace::*)()) & regSpace::getEsize,
+           "Get the element size");
 
-              .def("setHyper",
-                   (void (regSpace::*)(std::shared_ptr<hypercube>)) &
-                       regSpace::setHyper,
-                   "Get the hypercube")
-              .def("getVoidPtr", (void *(regSpace::*)()) & regSpace::getVoidPtr,
-                   "Get a void ptr")
-              .def("getEsize", (int (regSpace::*)()) & regSpace::getEsize,
-                   "Get the element size");
-
-     } // namespace SEP
+} // namespace SEP
 } // namespace SEP

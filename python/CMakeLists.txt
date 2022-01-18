@@ -42,7 +42,6 @@ pybind11_add_module(
   pyComplexR.cpp
   pyFloatR.cpp
   pyIntR.cpp
-  pyReg.cpp
   pyVector.cpp)
 
 target_include_directories(
