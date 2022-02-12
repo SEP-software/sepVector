@@ -161,7 +161,7 @@ target_include_directories(
       
          )
 
-target_link_libraries(sepVector hypercube xtensor ${TBB_LIBRARIES})
+target_link_libraries(sepVector hypercube xtensor TBB::tbb})
 
 install(FILES ${INCLUDES} DESTINATION include)
 install(
