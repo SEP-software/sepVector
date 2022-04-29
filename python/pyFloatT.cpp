@@ -2,7 +2,6 @@
 #include "floatTensor.h"
 
 #include "regSpace.h"
-#include "sepVectorConfig.h"
 #include <pybind11/chrono.h>
 #include <pybind11/complex.h>
 #include <pybind11/functional.h>

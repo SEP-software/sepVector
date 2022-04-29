@@ -75,8 +75,6 @@ if(NOT SUBPACKAGE)
     WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
 endif()
 
-configure_file("${PROJECT_SOURCE_DIR}/sepVectorConfig.h.in"
-               "${PROJECT_BINARY_DIR}/sepVectorConfig.h")
 
 if(BUILD_DOC)
   # check if Doxygen is installed

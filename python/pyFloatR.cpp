@@ -10,7 +10,6 @@
 #include "float7DReg.h"
 #include "floatTensor.h"
 
-#include "sepVectorConfig.h"
 #include <pybind11/chrono.h>
 #include <pybind11/complex.h>
 #include <pybind11/functional.h>

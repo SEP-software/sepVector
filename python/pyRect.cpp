@@ -1,7 +1,6 @@
 
 #include "rectFilter.h"
 #include "regSpace.h"
-#include "sepVectorConfig.h"
 #include "short1DReg.h"
 #include <pybind11/chrono.h>
 #include <pybind11/complex.h>
