@@ -156,10 +156,14 @@ target_include_directories(
   sepVector INTERFACE
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
   $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/..>
-
   $<INSTALL_INTERFACE:include>
-      
          )
+target_include_directories(
+  sepVector PUBLIC
+   ${Boost_INCLUDE_DIR}
+    ${TBB_INCLUDE_DIRS}
+)
+
 
 target_link_libraries(sepVector hypercube xtensor TBB::tbb)
 
